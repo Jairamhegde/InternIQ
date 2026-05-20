@@ -41,6 +41,3 @@ def total_opportunities():
                         '''
                 df = pd.read_sql_query(query,conn)
                 return df
-to = Top_role()
-print(to)
-print(to['job_count'][1])

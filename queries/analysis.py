@@ -2,14 +2,11 @@ import sqlite3
 import pandas as pd
 
 
-import os
-BASE_DIR = os.path.dirname(os.path.dirname(__file__)) 
-db_path = os.path.join(BASE_DIR, "jobs.db")
-conn = sqlite3.connect(db_path)
+from utils.path import JOBS_DB
 # ------------------------------FOR OVERALL MARKET TRENDS----
 def topSkills():
     # db_path = 'jobs.db'
-    conn = sqlite3.connect(db_path)
+    conn = sqlite3.connect(JOBS_DB)
     query = '''
     SELECT s.name, count(*) as demand
     FROM skills s
@@ -23,7 +20,7 @@ def topSkills():
     return df
 def roles():
     # db_path = 'jobs.db'
-    conn=sqlite3.connect(db_path)
+    conn=sqlite3.connect(JOBS_DB)
     query='''
     SELECT j.j_title,count(j.j_title) as demand
     FROM jobs j
@@ -35,7 +32,7 @@ def roles():
     conn.close()
     return df
 def noOfopportunities():
-    conn=sqlite3.connect(db_path)
+    conn=sqlite3.connect(JOBS_DB)
     query = '''
     SELECT count(*) as opportunities
     FROM jobs ;
@@ -45,7 +42,7 @@ def noOfopportunities():
     return df['opportunities'][0]
 def topLocations():
     # db_path = 'jobs.db'
-    conn=sqlite3.connect(db_path)
+    conn=sqlite3.connect(JOBS_DB)
     query='''
     SELECT j.location ,count(j.location) as count
     FROM jobs j
@@ -58,7 +55,7 @@ def topLocations():
     return df
 def commonRoles():
     # db_path = 'jobs.db'
-    conn=sqlite3.connect(db_path)
+    conn=sqlite3.connect(JOBS_DB)
     query='''
         SELECT
         s.name AS skill,
@@ -85,7 +82,7 @@ ORDER BY total_occurrences DESC;
 # ---------------------Role specific analysis---------
 def TopSkillsOfRole(role):
     # db_path = 'jobs.db'
-    conn=sqlite3.connect(db_path)
+    conn=sqlite3.connect(JOBS_DB)
     query='''
     SELECT s.name,count(*) as demand
     FROM skills s
@@ -101,7 +98,7 @@ def TopSkillsOfRole(role):
     return df
 def jobCount(job):
     # db_path = 'jobs.db'
-    conn=sqlite3.connect(db_path)
+    conn=sqlite3.connect(JOBS_DB)
     query='''
     SELECT count(J_title) as no_of_jobs
     FROM jobs
@@ -114,7 +111,7 @@ def jobCount(job):
 
 def last_scraped_time():
     # db_path = 'jobs.db'
-    conn=sqlite3.connect(db_path)
+    conn=sqlite3.connect(JOBS_DB)
 
     query='''
     SELECT max(scraped_time)
@@ -151,14 +148,14 @@ def roles_trends():
         select * from Ranked
         order by month,rank;
         '''
-    conn=sqlite3.connect(db_path)
+    conn=sqlite3.connect(JOBS_DB)
     df=pd.read_sql_query(top_roles,conn)
     conn.close()
     return df
 
 #--------------------------FOR LAST 7 DAYS ANALYSIS -------------
 def OPPORTUNITIES():
-    conn=sqlite3.connect(db_path)
+    conn=sqlite3.connect(JOBS_DB)
     query = '''
     SELECT count(*) as opportunities
     FROM jobs 
@@ -166,14 +163,14 @@ def OPPORTUNITIES():
     '''
     df=pd.read_sql_query(query,conn)
     conn.close()
-    print(df)
+    
 
     return df['opportunities'][0]
 
 
 # --------------------Role Specifi Analysis----------------
 def uniqueSkills(role):
-    conn = sqlite3.connect(db_path)
+    conn = sqlite3.connect(JOBS_DB)
     query = '''
         select count(distinct s.name) as skills
         from jobs j
@@ -182,10 +179,11 @@ def uniqueSkills(role):
         where J_title = ?
     '''
     df = pd.read_sql_query(query,conn,params=(role,))
+    conn.close()
     return df
 
 def uniqueSkillCount(role):
-     conn = sqlite3.connect(db_path)
+     conn = sqlite3.connect(JOBS_DB)
      query = '''
         select s.name as skill,count(*) as count
         from jobs j
@@ -197,6 +195,7 @@ def uniqueSkillCount(role):
         limit 8;
         '''
      df = pd.read_sql_query(query,conn, params=(role,))
+     conn.close()
      return df
 
 

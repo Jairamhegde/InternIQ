@@ -1165,3 +1165,990 @@
 2026-05-10 21:51:08,065 | INFO | mainscript.py:34 | internshala() | Scraped data from page 20
 2026-05-10 21:51:08,074 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
 2026-05-10 21:51:08,080 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 00:12:24,679 | INFO | mainscript.py:23 | <module>() | Execution started..
+2026-05-15 00:12:25,697 | INFO | mainscript.py:34 | internshala() | Scraped data from page 1
+2026-05-15 00:12:25,698 | ERROR | db_manager.py:55 | manage_operation() | table jobs has no column named minsal
+2026-05-15 00:12:25,698 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 00:12:25,706 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 00:12:26,640 | INFO | mainscript.py:34 | internshala() | Scraped data from page 2
+2026-05-15 00:12:26,641 | ERROR | db_manager.py:55 | manage_operation() | table jobs has no column named minsal
+2026-05-15 00:12:26,641 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 00:12:26,649 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 00:12:27,466 | INFO | mainscript.py:34 | internshala() | Scraped data from page 3
+2026-05-15 00:12:27,467 | ERROR | db_manager.py:55 | manage_operation() | table jobs has no column named minsal
+2026-05-15 00:12:27,467 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 00:12:27,475 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 00:12:28,389 | INFO | mainscript.py:34 | internshala() | Scraped data from page 4
+2026-05-15 00:12:28,390 | ERROR | db_manager.py:55 | manage_operation() | table jobs has no column named minsal
+2026-05-15 00:12:28,390 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 00:12:28,397 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 00:12:29,424 | INFO | mainscript.py:34 | internshala() | Scraped data from page 5
+2026-05-15 00:12:29,425 | ERROR | db_manager.py:55 | manage_operation() | table jobs has no column named minsal
+2026-05-15 00:12:29,425 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 00:12:29,432 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 00:12:30,276 | INFO | mainscript.py:34 | internshala() | Scraped data from page 6
+2026-05-15 00:12:30,277 | ERROR | db_manager.py:55 | manage_operation() | table jobs has no column named minsal
+2026-05-15 00:12:30,277 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 00:12:30,283 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 00:12:31,144 | INFO | mainscript.py:34 | internshala() | Scraped data from page 7
+2026-05-15 00:12:31,144 | ERROR | db_manager.py:55 | manage_operation() | table jobs has no column named minsal
+2026-05-15 00:12:31,145 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 00:12:31,152 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 00:12:31,997 | INFO | mainscript.py:34 | internshala() | Scraped data from page 8
+2026-05-15 00:12:31,998 | ERROR | db_manager.py:55 | manage_operation() | table jobs has no column named minsal
+2026-05-15 00:12:31,998 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 00:12:32,006 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 00:12:32,877 | INFO | mainscript.py:34 | internshala() | Scraped data from page 9
+2026-05-15 00:12:32,878 | ERROR | db_manager.py:55 | manage_operation() | table jobs has no column named minsal
+2026-05-15 00:12:32,878 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 00:12:32,885 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 00:12:33,794 | INFO | mainscript.py:34 | internshala() | Scraped data from page 10
+2026-05-15 00:12:33,795 | ERROR | db_manager.py:55 | manage_operation() | table jobs has no column named minsal
+2026-05-15 00:12:33,795 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 00:12:33,802 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 00:12:34,666 | INFO | mainscript.py:34 | internshala() | Scraped data from page 11
+2026-05-15 00:12:34,667 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 00:12:34,675 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 00:12:35,570 | INFO | mainscript.py:34 | internshala() | Scraped data from page 12
+2026-05-15 00:12:35,571 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 00:12:35,578 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 00:12:36,370 | INFO | mainscript.py:34 | internshala() | Scraped data from page 13
+2026-05-15 00:12:36,371 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 00:12:36,378 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 00:12:38,133 | INFO | mainscript.py:34 | internshala() | Scraped data from page 14
+2026-05-15 00:12:38,133 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 00:12:38,141 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 00:12:38,960 | INFO | mainscript.py:34 | internshala() | Scraped data from page 15
+2026-05-15 00:12:38,960 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 00:12:38,969 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 00:12:39,947 | INFO | mainscript.py:34 | internshala() | Scraped data from page 16
+2026-05-15 00:12:39,947 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 00:12:39,956 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 00:12:40,856 | INFO | mainscript.py:34 | internshala() | Scraped data from page 17
+2026-05-15 00:12:40,857 | ERROR | db_manager.py:55 | manage_operation() | table jobs has no column named minsal
+2026-05-15 00:12:40,857 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 00:12:40,865 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 00:12:41,908 | INFO | mainscript.py:34 | internshala() | Scraped data from page 18
+2026-05-15 00:12:41,911 | ERROR | db_manager.py:55 | manage_operation() | table jobs has no column named minsal
+2026-05-15 00:12:41,911 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 00:12:41,918 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 00:12:42,978 | INFO | mainscript.py:34 | internshala() | Scraped data from page 19
+2026-05-15 00:12:42,979 | ERROR | db_manager.py:55 | manage_operation() | table jobs has no column named minsal
+2026-05-15 00:12:42,979 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 00:12:42,989 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 00:12:43,965 | INFO | mainscript.py:34 | internshala() | Scraped data from page 20
+2026-05-15 00:12:43,965 | ERROR | db_manager.py:55 | manage_operation() | table jobs has no column named minsal
+2026-05-15 00:12:43,966 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 00:12:43,974 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 00:48:33,219 | INFO | mainscript.py:23 | <module>() | Execution started..
+2026-05-15 00:48:34,473 | INFO | mainscript.py:34 | internshala() | Scraped data from page 1
+2026-05-15 00:48:34,483 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 00:48:34,493 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 00:48:35,606 | INFO | mainscript.py:34 | internshala() | Scraped data from page 2
+2026-05-15 00:48:35,614 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 00:48:35,621 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 00:48:36,931 | INFO | mainscript.py:34 | internshala() | Scraped data from page 3
+2026-05-15 00:48:36,937 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 00:48:36,942 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 00:48:37,663 | INFO | mainscript.py:34 | internshala() | Scraped data from page 4
+2026-05-15 00:48:37,681 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 00:48:37,685 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 00:48:38,458 | INFO | mainscript.py:34 | internshala() | Scraped data from page 5
+2026-05-15 00:48:38,479 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 00:48:38,483 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 00:48:39,519 | INFO | mainscript.py:34 | internshala() | Scraped data from page 6
+2026-05-15 00:48:39,546 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 00:48:39,551 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 00:48:40,319 | INFO | mainscript.py:34 | internshala() | Scraped data from page 7
+2026-05-15 00:48:40,325 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 00:48:40,329 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 00:48:41,126 | INFO | mainscript.py:34 | internshala() | Scraped data from page 8
+2026-05-15 00:48:41,135 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 00:48:41,139 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 00:48:41,991 | INFO | mainscript.py:34 | internshala() | Scraped data from page 9
+2026-05-15 00:48:42,017 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 00:48:42,021 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 00:48:43,075 | INFO | mainscript.py:34 | internshala() | Scraped data from page 10
+2026-05-15 00:48:43,081 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 00:48:43,087 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 00:48:44,042 | INFO | mainscript.py:34 | internshala() | Scraped data from page 11
+2026-05-15 00:48:44,043 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 00:48:44,047 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 00:48:45,004 | INFO | mainscript.py:34 | internshala() | Scraped data from page 12
+2026-05-15 00:48:45,005 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 00:48:45,018 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 00:48:45,860 | INFO | mainscript.py:34 | internshala() | Scraped data from page 13
+2026-05-15 00:48:45,861 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 00:48:45,864 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 00:48:46,761 | INFO | mainscript.py:34 | internshala() | Scraped data from page 14
+2026-05-15 00:48:46,762 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 00:48:46,766 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 00:48:47,884 | INFO | mainscript.py:34 | internshala() | Scraped data from page 15
+2026-05-15 00:48:47,884 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 00:48:47,888 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 00:48:48,823 | INFO | mainscript.py:34 | internshala() | Scraped data from page 16
+2026-05-15 00:48:48,823 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 00:48:48,827 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 00:48:49,818 | INFO | mainscript.py:34 | internshala() | Scraped data from page 17
+2026-05-15 00:48:49,822 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 00:48:49,825 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 00:48:51,654 | INFO | mainscript.py:34 | internshala() | Scraped data from page 18
+2026-05-15 00:48:51,658 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 00:48:51,661 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 00:48:52,517 | INFO | mainscript.py:34 | internshala() | Scraped data from page 19
+2026-05-15 00:48:52,524 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 00:48:52,529 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 00:48:53,423 | INFO | mainscript.py:34 | internshala() | Scraped data from page 20
+2026-05-15 00:48:53,446 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 00:48:53,451 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 20:44:23,977 | INFO | mainscript.py:23 | <module>() | Execution started..
+2026-05-15 20:44:24,016 | ERROR | fetcher.py:13 | get_soup() | HTTPSConnectionPool(host='internshala.com', port=443): Max retries exceeded with url: /jobs/net-development,ai-agent-development,asp-net,android-app-development,angular-js-development,backend-development,cloud-computing,cyber-security,front-end-development,full-stack-development,game-development,java,javascript-development,machine-learning,node-js-development,python-django,web-development-jobs/ (Caused by NameResolutionError("HTTPSConnection(host='internshala.com', port=443): Failed to resolve 'internshala.com' ([Errno 11001] getaddrinfo failed)"))
+2026-05-15 20:44:24,017 | ERROR | extractor.py:103 | scrape_data() | 'NoneType' object has no attribute 'find_all'
+2026-05-15 20:44:24,018 | INFO | mainscript.py:34 | internshala() | Scraped data from page 1
+2026-05-15 20:44:24,019 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 20:44:24,026 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 20:44:24,033 | ERROR | fetcher.py:13 | get_soup() | HTTPSConnectionPool(host='internshala.com', port=443): Max retries exceeded with url: /jobs/net-development,ai-agent-development,asp-net,android-app-development,angular-js-development,backend-development,cloud-computing,cyber-security,front-end-development,full-stack-development,game-development,java,javascript-development,machine-learning,node-js-development,python-django,web-development-jobs/page-2 (Caused by NameResolutionError("HTTPSConnection(host='internshala.com', port=443): Failed to resolve 'internshala.com' ([Errno 11001] getaddrinfo failed)"))
+2026-05-15 20:44:24,033 | ERROR | extractor.py:103 | scrape_data() | 'NoneType' object has no attribute 'find_all'
+2026-05-15 20:44:24,033 | INFO | mainscript.py:34 | internshala() | Scraped data from page 2
+2026-05-15 20:44:24,034 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 20:44:24,036 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 20:44:24,041 | ERROR | fetcher.py:13 | get_soup() | HTTPSConnectionPool(host='internshala.com', port=443): Max retries exceeded with url: /jobs/net-development,ai-agent-development,asp-net,android-app-development,angular-js-development,backend-development,cloud-computing,cyber-security,front-end-development,full-stack-development,game-development,java,javascript-development,machine-learning,node-js-development,python-django,web-development-jobs/page-3 (Caused by NameResolutionError("HTTPSConnection(host='internshala.com', port=443): Failed to resolve 'internshala.com' ([Errno 11001] getaddrinfo failed)"))
+2026-05-15 20:44:24,041 | ERROR | extractor.py:103 | scrape_data() | 'NoneType' object has no attribute 'find_all'
+2026-05-15 20:44:24,042 | INFO | mainscript.py:34 | internshala() | Scraped data from page 3
+2026-05-15 20:44:24,042 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 20:44:24,043 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 20:44:24,047 | ERROR | fetcher.py:13 | get_soup() | HTTPSConnectionPool(host='internshala.com', port=443): Max retries exceeded with url: /jobs/net-development,ai-agent-development,asp-net,android-app-development,angular-js-development,backend-development,cloud-computing,cyber-security,front-end-development,full-stack-development,game-development,java,javascript-development,machine-learning,node-js-development,python-django,web-development-jobs/page-4 (Caused by NameResolutionError("HTTPSConnection(host='internshala.com', port=443): Failed to resolve 'internshala.com' ([Errno 11001] getaddrinfo failed)"))
+2026-05-15 20:44:24,047 | ERROR | extractor.py:103 | scrape_data() | 'NoneType' object has no attribute 'find_all'
+2026-05-15 20:44:24,047 | INFO | mainscript.py:34 | internshala() | Scraped data from page 4
+2026-05-15 20:44:24,049 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 20:44:24,049 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 20:44:24,051 | ERROR | fetcher.py:13 | get_soup() | HTTPSConnectionPool(host='internshala.com', port=443): Max retries exceeded with url: /jobs/net-development,ai-agent-development,asp-net,android-app-development,angular-js-development,backend-development,cloud-computing,cyber-security,front-end-development,full-stack-development,game-development,java,javascript-development,machine-learning,node-js-development,python-django,web-development-jobs/page-5 (Caused by NameResolutionError("HTTPSConnection(host='internshala.com', port=443): Failed to resolve 'internshala.com' ([Errno 11001] getaddrinfo failed)"))
+2026-05-15 20:44:24,051 | ERROR | extractor.py:103 | scrape_data() | 'NoneType' object has no attribute 'find_all'
+2026-05-15 20:44:24,051 | INFO | mainscript.py:34 | internshala() | Scraped data from page 5
+2026-05-15 20:44:24,052 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 20:44:24,052 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 20:44:24,056 | ERROR | fetcher.py:13 | get_soup() | HTTPSConnectionPool(host='internshala.com', port=443): Max retries exceeded with url: /jobs/net-development,ai-agent-development,asp-net,android-app-development,angular-js-development,backend-development,cloud-computing,cyber-security,front-end-development,full-stack-development,game-development,java,javascript-development,machine-learning,node-js-development,python-django,web-development-jobs/page-6 (Caused by NameResolutionError("HTTPSConnection(host='internshala.com', port=443): Failed to resolve 'internshala.com' ([Errno 11001] getaddrinfo failed)"))
+2026-05-15 20:44:24,057 | ERROR | extractor.py:103 | scrape_data() | 'NoneType' object has no attribute 'find_all'
+2026-05-15 20:44:24,058 | INFO | mainscript.py:34 | internshala() | Scraped data from page 6
+2026-05-15 20:44:24,059 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 20:44:24,060 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 20:44:24,065 | ERROR | fetcher.py:13 | get_soup() | HTTPSConnectionPool(host='internshala.com', port=443): Max retries exceeded with url: /jobs/net-development,ai-agent-development,asp-net,android-app-development,angular-js-development,backend-development,cloud-computing,cyber-security,front-end-development,full-stack-development,game-development,java,javascript-development,machine-learning,node-js-development,python-django,web-development-jobs/page-7 (Caused by NameResolutionError("HTTPSConnection(host='internshala.com', port=443): Failed to resolve 'internshala.com' ([Errno 11001] getaddrinfo failed)"))
+2026-05-15 20:44:24,066 | ERROR | extractor.py:103 | scrape_data() | 'NoneType' object has no attribute 'find_all'
+2026-05-15 20:44:24,066 | INFO | mainscript.py:34 | internshala() | Scraped data from page 7
+2026-05-15 20:44:24,067 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 20:44:24,068 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 20:44:24,072 | ERROR | fetcher.py:13 | get_soup() | HTTPSConnectionPool(host='internshala.com', port=443): Max retries exceeded with url: /jobs/net-development,ai-agent-development,asp-net,android-app-development,angular-js-development,backend-development,cloud-computing,cyber-security,front-end-development,full-stack-development,game-development,java,javascript-development,machine-learning,node-js-development,python-django,web-development-jobs/page-8 (Caused by NameResolutionError("HTTPSConnection(host='internshala.com', port=443): Failed to resolve 'internshala.com' ([Errno 11001] getaddrinfo failed)"))
+2026-05-15 20:44:24,072 | ERROR | extractor.py:103 | scrape_data() | 'NoneType' object has no attribute 'find_all'
+2026-05-15 20:44:24,073 | INFO | mainscript.py:34 | internshala() | Scraped data from page 8
+2026-05-15 20:44:24,074 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 20:44:24,075 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 20:44:24,080 | ERROR | fetcher.py:13 | get_soup() | HTTPSConnectionPool(host='internshala.com', port=443): Max retries exceeded with url: /jobs/net-development,ai-agent-development,asp-net,android-app-development,angular-js-development,backend-development,cloud-computing,cyber-security,front-end-development,full-stack-development,game-development,java,javascript-development,machine-learning,node-js-development,python-django,web-development-jobs/page-9 (Caused by NameResolutionError("HTTPSConnection(host='internshala.com', port=443): Failed to resolve 'internshala.com' ([Errno 11001] getaddrinfo failed)"))
+2026-05-15 20:44:24,081 | ERROR | extractor.py:103 | scrape_data() | 'NoneType' object has no attribute 'find_all'
+2026-05-15 20:44:24,082 | INFO | mainscript.py:34 | internshala() | Scraped data from page 9
+2026-05-15 20:44:24,083 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 20:44:24,085 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 20:44:24,089 | ERROR | fetcher.py:13 | get_soup() | HTTPSConnectionPool(host='internshala.com', port=443): Max retries exceeded with url: /jobs/net-development,ai-agent-development,asp-net,android-app-development,angular-js-development,backend-development,cloud-computing,cyber-security,front-end-development,full-stack-development,game-development,java,javascript-development,machine-learning,node-js-development,python-django,web-development-jobs/page-10 (Caused by NameResolutionError("HTTPSConnection(host='internshala.com', port=443): Failed to resolve 'internshala.com' ([Errno 11001] getaddrinfo failed)"))
+2026-05-15 20:44:24,089 | ERROR | extractor.py:103 | scrape_data() | 'NoneType' object has no attribute 'find_all'
+2026-05-15 20:44:24,090 | INFO | mainscript.py:34 | internshala() | Scraped data from page 10
+2026-05-15 20:44:24,093 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 20:44:24,096 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 20:44:24,102 | ERROR | fetcher.py:13 | get_soup() | HTTPSConnectionPool(host='internshala.com', port=443): Max retries exceeded with url: /jobs/net-development,ai-agent-development,asp-net,android-app-development,angular-js-development,backend-development,cloud-computing,cyber-security,front-end-development,full-stack-development,game-development,java,javascript-development,machine-learning,node-js-development,python-django,web-development-jobs/page-11 (Caused by NameResolutionError("HTTPSConnection(host='internshala.com', port=443): Failed to resolve 'internshala.com' ([Errno 11001] getaddrinfo failed)"))
+2026-05-15 20:44:24,103 | ERROR | extractor.py:103 | scrape_data() | 'NoneType' object has no attribute 'find_all'
+2026-05-15 20:44:24,103 | INFO | mainscript.py:34 | internshala() | Scraped data from page 11
+2026-05-15 20:44:24,103 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 20:44:24,106 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 20:44:24,111 | ERROR | fetcher.py:13 | get_soup() | HTTPSConnectionPool(host='internshala.com', port=443): Max retries exceeded with url: /jobs/net-development,ai-agent-development,asp-net,android-app-development,angular-js-development,backend-development,cloud-computing,cyber-security,front-end-development,full-stack-development,game-development,java,javascript-development,machine-learning,node-js-development,python-django,web-development-jobs/page-12 (Caused by NameResolutionError("HTTPSConnection(host='internshala.com', port=443): Failed to resolve 'internshala.com' ([Errno 11001] getaddrinfo failed)"))
+2026-05-15 20:44:24,112 | ERROR | extractor.py:103 | scrape_data() | 'NoneType' object has no attribute 'find_all'
+2026-05-15 20:44:24,112 | INFO | mainscript.py:34 | internshala() | Scraped data from page 12
+2026-05-15 20:44:24,113 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 20:44:24,115 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 20:44:24,118 | ERROR | fetcher.py:13 | get_soup() | HTTPSConnectionPool(host='internshala.com', port=443): Max retries exceeded with url: /jobs/net-development,ai-agent-development,asp-net,android-app-development,angular-js-development,backend-development,cloud-computing,cyber-security,front-end-development,full-stack-development,game-development,java,javascript-development,machine-learning,node-js-development,python-django,web-development-jobs/page-13 (Caused by NameResolutionError("HTTPSConnection(host='internshala.com', port=443): Failed to resolve 'internshala.com' ([Errno 11001] getaddrinfo failed)"))
+2026-05-15 20:44:24,119 | ERROR | extractor.py:103 | scrape_data() | 'NoneType' object has no attribute 'find_all'
+2026-05-15 20:44:24,120 | INFO | mainscript.py:34 | internshala() | Scraped data from page 13
+2026-05-15 20:44:24,121 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 20:44:24,122 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 20:44:24,126 | ERROR | fetcher.py:13 | get_soup() | HTTPSConnectionPool(host='internshala.com', port=443): Max retries exceeded with url: /jobs/net-development,ai-agent-development,asp-net,android-app-development,angular-js-development,backend-development,cloud-computing,cyber-security,front-end-development,full-stack-development,game-development,java,javascript-development,machine-learning,node-js-development,python-django,web-development-jobs/page-14 (Caused by NameResolutionError("HTTPSConnection(host='internshala.com', port=443): Failed to resolve 'internshala.com' ([Errno 11001] getaddrinfo failed)"))
+2026-05-15 20:44:24,127 | ERROR | extractor.py:103 | scrape_data() | 'NoneType' object has no attribute 'find_all'
+2026-05-15 20:44:24,127 | INFO | mainscript.py:34 | internshala() | Scraped data from page 14
+2026-05-15 20:44:24,128 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 20:44:24,129 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 20:44:24,130 | ERROR | fetcher.py:13 | get_soup() | HTTPSConnectionPool(host='internshala.com', port=443): Max retries exceeded with url: /jobs/net-development,ai-agent-development,asp-net,android-app-development,angular-js-development,backend-development,cloud-computing,cyber-security,front-end-development,full-stack-development,game-development,java,javascript-development,machine-learning,node-js-development,python-django,web-development-jobs/page-15 (Caused by NameResolutionError("HTTPSConnection(host='internshala.com', port=443): Failed to resolve 'internshala.com' ([Errno 11001] getaddrinfo failed)"))
+2026-05-15 20:44:24,131 | ERROR | extractor.py:103 | scrape_data() | 'NoneType' object has no attribute 'find_all'
+2026-05-15 20:44:24,131 | INFO | mainscript.py:34 | internshala() | Scraped data from page 15
+2026-05-15 20:44:24,131 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 20:44:24,132 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 20:44:24,134 | ERROR | fetcher.py:13 | get_soup() | HTTPSConnectionPool(host='internshala.com', port=443): Max retries exceeded with url: /jobs/net-development,ai-agent-development,asp-net,android-app-development,angular-js-development,backend-development,cloud-computing,cyber-security,front-end-development,full-stack-development,game-development,java,javascript-development,machine-learning,node-js-development,python-django,web-development-jobs/page-16 (Caused by NameResolutionError("HTTPSConnection(host='internshala.com', port=443): Failed to resolve 'internshala.com' ([Errno 11001] getaddrinfo failed)"))
+2026-05-15 20:44:24,134 | ERROR | extractor.py:103 | scrape_data() | 'NoneType' object has no attribute 'find_all'
+2026-05-15 20:44:24,134 | INFO | mainscript.py:34 | internshala() | Scraped data from page 16
+2026-05-15 20:44:24,134 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 20:44:24,135 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 20:44:24,136 | ERROR | fetcher.py:13 | get_soup() | HTTPSConnectionPool(host='internshala.com', port=443): Max retries exceeded with url: /jobs/net-development,ai-agent-development,asp-net,android-app-development,angular-js-development,backend-development,cloud-computing,cyber-security,front-end-development,full-stack-development,game-development,java,javascript-development,machine-learning,node-js-development,python-django,web-development-jobs/page-17 (Caused by NameResolutionError("HTTPSConnection(host='internshala.com', port=443): Failed to resolve 'internshala.com' ([Errno 11001] getaddrinfo failed)"))
+2026-05-15 20:44:24,136 | ERROR | extractor.py:103 | scrape_data() | 'NoneType' object has no attribute 'find_all'
+2026-05-15 20:44:24,137 | INFO | mainscript.py:34 | internshala() | Scraped data from page 17
+2026-05-15 20:44:24,137 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 20:44:24,137 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 20:44:24,139 | ERROR | fetcher.py:13 | get_soup() | HTTPSConnectionPool(host='internshala.com', port=443): Max retries exceeded with url: /jobs/net-development,ai-agent-development,asp-net,android-app-development,angular-js-development,backend-development,cloud-computing,cyber-security,front-end-development,full-stack-development,game-development,java,javascript-development,machine-learning,node-js-development,python-django,web-development-jobs/page-18 (Caused by NameResolutionError("HTTPSConnection(host='internshala.com', port=443): Failed to resolve 'internshala.com' ([Errno 11001] getaddrinfo failed)"))
+2026-05-15 20:44:24,139 | ERROR | extractor.py:103 | scrape_data() | 'NoneType' object has no attribute 'find_all'
+2026-05-15 20:44:24,139 | INFO | mainscript.py:34 | internshala() | Scraped data from page 18
+2026-05-15 20:44:24,140 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 20:44:24,141 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 20:44:24,142 | ERROR | fetcher.py:13 | get_soup() | HTTPSConnectionPool(host='internshala.com', port=443): Max retries exceeded with url: /jobs/net-development,ai-agent-development,asp-net,android-app-development,angular-js-development,backend-development,cloud-computing,cyber-security,front-end-development,full-stack-development,game-development,java,javascript-development,machine-learning,node-js-development,python-django,web-development-jobs/page-19 (Caused by NameResolutionError("HTTPSConnection(host='internshala.com', port=443): Failed to resolve 'internshala.com' ([Errno 11001] getaddrinfo failed)"))
+2026-05-15 20:44:24,142 | ERROR | extractor.py:103 | scrape_data() | 'NoneType' object has no attribute 'find_all'
+2026-05-15 20:44:24,142 | INFO | mainscript.py:34 | internshala() | Scraped data from page 19
+2026-05-15 20:44:24,143 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 20:44:24,143 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 20:44:24,146 | ERROR | fetcher.py:13 | get_soup() | HTTPSConnectionPool(host='internshala.com', port=443): Max retries exceeded with url: /jobs/net-development,ai-agent-development,asp-net,android-app-development,angular-js-development,backend-development,cloud-computing,cyber-security,front-end-development,full-stack-development,game-development,java,javascript-development,machine-learning,node-js-development,python-django,web-development-jobs/page-20 (Caused by NameResolutionError("HTTPSConnection(host='internshala.com', port=443): Failed to resolve 'internshala.com' ([Errno 11001] getaddrinfo failed)"))
+2026-05-15 20:44:24,146 | ERROR | extractor.py:103 | scrape_data() | 'NoneType' object has no attribute 'find_all'
+2026-05-15 20:44:24,146 | INFO | mainscript.py:34 | internshala() | Scraped data from page 20
+2026-05-15 20:44:24,146 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 20:44:24,147 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 20:54:04,825 | INFO | mainscript.py:23 | <module>() | Execution started..
+2026-05-15 20:54:06,159 | ERROR | extractor.py:103 | scrape_data() | 'list' object has no attribute 'lower'
+2026-05-15 20:54:06,159 | INFO | mainscript.py:34 | internshala() | Scraped data from page 1
+2026-05-15 20:54:06,160 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 20:54:06,162 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 20:54:07,619 | ERROR | extractor.py:103 | scrape_data() | 'NoneType' object has no attribute 'lower'
+2026-05-15 20:54:07,619 | INFO | mainscript.py:34 | internshala() | Scraped data from page 2
+2026-05-15 20:54:07,620 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 20:54:07,621 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 20:54:09,728 | ERROR | extractor.py:103 | scrape_data() | 'NoneType' object has no attribute 'lower'
+2026-05-15 20:54:09,729 | INFO | mainscript.py:34 | internshala() | Scraped data from page 3
+2026-05-15 20:54:09,729 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 20:54:09,730 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 20:54:11,172 | ERROR | extractor.py:103 | scrape_data() | 'list' object has no attribute 'lower'
+2026-05-15 20:54:11,173 | INFO | mainscript.py:34 | internshala() | Scraped data from page 4
+2026-05-15 20:54:11,173 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 20:54:11,174 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 20:54:12,785 | ERROR | extractor.py:103 | scrape_data() | 'list' object has no attribute 'lower'
+2026-05-15 20:54:12,785 | INFO | mainscript.py:34 | internshala() | Scraped data from page 5
+2026-05-15 20:54:12,786 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 20:54:12,786 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 20:54:14,328 | ERROR | extractor.py:103 | scrape_data() | 'NoneType' object has no attribute 'lower'
+2026-05-15 20:54:14,328 | INFO | mainscript.py:34 | internshala() | Scraped data from page 6
+2026-05-15 20:54:14,328 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 20:54:14,329 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 20:54:15,670 | ERROR | extractor.py:103 | scrape_data() | 'list' object has no attribute 'lower'
+2026-05-15 20:54:15,670 | INFO | mainscript.py:34 | internshala() | Scraped data from page 7
+2026-05-15 20:54:15,670 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 20:54:15,671 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 20:54:17,288 | ERROR | extractor.py:103 | scrape_data() | 'NoneType' object has no attribute 'lower'
+2026-05-15 20:54:17,288 | INFO | mainscript.py:34 | internshala() | Scraped data from page 8
+2026-05-15 20:54:17,288 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 20:54:17,289 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 20:54:18,509 | ERROR | extractor.py:103 | scrape_data() | 'NoneType' object has no attribute 'lower'
+2026-05-15 20:54:18,510 | INFO | mainscript.py:34 | internshala() | Scraped data from page 9
+2026-05-15 20:54:18,510 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 20:54:18,510 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 20:54:20,003 | ERROR | extractor.py:103 | scrape_data() | 'list' object has no attribute 'lower'
+2026-05-15 20:54:20,004 | INFO | mainscript.py:34 | internshala() | Scraped data from page 10
+2026-05-15 20:54:20,004 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 20:54:20,005 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 20:54:21,534 | ERROR | extractor.py:103 | scrape_data() | 'NoneType' object has no attribute 'lower'
+2026-05-15 20:54:21,535 | INFO | mainscript.py:34 | internshala() | Scraped data from page 11
+2026-05-15 20:54:21,536 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 20:54:21,536 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 20:54:23,007 | ERROR | extractor.py:103 | scrape_data() | 'NoneType' object has no attribute 'lower'
+2026-05-15 20:54:23,007 | INFO | mainscript.py:34 | internshala() | Scraped data from page 12
+2026-05-15 20:54:23,007 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 20:54:23,008 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 20:54:24,489 | ERROR | extractor.py:103 | scrape_data() | 'NoneType' object has no attribute 'lower'
+2026-05-15 20:54:24,489 | INFO | mainscript.py:34 | internshala() | Scraped data from page 13
+2026-05-15 20:54:24,490 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 20:54:24,490 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 20:54:26,137 | ERROR | extractor.py:103 | scrape_data() | 'NoneType' object has no attribute 'lower'
+2026-05-15 20:54:26,137 | INFO | mainscript.py:34 | internshala() | Scraped data from page 14
+2026-05-15 20:54:26,137 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 20:54:26,138 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 20:54:28,018 | ERROR | extractor.py:103 | scrape_data() | 'NoneType' object has no attribute 'lower'
+2026-05-15 20:54:28,018 | INFO | mainscript.py:34 | internshala() | Scraped data from page 15
+2026-05-15 20:54:28,019 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 20:54:28,020 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 20:54:29,626 | ERROR | extractor.py:103 | scrape_data() | 'NoneType' object has no attribute 'lower'
+2026-05-15 20:54:29,626 | INFO | mainscript.py:34 | internshala() | Scraped data from page 16
+2026-05-15 20:54:29,627 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 20:54:29,627 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 20:54:31,237 | ERROR | extractor.py:103 | scrape_data() | 'NoneType' object has no attribute 'lower'
+2026-05-15 20:54:31,237 | INFO | mainscript.py:34 | internshala() | Scraped data from page 17
+2026-05-15 20:54:31,238 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 20:54:31,238 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 20:54:32,363 | ERROR | extractor.py:103 | scrape_data() | 'NoneType' object has no attribute 'lower'
+2026-05-15 20:54:32,363 | INFO | mainscript.py:34 | internshala() | Scraped data from page 18
+2026-05-15 20:54:32,364 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 20:54:32,364 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 20:54:33,704 | ERROR | extractor.py:103 | scrape_data() | 'NoneType' object has no attribute 'lower'
+2026-05-15 20:54:33,705 | INFO | mainscript.py:34 | internshala() | Scraped data from page 19
+2026-05-15 20:54:33,705 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 20:54:33,706 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 20:54:35,362 | ERROR | extractor.py:103 | scrape_data() | 'NoneType' object has no attribute 'lower'
+2026-05-15 20:54:35,363 | INFO | mainscript.py:34 | internshala() | Scraped data from page 20
+2026-05-15 20:54:35,363 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 20:54:35,364 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 20:59:08,501 | INFO | mainscript.py:23 | <module>() | Execution started..
+2026-05-15 20:59:09,752 | INFO | mainscript.py:34 | internshala() | Scraped data from page 1
+2026-05-15 20:59:09,763 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 20:59:09,771 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 20:59:11,110 | INFO | mainscript.py:34 | internshala() | Scraped data from page 2
+2026-05-15 20:59:11,119 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 20:59:11,124 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 20:59:12,565 | INFO | mainscript.py:34 | internshala() | Scraped data from page 3
+2026-05-15 20:59:12,572 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 20:59:12,578 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 20:59:15,112 | INFO | mainscript.py:34 | internshala() | Scraped data from page 4
+2026-05-15 20:59:15,120 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 20:59:15,124 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 20:59:20,522 | INFO | mainscript.py:34 | internshala() | Scraped data from page 5
+2026-05-15 20:59:20,530 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 20:59:20,535 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 20:59:22,048 | INFO | mainscript.py:34 | internshala() | Scraped data from page 6
+2026-05-15 20:59:22,055 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 20:59:22,059 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 20:59:23,626 | INFO | mainscript.py:34 | internshala() | Scraped data from page 7
+2026-05-15 20:59:23,636 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 20:59:23,641 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 20:59:24,714 | INFO | mainscript.py:34 | internshala() | Scraped data from page 8
+2026-05-15 20:59:24,721 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 20:59:24,726 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 20:59:25,759 | INFO | mainscript.py:34 | internshala() | Scraped data from page 9
+2026-05-15 20:59:25,766 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 20:59:25,770 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 20:59:26,799 | INFO | mainscript.py:34 | internshala() | Scraped data from page 10
+2026-05-15 20:59:26,807 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 20:59:26,812 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 20:59:28,235 | INFO | mainscript.py:34 | internshala() | Scraped data from page 11
+2026-05-15 20:59:28,237 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 20:59:28,245 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 20:59:29,270 | INFO | mainscript.py:34 | internshala() | Scraped data from page 12
+2026-05-15 20:59:29,271 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 20:59:29,278 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 20:59:30,234 | INFO | mainscript.py:34 | internshala() | Scraped data from page 13
+2026-05-15 20:59:30,234 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 20:59:30,241 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 20:59:31,753 | INFO | mainscript.py:34 | internshala() | Scraped data from page 14
+2026-05-15 20:59:31,754 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 20:59:31,759 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 20:59:33,548 | INFO | mainscript.py:34 | internshala() | Scraped data from page 15
+2026-05-15 20:59:33,548 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 20:59:33,556 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 20:59:34,812 | INFO | mainscript.py:34 | internshala() | Scraped data from page 16
+2026-05-15 20:59:34,812 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 20:59:34,819 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 20:59:36,386 | INFO | mainscript.py:34 | internshala() | Scraped data from page 17
+2026-05-15 20:59:36,386 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 20:59:36,393 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 20:59:37,613 | INFO | mainscript.py:34 | internshala() | Scraped data from page 18
+2026-05-15 20:59:37,620 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 20:59:37,625 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 20:59:39,093 | INFO | mainscript.py:34 | internshala() | Scraped data from page 19
+2026-05-15 20:59:39,098 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 20:59:39,104 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-15 20:59:40,524 | INFO | mainscript.py:34 | internshala() | Scraped data from page 20
+2026-05-15 20:59:40,531 | INFO | mainscript.py:36 | internshala() | Inserted data into jobs.db
+2026-05-15 20:59:40,539 | INFO | mainscript.py:38 | internshala() | Inserted data into rawData.db
+2026-05-16 20:28:15,987 | INFO | mainscript.py:27 | <module>() | Execution started...
+2026-05-16 20:28:36,847 | INFO | mainscript.py:27 | <module>() | Execution started...
+2026-05-16 20:28:38,154 | INFO | mainscript.py:45 | internshala() | Scraped data from page 1
+2026-05-16 20:28:38,156 | ERROR | mainscript.py:53 | internshala() | Failed scraping page 1
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 47, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 18, in insertRawData
+    if not (i['TechStack'] and i['company'] and i['job']):
+            ~^^^^^^^^^^^^^
+KeyError: 'TechStack'
+2026-05-16 20:28:38,884 | INFO | mainscript.py:45 | internshala() | Scraped data from page 2
+2026-05-16 20:28:38,884 | ERROR | mainscript.py:53 | internshala() | Failed scraping page 2
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 47, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 18, in insertRawData
+    if not (i['TechStack'] and i['company'] and i['job']):
+            ~^^^^^^^^^^^^^
+KeyError: 'TechStack'
+2026-05-16 20:28:39,660 | INFO | mainscript.py:45 | internshala() | Scraped data from page 3
+2026-05-16 20:28:39,660 | ERROR | mainscript.py:53 | internshala() | Failed scraping page 3
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 47, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 18, in insertRawData
+    if not (i['TechStack'] and i['company'] and i['job']):
+            ~^^^^^^^^^^^^^
+KeyError: 'TechStack'
+2026-05-16 20:28:40,541 | INFO | mainscript.py:45 | internshala() | Scraped data from page 4
+2026-05-16 20:28:40,542 | ERROR | mainscript.py:53 | internshala() | Failed scraping page 4
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 47, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 18, in insertRawData
+    if not (i['TechStack'] and i['company'] and i['job']):
+            ~^^^^^^^^^^^^^
+KeyError: 'TechStack'
+2026-05-16 20:28:41,451 | INFO | mainscript.py:45 | internshala() | Scraped data from page 5
+2026-05-16 20:28:41,452 | ERROR | mainscript.py:53 | internshala() | Failed scraping page 5
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 47, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 18, in insertRawData
+    if not (i['TechStack'] and i['company'] and i['job']):
+            ~^^^^^^^^^^^^^
+KeyError: 'TechStack'
+2026-05-16 20:28:42,440 | INFO | mainscript.py:45 | internshala() | Scraped data from page 6
+2026-05-16 20:28:42,441 | ERROR | mainscript.py:53 | internshala() | Failed scraping page 6
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 47, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 18, in insertRawData
+    if not (i['TechStack'] and i['company'] and i['job']):
+            ~^^^^^^^^^^^^^
+KeyError: 'TechStack'
+2026-05-16 20:28:43,217 | INFO | mainscript.py:45 | internshala() | Scraped data from page 7
+2026-05-16 20:28:43,217 | ERROR | mainscript.py:53 | internshala() | Failed scraping page 7
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 47, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 18, in insertRawData
+    if not (i['TechStack'] and i['company'] and i['job']):
+            ~^^^^^^^^^^^^^
+KeyError: 'TechStack'
+2026-05-16 20:28:44,083 | INFO | mainscript.py:45 | internshala() | Scraped data from page 8
+2026-05-16 20:28:44,084 | ERROR | mainscript.py:53 | internshala() | Failed scraping page 8
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 47, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 18, in insertRawData
+    if not (i['TechStack'] and i['company'] and i['job']):
+            ~^^^^^^^^^^^^^
+KeyError: 'TechStack'
+2026-05-16 20:28:44,994 | INFO | mainscript.py:45 | internshala() | Scraped data from page 9
+2026-05-16 20:28:44,995 | ERROR | mainscript.py:53 | internshala() | Failed scraping page 9
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 47, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 18, in insertRawData
+    if not (i['TechStack'] and i['company'] and i['job']):
+            ~^^^^^^^^^^^^^
+KeyError: 'TechStack'
+2026-05-16 20:28:45,953 | INFO | mainscript.py:45 | internshala() | Scraped data from page 10
+2026-05-16 20:28:45,953 | ERROR | mainscript.py:53 | internshala() | Failed scraping page 10
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 47, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 18, in insertRawData
+    if not (i['TechStack'] and i['company'] and i['job']):
+            ~^^^^^^^^^^^^^
+KeyError: 'TechStack'
+2026-05-16 20:28:46,730 | INFO | mainscript.py:45 | internshala() | Scraped data from page 11
+2026-05-16 20:28:46,730 | ERROR | mainscript.py:53 | internshala() | Failed scraping page 11
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 47, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 18, in insertRawData
+    if not (i['TechStack'] and i['company'] and i['job']):
+            ~^^^^^^^^^^^^^
+KeyError: 'TechStack'
+2026-05-16 20:28:47,567 | INFO | mainscript.py:45 | internshala() | Scraped data from page 12
+2026-05-16 20:28:47,568 | ERROR | mainscript.py:53 | internshala() | Failed scraping page 12
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 47, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 18, in insertRawData
+    if not (i['TechStack'] and i['company'] and i['job']):
+            ~^^^^^^^^^^^^^
+KeyError: 'TechStack'
+2026-05-16 20:28:48,521 | INFO | mainscript.py:45 | internshala() | Scraped data from page 13
+2026-05-16 20:28:48,534 | ERROR | mainscript.py:53 | internshala() | Failed scraping page 13
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 47, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 18, in insertRawData
+    if not (i['TechStack'] and i['company'] and i['job']):
+            ~^^^^^^^^^^^^^
+KeyError: 'TechStack'
+2026-05-16 20:28:49,459 | INFO | mainscript.py:45 | internshala() | Scraped data from page 14
+2026-05-16 20:28:49,459 | ERROR | mainscript.py:53 | internshala() | Failed scraping page 14
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 47, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 18, in insertRawData
+    if not (i['TechStack'] and i['company'] and i['job']):
+            ~^^^^^^^^^^^^^
+KeyError: 'TechStack'
+2026-05-16 20:28:50,428 | INFO | mainscript.py:45 | internshala() | Scraped data from page 15
+2026-05-16 20:28:50,428 | ERROR | mainscript.py:53 | internshala() | Failed scraping page 15
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 47, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 18, in insertRawData
+    if not (i['TechStack'] and i['company'] and i['job']):
+            ~^^^^^^^^^^^^^
+KeyError: 'TechStack'
+2026-05-16 20:28:51,389 | INFO | mainscript.py:45 | internshala() | Scraped data from page 16
+2026-05-16 20:28:51,389 | ERROR | mainscript.py:53 | internshala() | Failed scraping page 16
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 47, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 18, in insertRawData
+    if not (i['TechStack'] and i['company'] and i['job']):
+            ~^^^^^^^^^^^^^
+KeyError: 'TechStack'
+2026-05-16 20:28:52,342 | INFO | mainscript.py:45 | internshala() | Scraped data from page 17
+2026-05-16 20:28:52,343 | ERROR | mainscript.py:53 | internshala() | Failed scraping page 17
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 47, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 18, in insertRawData
+    if not (i['TechStack'] and i['company'] and i['job']):
+            ~^^^^^^^^^^^^^
+KeyError: 'TechStack'
+2026-05-16 20:28:53,301 | INFO | mainscript.py:45 | internshala() | Scraped data from page 18
+2026-05-16 20:28:53,301 | ERROR | mainscript.py:53 | internshala() | Failed scraping page 18
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 47, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 18, in insertRawData
+    if not (i['TechStack'] and i['company'] and i['job']):
+            ~^^^^^^^^^^^^^
+KeyError: 'TechStack'
+2026-05-16 20:28:54,281 | INFO | mainscript.py:45 | internshala() | Scraped data from page 19
+2026-05-16 20:28:54,282 | ERROR | mainscript.py:53 | internshala() | Failed scraping page 19
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 47, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 18, in insertRawData
+    if not (i['TechStack'] and i['company'] and i['job']):
+            ~^^^^^^^^^^^^^
+KeyError: 'TechStack'
+2026-05-16 20:28:55,046 | INFO | mainscript.py:45 | internshala() | Scraped data from page 20
+2026-05-16 20:28:55,047 | ERROR | mainscript.py:53 | internshala() | Failed scraping page 20
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 47, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 18, in insertRawData
+    if not (i['TechStack'] and i['company'] and i['job']):
+            ~^^^^^^^^^^^^^
+KeyError: 'TechStack'
+2026-05-16 20:28:55,048 | INFO | mainscript.py:61 | internshala() | Inserted processed data into jobs.db
+2026-05-16 20:31:05,273 | INFO | mainscript.py:27 | <module>() | Execution started...
+2026-05-16 20:31:06,195 | INFO | mainscript.py:45 | internshala() | Scraped data from page 1
+2026-05-16 20:31:06,198 | ERROR | mainscript.py:53 | internshala() | Failed scraping page 1
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 47, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 35, in insertRawData
+    cur.execute(
+    ~~~~~~~~~~~^
+        '''
+        ^^^
+    ...<18 lines>...
+        )
+        ^
+    )
+    ^
+sqlite3.OperationalError: table JobData has no column named ScrapTime
+2026-05-16 20:31:07,045 | INFO | mainscript.py:45 | internshala() | Scraped data from page 2
+2026-05-16 20:31:07,046 | ERROR | mainscript.py:53 | internshala() | Failed scraping page 2
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 47, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 35, in insertRawData
+    cur.execute(
+    ~~~~~~~~~~~^
+        '''
+        ^^^
+    ...<18 lines>...
+        )
+        ^
+    )
+    ^
+sqlite3.OperationalError: table JobData has no column named ScrapTime
+2026-05-16 20:31:07,808 | INFO | mainscript.py:45 | internshala() | Scraped data from page 3
+2026-05-16 20:31:07,808 | ERROR | mainscript.py:53 | internshala() | Failed scraping page 3
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 47, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 35, in insertRawData
+    cur.execute(
+    ~~~~~~~~~~~^
+        '''
+        ^^^
+    ...<18 lines>...
+        )
+        ^
+    )
+    ^
+sqlite3.OperationalError: table JobData has no column named ScrapTime
+2026-05-16 20:31:08,615 | INFO | mainscript.py:45 | internshala() | Scraped data from page 4
+2026-05-16 20:31:08,616 | ERROR | mainscript.py:53 | internshala() | Failed scraping page 4
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 47, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 35, in insertRawData
+    cur.execute(
+    ~~~~~~~~~~~^
+        '''
+        ^^^
+    ...<18 lines>...
+        )
+        ^
+    )
+    ^
+sqlite3.OperationalError: table JobData has no column named ScrapTime
+2026-05-16 20:31:09,623 | INFO | mainscript.py:45 | internshala() | Scraped data from page 5
+2026-05-16 20:31:09,624 | ERROR | mainscript.py:53 | internshala() | Failed scraping page 5
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 47, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 35, in insertRawData
+    cur.execute(
+    ~~~~~~~~~~~^
+        '''
+        ^^^
+    ...<18 lines>...
+        )
+        ^
+    )
+    ^
+sqlite3.OperationalError: table JobData has no column named ScrapTime
+2026-05-16 20:31:10,364 | INFO | mainscript.py:45 | internshala() | Scraped data from page 6
+2026-05-16 20:31:10,365 | ERROR | mainscript.py:53 | internshala() | Failed scraping page 6
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 47, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 35, in insertRawData
+    cur.execute(
+    ~~~~~~~~~~~^
+        '''
+        ^^^
+    ...<18 lines>...
+        )
+        ^
+    )
+    ^
+sqlite3.OperationalError: table JobData has no column named ScrapTime
+2026-05-16 20:31:11,155 | INFO | mainscript.py:45 | internshala() | Scraped data from page 7
+2026-05-16 20:31:11,156 | ERROR | mainscript.py:53 | internshala() | Failed scraping page 7
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 47, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 35, in insertRawData
+    cur.execute(
+    ~~~~~~~~~~~^
+        '''
+        ^^^
+    ...<18 lines>...
+        )
+        ^
+    )
+    ^
+sqlite3.OperationalError: table JobData has no column named ScrapTime
+2026-05-16 20:31:12,016 | INFO | mainscript.py:45 | internshala() | Scraped data from page 8
+2026-05-16 20:31:12,017 | ERROR | mainscript.py:53 | internshala() | Failed scraping page 8
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 47, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 35, in insertRawData
+    cur.execute(
+    ~~~~~~~~~~~^
+        '''
+        ^^^
+    ...<18 lines>...
+        )
+        ^
+    )
+    ^
+sqlite3.OperationalError: table JobData has no column named ScrapTime
+2026-05-16 20:31:12,840 | INFO | mainscript.py:45 | internshala() | Scraped data from page 9
+2026-05-16 20:31:12,841 | ERROR | mainscript.py:53 | internshala() | Failed scraping page 9
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 47, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 35, in insertRawData
+    cur.execute(
+    ~~~~~~~~~~~^
+        '''
+        ^^^
+    ...<18 lines>...
+        )
+        ^
+    )
+    ^
+sqlite3.OperationalError: table JobData has no column named ScrapTime
+2026-05-16 20:31:13,780 | INFO | mainscript.py:45 | internshala() | Scraped data from page 10
+2026-05-16 20:31:13,781 | ERROR | mainscript.py:53 | internshala() | Failed scraping page 10
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 47, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 35, in insertRawData
+    cur.execute(
+    ~~~~~~~~~~~^
+        '''
+        ^^^
+    ...<18 lines>...
+        )
+        ^
+    )
+    ^
+sqlite3.OperationalError: table JobData has no column named ScrapTime
+2026-05-16 20:31:14,551 | INFO | mainscript.py:45 | internshala() | Scraped data from page 11
+2026-05-16 20:31:14,551 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-16 20:31:15,449 | INFO | mainscript.py:45 | internshala() | Scraped data from page 12
+2026-05-16 20:31:15,450 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-16 20:31:16,397 | INFO | mainscript.py:45 | internshala() | Scraped data from page 13
+2026-05-16 20:31:16,398 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-16 20:31:17,231 | INFO | mainscript.py:45 | internshala() | Scraped data from page 14
+2026-05-16 20:31:17,232 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-16 20:31:17,982 | INFO | mainscript.py:45 | internshala() | Scraped data from page 15
+2026-05-16 20:31:17,982 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-16 20:31:18,735 | INFO | mainscript.py:45 | internshala() | Scraped data from page 16
+2026-05-16 20:31:18,736 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-16 20:31:19,680 | INFO | mainscript.py:45 | internshala() | Scraped data from page 17
+2026-05-16 20:31:19,681 | ERROR | mainscript.py:53 | internshala() | Failed scraping page 17
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 47, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 35, in insertRawData
+    cur.execute(
+    ~~~~~~~~~~~^
+        '''
+        ^^^
+    ...<18 lines>...
+        )
+        ^
+    )
+    ^
+sqlite3.OperationalError: table JobData has no column named ScrapTime
+2026-05-16 20:31:20,425 | INFO | mainscript.py:45 | internshala() | Scraped data from page 18
+2026-05-16 20:31:20,425 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-16 20:31:21,261 | INFO | mainscript.py:45 | internshala() | Scraped data from page 19
+2026-05-16 20:31:21,262 | ERROR | mainscript.py:53 | internshala() | Failed scraping page 19
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 47, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 35, in insertRawData
+    cur.execute(
+    ~~~~~~~~~~~^
+        '''
+        ^^^
+    ...<18 lines>...
+        )
+        ^
+    )
+    ^
+sqlite3.OperationalError: table JobData has no column named ScrapTime
+2026-05-16 20:31:22,092 | INFO | mainscript.py:45 | internshala() | Scraped data from page 20
+2026-05-16 20:31:22,092 | ERROR | mainscript.py:53 | internshala() | Failed scraping page 20
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 47, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 35, in insertRawData
+    cur.execute(
+    ~~~~~~~~~~~^
+        '''
+        ^^^
+    ...<18 lines>...
+        )
+        ^
+    )
+    ^
+sqlite3.OperationalError: table JobData has no column named ScrapTime
+2026-05-16 20:31:22,093 | INFO | mainscript.py:61 | internshala() | Inserted processed data into jobs.db
+2026-05-16 20:32:55,533 | INFO | mainscript.py:27 | <module>() | Execution started...
+2026-05-16 20:32:56,507 | INFO | mainscript.py:45 | internshala() | Scraped data from page 1
+2026-05-16 20:32:56,516 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-16 20:32:57,284 | INFO | mainscript.py:45 | internshala() | Scraped data from page 2
+2026-05-16 20:32:57,291 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-16 20:32:58,027 | INFO | mainscript.py:45 | internshala() | Scraped data from page 3
+2026-05-16 20:32:58,036 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-16 20:32:58,948 | INFO | mainscript.py:45 | internshala() | Scraped data from page 4
+2026-05-16 20:32:58,965 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-16 20:33:00,024 | INFO | mainscript.py:45 | internshala() | Scraped data from page 5
+2026-05-16 20:33:00,032 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-16 20:33:00,777 | INFO | mainscript.py:45 | internshala() | Scraped data from page 6
+2026-05-16 20:33:00,787 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-16 20:33:01,520 | INFO | mainscript.py:45 | internshala() | Scraped data from page 7
+2026-05-16 20:33:01,530 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-16 20:33:02,583 | INFO | mainscript.py:45 | internshala() | Scraped data from page 8
+2026-05-16 20:33:02,595 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-16 20:33:03,539 | INFO | mainscript.py:45 | internshala() | Scraped data from page 9
+2026-05-16 20:33:03,550 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-16 20:33:04,478 | INFO | mainscript.py:45 | internshala() | Scraped data from page 10
+2026-05-16 20:33:04,488 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-16 20:33:05,478 | INFO | mainscript.py:45 | internshala() | Scraped data from page 11
+2026-05-16 20:33:05,479 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-16 20:33:06,425 | INFO | mainscript.py:45 | internshala() | Scraped data from page 12
+2026-05-16 20:33:06,425 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-16 20:33:07,450 | INFO | mainscript.py:45 | internshala() | Scraped data from page 13
+2026-05-16 20:33:07,451 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-16 20:33:08,154 | INFO | mainscript.py:45 | internshala() | Scraped data from page 14
+2026-05-16 20:33:08,155 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-16 20:33:08,970 | INFO | mainscript.py:45 | internshala() | Scraped data from page 15
+2026-05-16 20:33:08,970 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-16 20:33:09,727 | INFO | mainscript.py:45 | internshala() | Scraped data from page 16
+2026-05-16 20:33:09,728 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-16 20:33:10,588 | INFO | mainscript.py:45 | internshala() | Scraped data from page 17
+2026-05-16 20:33:10,595 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-16 20:33:11,523 | INFO | mainscript.py:45 | internshala() | Scraped data from page 18
+2026-05-16 20:33:11,525 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-16 20:33:12,449 | INFO | mainscript.py:45 | internshala() | Scraped data from page 19
+2026-05-16 20:33:12,455 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-16 20:33:13,183 | INFO | mainscript.py:45 | internshala() | Scraped data from page 20
+2026-05-16 20:33:13,188 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-16 20:33:13,214 | INFO | mainscript.py:61 | internshala() | Inserted processed data into jobs.db
+2026-05-16 21:09:39,582 | INFO | mainscript.py:27 | <module>() | Execution started...
+2026-05-16 21:09:40,714 | INFO | mainscript.py:45 | internshala() | Scraped data from page 1
+2026-05-16 21:09:40,720 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-16 21:09:41,532 | INFO | mainscript.py:45 | internshala() | Scraped data from page 2
+2026-05-16 21:09:41,539 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-16 21:09:42,339 | INFO | mainscript.py:45 | internshala() | Scraped data from page 3
+2026-05-16 21:09:42,346 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-16 21:09:43,297 | INFO | mainscript.py:45 | internshala() | Scraped data from page 4
+2026-05-16 21:09:43,304 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-16 21:09:44,198 | INFO | mainscript.py:45 | internshala() | Scraped data from page 5
+2026-05-16 21:09:44,205 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-16 21:09:45,144 | INFO | mainscript.py:45 | internshala() | Scraped data from page 6
+2026-05-16 21:09:45,156 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-16 21:09:45,994 | INFO | mainscript.py:45 | internshala() | Scraped data from page 7
+2026-05-16 21:09:46,002 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-16 21:09:46,899 | INFO | mainscript.py:45 | internshala() | Scraped data from page 8
+2026-05-16 21:09:46,907 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-16 21:09:48,053 | INFO | mainscript.py:45 | internshala() | Scraped data from page 9
+2026-05-16 21:09:48,060 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-16 21:09:48,907 | INFO | mainscript.py:45 | internshala() | Scraped data from page 10
+2026-05-16 21:09:48,915 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-16 21:09:49,999 | INFO | mainscript.py:45 | internshala() | Scraped data from page 11
+2026-05-16 21:09:50,001 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-16 21:09:50,921 | INFO | mainscript.py:45 | internshala() | Scraped data from page 12
+2026-05-16 21:09:50,922 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-16 21:09:52,086 | INFO | mainscript.py:45 | internshala() | Scraped data from page 13
+2026-05-16 21:09:52,087 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-16 21:09:52,952 | INFO | mainscript.py:45 | internshala() | Scraped data from page 14
+2026-05-16 21:09:52,953 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-16 21:09:53,816 | INFO | mainscript.py:45 | internshala() | Scraped data from page 15
+2026-05-16 21:09:53,816 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-16 21:09:54,781 | INFO | mainscript.py:45 | internshala() | Scraped data from page 16
+2026-05-16 21:09:54,782 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-16 21:09:55,809 | INFO | mainscript.py:45 | internshala() | Scraped data from page 17
+2026-05-16 21:09:55,814 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-16 21:09:56,627 | INFO | mainscript.py:45 | internshala() | Scraped data from page 18
+2026-05-16 21:09:56,628 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-16 21:09:57,678 | INFO | mainscript.py:45 | internshala() | Scraped data from page 19
+2026-05-16 21:09:57,683 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-16 21:09:58,613 | INFO | mainscript.py:45 | internshala() | Scraped data from page 20
+2026-05-16 21:09:58,617 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-16 21:09:58,642 | INFO | mainscript.py:61 | internshala() | Inserted processed data into jobs.db
+2026-05-18 23:32:36,609 | INFO | mainscript.py:27 | <module>() | Execution started...
+2026-05-18 23:32:38,794 | INFO | mainscript.py:45 | internshala() | Scraped data from page 1
+2026-05-18 23:32:38,811 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-18 23:32:39,730 | INFO | mainscript.py:45 | internshala() | Scraped data from page 2
+2026-05-18 23:32:39,737 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-18 23:32:40,636 | INFO | mainscript.py:45 | internshala() | Scraped data from page 3
+2026-05-18 23:32:40,643 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-18 23:32:42,780 | INFO | mainscript.py:45 | internshala() | Scraped data from page 4
+2026-05-18 23:32:42,788 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-18 23:32:43,786 | INFO | mainscript.py:45 | internshala() | Scraped data from page 5
+2026-05-18 23:32:43,792 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-18 23:32:45,414 | INFO | mainscript.py:45 | internshala() | Scraped data from page 6
+2026-05-18 23:32:45,423 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-18 23:32:46,363 | INFO | mainscript.py:45 | internshala() | Scraped data from page 7
+2026-05-18 23:32:46,371 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-18 23:32:48,309 | INFO | mainscript.py:45 | internshala() | Scraped data from page 8
+2026-05-18 23:32:48,317 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-18 23:32:49,239 | INFO | mainscript.py:45 | internshala() | Scraped data from page 9
+2026-05-18 23:32:49,249 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-18 23:32:50,163 | INFO | mainscript.py:45 | internshala() | Scraped data from page 10
+2026-05-18 23:32:50,169 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-18 23:32:51,807 | INFO | mainscript.py:45 | internshala() | Scraped data from page 11
+2026-05-18 23:32:51,809 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-18 23:32:52,712 | INFO | mainscript.py:45 | internshala() | Scraped data from page 12
+2026-05-18 23:32:52,713 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-18 23:32:54,746 | INFO | mainscript.py:45 | internshala() | Scraped data from page 13
+2026-05-18 23:32:54,748 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-18 23:32:55,613 | INFO | mainscript.py:45 | internshala() | Scraped data from page 14
+2026-05-18 23:32:55,614 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-18 23:32:56,622 | INFO | mainscript.py:45 | internshala() | Scraped data from page 15
+2026-05-18 23:32:56,622 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-18 23:32:58,380 | INFO | mainscript.py:45 | internshala() | Scraped data from page 16
+2026-05-18 23:32:58,381 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-18 23:32:59,482 | INFO | mainscript.py:45 | internshala() | Scraped data from page 17
+2026-05-18 23:32:59,487 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-18 23:33:01,167 | INFO | mainscript.py:45 | internshala() | Scraped data from page 18
+2026-05-18 23:33:01,169 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-18 23:33:02,071 | INFO | mainscript.py:45 | internshala() | Scraped data from page 19
+2026-05-18 23:33:02,076 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-18 23:33:04,364 | INFO | mainscript.py:45 | internshala() | Scraped data from page 20
+2026-05-18 23:33:04,371 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-18 23:33:04,418 | INFO | mainscript.py:61 | internshala() | Inserted processed data into jobs.db
+2026-05-20 18:43:28,529 | INFO | mainscript.py:27 | <module>() | Execution started...
+2026-05-20 18:43:29,874 | INFO | mainscript.py:45 | internshala() | Scraped data from page 1
+2026-05-20 18:43:29,895 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-20 18:43:30,926 | INFO | mainscript.py:45 | internshala() | Scraped data from page 2
+2026-05-20 18:43:30,935 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-20 18:43:32,780 | INFO | mainscript.py:45 | internshala() | Scraped data from page 3
+2026-05-20 18:43:32,789 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-20 18:43:36,916 | INFO | mainscript.py:45 | internshala() | Scraped data from page 4
+2026-05-20 18:43:36,926 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-20 18:43:40,354 | INFO | mainscript.py:45 | internshala() | Scraped data from page 5
+2026-05-20 18:43:40,363 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-20 18:43:41,448 | INFO | mainscript.py:45 | internshala() | Scraped data from page 6
+2026-05-20 18:43:41,457 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-20 18:43:42,428 | INFO | mainscript.py:45 | internshala() | Scraped data from page 7
+2026-05-20 18:43:42,436 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-20 18:43:43,754 | INFO | mainscript.py:45 | internshala() | Scraped data from page 8
+2026-05-20 18:43:43,761 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-20 18:43:44,837 | INFO | mainscript.py:45 | internshala() | Scraped data from page 9
+2026-05-20 18:43:44,846 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-20 18:43:45,882 | INFO | mainscript.py:45 | internshala() | Scraped data from page 10
+2026-05-20 18:43:45,888 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-20 18:43:46,814 | INFO | mainscript.py:45 | internshala() | Scraped data from page 11
+2026-05-20 18:43:46,815 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-20 18:43:48,214 | INFO | mainscript.py:45 | internshala() | Scraped data from page 12
+2026-05-20 18:43:48,215 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-20 18:43:51,495 | INFO | mainscript.py:45 | internshala() | Scraped data from page 13
+2026-05-20 18:43:51,495 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-20 18:43:53,865 | INFO | mainscript.py:45 | internshala() | Scraped data from page 14
+2026-05-20 18:43:53,866 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-20 18:43:56,637 | INFO | mainscript.py:45 | internshala() | Scraped data from page 15
+2026-05-20 18:43:56,638 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-20 18:43:57,664 | INFO | mainscript.py:45 | internshala() | Scraped data from page 16
+2026-05-20 18:43:57,664 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-20 18:43:58,762 | INFO | mainscript.py:45 | internshala() | Scraped data from page 17
+2026-05-20 18:43:58,767 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-20 18:43:59,705 | INFO | mainscript.py:45 | internshala() | Scraped data from page 18
+2026-05-20 18:43:59,712 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-20 18:44:00,651 | INFO | mainscript.py:45 | internshala() | Scraped data from page 19
+2026-05-20 18:44:00,660 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-20 18:44:02,091 | INFO | mainscript.py:45 | internshala() | Scraped data from page 20
+2026-05-20 18:44:02,097 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
+2026-05-20 18:44:02,154 | INFO | mainscript.py:61 | internshala() | Inserted processed data into jobs.db

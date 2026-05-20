@@ -5,6 +5,7 @@ import pandas as pd
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__)) 
 db_path = os.path.join(BASE_DIR, "jobs.db")
+conn = sqlite3.connect(db_path)
 # ------------------------------FOR OVERALL MARKET TRENDS----
 def topSkills():
     # db_path = 'jobs.db'
@@ -81,6 +82,7 @@ ORDER BY total_occurrences DESC;
     df=pd.read_sql_query(query,conn)
     conn.close()
     return df
+# ---------------------Role specific analysis---------
 def TopSkillsOfRole(role):
     # db_path = 'jobs.db'
     conn=sqlite3.connect(db_path)
@@ -91,7 +93,7 @@ def TopSkillsOfRole(role):
     JOIN jobs j ON js.job_id = j.j_id  
     WHERE j.j_title = ?
     GROUP BY s.name
-    ORDER BY demand DESC
+    ORDER BY count(*) DESC
     LIMIT 10;
     '''
     df=pd.read_sql_query(query,conn,params=(role,))
@@ -108,6 +110,7 @@ def jobCount(job):
     df=pd.read_sql_query(query,conn,params=(job,))
     conn.close()
     return df
+# ----------------------------------------------------
 
 def last_scraped_time():
     # db_path = 'jobs.db'
@@ -159,10 +162,42 @@ def OPPORTUNITIES():
     query = '''
     SELECT count(*) as opportunities
     FROM jobs 
-    where date(postedDate) >= date("now","-7 days");
+    where date(postedDate) >= date("now","-10 days");
     '''
     df=pd.read_sql_query(query,conn)
     conn.close()
+    print(df)
+
     return df['opportunities'][0]
-# print(commonRoles())
+
+
+# --------------------Role Specifi Analysis----------------
+def uniqueSkills(role):
+    conn = sqlite3.connect(db_path)
+    query = '''
+        select count(distinct s.name) as skills
+        from jobs j
+        join job_skills js on j.j_id = js.job_id
+        join skills s on js.skill_id = s.s_id
+        where J_title = ?
+    '''
+    df = pd.read_sql_query(query,conn,params=(role,))
+    return df
+
+def uniqueSkillCount(role):
+     conn = sqlite3.connect(db_path)
+     query = '''
+        select s.name as skill,count(*) as count
+        from jobs j
+        join job_skills js on j.j_id = js.job_id
+        join skills s on js.skill_id = s.s_id
+        where j.J_title = ?
+        group by s.name
+        order by count(*) desc
+        limit 8;
+        '''
+     df = pd.read_sql_query(query,conn, params=(role,))
+     return df
+
+print(uniqueSkills("Web Developer"))
 

@@ -1,13 +1,8 @@
 import sqlite3
 import logging
 import os
-logging.basicConfig(
-    filename = "logfile.log"
-)
-BASE_DIR = os.path.dirname(os.path.dirname(__file__)) 
-db_path = os.path.join(BASE_DIR, "jobs.db")
-conn=sqlite3.connect(db_path)
-cur=conn.cursor()
+from utils.path import RAWDATA_DB
+from utils.path import JOBS_DB
 # logging.info("ade")
 # cur.execute(
 #     'ALTER TABLE jobs add company text'
@@ -48,18 +43,34 @@ cur=conn.cursor()
 # ALTER TABLE jobsnd_skills rename to job_skills;
 # ''')
 
-def clearTable():
-    conn=sqlite3.connect(db_path)
-    cur=conn.cursor()
-    cur.execute('DELETE FROM jobs')
-    cur.execute('DELETE FROM skills')
-    cur.execute('DELETE FROM job_skills')
-    cur.execute('DELETE FROM jobSnapshot')
-    conn.commit()
-    conn.close()
-    logging.info("cleared table...")
+# def clearTable():
+#     conn=sqlite3.connect(db_path)
+#     cur=conn.cursor()
+#     cur.execute('DELETE FROM jobs')
+#     cur.execute('DELETE FROM skills')
+#     cur.execute('DELETE FROM job_skills')
+#     cur.execute('DELETE FROM jobSnapshot')
+#     conn.commit()
+#     conn.close()
+#     logging.info("cleared table...")
 
+conn = sqlite3.connect(JOBS_DB)
+# cur = conn.cursor()
+# ('''
+# create table jobSnapshot(
+#             id integer primary key autoincrement,
+#             title varchar(50),
+#             company varchar(50),
+#             location varchar(50)
+#             );
+# ''')
 
+# cur.execute('ALTER TABLE jobSnapshot add scraped_date date;')
+cur = conn.cursor()
+
+cur.execute(''' create unique index if not exists uniquejob on jobs(J_title,location,company,postedDate)''')
+conn.commit()
+conn.close()
 # cur.execute('''
 # CREATE TABLE jobSnapshot(
 #         job_id INT,
@@ -74,55 +85,64 @@ def clearTable():
 
 
 
-query = """ALTER TABLE jobs
-MODIFY salary INT """
+# query = """ALTER TABLE jobs
+# MODIFY salary INT """
 
-minsalCol = '''
-ALTER TABLE jobs
-ADD minsal int;
-'''
-maxslaCol = '''
-ALTER TABLE jobs
-ADD maxsal int;
-'''
+# minsalCol = '''
+# ALTER TABLE jobs
+# ADD minsal int;
+# '''
+# maxslaCol = '''
+# ALTER TABLE jobs
+# ADD maxsal int;
+# '''
 
-fetchIdsal = '''
-SELECT j_id,salary FROM jobs;
-'''
-# cur.execute(fetchIdsal)
+# fetchIdsal = '''
+# SELECT j_id,salary FROM jobs;
+# '''
+# # cur.execute(query)
+# # cur.execute(minsalCol)
+# # cur.execute(maxslaCol)
+# import pandas as pd
+# query ="""select * from Jobs;"""
 
-rows = cur.fetchall()
-for row in rows:
+# df = pd.read_sql_query(query,conn)
+# print(df)
+
+# # cur.execute(fetchIdsal)
+
+# rows = cur.fetchall()
+# for row in rows:
     
-    rowid = row[0]
-    sal = row[1]
-    minsal = None
-    maxsal = None
-    if sal:
-        try:
+#     rowid = row[0]
+#     sal = row[1]
+#     minsal = None
+#     maxsal = None
+#     if sal:
+#         try:
     
-            if "-" in sal:
-                minsal,maxsal = sal.split("-")
-                minsal = int(minsal.replace(",","").replace("₹","").strip())
-                maxsal = int(maxsal.replace(",","").replace("₹","").strip())
-            else:
-                minsal = maxsal = int(sal.replace(",","").replace("₹","").strip())
-        except ValueError:
-            minsal = None
-            maxsal = None    
-    myquery = """
-    UPDATE jobs
-    SET minsal = ?,maxsal = ?
-    WHERE j_id = ?
-    """
-    # cur.execute(myquery,(minsal,maxsal,rowid))
+#             if "-" in sal:
+#                 minsal,maxsal = sal.split("-")
+#                 minsal = int(minsal.replace(",","").replace("₹","").strip())
+#                 maxsal = int(maxsal.replace(",","").replace("₹","").strip())
+#             else:
+#                 minsal = maxsal = int(sal.replace(",","").replace("₹","").strip())
+#         except ValueError:
+#             minsal = None
+#             maxsal = None    
+#     myquery = """
+#     UPDATE jobs
+#     SET minsal = ?,maxsal = ?
+#     WHERE j_id = ?
+#     """
+#     # cur.execute(myquery,(minsal,maxsal,rowid))
     
 
-# Drop the salary column from jobs
-dropsal = """
-ALTER TABLE jobs
-drop Salary;
-"""
-cur.execute(dropsal)
-conn.commit()
-conn.close()
+# # Drop the salary column from jobs
+# dropsal = """
+# ALTER TABLE jobs
+# drop Salary;
+# """
+# # cur.execute(dropsal)
+# conn.commit()
+# conn.close()

@@ -6,7 +6,7 @@ problemsfaced.txt
 *.csv
 ap.py
 dashboard.py
-*.db
+
 *.sql
 trial.py
 app2.py

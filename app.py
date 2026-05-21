@@ -3,6 +3,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 from queries.analysis import roles, noOfopportunities, roles_trends, TopSkillsOfRole, jobCount, topSkills, topLocations, commonRoles, last_scraped_time
+from queries.recent_market_trends import Top_role,top_skill,total_opportunities
 import pandas as pd
 import plotly.io as pio
 
@@ -373,7 +374,7 @@ def load_dashboard():
     # PAGE: RECENT MARKET TREND
     # ════════════════════════════════════════════
     elif page == "Recent Market Trend":
-        from queries.recent_market_trends import Top_role,top_skill,total_opportunities
+        
         toprole = Top_role()
         topSkill = top_skill()
         total_opportunity = total_opportunities()

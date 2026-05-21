@@ -1,12 +1,23 @@
 import sqlite3
 import pandas as pd
+from pathlib import Path
 
 
 from utils.path import JOBS_DB
+
+
+# Helper to get a DB connection with helpful error when the file is missing
+def get_conn():
+    db_path = Path(JOBS_DB)
+    if not db_path.exists():
+        raise FileNotFoundError(
+            f"Database file not found at {db_path}. Ensure jobs.db is present in the repository and deployed."
+        )
+    return sqlite3.connect(str(db_path))
 # ------------------------------FOR OVERALL MARKET TRENDS----
 def topSkills():
     # db_path = 'jobs.db'
-    conn = sqlite3.connect(JOBS_DB)
+    conn = get_conn()
     query = '''
     SELECT s.name, count(*) as demand
     FROM skills s
@@ -20,11 +31,11 @@ def topSkills():
     return df
 def roles():
     # db_path = 'jobs.db'
-    conn=sqlite3.connect(JOBS_DB)
+    conn = get_conn()
     query='''
-    SELECT j.j_title,count(j.j_title) as demand
+    SELECT j.J_title,count(j.J_title) as demand
     FROM jobs j
-    GROUP BY j_title
+    GROUP BY J_title
     ORDER BY demand DESC
     LIMIT 10;
     '''
@@ -32,7 +43,7 @@ def roles():
     conn.close()
     return df
 def noOfopportunities():
-    conn=sqlite3.connect(JOBS_DB)
+    conn = get_conn()
     query = '''
     SELECT count(*) as opportunities
     FROM jobs ;
@@ -42,7 +53,7 @@ def noOfopportunities():
     return df['opportunities'][0]
 def topLocations():
     # db_path = 'jobs.db'
-    conn=sqlite3.connect(JOBS_DB)
+    conn = get_conn()
     query='''
     SELECT j.location ,count(j.location) as count
     FROM jobs j
@@ -55,24 +66,24 @@ def topLocations():
     return df
 def commonRoles():
     # db_path = 'jobs.db'
-    conn=sqlite3.connect(JOBS_DB)
+    conn = get_conn()
     query='''
         SELECT
         s.name AS skill,
-        COUNT(DISTINCT j.j_title) AS role_count,
+        COUNT(DISTINCT j.J_title) AS role_count,
         COUNT(*) AS total_occurrences
     FROM jobs j
     JOIN job_skills js ON j.j_id = js.job_id
     JOIN skills s ON s.s_id = js.skill_id
-    WHERE j.j_title IN (
-        SELECT j_title
+    WHERE j.J_title IN (
+        SELECT J_title
         FROM jobs
-        GROUP BY j_title
+        GROUP BY J_title
         ORDER BY COUNT(*) DESC
         LIMIT 2
     )
     GROUP BY s.name
-    HAVING COUNT(DISTINCT j.j_title) = 2
+    HAVING COUNT(DISTINCT j.J_title) = 2
 ORDER BY total_occurrences DESC;
 
 '''
@@ -82,13 +93,13 @@ ORDER BY total_occurrences DESC;
 # ---------------------Role specific analysis---------
 def TopSkillsOfRole(role):
     # db_path = 'jobs.db'
-    conn=sqlite3.connect(JOBS_DB)
+    conn = get_conn()
     query='''
     SELECT s.name,count(*) as demand
     FROM skills s
     JOIN job_skills js ON s.s_id = js.skill_id
     JOIN jobs j ON js.job_id = j.j_id  
-    WHERE j.j_title = ?
+    WHERE j.J_title = ?
     GROUP BY s.name
     ORDER BY count(*) DESC
     LIMIT 10;
@@ -98,7 +109,7 @@ def TopSkillsOfRole(role):
     return df
 def jobCount(job):
     # db_path = 'jobs.db'
-    conn=sqlite3.connect(JOBS_DB)
+    conn = get_conn()
     query='''
     SELECT count(J_title) as no_of_jobs
     FROM jobs
@@ -111,7 +122,7 @@ def jobCount(job):
 
 def last_scraped_time():
     # db_path = 'jobs.db'
-    conn=sqlite3.connect(JOBS_DB)
+    conn = get_conn()
 
     query='''
     SELECT max(scraped_time)
@@ -148,7 +159,7 @@ def roles_trends():
         select * from Ranked
         order by month,rank;
         '''
-    conn=sqlite3.connect(JOBS_DB)
+    conn = get_conn()
     df=pd.read_sql_query(top_roles,conn)
     conn.close()
     return df
@@ -200,3 +211,4 @@ def uniqueSkillCount(role):
 
 
 
+print(roles())

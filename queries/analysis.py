@@ -1,8 +1,6 @@
 import sqlite3
 import pandas as pd
 from pathlib import Path
-
-
 from utils.path import JOBS_DB
 
 
@@ -64,7 +62,7 @@ def topLocations():
     df=pd.read_sql_query(query,conn)
     conn.close()
     return df
-def commonRoles():
+def commonSkills():
     # db_path = 'jobs.db'
     conn = get_conn()
     query='''
@@ -208,7 +206,4 @@ def uniqueSkillCount(role):
      df = pd.read_sql_query(query,conn, params=(role,))
      conn.close()
      return df
-
-
-
-print(roles())
+print(roles_trends())

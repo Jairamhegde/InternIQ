@@ -2,7 +2,7 @@ import streamlit as st
 import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
-from queries.analysis import roles, noOfopportunities, roles_trends, TopSkillsOfRole, jobCount, topSkills, topLocations, commonRoles, last_scraped_time
+from queries.analysis import roles, noOfopportunities, roles_trends, TopSkillsOfRole, jobCount, topSkills, topLocations, commonSkills, last_scraped_time
 from queries.recent_market_trends import Top_role,top_skill,total_opportunities
 import pandas as pd
 import plotly.io as pio
@@ -213,7 +213,7 @@ def load_dashboard():
             'roles': roles(),
             'skills': topSkills(),
             'locations': topLocations(),
-            'common_roles': commonRoles(),
+            'common_roles': commonSkills(),
             'opportunity': noOfopportunities()
         }
 
@@ -221,7 +221,7 @@ def load_dashboard():
     df_roles = data['roles']
     df_skills = data['skills']
     df_locations = data['locations']
-    df_common_roles = data['common_roles']
+    cross_functional_skills = data['common_roles']
 
     with st.sidebar:
         st.markdown(
@@ -338,7 +338,7 @@ def load_dashboard():
                                   title=dict(font=dict(color='#94a3b8', size=13)))
             st.plotly_chart(fig_pie, use_container_width=True)
 
-        if not df_common_roles.empty:
+        if not cross_functional_skills.empty:
             st.markdown("<br>", unsafe_allow_html=True)
             st.markdown("### Cross-Functional Skills")
             st.markdown(
@@ -346,14 +346,14 @@ def load_dashboard():
                 unsafe_allow_html=True
             )
             fig_common = px.bar(
-                df_common_roles.head(15), x='total_occurrences', y='skill', orientation='h',
+                cross_functional_skills.head(15), x='total_occurrences', y='skill', orientation='h',
                 text='total_occurrences',
                 labels={'total_occurrences': 'Total Occurrences', 'skill': ''}
             )
             fig_common.update_traces(
                 texttemplate='%{text}', textposition='outside',
                 textfont=dict(color='#94a3b8', size=11),
-                marker=dict(color=df_common_roles['role_count'], colorscale=[[0,'#1e1b4b'],[1,'#a78bfa']])
+                marker=dict(color=cross_functional_skills['role_count'], colorscale=[[0,'#1e1b4b'],[1,'#a78bfa']])
             )
             fig_common.update_layout(
                 height=480, yaxis={'categoryorder': 'total ascending'},

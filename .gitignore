@@ -10,3 +10,5 @@ dashboard.py
 *.sql
 trial.py
 app2.py
+*.zip
+*.db

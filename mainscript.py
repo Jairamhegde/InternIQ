@@ -25,36 +25,45 @@ logging.basicConfig(
 )
 
 logging.info("Execution started...")
+page_url = [
+        "https://internshala.com/jobs/machine-learning-jobs/",
+        "https://internshala.com/jobs/backend-development-jobs/",
+        "https://internshala.com/fresher-jobs/front-end-development-jobs/",
+        "https://internshala.com/jobs/mobile-app-development-jobs/",
+        "https://internshala.com/jobs/big-data-jobs/"
+    ]
 
+def internshala(url_list):
+    for url in url_list:
+        for page in range(1, 21):
 
-def internshala(url):
+            if page == 1:
+                link = url
+            else:
+                link = f"{url}page-{page}"
 
-    for page in range(1, 21):
+            try:
 
-        if page == 1:
-            link = url
-        else:
-            link = f"{url}page-{page}"
+                soup = get_soup(link)
 
-        try:
+                raw_data = scrape_data(soup)
+                if not raw_data:
+                    logging.info(f"No data found in page {page}")
+                    break
 
-            soup = get_soup(link)
+                logging.info(f"Scraped {len(raw_data)} jobs from {link}")
 
-            raw_data = scrape_data(soup)
+                insertRawData(raw_data)
 
-            logging.info(f"Scraped data from page {page}")
+                logging.info("Inserted raw data into rawData.db")
 
-            insertRawData(raw_data)
+            except Exception:
 
-            logging.info("Inserted raw data into rawData.db")
+                logging.exception(
+                    f"Failed scraping page {page}"
+                )
 
-        except Exception:
-
-            logging.exception(
-                f"Failed scraping page {page}"
-            )
-
-    # Transform ALL raw data once
+        # Transform ALL raw data once
     data = loadData()
     manage_operation(data)
 
@@ -64,24 +73,5 @@ def internshala(url):
 
 
 if __name__ == '__main__':
-
-    internshala(
-        "https://internshala.com/jobs/"
-        "net-development,"
-        "ai-agent-development,"
-        "asp-net,"
-        "android-app-development,"
-        "angular-js-development,"
-        "backend-development,"
-        "cloud-computing,"
-        "cyber-security,"
-        "front-end-development,"
-        "full-stack-development,"
-        "game-development,"
-        "java,"
-        "javascript-development,"
-        "machine-learning,"
-        "node-js-development,"
-        "python-django,"
-        "web-development-jobs/"
-    )
+    
+    internshala(url_list=page_url)

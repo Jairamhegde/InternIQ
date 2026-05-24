@@ -2,6 +2,9 @@ from datetime import datetime, timedelta
 import logging
 import re
 import pandas as pd
+from keyword_match.text_tockenization import (generate_unigrams,
+                                              generate_bigrams,
+                                              get_matching_skills)
 
 
 def dateFromtext(i):
@@ -32,16 +35,35 @@ def scrape_data(soup):
     try:
 
         job_card = soup.find_all('div', class_="internship_meta experience_meta")
-
         if job_card:
-
             for job in job_card:
-
                 postedtime_tag = job.select_one("div.color-labels span")
                 posted_time = postedtime_tag.text if postedtime_tag else None
 
-                skills_tag = job.find_all('div', class_="skill_container")
-                skills = skills_tag if skills_tag else None
+                skills_tag = job.find_all("div", class_="job_skill")
+                if skills_tag:
+                    skills = [skill.get_text(strip = True)  for skill in skills_tag]
+                else:
+                    job_description = job.find("div", class_="text")
+
+                    if job_description:
+
+                        job_description = job_description.get_text(" ", strip=True)
+
+                        unigrams = generate_unigrams(job_description)
+
+                        bigrams = generate_bigrams(unigrams) if unigrams else set()
+
+                        ngrams = set(unigrams) | bigrams
+
+                        matched_skills = get_matching_skills(ngrams)
+
+                        skills = matched_skills if matched_skills else None
+
+                    else:
+                        skills = None
+                
+    
 
                 job_tag = job.find('a', id='job_title')
                 jobb = job_tag.text if job_tag else None
@@ -55,7 +77,7 @@ def scrape_data(soup):
                 sal_tag = job.find('span', class_="desktop")
                 sal = sal_tag.text if sal_tag else None
 
-                techstack = [skil.text for skil in skills] if skills else None
+                techstack = skills
 
                 location_tag = job.select_one("p.locations a")
                 location = location_tag.get_text(strip=True) if location_tag else None
@@ -79,8 +101,7 @@ def scrape_data(soup):
         return job_data
 
     except Exception as e:
-
-        logging.Exception(f"Failed to extract data :{e}")
+        logging.exception(f"Failed to extract data :{e}")
         return job_data
 
 

@@ -2152,3 +2152,200 @@ sqlite3.OperationalError: table JobData has no column named ScrapTime
 2026-05-20 18:44:02,091 | INFO | mainscript.py:45 | internshala() | Scraped data from page 20
 2026-05-20 18:44:02,097 | INFO | mainscript.py:49 | internshala() | Inserted raw data into rawData.db
 2026-05-20 18:44:02,154 | INFO | mainscript.py:61 | internshala() | Inserted processed data into jobs.db
+2026-05-24 22:35:55,333 | INFO | mainscript.py:27 | <module>() | Execution started...
+2026-05-24 22:36:05,019 | INFO | mainscript.py:27 | <module>() | Execution started...
+2026-05-24 22:36:06,863 | ERROR | mainscript.py:62 | internshala() | Failed scraping page 1
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\extract\extractor.py", line 50, in scrape_data
+    unigrams = generate_unigrams(job_description)
+  File "D:\intern_jobscraper\keyword_match\text_tockenization.py", line 5, in generate_unigrams
+    text = text.lower().strip()
+           ~~~~~~~~~~^^
+TypeError: 'NoneType' object is not callable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 49, in internshala
+    raw_data = scrape_data(soup)
+  File "D:\intern_jobscraper\extract\extractor.py", line 98, in scrape_data
+    logging.Exception(f"Failed to extract data :{e}")
+    ^^^^^^^^^^^^^^^^^
+AttributeError: module 'logging' has no attribute 'Exception'. Did you mean: 'exception'?
+2026-05-24 22:36:08,657 | ERROR | mainscript.py:62 | internshala() | Failed scraping page 2
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\extract\extractor.py", line 50, in scrape_data
+    unigrams = generate_unigrams(job_description)
+  File "D:\intern_jobscraper\keyword_match\text_tockenization.py", line 5, in generate_unigrams
+    text = text.lower().strip()
+           ~~~~~~~~~~^^
+TypeError: 'NoneType' object is not callable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 49, in internshala
+    raw_data = scrape_data(soup)
+  File "D:\intern_jobscraper\extract\extractor.py", line 98, in scrape_data
+    logging.Exception(f"Failed to extract data :{e}")
+    ^^^^^^^^^^^^^^^^^
+AttributeError: module 'logging' has no attribute 'Exception'. Did you mean: 'exception'?
+2026-05-24 22:36:10,647 | ERROR | mainscript.py:62 | internshala() | Failed scraping page 3
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\extract\extractor.py", line 50, in scrape_data
+    unigrams = generate_unigrams(job_description)
+  File "D:\intern_jobscraper\keyword_match\text_tockenization.py", line 5, in generate_unigrams
+    text = text.lower().strip()
+           ~~~~~~~~~~^^
+TypeError: 'NoneType' object is not callable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 49, in internshala
+    raw_data = scrape_data(soup)
+  File "D:\intern_jobscraper\extract\extractor.py", line 98, in scrape_data
+    logging.Exception(f"Failed to extract data :{e}")
+    ^^^^^^^^^^^^^^^^^
+AttributeError: module 'logging' has no attribute 'Exception'. Did you mean: 'exception'?
+2026-05-24 22:36:12,567 | ERROR | mainscript.py:62 | internshala() | Failed scraping page 4
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\extract\extractor.py", line 50, in scrape_data
+    unigrams = generate_unigrams(job_description)
+  File "D:\intern_jobscraper\keyword_match\text_tockenization.py", line 5, in generate_unigrams
+    text = text.lower().strip()
+           ~~~~~~~~~~^^
+TypeError: 'NoneType' object is not callable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 49, in internshala
+    raw_data = scrape_data(soup)
+  File "D:\intern_jobscraper\extract\extractor.py", line 98, in scrape_data
+    logging.Exception(f"Failed to extract data :{e}")
+    ^^^^^^^^^^^^^^^^^
+AttributeError: module 'logging' has no attribute 'Exception'. Did you mean: 'exception'?
+2026-05-24 22:36:14,290 | ERROR | mainscript.py:62 | internshala() | Failed scraping page 5
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\extract\extractor.py", line 50, in scrape_data
+    unigrams = generate_unigrams(job_description)
+  File "D:\intern_jobscraper\keyword_match\text_tockenization.py", line 5, in generate_unigrams
+    text = text.lower().strip()
+           ~~~~~~~~~~^^
+TypeError: 'NoneType' object is not callable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 49, in internshala
+    raw_data = scrape_data(soup)
+  File "D:\intern_jobscraper\extract\extractor.py", line 98, in scrape_data
+    logging.Exception(f"Failed to extract data :{e}")
+    ^^^^^^^^^^^^^^^^^
+AttributeError: module 'logging' has no attribute 'Exception'. Did you mean: 'exception'?
+2026-05-24 22:36:15,639 | INFO | mainscript.py:51 | internshala() | No data found in page 6
+2026-05-24 22:36:17,292 | ERROR | mainscript.py:62 | internshala() | Failed scraping page 1
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\extract\extractor.py", line 50, in scrape_data
+    unigrams = generate_unigrams(job_description)
+  File "D:\intern_jobscraper\keyword_match\text_tockenization.py", line 5, in generate_unigrams
+    text = text.lower().strip()
+           ~~~~~~~~~~^^
+TypeError: 'NoneType' object is not callable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 49, in internshala
+    raw_data = scrape_data(soup)
+  File "D:\intern_jobscraper\extract\extractor.py", line 98, in scrape_data
+    logging.Exception(f"Failed to extract data :{e}")
+    ^^^^^^^^^^^^^^^^^
+AttributeError: module 'logging' has no attribute 'Exception'. Did you mean: 'exception'?
+2026-05-24 22:36:19,401 | INFO | mainscript.py:54 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/backend-development-jobs/page-2
+2026-05-24 22:36:19,414 | INFO | mainscript.py:58 | internshala() | Inserted raw data into rawData.db
+2026-05-24 22:52:35,719 | INFO | mainscript.py:27 | <module>() | Execution started...
+2026-05-24 22:52:37,547 | ERROR | extractor.py:104 | scrape_data() | Failed to extract data :'str' object has no attribute 'text'
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\extract\extractor.py", line 80, in scrape_data
+    techstack = [skil.text for skil in skills] if skills else None
+                 ^^^^^^^^^
+AttributeError: 'str' object has no attribute 'text'
+2026-05-24 22:52:37,548 | INFO | mainscript.py:51 | internshala() | No data found in page 1
+2026-05-24 22:52:39,370 | ERROR | extractor.py:104 | scrape_data() | Failed to extract data :'str' object has no attribute 'text'
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\extract\extractor.py", line 80, in scrape_data
+    techstack = [skil.text for skil in skills] if skills else None
+                 ^^^^^^^^^
+AttributeError: 'str' object has no attribute 'text'
+2026-05-24 22:52:39,371 | INFO | mainscript.py:51 | internshala() | No data found in page 1
+2026-05-24 22:52:41,138 | ERROR | extractor.py:104 | scrape_data() | Failed to extract data :'str' object has no attribute 'text'
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\extract\extractor.py", line 80, in scrape_data
+    techstack = [skil.text for skil in skills] if skills else None
+                 ^^^^^^^^^
+AttributeError: 'str' object has no attribute 'text'
+2026-05-24 22:52:41,138 | INFO | mainscript.py:51 | internshala() | No data found in page 1
+2026-05-24 22:52:43,007 | ERROR | extractor.py:104 | scrape_data() | Failed to extract data :'str' object has no attribute 'text'
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\extract\extractor.py", line 80, in scrape_data
+    techstack = [skil.text for skil in skills] if skills else None
+                 ^^^^^^^^^
+AttributeError: 'str' object has no attribute 'text'
+2026-05-24 22:52:43,008 | INFO | mainscript.py:54 | internshala() | Scraped 1 jobs from https://internshala.com/jobs/mobile-app-development-jobs/
+2026-05-24 22:52:43,013 | INFO | mainscript.py:58 | internshala() | Inserted raw data into rawData.db
+2026-05-24 22:52:45,685 | ERROR | extractor.py:104 | scrape_data() | Failed to extract data :'str' object has no attribute 'text'
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\extract\extractor.py", line 80, in scrape_data
+    techstack = [skil.text for skil in skills] if skills else None
+                 ^^^^^^^^^
+AttributeError: 'str' object has no attribute 'text'
+2026-05-24 22:52:45,686 | INFO | mainscript.py:51 | internshala() | No data found in page 2
+2026-05-24 22:52:47,300 | ERROR | extractor.py:104 | scrape_data() | Failed to extract data :'str' object has no attribute 'text'
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\extract\extractor.py", line 80, in scrape_data
+    techstack = [skil.text for skil in skills] if skills else None
+                 ^^^^^^^^^
+AttributeError: 'str' object has no attribute 'text'
+2026-05-24 22:52:47,300 | INFO | mainscript.py:51 | internshala() | No data found in page 1
+2026-05-24 22:52:47,353 | INFO | mainscript.py:70 | internshala() | Inserted processed data into jobs.db
+2026-05-24 23:44:57,926 | INFO | mainscript.py:27 | <module>() | Execution started...
+2026-05-24 23:44:59,970 | INFO | mainscript.py:54 | internshala() | Scraped 50 jobs from https://internshala.com/jobs/machine-learning-jobs/
+2026-05-24 23:45:00,017 | INFO | mainscript.py:58 | internshala() | Inserted raw data into rawData.db
+2026-05-24 23:45:02,267 | INFO | mainscript.py:54 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/machine-learning-jobs/page-2
+2026-05-24 23:45:02,285 | INFO | mainscript.py:58 | internshala() | Inserted raw data into rawData.db
+2026-05-24 23:45:04,150 | INFO | mainscript.py:54 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/machine-learning-jobs/page-3
+2026-05-24 23:45:04,164 | INFO | mainscript.py:58 | internshala() | Inserted raw data into rawData.db
+2026-05-24 23:45:05,941 | INFO | mainscript.py:54 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/machine-learning-jobs/page-4
+2026-05-24 23:45:05,953 | INFO | mainscript.py:58 | internshala() | Inserted raw data into rawData.db
+2026-05-24 23:45:07,517 | INFO | mainscript.py:54 | internshala() | Scraped 32 jobs from https://internshala.com/jobs/machine-learning-jobs/page-5
+2026-05-24 23:45:07,526 | INFO | mainscript.py:58 | internshala() | Inserted raw data into rawData.db
+2026-05-24 23:45:08,642 | INFO | mainscript.py:51 | internshala() | No data found in page 6
+2026-05-24 23:45:10,576 | INFO | mainscript.py:54 | internshala() | Scraped 50 jobs from https://internshala.com/jobs/backend-development-jobs/
+2026-05-24 23:45:10,587 | INFO | mainscript.py:58 | internshala() | Inserted raw data into rawData.db
+2026-05-24 23:45:12,196 | INFO | mainscript.py:54 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/backend-development-jobs/page-2
+2026-05-24 23:45:12,206 | INFO | mainscript.py:58 | internshala() | Inserted raw data into rawData.db
+2026-05-24 23:45:14,125 | INFO | mainscript.py:54 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/backend-development-jobs/page-3
+2026-05-24 23:45:14,148 | INFO | mainscript.py:58 | internshala() | Inserted raw data into rawData.db
+2026-05-24 23:45:16,014 | INFO | mainscript.py:54 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/backend-development-jobs/page-4
+2026-05-24 23:45:16,026 | INFO | mainscript.py:58 | internshala() | Inserted raw data into rawData.db
+2026-05-24 23:45:17,384 | INFO | mainscript.py:54 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/backend-development-jobs/page-5
+2026-05-24 23:45:17,395 | INFO | mainscript.py:58 | internshala() | Inserted raw data into rawData.db
+2026-05-24 23:45:18,617 | INFO | mainscript.py:54 | internshala() | Scraped 2 jobs from https://internshala.com/jobs/backend-development-jobs/page-6
+2026-05-24 23:45:18,623 | INFO | mainscript.py:58 | internshala() | Inserted raw data into rawData.db
+2026-05-24 23:45:19,778 | INFO | mainscript.py:51 | internshala() | No data found in page 7
+2026-05-24 23:45:21,464 | INFO | mainscript.py:54 | internshala() | Scraped 50 jobs from https://internshala.com/fresher-jobs/front-end-development-jobs/
+2026-05-24 23:45:21,474 | INFO | mainscript.py:58 | internshala() | Inserted raw data into rawData.db
+2026-05-24 23:45:22,749 | INFO | mainscript.py:54 | internshala() | Scraped 17 jobs from https://internshala.com/fresher-jobs/front-end-development-jobs/page-2
+2026-05-24 23:45:22,758 | INFO | mainscript.py:58 | internshala() | Inserted raw data into rawData.db
+2026-05-24 23:45:23,904 | INFO | mainscript.py:51 | internshala() | No data found in page 3
+2026-05-24 23:45:25,827 | INFO | mainscript.py:54 | internshala() | Scraped 50 jobs from https://internshala.com/jobs/mobile-app-development-jobs/
+2026-05-24 23:45:25,840 | INFO | mainscript.py:58 | internshala() | Inserted raw data into rawData.db
+2026-05-24 23:45:27,373 | INFO | mainscript.py:54 | internshala() | Scraped 32 jobs from https://internshala.com/jobs/mobile-app-development-jobs/page-2
+2026-05-24 23:45:27,384 | INFO | mainscript.py:58 | internshala() | Inserted raw data into rawData.db
+2026-05-24 23:45:28,544 | INFO | mainscript.py:51 | internshala() | No data found in page 3
+2026-05-24 23:45:30,214 | INFO | mainscript.py:54 | internshala() | Scraped 38 jobs from https://internshala.com/jobs/big-data-jobs/
+2026-05-24 23:45:30,231 | INFO | mainscript.py:58 | internshala() | Inserted raw data into rawData.db
+2026-05-24 23:45:31,439 | INFO | mainscript.py:51 | internshala() | No data found in page 2
+2026-05-24 23:45:31,576 | INFO | mainscript.py:70 | internshala() | Inserted processed data into jobs.db

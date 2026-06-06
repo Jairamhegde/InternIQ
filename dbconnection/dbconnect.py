@@ -2,7 +2,7 @@ import psycopg2
 import streamlit as st
 
 
-@st.cache.resource
+@st.cache_resource
 def connect_database(search_path="clean_data"):
     data = st.secrets["database"]
     PG_CONFIG = {

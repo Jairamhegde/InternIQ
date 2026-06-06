@@ -402,7 +402,7 @@ def load_dashboard():
         with col2:
             role_rank = df_roles[df_roles['title'] == selected_role].index[0] + 1
             st.metric("Role Ranking", f"#{role_rank}", f"out of {len(df_roles)}")
-
+        
         df_role_skills = TopSkillsOfRole(selected_role)   # columns: name, demand
         df_job_count   = jobCount(selected_role)           # column:  no_of_jobs
         total_jobs     = df_job_count.iloc[0]['no_of_jobs']

@@ -17,7 +17,7 @@ def topSkills():
     LIMIT 10;
     '''
     df = pd.read_sql_query(query, conn)
-    conn.close()
+
     return df
 
 
@@ -31,7 +31,7 @@ def roles():
     LIMIT 10;
     '''
     df = pd.read_sql_query(query, conn)
-    conn.close()
+
     return df
 
 
@@ -42,7 +42,7 @@ def noOfopportunities():
     FROM job_data;
     '''
     df = pd.read_sql_query(query, conn)
-    conn.close()
+
     return df['opportunities'][0]
 
 
@@ -56,7 +56,7 @@ def topLocations():
     LIMIT 10;
     '''
     df = pd.read_sql_query(query, conn)
-    conn.close()
+
     return df
 
 
@@ -82,7 +82,7 @@ def commonSkills():
     ORDER BY total_occurrences DESC;
     '''
     df = pd.read_sql_query(query, conn)
-    conn.close()
+
     return df
 
 
@@ -101,7 +101,7 @@ def TopSkillsOfRole(role):
     LIMIT 10;
     '''
     df = pd.read_sql_query(query, conn, params=(role,))
-    conn.close()
+
     return df
 
 
@@ -113,7 +113,7 @@ def jobCount(job):
     WHERE title = %s;
     '''
     df = pd.read_sql_query(query, conn, params=(job,))
-    conn.close()
+
     return df
 
 
@@ -126,7 +126,7 @@ def last_scraped_time():
     FROM job_data;
     '''
     df = pd.read_sql_query(query, conn)
-    conn.close()
+
     return df.iloc[0, 0]
 
 
@@ -162,7 +162,7 @@ def roles_trends():
     '''
     conn = connect_database("clean_data")
     df = pd.read_sql_query(query, conn)
-    conn.close()
+
     return df
 
 
@@ -176,7 +176,7 @@ def OPPORTUNITIES():
     WHERE postedDate::date >= CURRENT_DATE - INTERVAL '10 days';
     '''
     df = pd.read_sql_query(query, conn)
-    conn.close()
+
     return df['opportunities'][0]
 
 
@@ -192,7 +192,7 @@ def uniqueSkills(role):
     WHERE j.id = %s
     '''
     df = pd.read_sql_query(query, conn, params=(role,))
-    conn.close()
+
     return df
 
 
@@ -209,5 +209,5 @@ def uniqueSkillCount(role):
     LIMIT 8;
     '''
     df = pd.read_sql_query(query, conn, params=(role,))
-    conn.close()
+
     return df

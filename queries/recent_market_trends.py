@@ -13,7 +13,6 @@ def Top_role():
     LIMIT 5;
     '''
     df = pd.read_sql_query(query, conn)
-    conn.close()
     return df
 
 
@@ -30,7 +29,6 @@ def top_skill():
     LIMIT 5;
     '''
     df = pd.read_sql_query(query, conn)
-    conn.close()
     return df
 
 
@@ -42,5 +40,4 @@ def total_opportunities():
     WHERE posted_date::date >= CURRENT_DATE - INTERVAL '10 days';
     '''
     df = pd.read_sql_query(query, conn)
-    conn.close()
     return df

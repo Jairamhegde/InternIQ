@@ -7,3 +7,4 @@ matplotlib
 beautifulsoup4
 requests
 altair
+psycopg2

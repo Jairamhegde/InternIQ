@@ -1,5 +1,5 @@
 import logging
-
+import psycopg2
 from extract.fetcher import get_soup
 from extract.extractor import scrape_data
 

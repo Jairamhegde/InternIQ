@@ -7,4 +7,4 @@ matplotlib
 beautifulsoup4
 requests
 altair
-psycopg2
+psycopg2-binary==2.9.9

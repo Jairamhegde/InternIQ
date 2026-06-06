@@ -24,9 +24,9 @@ def topSkills():
 def roles():
     conn = connect_database("clean_data")
     query = '''
-    SELECT j.title as title ,count(j.id) as demand
+    SELECT j.id,j.title as title ,count(j.id) as demand
     FROM job_data j
-    GROUP BY title
+    GROUP BY j.id,j.title
     ORDER BY demand DESC
     LIMIT 10;
     '''

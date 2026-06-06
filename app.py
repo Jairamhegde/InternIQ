@@ -10,7 +10,7 @@ from queries.analysis import (
     TopSkillsOfRole, jobCount, topSkills,
     topLocations, commonSkills, last_scraped_time
 )
-from queries.recent_market_trends import Top_role, top_skill, total_opportunities
+from queries.recent_market_trends import Top_role, top_skill, total_opportunities, average_salary
 
 pio.templates["mytheme"] = go.layout.Template(
     layout=go.Layout(
@@ -32,7 +32,7 @@ st.set_page_config(
 
 STYLES = """
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap');
 
 html, body, [class*="css"] { font-family: 'Outfit', sans-serif !important; }
 .material-icons, .material-symbols-outlined { font-family: 'Material Icons' !important; }
@@ -76,18 +76,40 @@ div[data-testid="stPlotlyChart"] {
 div[data-testid="stPlotlyChart"]:hover { border-color: rgba(99,102,241,0.3) !important; }
 div[data-testid="stPlotlyChart"] * { background: transparent !important; }
 
-section[data-testid="stSidebar"] { background: #0c0f1e !important; border-right: 1px solid rgba(255,255,255,0.06); padding-top: 1.5rem; }
-section[data-testid="stSidebar"] .block-container { padding: 0 1rem !important; }
+/* ── SIDEBAR ── */
+section[data-testid="stSidebar"] {
+    background: #0d0f14 !important;
+    border-right: 1px solid rgba(255,255,255,0.05);
+}
+section[data-testid="stSidebar"] .block-container { padding: 0 !important; }
 
+/* Nav buttons */
 div.stButton > button {
-    background: transparent !important; border: 1px solid rgba(255,255,255,0.07) !important;
-    color: #94a3b8 !important; border-radius: 10px !important; font-size: 13px !important;
-    font-weight: 500 !important; padding: 10px 14px !important; transition: all 0.2s ease !important;
-    text-align: left !important; margin-bottom: 4px; width: 100%;
+    background: transparent !important;
+    border: none !important;
+    color: #4a5272 !important;
+    border-radius: 8px !important;
+    font-size: 13.5px !important;
+    font-weight: 400 !important;
+    font-family: 'DM Sans', sans-serif !important;
+    padding: 9px 12px !important;
+    transition: all 0.18s ease !important;
+    text-align: left !important;
+    margin-bottom: 2px;
+    width: 100%;
+    letter-spacing: 0;
 }
 div.stButton > button:hover {
-    background: rgba(99,102,241,0.12) !important; border-color: rgba(99,102,241,0.4) !important;
-    color: #e2e8f0 !important; transform: translateX(3px);
+    background: #161a26 !important;
+    color: #c8d0e8 !important;
+    transform: none !important;
+}
+div.stButton > button:focus,
+div.stButton > button:active {
+    background: #131827 !important;
+    color: #ffffff !important;
+    border: none !important;
+    box-shadow: none !important;
 }
 
 [data-testid="stMarkdownContainer"] h3 { padding-left: 12px; border-left: 3px solid #6366f1; color: #e2e8f0 !important; }
@@ -104,6 +126,14 @@ hr { border-color: rgba(255,255,255,0.06) !important; }
 ::-webkit-scrollbar-thumb:hover { background: #6366f1; }
 </style>
 """
+
+NAV_ICONS = {
+    "Overall Market Trends":  "",
+    "Recent Market Trend":    "",
+    "Role-Specific Analysis": "",
+    "Comparative Analysis":   "",
+    "Trends Over Time":       "",
+}
 
 
 def insight_card(icon, label, label_color, value, sub, sub_color, bg_color):
@@ -126,7 +156,7 @@ def key_insight_card(text):
     <div style="background:#13172a;border:1px solid rgba(99,102,241,0.15);border-radius:14px;
                 padding:18px 20px;display:flex;align-items:flex-start;gap:14px">
       <div style="width:42px;height:42px;border-radius:50%;background:#2a1f00;
-                  display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">💡</div>
+                  display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0"></div>
       <div>
         <p style="color:#f59e0b;font-size:13px;font-weight:700;letter-spacing:.5px;
                   text-transform:uppercase;margin:0 0 6px">Key Insight</p>
@@ -142,7 +172,7 @@ def insights_section(cards_html, insight_html):
       <div style="display:flex;align-items:center;gap:14px;margin-bottom:24px;
                   border-left:3px solid #6366f1;padding-left:14px">
         <div style="background:#1e1b4b;border-radius:10px;width:42px;height:42px;
-                    display:flex;align-items:center;justify-content:center;font-size:20px">📊</div>
+                    display:flex;align-items:center;justify-content:center;font-size:20px"></div>
         <p style="color:#fff;font-size:22px;font-weight:600;margin:0">Insights received</p>
       </div>
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:16px">
@@ -158,39 +188,74 @@ def load_dashboard():
     @st.cache_data
     def load_all_data():
         return {
-            'roles':        roles(),           # columns: id,title, demand
-            'skills':       topSkills(),        # columns: name, demand
-            'locations':    topLocations(),     # columns: location, count
-            'common_roles': commonSkills(),     # columns: skill, role_count, total_occurrences
-            'opportunity':  noOfopportunities() # scalar
+            'roles':        roles(),
+            'skills':       topSkills(),
+            'locations':    topLocations(),
+            'common_roles': commonSkills(),
+            'opportunity':  noOfopportunities()
         }
 
     data = load_all_data()
-    df_roles             = data['roles']           # id, demand
-    df_skills            = data['skills']           # name, demand
-    df_locations         = data['locations']        # location, count
-    cross_functional_skills = data['common_roles']  # skill, role_count, total_occurrences
+    df_roles                = data['roles']
+    df_skills               = data['skills']
+    df_locations            = data['locations']
+    cross_functional_skills = data['common_roles']
 
+    # ── SIDEBAR ───────────────────────────────────────────────────────────────
     with st.sidebar:
-        st.markdown(
-            "<div style='padding:0 4px 20px'>"
-            "<p style='font-size:11px;font-weight:600;color:#475569;letter-spacing:1.4px;"
-            "text-transform:uppercase;margin-bottom:12px'>Navigation</p>"
-            "</div>",
-            unsafe_allow_html=True
-        )
+        # Brand header
+        st.markdown("""
+        <div style="padding:28px 20px 24px;font-family:'DM Sans',sans-serif">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:32px">
+                <div style="width:30px;height:30px;background:#4f8ef7;border-radius:8px;
+                            display:flex;align-items:center;justify-content:center;
+                            font-size:13px;font-weight:700;color:#fff;flex-shrink:0">IQ</div>
+                <span style="font-size:15px;font-weight:500;color:#fff;font-family:'DM Sans',sans-serif">
+                    Intern<span style="color:#4f8ef7">IQ</span>
+                </span>
+            </div>
+            <p style="font-size:10px;font-weight:500;letter-spacing:0.12em;color:#2e3450;
+                      text-transform:uppercase;margin:0 0 6px;padding:0 4px">Analytics</p>
+        </div>
+        """, unsafe_allow_html=True)
+
         pages = [
-            "Overall Market Trends", "Recent Market Trend",
-            "Role-Specific Analysis", "Comparative Analysis", "Trends Over Time"
+            "Overall Market Trends",
+            "Recent Market Trend",
+            "Role-Specific Analysis",
         ]
+        compare_pages = [
+            "Comparative Analysis",
+            "Trends Over Time",
+        ]
+
         if "page" not in st.session_state:
             st.session_state.page = pages[0]
+
         for pg in pages:
-            if st.button(pg, use_container_width=True):
+            label = f"{pg}"
+            if st.button(label, key=f"nav_{pg}", use_container_width=True):
                 st.session_state.page = pg
+
+        # Divider + second section label
+        st.markdown("""
+        <div style="padding:0 20px;font-family:'DM Sans',sans-serif">
+            <div style="height:0.5px;background:#161a24;margin:10px 0 14px"></div>
+            <p style="font-size:10px;font-weight:500;letter-spacing:0.12em;color:#2e3450;
+                      text-transform:uppercase;margin:0 0 6px;padding:0 4px">Compare</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        for pg in compare_pages:
+            
+            label = f"{pg}"
+            if st.button(label, key=f"nav_{pg}", use_container_width=True):
+                st.session_state.page = pg
+
         page = st.session_state.page
         total_job_count = data['opportunity']
 
+    # ── PAGE HEADER ───────────────────────────────────────────────────────────
     st.markdown("# Internship Job Market Intelligence")
     st.markdown(
         "<p style='color:#64748b;font-size:14px;margin-top:-8px;margin-bottom:24px'>"
@@ -206,20 +271,20 @@ def load_dashboard():
         with col1:
             st.metric("Opportunities Tracked", f"{total_job_count:,}", "Active Postings")
         with col2:
-            # roles() returns column 'id' for role name
-            top_role = df_roles.iloc[0]['title']
+            top_role = df_roles.iloc[0]['title'].capitalize()
             st.metric("Top Role",
                       top_role[:20] + "…" if len(str(top_role)) > 20 else top_role,
                       f"{df_roles.iloc[0]['demand']} jobs")
         with col3:
-            st.metric("Most Demanded Skill", df_skills.iloc[0]['name'],
+            st.metric("Most Demanded Skill", df_skills.iloc[0]['name'].capitalize(),
                       f"{df_skills.iloc[0]['demand']} mentions")
         with col4:
-            st.metric("Top Location", df_locations.iloc[0]['location'],
+            st.metric("Top Location", df_locations.iloc[0]['location'].capitalize(),
                       f"{df_locations.iloc[0]['count']} jobs")
 
         st.markdown("<br>", unsafe_allow_html=True)
         st.markdown("### Market Demand Analysis")
+        st.markdown("<br>", unsafe_allow_html=True)
 
         col1, col2 = st.columns(2)
         with col1:
@@ -322,20 +387,23 @@ def load_dashboard():
 
     # ── PAGE: RECENT MARKET TREND ─────────────────────────────────────────────
     elif page == "Recent Market Trend":
-        # columns: title, job_count   |   skill, skill_count   |   total_opportunities
         toprole           = Top_role()
         topSkill_df       = top_skill()
         total_opportunity = total_opportunities()
+        salary_range      = average_salary(toprole['title'][0])
 
         st.markdown("### Last 10 Days Market Trends")
+        st.markdown("<br>", unsafe_allow_html=True)
 
-        col1, col2, col3 = st.columns(3)
+        col1, col2, col3, col4 = st.columns(4)
         with col1:
             st.metric("Total Opportunities", total_opportunity['total_opportunities'][0], "Active postings")
         with col2:
-            st.metric("Demanding Skill", topSkill_df['skill'][0], f"{topSkill_df['skill_count'][0]} mentions")
+            st.metric("Demanding Skill", topSkill_df['skill'][0].capitalize(), f"{topSkill_df['skill_count'][0]} mentions")
         with col3:
-            st.metric("Demanding Role", toprole['title'][0], f"{toprole['job_count'][0]} posted")
+            st.metric("Demanding Role", toprole['title'][0].capitalize(), f"{toprole['job_count'][0]} posted")
+        with col4:
+            st.metric("Salary range", f"₹{int(salary_range.iloc[0]['minimum'])//12}-₹{int(salary_range.iloc[0]['maximum'])//12}", "Per month")
 
         chart = px.bar(
             toprole, x="title", y="job_count",
@@ -397,18 +465,18 @@ def load_dashboard():
 
         col1, col2 = st.columns([2, 1])
         with col1:
-            # roles() → column 'id' holds the role/title name
             selected_role = st.selectbox("Select a role:", df_roles['title'].tolist(), key="role_selector")
         with col2:
             role_rank = df_roles[df_roles['title'] == selected_role].index[0] + 1
             st.metric("Role Ranking", f"#{role_rank}", f"out of {len(df_roles)}")
-        
-        df_role_skills = TopSkillsOfRole(selected_role)   # columns: name, demand
-        df_job_count   = jobCount(selected_role)           # column:  no_of_jobs
+
+        salaries       = average_salary(selected_role)
+        df_role_skills = TopSkillsOfRole(selected_role)
+        df_job_count   = jobCount(selected_role)
         total_jobs     = df_job_count.iloc[0]['no_of_jobs']
 
         st.markdown("<br>", unsafe_allow_html=True)
-        col1, col2, col3 = st.columns(3)
+        col1, col2, col3, col4 = st.columns(4)
         with col1:
             st.metric("Total Openings", f"{total_jobs}", "Active Positions")
         with col2:
@@ -416,6 +484,8 @@ def load_dashboard():
         with col3:
             avg_skills = df_role_skills['demand'].mean()
             st.metric("Avg. Skill Mentions", f"{avg_skills:.0f}", "per skill")
+        with col4:
+            st.metric("AVG Salary", f"₹{int(salaries.iloc[0]['average'])//12}", "Per month")
 
         st.markdown("<br>", unsafe_allow_html=True)
         st.markdown("### Skills Breakdown")
@@ -587,12 +657,12 @@ def load_dashboard():
                 )
                 st.plotly_chart(fig_heatmap, use_container_width=True)
 
-                common_skills = df_matrix[df_matrix['Total'] == len(selected_roles)]['Skill'].tolist()
-                if common_skills:
+                common = df_matrix[df_matrix['Total'] == len(selected_roles)]['Skill'].tolist()
+                if common:
                     st.success(
-                        f"**{len(common_skills)} shared skills** across all selected roles: "
-                        + ", ".join(common_skills[:10])
-                        + ("…" if len(common_skills) > 10 else "")
+                        f"**{len(common)} shared skills** across all selected roles: "
+                        + ", ".join(common[:10])
+                        + ("…" if len(common) > 10 else "")
                     )
 
             st.markdown("<br>", unsafe_allow_html=True)
@@ -604,7 +674,7 @@ def load_dashboard():
     # ── PAGE: TRENDS OVER TIME ────────────────────────────────────────────────
     elif page == "Trends Over Time":
         st.markdown("### Trends Over Time")
-        df_trends = roles_trends()          
+        df_trends = roles_trends()
         df_trends = df_trends.sort_values("month", ascending=True)
 
         COLORS = [
@@ -616,11 +686,11 @@ def load_dashboard():
         for i, role_name in enumerate(df_trends["name"].unique()):
             df_role = df_trends[df_trends["name"] == role_name]
             color   = COLORS[i % len(COLORS)]
-            r, g, b = int(color[1:3],16), int(color[3:5],16), int(color[5:7],16)
+            r, g, b = int(color[1:3], 16), int(color[3:5], 16), int(color[5:7], 16)
 
             fig.add_trace(go.Scatter(
                 x=df_role["month"],
-                y=df_role["jobcount"],          
+                y=df_role["jobcount"],
                 name=role_name,
                 mode="lines",
                 line=dict(color=color, width=2.5, shape="spline", smoothing=1.2),

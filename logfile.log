@@ -3096,3 +3096,171 @@ LINE 2:                     INSERT OR IGNORE INTO job_data
 2026-06-05 18:57:52,738 | INFO | mainscript.py:46 | internshala() | No data found on page 2 — stopping pagination for https://internshala.com/jobs/big-data-jobs/
 2026-06-05 18:57:53,408 | INFO | db_manager.py:112 | manage_operation() | manage_operation completed successfully
 2026-06-05 18:57:53,408 | INFO | mainscript.py:62 | internshala() | Processed data inserted into clean_data schema (PostgreSQL)
+2026-06-06 16:32:22,222 | INFO | mainscript.py:34 | internshala() | Execution started...
+2026-06-06 16:32:23,508 | INFO | mainscript.py:48 | internshala() | Scraped 50 jobs from https://internshala.com/jobs/machine-learning-jobs/
+2026-06-06 16:33:50,895 | INFO | mainscript.py:52 | internshala() | Inserted 50 jobs into raw_data schema (PostgreSQL)
+2026-06-06 16:33:51,969 | INFO | mainscript.py:48 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/machine-learning-jobs/page-2
+2026-06-06 16:33:51,969 | ERROR | mainscript.py:55 | internshala() | Failed scraping page 2 of https://internshala.com/jobs/machine-learning-jobs/
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 50, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 14, in insertRawData
+    cur = conn.cursor()
+psycopg2.InterfaceError: connection already closed
+2026-06-06 16:33:52,867 | INFO | mainscript.py:48 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/machine-learning-jobs/page-3
+2026-06-06 16:33:52,867 | ERROR | mainscript.py:55 | internshala() | Failed scraping page 3 of https://internshala.com/jobs/machine-learning-jobs/
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 50, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 14, in insertRawData
+    cur = conn.cursor()
+psycopg2.InterfaceError: connection already closed
+2026-06-06 16:33:53,668 | INFO | mainscript.py:48 | internshala() | Scraped 21 jobs from https://internshala.com/jobs/machine-learning-jobs/page-4
+2026-06-06 16:33:53,668 | ERROR | mainscript.py:55 | internshala() | Failed scraping page 4 of https://internshala.com/jobs/machine-learning-jobs/
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 50, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 14, in insertRawData
+    cur = conn.cursor()
+psycopg2.InterfaceError: connection already closed
+2026-06-06 16:33:54,191 | INFO | mainscript.py:45 | internshala() | No data found on page 5 — stopping pagination for https://internshala.com/jobs/machine-learning-jobs/
+2026-06-06 16:33:55,496 | INFO | mainscript.py:48 | internshala() | Scraped 50 jobs from https://internshala.com/jobs/backend-development-jobs/
+2026-06-06 16:33:55,497 | ERROR | mainscript.py:55 | internshala() | Failed scraping page 1 of https://internshala.com/jobs/backend-development-jobs/
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 50, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 14, in insertRawData
+    cur = conn.cursor()
+psycopg2.InterfaceError: connection already closed
+2026-06-06 16:33:56,456 | INFO | mainscript.py:48 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/backend-development-jobs/page-2
+2026-06-06 16:33:56,456 | ERROR | mainscript.py:55 | internshala() | Failed scraping page 2 of https://internshala.com/jobs/backend-development-jobs/
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 50, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 14, in insertRawData
+    cur = conn.cursor()
+psycopg2.InterfaceError: connection already closed
+2026-06-06 16:33:57,483 | INFO | mainscript.py:48 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/backend-development-jobs/page-3
+2026-06-06 16:33:57,483 | ERROR | mainscript.py:55 | internshala() | Failed scraping page 3 of https://internshala.com/jobs/backend-development-jobs/
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 50, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 14, in insertRawData
+    cur = conn.cursor()
+psycopg2.InterfaceError: connection already closed
+2026-06-06 16:33:58,448 | INFO | mainscript.py:48 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/backend-development-jobs/page-4
+2026-06-06 16:33:58,449 | ERROR | mainscript.py:55 | internshala() | Failed scraping page 4 of https://internshala.com/jobs/backend-development-jobs/
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 50, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 14, in insertRawData
+    cur = conn.cursor()
+psycopg2.InterfaceError: connection already closed
+2026-06-06 16:33:59,311 | INFO | mainscript.py:48 | internshala() | Scraped 5 jobs from https://internshala.com/jobs/backend-development-jobs/page-5
+2026-06-06 16:33:59,311 | ERROR | mainscript.py:55 | internshala() | Failed scraping page 5 of https://internshala.com/jobs/backend-development-jobs/
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 50, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 14, in insertRawData
+    cur = conn.cursor()
+psycopg2.InterfaceError: connection already closed
+2026-06-06 16:33:59,861 | INFO | mainscript.py:45 | internshala() | No data found on page 6 — stopping pagination for https://internshala.com/jobs/backend-development-jobs/
+2026-06-06 16:34:00,906 | INFO | mainscript.py:48 | internshala() | Scraped 50 jobs from https://internshala.com/fresher-jobs/front-end-development-jobs/
+2026-06-06 16:34:00,907 | ERROR | mainscript.py:55 | internshala() | Failed scraping page 1 of https://internshala.com/fresher-jobs/front-end-development-jobs/
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 50, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 14, in insertRawData
+    cur = conn.cursor()
+psycopg2.InterfaceError: connection already closed
+2026-06-06 16:34:01,595 | INFO | mainscript.py:48 | internshala() | Scraped 10 jobs from https://internshala.com/fresher-jobs/front-end-development-jobs/page-2
+2026-06-06 16:34:01,596 | ERROR | mainscript.py:55 | internshala() | Failed scraping page 2 of https://internshala.com/fresher-jobs/front-end-development-jobs/
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 50, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 14, in insertRawData
+    cur = conn.cursor()
+psycopg2.InterfaceError: connection already closed
+2026-06-06 16:34:02,162 | INFO | mainscript.py:45 | internshala() | No data found on page 3 — stopping pagination for https://internshala.com/fresher-jobs/front-end-development-jobs/
+2026-06-06 16:34:03,495 | INFO | mainscript.py:48 | internshala() | Scraped 50 jobs from https://internshala.com/jobs/mobile-app-development-jobs/
+2026-06-06 16:34:03,495 | ERROR | mainscript.py:55 | internshala() | Failed scraping page 1 of https://internshala.com/jobs/mobile-app-development-jobs/
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 50, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 14, in insertRawData
+    cur = conn.cursor()
+psycopg2.InterfaceError: connection already closed
+2026-06-06 16:34:04,372 | INFO | mainscript.py:48 | internshala() | Scraped 28 jobs from https://internshala.com/jobs/mobile-app-development-jobs/page-2
+2026-06-06 16:34:04,372 | ERROR | mainscript.py:55 | internshala() | Failed scraping page 2 of https://internshala.com/jobs/mobile-app-development-jobs/
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 50, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 14, in insertRawData
+    cur = conn.cursor()
+psycopg2.InterfaceError: connection already closed
+2026-06-06 16:34:04,954 | INFO | mainscript.py:45 | internshala() | No data found on page 3 — stopping pagination for https://internshala.com/jobs/mobile-app-development-jobs/
+2026-06-06 16:34:06,103 | INFO | mainscript.py:48 | internshala() | Scraped 30 jobs from https://internshala.com/jobs/big-data-jobs/
+2026-06-06 16:34:06,103 | ERROR | mainscript.py:55 | internshala() | Failed scraping page 1 of https://internshala.com/jobs/big-data-jobs/
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 50, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 14, in insertRawData
+    cur = conn.cursor()
+psycopg2.InterfaceError: connection already closed
+2026-06-06 16:34:06,870 | INFO | mainscript.py:45 | internshala() | No data found on page 2 — stopping pagination for https://internshala.com/jobs/big-data-jobs/
+2026-06-06 16:34:06,871 | ERROR | transformData.py:136 | loadData() | loadData failed: connection already closed
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\transform\transformData.py", line 83, in loadData
+    cur = conn.cursor()
+psycopg2.InterfaceError: connection already closed
+2026-06-06 16:34:07,304 | INFO | db_manager.py:112 | manage_operation() | manage_operation completed successfully
+2026-06-06 16:34:07,304 | INFO | mainscript.py:61 | internshala() | Processed data inserted into clean_data schema (PostgreSQL)
+2026-06-06 16:44:16,849 | INFO | mainscript.py:34 | internshala() | Execution started...
+2026-06-06 16:44:18,178 | INFO | mainscript.py:48 | internshala() | Scraped 50 jobs from https://internshala.com/jobs/machine-learning-jobs/
+2026-06-06 16:45:10,300 | INFO | mainscript.py:52 | internshala() | Inserted 50 jobs into raw_data schema (PostgreSQL)
+2026-06-06 16:45:11,319 | INFO | mainscript.py:48 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/machine-learning-jobs/page-2
+2026-06-06 16:45:37,721 | INFO | mainscript.py:52 | internshala() | Inserted 40 jobs into raw_data schema (PostgreSQL)
+2026-06-06 16:45:38,773 | INFO | mainscript.py:48 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/machine-learning-jobs/page-3
+2026-06-06 16:46:01,016 | INFO | mainscript.py:52 | internshala() | Inserted 40 jobs into raw_data schema (PostgreSQL)
+2026-06-06 16:46:01,765 | INFO | mainscript.py:48 | internshala() | Scraped 21 jobs from https://internshala.com/jobs/machine-learning-jobs/page-4
+2026-06-06 16:46:03,481 | INFO | mainscript.py:52 | internshala() | Inserted 21 jobs into raw_data schema (PostgreSQL)
+2026-06-06 16:46:04,064 | INFO | mainscript.py:45 | internshala() | No data found on page 5 — stopping pagination for https://internshala.com/jobs/machine-learning-jobs/
+2026-06-06 16:46:05,201 | INFO | mainscript.py:48 | internshala() | Scraped 50 jobs from https://internshala.com/jobs/backend-development-jobs/
+2026-06-06 16:46:44,710 | INFO | mainscript.py:52 | internshala() | Inserted 50 jobs into raw_data schema (PostgreSQL)
+2026-06-06 16:46:45,851 | INFO | mainscript.py:48 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/backend-development-jobs/page-2
+2026-06-06 16:47:15,275 | INFO | mainscript.py:52 | internshala() | Inserted 40 jobs into raw_data schema (PostgreSQL)
+2026-06-06 16:47:16,244 | INFO | mainscript.py:48 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/backend-development-jobs/page-3
+2026-06-06 16:47:46,203 | INFO | mainscript.py:52 | internshala() | Inserted 40 jobs into raw_data schema (PostgreSQL)
+2026-06-06 16:47:47,408 | INFO | mainscript.py:48 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/backend-development-jobs/page-4
+2026-06-06 16:48:04,078 | INFO | mainscript.py:52 | internshala() | Inserted 40 jobs into raw_data schema (PostgreSQL)
+2026-06-06 16:48:04,762 | INFO | mainscript.py:48 | internshala() | Scraped 5 jobs from https://internshala.com/jobs/backend-development-jobs/page-5
+2026-06-06 16:48:05,311 | INFO | mainscript.py:52 | internshala() | Inserted 5 jobs into raw_data schema (PostgreSQL)
+2026-06-06 16:48:05,870 | INFO | mainscript.py:45 | internshala() | No data found on page 6 — stopping pagination for https://internshala.com/jobs/backend-development-jobs/
+2026-06-06 16:48:07,046 | INFO | mainscript.py:48 | internshala() | Scraped 50 jobs from https://internshala.com/fresher-jobs/front-end-development-jobs/
+2026-06-06 16:48:27,130 | INFO | mainscript.py:52 | internshala() | Inserted 50 jobs into raw_data schema (PostgreSQL)
+2026-06-06 16:48:27,978 | INFO | mainscript.py:48 | internshala() | Scraped 10 jobs from https://internshala.com/fresher-jobs/front-end-development-jobs/page-2
+2026-06-06 16:48:28,616 | INFO | mainscript.py:52 | internshala() | Inserted 10 jobs into raw_data schema (PostgreSQL)
+2026-06-06 16:48:29,181 | INFO | mainscript.py:45 | internshala() | No data found on page 3 — stopping pagination for https://internshala.com/fresher-jobs/front-end-development-jobs/
+2026-06-06 16:48:30,457 | INFO | mainscript.py:48 | internshala() | Scraped 50 jobs from https://internshala.com/jobs/mobile-app-development-jobs/
+2026-06-06 16:49:03,692 | INFO | mainscript.py:52 | internshala() | Inserted 50 jobs into raw_data schema (PostgreSQL)
+2026-06-06 16:49:04,564 | INFO | mainscript.py:48 | internshala() | Scraped 28 jobs from https://internshala.com/jobs/mobile-app-development-jobs/page-2
+2026-06-06 16:49:15,823 | INFO | mainscript.py:52 | internshala() | Inserted 28 jobs into raw_data schema (PostgreSQL)
+2026-06-06 16:49:16,346 | INFO | mainscript.py:45 | internshala() | No data found on page 3 — stopping pagination for https://internshala.com/jobs/mobile-app-development-jobs/
+2026-06-06 16:49:17,224 | INFO | mainscript.py:48 | internshala() | Scraped 30 jobs from https://internshala.com/jobs/big-data-jobs/
+2026-06-06 16:49:36,459 | INFO | mainscript.py:52 | internshala() | Inserted 30 jobs into raw_data schema (PostgreSQL)
+2026-06-06 16:49:37,059 | INFO | mainscript.py:45 | internshala() | No data found on page 2 — stopping pagination for https://internshala.com/jobs/big-data-jobs/
+2026-06-06 16:58:11,054 | INFO | db_manager.py:112 | manage_operation() | manage_operation completed successfully
+2026-06-06 16:58:11,072 | INFO | mainscript.py:61 | internshala() | Processed data inserted into clean_data schema (PostgreSQL)

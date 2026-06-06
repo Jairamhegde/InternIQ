@@ -41,3 +41,21 @@ def total_opportunities():
     '''
     df = pd.read_sql_query(query, conn)
     return df
+
+
+def average_salary(role):
+    conn = connect_database("clean_data")
+    query = '''
+    SELECT title,min(salary_min) as minimum,max(salary_max) as maximum,
+    avg((salary_min+salary_max)/2.0) as average,
+    count(*) as count
+    from job_data
+    WHERE title = %s
+    GROUP BY title;
+    '''
+    df = pd.read_sql_query(query,conn,params=(role,))
+    return df
+
+
+# print(average_salary("python developer"))
+

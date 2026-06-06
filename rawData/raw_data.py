@@ -1,12 +1,10 @@
 from datetime import datetime
 from dbconnection.dbconnect import connect_database
 
-
 def normalize(text):
     if not text:
         return None
     return " ".join(text.split()).strip().lower()
-
 
 def insertRawData(job_data):
 
@@ -121,6 +119,4 @@ def insertRawData(job_data):
         conn.rollback()
         raise e
 
-    finally:
-        cur.close()
-        conn.close()
+   

@@ -14,3 +14,6 @@ JOBS_DB = BASE_DIR/"jobs.db"
 TEST_DB = BASE_DIR/"transform"/"test.db"
 
 
+rawjson = BASE_DIR/"rawdata.json"
+
+

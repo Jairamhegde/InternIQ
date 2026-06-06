@@ -6,9 +6,6 @@ from extract.extractor import scrape_data
 from rawData.raw_data import insertRawData
 from db.db_manager import manage_operation
 from transform.transformData import loadData
-# future imports
-# from extract.cleanData import loadData
-# from insights.insight import generate_insights
 
 
 logging.basicConfig(
@@ -24,54 +21,45 @@ logging.basicConfig(
     ]
 )
 
-logging.info("Execution started...")
 page_url = [
-        "https://internshala.com/jobs/machine-learning-jobs/",
-        "https://internshala.com/jobs/backend-development-jobs/",
-        "https://internshala.com/fresher-jobs/front-end-development-jobs/",
-        "https://internshala.com/jobs/mobile-app-development-jobs/",
-        "https://internshala.com/jobs/big-data-jobs/"
-    ]
+    "https://internshala.com/jobs/machine-learning-jobs/",
+    "https://internshala.com/jobs/backend-development-jobs/",
+    "https://internshala.com/fresher-jobs/front-end-development-jobs/",
+    "https://internshala.com/jobs/mobile-app-development-jobs/",
+    "https://internshala.com/jobs/big-data-jobs/"
+]
+
 
 def internshala(url_list):
+    logging.info("Execution started...")
+
     for url in url_list:
         for page in range(1, 21):
 
-            if page == 1:
-                link = url
-            else:
-                link = f"{url}page-{page}"
-
+            link = url if page == 1 else f"{url}page-{page}"
             try:
-
-                soup = get_soup(link)
-
+                soup     = get_soup(link)
                 raw_data = scrape_data(soup)
+
                 if not raw_data:
-                    logging.info(f"No data found in page {page}")
+                    logging.info(f"No data found on page {page} — stopping pagination for {url}")
                     break
 
                 logging.info(f"Scraped {len(raw_data)} jobs from {link}")
 
                 insertRawData(raw_data)
 
-                logging.info("Inserted raw data into rawData.db")
+                logging.info(f"Inserted {len(raw_data)} jobs into raw_data schema (PostgreSQL)")
 
             except Exception:
+                logging.exception(f"Failed scraping page {page} of {url}")
 
-                logging.exception(
-                    f"Failed scraping page {page}"
-                )
-
-        # Transform ALL raw data once
+    # Transform all raw data once scraping is complete
     data = loadData()
     manage_operation(data)
 
-    logging.info(
-        "Inserted processed data into jobs.db"
-    )
+    logging.info("Processed data inserted into clean_data schema (PostgreSQL)")
 
 
 if __name__ == '__main__':
-    
     internshala(url_list=page_url)

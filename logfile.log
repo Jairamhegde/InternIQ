@@ -2349,3 +2349,750 @@ AttributeError: 'str' object has no attribute 'text'
 2026-05-24 23:45:30,231 | INFO | mainscript.py:58 | internshala() | Inserted raw data into rawData.db
 2026-05-24 23:45:31,439 | INFO | mainscript.py:51 | internshala() | No data found in page 2
 2026-05-24 23:45:31,576 | INFO | mainscript.py:70 | internshala() | Inserted processed data into jobs.db
+2026-05-28 12:22:56,064 | INFO | mainscript.py:27 | <module>() | Execution started...
+2026-05-28 12:23:01,005 | INFO | mainscript.py:54 | internshala() | Scraped 50 jobs from https://internshala.com/jobs/machine-learning-jobs/
+2026-05-28 12:23:01,057 | INFO | mainscript.py:58 | internshala() | Inserted raw data into rawData.db
+2026-05-28 12:23:03,795 | INFO | mainscript.py:54 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/machine-learning-jobs/page-2
+2026-05-28 12:23:03,837 | INFO | mainscript.py:58 | internshala() | Inserted raw data into rawData.db
+2026-05-28 12:23:07,586 | INFO | mainscript.py:54 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/machine-learning-jobs/page-3
+2026-05-28 12:23:07,671 | INFO | mainscript.py:58 | internshala() | Inserted raw data into rawData.db
+2026-05-28 12:23:11,143 | INFO | mainscript.py:54 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/machine-learning-jobs/page-4
+2026-05-28 12:23:11,171 | INFO | mainscript.py:58 | internshala() | Inserted raw data into rawData.db
+2026-05-28 12:23:15,401 | INFO | mainscript.py:54 | internshala() | Scraped 28 jobs from https://internshala.com/jobs/machine-learning-jobs/page-5
+2026-05-28 12:23:15,406 | INFO | mainscript.py:58 | internshala() | Inserted raw data into rawData.db
+2026-05-28 12:23:17,770 | INFO | mainscript.py:51 | internshala() | No data found in page 6
+2026-05-28 12:23:22,758 | INFO | mainscript.py:54 | internshala() | Scraped 50 jobs from https://internshala.com/jobs/backend-development-jobs/
+2026-05-28 12:23:22,768 | INFO | mainscript.py:58 | internshala() | Inserted raw data into rawData.db
+2026-05-28 12:23:27,078 | INFO | mainscript.py:54 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/backend-development-jobs/page-2
+2026-05-28 12:23:27,087 | INFO | mainscript.py:58 | internshala() | Inserted raw data into rawData.db
+2026-05-28 12:23:30,951 | INFO | mainscript.py:54 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/backend-development-jobs/page-3
+2026-05-28 12:23:30,959 | INFO | mainscript.py:58 | internshala() | Inserted raw data into rawData.db
+2026-05-28 12:23:35,920 | INFO | mainscript.py:54 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/backend-development-jobs/page-4
+2026-05-28 12:23:35,928 | INFO | mainscript.py:58 | internshala() | Inserted raw data into rawData.db
+2026-05-28 12:23:42,676 | INFO | mainscript.py:54 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/backend-development-jobs/page-5
+2026-05-28 12:23:42,683 | INFO | mainscript.py:58 | internshala() | Inserted raw data into rawData.db
+2026-05-28 12:23:48,638 | INFO | mainscript.py:54 | internshala() | Scraped 2 jobs from https://internshala.com/jobs/backend-development-jobs/page-6
+2026-05-28 12:23:48,643 | INFO | mainscript.py:58 | internshala() | Inserted raw data into rawData.db
+2026-05-28 12:23:52,111 | INFO | mainscript.py:51 | internshala() | No data found in page 7
+2026-05-28 12:23:58,426 | INFO | mainscript.py:54 | internshala() | Scraped 50 jobs from https://internshala.com/fresher-jobs/front-end-development-jobs/
+2026-05-28 12:23:58,443 | INFO | mainscript.py:58 | internshala() | Inserted raw data into rawData.db
+2026-05-28 12:24:02,268 | INFO | mainscript.py:54 | internshala() | Scraped 13 jobs from https://internshala.com/fresher-jobs/front-end-development-jobs/page-2
+2026-05-28 12:24:02,274 | INFO | mainscript.py:58 | internshala() | Inserted raw data into rawData.db
+2026-05-28 12:24:04,451 | INFO | mainscript.py:51 | internshala() | No data found in page 3
+2026-05-28 12:24:07,814 | INFO | mainscript.py:54 | internshala() | Scraped 50 jobs from https://internshala.com/jobs/mobile-app-development-jobs/
+2026-05-28 12:24:07,844 | INFO | mainscript.py:58 | internshala() | Inserted raw data into rawData.db
+2026-05-28 12:24:11,703 | INFO | mainscript.py:54 | internshala() | Scraped 25 jobs from https://internshala.com/jobs/mobile-app-development-jobs/page-2
+2026-05-28 12:24:11,727 | INFO | mainscript.py:58 | internshala() | Inserted raw data into rawData.db
+2026-05-28 12:24:15,275 | INFO | mainscript.py:51 | internshala() | No data found in page 3
+2026-05-28 12:24:17,458 | INFO | mainscript.py:54 | internshala() | Scraped 38 jobs from https://internshala.com/jobs/big-data-jobs/
+2026-05-28 12:24:17,467 | INFO | mainscript.py:58 | internshala() | Inserted raw data into rawData.db
+2026-05-28 12:24:20,244 | INFO | mainscript.py:51 | internshala() | No data found in page 2
+2026-05-28 12:24:20,356 | INFO | mainscript.py:70 | internshala() | Inserted processed data into jobs.db
+2026-05-30 19:04:24,097 | INFO | mainscript.py:27 | <module>() | Execution started...
+2026-05-30 19:04:27,505 | INFO | mainscript.py:54 | internshala() | Scraped 50 jobs from https://internshala.com/jobs/machine-learning-jobs/
+2026-05-30 19:04:27,532 | INFO | mainscript.py:58 | internshala() | Inserted raw data into rawData.db
+2026-05-30 19:04:28,626 | INFO | mainscript.py:54 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/machine-learning-jobs/page-2
+2026-05-30 19:04:28,636 | INFO | mainscript.py:58 | internshala() | Inserted raw data into rawData.db
+2026-05-30 19:04:29,724 | INFO | mainscript.py:54 | internshala() | Scraped 36 jobs from https://internshala.com/jobs/machine-learning-jobs/page-3
+2026-05-30 19:04:29,738 | INFO | mainscript.py:58 | internshala() | Inserted raw data into rawData.db
+2026-05-30 19:04:30,289 | INFO | mainscript.py:51 | internshala() | No data found in page 4
+2026-05-30 19:04:31,466 | INFO | mainscript.py:54 | internshala() | Scraped 50 jobs from https://internshala.com/jobs/backend-development-jobs/
+2026-05-30 19:04:31,475 | INFO | mainscript.py:58 | internshala() | Inserted raw data into rawData.db
+2026-05-30 19:04:32,464 | INFO | mainscript.py:54 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/backend-development-jobs/page-2
+2026-05-30 19:04:32,473 | INFO | mainscript.py:58 | internshala() | Inserted raw data into rawData.db
+2026-05-30 19:04:33,405 | INFO | mainscript.py:54 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/backend-development-jobs/page-3
+2026-05-30 19:04:33,438 | INFO | mainscript.py:58 | internshala() | Inserted raw data into rawData.db
+2026-05-30 19:04:34,349 | INFO | mainscript.py:54 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/backend-development-jobs/page-4
+2026-05-30 19:04:34,358 | INFO | mainscript.py:58 | internshala() | Inserted raw data into rawData.db
+2026-05-30 19:04:34,968 | INFO | mainscript.py:54 | internshala() | Scraped 6 jobs from https://internshala.com/jobs/backend-development-jobs/page-5
+2026-05-30 19:04:34,974 | INFO | mainscript.py:58 | internshala() | Inserted raw data into rawData.db
+2026-05-30 19:04:35,536 | INFO | mainscript.py:51 | internshala() | No data found in page 6
+2026-05-30 19:04:36,567 | INFO | mainscript.py:54 | internshala() | Scraped 40 jobs from https://internshala.com/fresher-jobs/front-end-development-jobs/
+2026-05-30 19:04:36,574 | INFO | mainscript.py:58 | internshala() | Inserted raw data into rawData.db
+2026-05-30 19:04:37,166 | INFO | mainscript.py:54 | internshala() | Scraped 1 jobs from https://internshala.com/fresher-jobs/front-end-development-jobs/page-2
+2026-05-30 19:04:37,169 | INFO | mainscript.py:58 | internshala() | Inserted raw data into rawData.db
+2026-05-30 19:04:37,714 | INFO | mainscript.py:51 | internshala() | No data found in page 3
+2026-05-30 19:04:38,828 | INFO | mainscript.py:54 | internshala() | Scraped 50 jobs from https://internshala.com/jobs/mobile-app-development-jobs/
+2026-05-30 19:04:38,845 | INFO | mainscript.py:58 | internshala() | Inserted raw data into rawData.db
+2026-05-30 19:04:39,596 | INFO | mainscript.py:54 | internshala() | Scraped 19 jobs from https://internshala.com/jobs/mobile-app-development-jobs/page-2
+2026-05-30 19:04:39,604 | INFO | mainscript.py:58 | internshala() | Inserted raw data into rawData.db
+2026-05-30 19:04:40,196 | INFO | mainscript.py:51 | internshala() | No data found in page 3
+2026-05-30 19:04:43,223 | INFO | mainscript.py:54 | internshala() | Scraped 28 jobs from https://internshala.com/jobs/big-data-jobs/
+2026-05-30 19:04:43,233 | INFO | mainscript.py:58 | internshala() | Inserted raw data into rawData.db
+2026-05-30 19:04:43,810 | INFO | mainscript.py:51 | internshala() | No data found in page 2
+2026-05-30 19:04:44,080 | INFO | mainscript.py:70 | internshala() | Inserted processed data into jobs.db
+2026-06-05 01:22:35,756 | INFO | mainscript.py:34 | internshala() | Execution started...
+2026-06-05 01:22:37,127 | INFO | mainscript.py:49 | internshala() | Scraped 50 jobs from https://internshala.com/jobs/machine-learning-jobs/
+2026-06-05 01:22:37,185 | ERROR | mainscript.py:56 | internshala() | Failed scraping page 1 of https://internshala.com/jobs/machine-learning-jobs/
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 51, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 122, in insertRawData
+    raise e
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 31, in insertRawData
+    cur.execute(
+    ~~~~~~~~~~~^
+        '''
+        ^^^
+    ...<12 lines>...
+        )
+        ^
+    )
+    ^
+psycopg2.errors.InsufficientPrivilege: permission denied for table job_data
+
+2026-06-05 01:22:38,921 | INFO | mainscript.py:49 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/machine-learning-jobs/page-2
+2026-06-05 01:22:38,964 | ERROR | mainscript.py:56 | internshala() | Failed scraping page 2 of https://internshala.com/jobs/machine-learning-jobs/
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 51, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 122, in insertRawData
+    raise e
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 31, in insertRawData
+    cur.execute(
+    ~~~~~~~~~~~^
+        '''
+        ^^^
+    ...<12 lines>...
+        )
+        ^
+    )
+    ^
+psycopg2.errors.InsufficientPrivilege: permission denied for table job_data
+
+2026-06-05 01:22:40,023 | INFO | mainscript.py:49 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/machine-learning-jobs/page-3
+2026-06-05 01:22:40,068 | ERROR | mainscript.py:56 | internshala() | Failed scraping page 3 of https://internshala.com/jobs/machine-learning-jobs/
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 51, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 122, in insertRawData
+    raise e
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 31, in insertRawData
+    cur.execute(
+    ~~~~~~~~~~~^
+        '''
+        ^^^
+    ...<12 lines>...
+        )
+        ^
+    )
+    ^
+psycopg2.errors.InsufficientPrivilege: permission denied for table job_data
+
+2026-06-05 01:22:40,848 | INFO | mainscript.py:49 | internshala() | Scraped 7 jobs from https://internshala.com/jobs/machine-learning-jobs/page-4
+2026-06-05 01:22:40,878 | ERROR | mainscript.py:56 | internshala() | Failed scraping page 4 of https://internshala.com/jobs/machine-learning-jobs/
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 51, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 122, in insertRawData
+    raise e
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 31, in insertRawData
+    cur.execute(
+    ~~~~~~~~~~~^
+        '''
+        ^^^
+    ...<12 lines>...
+        )
+        ^
+    )
+    ^
+psycopg2.errors.InsufficientPrivilege: permission denied for table job_data
+
+2026-06-05 01:22:41,638 | INFO | mainscript.py:46 | internshala() | No data found on page 5 — stopping pagination for https://internshala.com/jobs/machine-learning-jobs/
+2026-06-05 01:22:42,930 | INFO | mainscript.py:49 | internshala() | Scraped 50 jobs from https://internshala.com/jobs/backend-development-jobs/
+2026-06-05 01:22:42,960 | ERROR | mainscript.py:56 | internshala() | Failed scraping page 1 of https://internshala.com/jobs/backend-development-jobs/
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 51, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 122, in insertRawData
+    raise e
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 31, in insertRawData
+    cur.execute(
+    ~~~~~~~~~~~^
+        '''
+        ^^^
+    ...<12 lines>...
+        )
+        ^
+    )
+    ^
+psycopg2.errors.InsufficientPrivilege: permission denied for table job_data
+
+2026-06-05 01:22:43,977 | INFO | mainscript.py:49 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/backend-development-jobs/page-2
+2026-06-05 01:22:44,009 | ERROR | mainscript.py:56 | internshala() | Failed scraping page 2 of https://internshala.com/jobs/backend-development-jobs/
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 51, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 122, in insertRawData
+    raise e
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 31, in insertRawData
+    cur.execute(
+    ~~~~~~~~~~~^
+        '''
+        ^^^
+    ...<12 lines>...
+        )
+        ^
+    )
+    ^
+psycopg2.errors.InsufficientPrivilege: permission denied for table job_data
+
+2026-06-05 01:22:45,101 | INFO | mainscript.py:49 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/backend-development-jobs/page-3
+2026-06-05 01:22:45,132 | ERROR | mainscript.py:56 | internshala() | Failed scraping page 3 of https://internshala.com/jobs/backend-development-jobs/
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 51, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 122, in insertRawData
+    raise e
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 31, in insertRawData
+    cur.execute(
+    ~~~~~~~~~~~^
+        '''
+        ^^^
+    ...<12 lines>...
+        )
+        ^
+    )
+    ^
+psycopg2.errors.InsufficientPrivilege: permission denied for table job_data
+
+2026-06-05 01:22:46,192 | INFO | mainscript.py:49 | internshala() | Scraped 38 jobs from https://internshala.com/jobs/backend-development-jobs/page-4
+2026-06-05 01:22:46,221 | ERROR | mainscript.py:56 | internshala() | Failed scraping page 4 of https://internshala.com/jobs/backend-development-jobs/
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 51, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 122, in insertRawData
+    raise e
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 31, in insertRawData
+    cur.execute(
+    ~~~~~~~~~~~^
+        '''
+        ^^^
+    ...<12 lines>...
+        )
+        ^
+    )
+    ^
+psycopg2.errors.InsufficientPrivilege: permission denied for table job_data
+
+2026-06-05 01:22:46,914 | INFO | mainscript.py:46 | internshala() | No data found on page 5 — stopping pagination for https://internshala.com/jobs/backend-development-jobs/
+2026-06-05 01:22:47,975 | INFO | mainscript.py:49 | internshala() | Scraped 48 jobs from https://internshala.com/fresher-jobs/front-end-development-jobs/
+2026-06-05 01:22:48,004 | ERROR | mainscript.py:56 | internshala() | Failed scraping page 1 of https://internshala.com/fresher-jobs/front-end-development-jobs/
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 51, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 122, in insertRawData
+    raise e
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 31, in insertRawData
+    cur.execute(
+    ~~~~~~~~~~~^
+        '''
+        ^^^
+    ...<12 lines>...
+        )
+        ^
+    )
+    ^
+psycopg2.errors.InsufficientPrivilege: permission denied for table job_data
+
+2026-06-05 01:22:48,858 | INFO | mainscript.py:49 | internshala() | Scraped 8 jobs from https://internshala.com/fresher-jobs/front-end-development-jobs/page-2
+2026-06-05 01:22:48,893 | ERROR | mainscript.py:56 | internshala() | Failed scraping page 2 of https://internshala.com/fresher-jobs/front-end-development-jobs/
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 51, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 122, in insertRawData
+    raise e
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 31, in insertRawData
+    cur.execute(
+    ~~~~~~~~~~~^
+        '''
+        ^^^
+    ...<12 lines>...
+        )
+        ^
+    )
+    ^
+psycopg2.errors.InsufficientPrivilege: permission denied for table job_data
+
+2026-06-05 01:22:49,639 | INFO | mainscript.py:46 | internshala() | No data found on page 3 — stopping pagination for https://internshala.com/fresher-jobs/front-end-development-jobs/
+2026-06-05 01:22:50,711 | INFO | mainscript.py:49 | internshala() | Scraped 50 jobs from https://internshala.com/jobs/mobile-app-development-jobs/
+2026-06-05 01:22:50,740 | ERROR | mainscript.py:56 | internshala() | Failed scraping page 1 of https://internshala.com/jobs/mobile-app-development-jobs/
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 51, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 122, in insertRawData
+    raise e
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 31, in insertRawData
+    cur.execute(
+    ~~~~~~~~~~~^
+        '''
+        ^^^
+    ...<12 lines>...
+        )
+        ^
+    )
+    ^
+psycopg2.errors.InsufficientPrivilege: permission denied for table job_data
+
+2026-06-05 01:22:51,611 | INFO | mainscript.py:49 | internshala() | Scraped 24 jobs from https://internshala.com/jobs/mobile-app-development-jobs/page-2
+2026-06-05 01:22:51,641 | ERROR | mainscript.py:56 | internshala() | Failed scraping page 2 of https://internshala.com/jobs/mobile-app-development-jobs/
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 51, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 122, in insertRawData
+    raise e
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 31, in insertRawData
+    cur.execute(
+    ~~~~~~~~~~~^
+        '''
+        ^^^
+    ...<12 lines>...
+        )
+        ^
+    )
+    ^
+psycopg2.errors.InsufficientPrivilege: permission denied for table job_data
+
+2026-06-05 01:22:52,357 | INFO | mainscript.py:46 | internshala() | No data found on page 3 — stopping pagination for https://internshala.com/jobs/mobile-app-development-jobs/
+2026-06-05 01:22:53,174 | INFO | mainscript.py:49 | internshala() | Scraped 25 jobs from https://internshala.com/jobs/big-data-jobs/
+2026-06-05 01:22:53,203 | ERROR | mainscript.py:56 | internshala() | Failed scraping page 1 of https://internshala.com/jobs/big-data-jobs/
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 51, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 122, in insertRawData
+    raise e
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 31, in insertRawData
+    cur.execute(
+    ~~~~~~~~~~~^
+        '''
+        ^^^
+    ...<12 lines>...
+        )
+        ^
+    )
+    ^
+psycopg2.errors.InsufficientPrivilege: permission denied for table job_data
+
+2026-06-05 01:22:53,772 | INFO | mainscript.py:46 | internshala() | No data found on page 2 — stopping pagination for https://internshala.com/jobs/big-data-jobs/
+2026-06-05 01:22:53,805 | ERROR | transformData.py:137 | loadData() | loadData failed: permission denied for table job_data
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\transform\transformData.py", line 86, in loadData
+    cur.execute("SELECT * FROM job_data;")
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.InsufficientPrivilege: permission denied for table job_data
+
+2026-06-05 01:22:53,842 | INFO | mainscript.py:62 | internshala() | Processed data inserted into clean_data schema (PostgreSQL)
+2026-06-05 01:34:09,250 | INFO | mainscript.py:34 | internshala() | Execution started...
+2026-06-05 01:34:10,517 | INFO | mainscript.py:49 | internshala() | Scraped 50 jobs from https://internshala.com/jobs/machine-learning-jobs/
+2026-06-05 01:34:10,554 | ERROR | mainscript.py:56 | internshala() | Failed scraping page 1 of https://internshala.com/jobs/machine-learning-jobs/
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 51, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 122, in insertRawData
+    raise e
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 31, in insertRawData
+    cur.execute(
+    ~~~~~~~~~~~^
+        '''
+        ^^^
+    ...<12 lines>...
+        )
+        ^
+    )
+    ^
+psycopg2.errors.InsufficientPrivilege: permission denied for sequence job_data_id_seq
+
+2026-06-05 01:34:11,770 | INFO | mainscript.py:49 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/machine-learning-jobs/page-2
+2026-06-05 01:34:11,805 | ERROR | mainscript.py:56 | internshala() | Failed scraping page 2 of https://internshala.com/jobs/machine-learning-jobs/
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 51, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 122, in insertRawData
+    raise e
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 31, in insertRawData
+    cur.execute(
+    ~~~~~~~~~~~^
+        '''
+        ^^^
+    ...<12 lines>...
+        )
+        ^
+    )
+    ^
+psycopg2.errors.InsufficientPrivilege: permission denied for sequence job_data_id_seq
+
+2026-06-05 01:34:12,804 | INFO | mainscript.py:49 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/machine-learning-jobs/page-3
+2026-06-05 01:34:12,834 | ERROR | mainscript.py:56 | internshala() | Failed scraping page 3 of https://internshala.com/jobs/machine-learning-jobs/
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 51, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 122, in insertRawData
+    raise e
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 31, in insertRawData
+    cur.execute(
+    ~~~~~~~~~~~^
+        '''
+        ^^^
+    ...<12 lines>...
+        )
+        ^
+    )
+    ^
+psycopg2.errors.InsufficientPrivilege: permission denied for sequence job_data_id_seq
+
+2026-06-05 01:34:13,767 | INFO | mainscript.py:49 | internshala() | Scraped 7 jobs from https://internshala.com/jobs/machine-learning-jobs/page-4
+2026-06-05 01:34:13,798 | ERROR | mainscript.py:56 | internshala() | Failed scraping page 4 of https://internshala.com/jobs/machine-learning-jobs/
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 51, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 122, in insertRawData
+    raise e
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 31, in insertRawData
+    cur.execute(
+    ~~~~~~~~~~~^
+        '''
+        ^^^
+    ...<12 lines>...
+        )
+        ^
+    )
+    ^
+psycopg2.errors.InsufficientPrivilege: permission denied for sequence job_data_id_seq
+
+2026-06-05 01:34:14,412 | INFO | mainscript.py:46 | internshala() | No data found on page 5 — stopping pagination for https://internshala.com/jobs/machine-learning-jobs/
+2026-06-05 01:34:15,773 | INFO | mainscript.py:49 | internshala() | Scraped 50 jobs from https://internshala.com/jobs/backend-development-jobs/
+2026-06-05 01:34:15,804 | ERROR | mainscript.py:56 | internshala() | Failed scraping page 1 of https://internshala.com/jobs/backend-development-jobs/
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 51, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 122, in insertRawData
+    raise e
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 31, in insertRawData
+    cur.execute(
+    ~~~~~~~~~~~^
+        '''
+        ^^^
+    ...<12 lines>...
+        )
+        ^
+    )
+    ^
+psycopg2.errors.InsufficientPrivilege: permission denied for sequence job_data_id_seq
+
+2026-06-05 01:34:16,814 | INFO | mainscript.py:49 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/backend-development-jobs/page-2
+2026-06-05 01:34:16,843 | ERROR | mainscript.py:56 | internshala() | Failed scraping page 2 of https://internshala.com/jobs/backend-development-jobs/
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 51, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 122, in insertRawData
+    raise e
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 31, in insertRawData
+    cur.execute(
+    ~~~~~~~~~~~^
+        '''
+        ^^^
+    ...<12 lines>...
+        )
+        ^
+    )
+    ^
+psycopg2.errors.InsufficientPrivilege: permission denied for sequence job_data_id_seq
+
+2026-06-05 01:34:17,977 | INFO | mainscript.py:49 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/backend-development-jobs/page-3
+2026-06-05 01:34:18,006 | ERROR | mainscript.py:56 | internshala() | Failed scraping page 3 of https://internshala.com/jobs/backend-development-jobs/
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 51, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 122, in insertRawData
+    raise e
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 31, in insertRawData
+    cur.execute(
+    ~~~~~~~~~~~^
+        '''
+        ^^^
+    ...<12 lines>...
+        )
+        ^
+    )
+    ^
+psycopg2.errors.InsufficientPrivilege: permission denied for sequence job_data_id_seq
+
+2026-06-05 01:34:19,190 | INFO | mainscript.py:49 | internshala() | Scraped 38 jobs from https://internshala.com/jobs/backend-development-jobs/page-4
+2026-06-05 01:34:19,220 | ERROR | mainscript.py:56 | internshala() | Failed scraping page 4 of https://internshala.com/jobs/backend-development-jobs/
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 51, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 122, in insertRawData
+    raise e
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 31, in insertRawData
+    cur.execute(
+    ~~~~~~~~~~~^
+        '''
+        ^^^
+    ...<12 lines>...
+        )
+        ^
+    )
+    ^
+psycopg2.errors.InsufficientPrivilege: permission denied for sequence job_data_id_seq
+
+2026-06-05 01:34:19,944 | INFO | mainscript.py:46 | internshala() | No data found on page 5 — stopping pagination for https://internshala.com/jobs/backend-development-jobs/
+2026-06-05 01:34:21,132 | INFO | mainscript.py:49 | internshala() | Scraped 48 jobs from https://internshala.com/fresher-jobs/front-end-development-jobs/
+2026-06-05 01:34:21,162 | ERROR | mainscript.py:56 | internshala() | Failed scraping page 1 of https://internshala.com/fresher-jobs/front-end-development-jobs/
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 51, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 122, in insertRawData
+    raise e
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 31, in insertRawData
+    cur.execute(
+    ~~~~~~~~~~~^
+        '''
+        ^^^
+    ...<12 lines>...
+        )
+        ^
+    )
+    ^
+psycopg2.errors.InsufficientPrivilege: permission denied for sequence job_data_id_seq
+
+2026-06-05 01:34:21,997 | INFO | mainscript.py:49 | internshala() | Scraped 8 jobs from https://internshala.com/fresher-jobs/front-end-development-jobs/page-2
+2026-06-05 01:34:22,028 | ERROR | mainscript.py:56 | internshala() | Failed scraping page 2 of https://internshala.com/fresher-jobs/front-end-development-jobs/
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 51, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 122, in insertRawData
+    raise e
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 31, in insertRawData
+    cur.execute(
+    ~~~~~~~~~~~^
+        '''
+        ^^^
+    ...<12 lines>...
+        )
+        ^
+    )
+    ^
+psycopg2.errors.InsufficientPrivilege: permission denied for sequence job_data_id_seq
+
+2026-06-05 01:34:22,740 | INFO | mainscript.py:46 | internshala() | No data found on page 3 — stopping pagination for https://internshala.com/fresher-jobs/front-end-development-jobs/
+2026-06-05 01:34:23,882 | INFO | mainscript.py:49 | internshala() | Scraped 50 jobs from https://internshala.com/jobs/mobile-app-development-jobs/
+2026-06-05 01:34:23,914 | ERROR | mainscript.py:56 | internshala() | Failed scraping page 1 of https://internshala.com/jobs/mobile-app-development-jobs/
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 51, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 122, in insertRawData
+    raise e
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 31, in insertRawData
+    cur.execute(
+    ~~~~~~~~~~~^
+        '''
+        ^^^
+    ...<12 lines>...
+        )
+        ^
+    )
+    ^
+psycopg2.errors.InsufficientPrivilege: permission denied for sequence job_data_id_seq
+
+2026-06-05 01:34:25,080 | INFO | mainscript.py:49 | internshala() | Scraped 24 jobs from https://internshala.com/jobs/mobile-app-development-jobs/page-2
+2026-06-05 01:34:25,110 | ERROR | mainscript.py:56 | internshala() | Failed scraping page 2 of https://internshala.com/jobs/mobile-app-development-jobs/
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 51, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 122, in insertRawData
+    raise e
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 31, in insertRawData
+    cur.execute(
+    ~~~~~~~~~~~^
+        '''
+        ^^^
+    ...<12 lines>...
+        )
+        ^
+    )
+    ^
+psycopg2.errors.InsufficientPrivilege: permission denied for sequence job_data_id_seq
+
+2026-06-05 01:34:25,821 | INFO | mainscript.py:46 | internshala() | No data found on page 3 — stopping pagination for https://internshala.com/jobs/mobile-app-development-jobs/
+2026-06-05 01:34:26,639 | INFO | mainscript.py:49 | internshala() | Scraped 25 jobs from https://internshala.com/jobs/big-data-jobs/
+2026-06-05 01:34:26,669 | ERROR | mainscript.py:56 | internshala() | Failed scraping page 1 of https://internshala.com/jobs/big-data-jobs/
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\mainscript.py", line 51, in internshala
+    insertRawData(raw_data)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 122, in insertRawData
+    raise e
+  File "D:\intern_jobscraper\rawData\raw_data.py", line 31, in insertRawData
+    cur.execute(
+    ~~~~~~~~~~~^
+        '''
+        ^^^
+    ...<12 lines>...
+        )
+        ^
+    )
+    ^
+psycopg2.errors.InsufficientPrivilege: permission denied for sequence job_data_id_seq
+
+2026-06-05 01:34:27,299 | INFO | mainscript.py:46 | internshala() | No data found on page 2 — stopping pagination for https://internshala.com/jobs/big-data-jobs/
+2026-06-05 01:34:27,360 | INFO | mainscript.py:62 | internshala() | Processed data inserted into clean_data schema (PostgreSQL)
+2026-06-05 01:42:25,846 | INFO | mainscript.py:34 | internshala() | Execution started...
+2026-06-05 01:42:27,031 | INFO | mainscript.py:49 | internshala() | Scraped 50 jobs from https://internshala.com/jobs/machine-learning-jobs/
+2026-06-05 01:42:27,163 | INFO | mainscript.py:53 | internshala() | Inserted 50 jobs into raw_data schema (PostgreSQL)
+2026-06-05 01:42:28,224 | INFO | mainscript.py:49 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/machine-learning-jobs/page-2
+2026-06-05 01:42:28,357 | INFO | mainscript.py:53 | internshala() | Inserted 40 jobs into raw_data schema (PostgreSQL)
+2026-06-05 01:42:29,296 | INFO | mainscript.py:49 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/machine-learning-jobs/page-3
+2026-06-05 01:42:29,350 | INFO | mainscript.py:53 | internshala() | Inserted 40 jobs into raw_data schema (PostgreSQL)
+2026-06-05 01:42:29,943 | INFO | mainscript.py:46 | internshala() | No data found on page 4 — stopping pagination for https://internshala.com/jobs/machine-learning-jobs/
+2026-06-05 01:42:31,083 | INFO | mainscript.py:49 | internshala() | Scraped 50 jobs from https://internshala.com/jobs/backend-development-jobs/
+2026-06-05 01:42:31,209 | INFO | mainscript.py:53 | internshala() | Inserted 50 jobs into raw_data schema (PostgreSQL)
+2026-06-05 01:42:32,273 | INFO | mainscript.py:49 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/backend-development-jobs/page-2
+2026-06-05 01:42:32,386 | INFO | mainscript.py:53 | internshala() | Inserted 40 jobs into raw_data schema (PostgreSQL)
+2026-06-05 01:42:33,388 | INFO | mainscript.py:49 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/backend-development-jobs/page-3
+2026-06-05 01:42:33,518 | INFO | mainscript.py:53 | internshala() | Inserted 40 jobs into raw_data schema (PostgreSQL)
+2026-06-05 01:42:35,476 | INFO | mainscript.py:49 | internshala() | Scraped 37 jobs from https://internshala.com/jobs/backend-development-jobs/page-4
+2026-06-05 01:42:35,547 | INFO | mainscript.py:53 | internshala() | Inserted 37 jobs into raw_data schema (PostgreSQL)
+2026-06-05 01:42:36,187 | INFO | mainscript.py:46 | internshala() | No data found on page 5 — stopping pagination for https://internshala.com/jobs/backend-development-jobs/
+2026-06-05 01:42:37,276 | INFO | mainscript.py:49 | internshala() | Scraped 48 jobs from https://internshala.com/fresher-jobs/front-end-development-jobs/
+2026-06-05 01:42:37,364 | INFO | mainscript.py:53 | internshala() | Inserted 48 jobs into raw_data schema (PostgreSQL)
+2026-06-05 01:42:38,126 | INFO | mainscript.py:49 | internshala() | Scraped 8 jobs from https://internshala.com/fresher-jobs/front-end-development-jobs/page-2
+2026-06-05 01:42:38,163 | INFO | mainscript.py:53 | internshala() | Inserted 8 jobs into raw_data schema (PostgreSQL)
+2026-06-05 01:42:38,748 | INFO | mainscript.py:46 | internshala() | No data found on page 3 — stopping pagination for https://internshala.com/fresher-jobs/front-end-development-jobs/
+2026-06-05 01:42:39,821 | INFO | mainscript.py:49 | internshala() | Scraped 50 jobs from https://internshala.com/jobs/mobile-app-development-jobs/
+2026-06-05 01:42:39,979 | INFO | mainscript.py:53 | internshala() | Inserted 50 jobs into raw_data schema (PostgreSQL)
+2026-06-05 01:42:41,839 | INFO | mainscript.py:49 | internshala() | Scraped 24 jobs from https://internshala.com/jobs/mobile-app-development-jobs/page-2
+2026-06-05 01:42:41,906 | INFO | mainscript.py:53 | internshala() | Inserted 24 jobs into raw_data schema (PostgreSQL)
+2026-06-05 01:42:42,593 | INFO | mainscript.py:46 | internshala() | No data found on page 3 — stopping pagination for https://internshala.com/jobs/mobile-app-development-jobs/
+2026-06-05 01:42:44,142 | INFO | mainscript.py:49 | internshala() | Scraped 25 jobs from https://internshala.com/jobs/big-data-jobs/
+2026-06-05 01:42:44,258 | INFO | mainscript.py:53 | internshala() | Inserted 25 jobs into raw_data schema (PostgreSQL)
+2026-06-05 01:42:44,907 | INFO | mainscript.py:46 | internshala() | No data found on page 2 — stopping pagination for https://internshala.com/jobs/big-data-jobs/
+2026-06-05 01:42:45,100 | ERROR | db_manager.py:135 | manage_operation() | manage_operation failed
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\db\db_manager.py", line 26, in manage_operation
+    cur.execute(
+    ~~~~~~~~~~~^
+        '''
+        ^^^
+    ...<20 lines>...
+        )
+        ^
+    )
+    ^
+psycopg2.errors.SyntaxError: syntax error at or near "OR"
+LINE 2:                     INSERT OR IGNORE INTO job_data
+                                   ^
+
+2026-06-05 01:42:45,101 | INFO | mainscript.py:62 | internshala() | Processed data inserted into clean_data schema (PostgreSQL)
+2026-06-05 18:35:23,462 | INFO | mainscript.py:34 | internshala() | Execution started...
+2026-06-05 18:35:27,523 | INFO | mainscript.py:49 | internshala() | Scraped 50 jobs from https://internshala.com/jobs/machine-learning-jobs/
+2026-06-05 18:35:27,743 | INFO | mainscript.py:53 | internshala() | Inserted 50 jobs into raw_data schema (PostgreSQL)
+2026-06-05 18:35:31,627 | INFO | mainscript.py:49 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/machine-learning-jobs/page-2
+2026-06-05 18:35:31,748 | INFO | mainscript.py:53 | internshala() | Inserted 40 jobs into raw_data schema (PostgreSQL)
+2026-06-05 18:35:34,992 | INFO | mainscript.py:49 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/machine-learning-jobs/page-3
+2026-06-05 18:35:35,071 | INFO | mainscript.py:53 | internshala() | Inserted 40 jobs into raw_data schema (PostgreSQL)
+2026-06-05 18:35:35,954 | INFO | mainscript.py:49 | internshala() | Scraped 11 jobs from https://internshala.com/jobs/machine-learning-jobs/page-4
+2026-06-05 18:35:35,986 | INFO | mainscript.py:53 | internshala() | Inserted 11 jobs into raw_data schema (PostgreSQL)
+2026-06-05 18:35:36,538 | INFO | mainscript.py:46 | internshala() | No data found on page 5 — stopping pagination for https://internshala.com/jobs/machine-learning-jobs/
+2026-06-05 18:35:37,863 | INFO | mainscript.py:49 | internshala() | Scraped 50 jobs from https://internshala.com/jobs/backend-development-jobs/
+2026-06-05 18:35:38,019 | INFO | mainscript.py:53 | internshala() | Inserted 50 jobs into raw_data schema (PostgreSQL)
+2026-06-05 18:35:39,143 | INFO | mainscript.py:49 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/backend-development-jobs/page-2
+2026-06-05 18:35:39,286 | INFO | mainscript.py:53 | internshala() | Inserted 40 jobs into raw_data schema (PostgreSQL)
+2026-06-05 18:35:40,640 | INFO | mainscript.py:49 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/backend-development-jobs/page-3
+2026-06-05 18:35:40,797 | INFO | mainscript.py:53 | internshala() | Inserted 40 jobs into raw_data schema (PostgreSQL)
+2026-06-05 18:35:41,801 | INFO | mainscript.py:49 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/backend-development-jobs/page-4
+2026-06-05 18:35:41,895 | INFO | mainscript.py:53 | internshala() | Inserted 40 jobs into raw_data schema (PostgreSQL)
+2026-06-05 18:35:42,494 | INFO | mainscript.py:49 | internshala() | Scraped 3 jobs from https://internshala.com/jobs/backend-development-jobs/page-5
+2026-06-05 18:35:42,525 | INFO | mainscript.py:53 | internshala() | Inserted 3 jobs into raw_data schema (PostgreSQL)
+2026-06-05 18:35:43,156 | INFO | mainscript.py:46 | internshala() | No data found on page 6 — stopping pagination for https://internshala.com/jobs/backend-development-jobs/
+2026-06-05 18:35:44,318 | INFO | mainscript.py:49 | internshala() | Scraped 50 jobs from https://internshala.com/fresher-jobs/front-end-development-jobs/
+2026-06-05 18:35:44,425 | INFO | mainscript.py:53 | internshala() | Inserted 50 jobs into raw_data schema (PostgreSQL)
+2026-06-05 18:35:45,108 | INFO | mainscript.py:49 | internshala() | Scraped 11 jobs from https://internshala.com/fresher-jobs/front-end-development-jobs/page-2
+2026-06-05 18:35:45,142 | INFO | mainscript.py:53 | internshala() | Inserted 11 jobs into raw_data schema (PostgreSQL)
+2026-06-05 18:35:45,769 | INFO | mainscript.py:46 | internshala() | No data found on page 3 — stopping pagination for https://internshala.com/fresher-jobs/front-end-development-jobs/
+2026-06-05 18:35:46,878 | INFO | mainscript.py:49 | internshala() | Scraped 50 jobs from https://internshala.com/jobs/mobile-app-development-jobs/
+2026-06-05 18:35:47,044 | INFO | mainscript.py:53 | internshala() | Inserted 50 jobs into raw_data schema (PostgreSQL)
+2026-06-05 18:35:47,915 | INFO | mainscript.py:49 | internshala() | Scraped 27 jobs from https://internshala.com/jobs/mobile-app-development-jobs/page-2
+2026-06-05 18:35:47,989 | INFO | mainscript.py:53 | internshala() | Inserted 27 jobs into raw_data schema (PostgreSQL)
+2026-06-05 18:35:48,618 | INFO | mainscript.py:46 | internshala() | No data found on page 3 — stopping pagination for https://internshala.com/jobs/mobile-app-development-jobs/
+2026-06-05 18:35:49,585 | INFO | mainscript.py:49 | internshala() | Scraped 26 jobs from https://internshala.com/jobs/big-data-jobs/
+2026-06-05 18:35:49,689 | INFO | mainscript.py:53 | internshala() | Inserted 26 jobs into raw_data schema (PostgreSQL)
+2026-06-05 18:35:50,384 | INFO | mainscript.py:46 | internshala() | No data found on page 2 — stopping pagination for https://internshala.com/jobs/big-data-jobs/
+2026-06-05 18:35:50,561 | ERROR | db_manager.py:135 | manage_operation() | manage_operation failed
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\db\db_manager.py", line 26, in manage_operation
+    cur.execute(
+    ~~~~~~~~~~~^
+        '''
+        ^^^
+    ...<20 lines>...
+        )
+        ^
+    )
+    ^
+psycopg2.errors.SyntaxError: syntax error at or near "OR"
+LINE 2:                     INSERT OR IGNORE INTO job_data
+                                   ^
+
+2026-06-05 18:35:50,571 | INFO | mainscript.py:62 | internshala() | Processed data inserted into clean_data schema (PostgreSQL)
+2026-06-05 18:57:29,666 | INFO | mainscript.py:34 | internshala() | Execution started...
+2026-06-05 18:57:30,896 | INFO | mainscript.py:49 | internshala() | Scraped 50 jobs from https://internshala.com/jobs/machine-learning-jobs/
+2026-06-05 18:57:31,041 | INFO | mainscript.py:53 | internshala() | Inserted 50 jobs into raw_data schema (PostgreSQL)
+2026-06-05 18:57:32,524 | INFO | mainscript.py:49 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/machine-learning-jobs/page-2
+2026-06-05 18:57:32,637 | INFO | mainscript.py:53 | internshala() | Inserted 40 jobs into raw_data schema (PostgreSQL)
+2026-06-05 18:57:33,894 | INFO | mainscript.py:49 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/machine-learning-jobs/page-3
+2026-06-05 18:57:33,961 | INFO | mainscript.py:53 | internshala() | Inserted 40 jobs into raw_data schema (PostgreSQL)
+2026-06-05 18:57:34,860 | INFO | mainscript.py:49 | internshala() | Scraped 11 jobs from https://internshala.com/jobs/machine-learning-jobs/page-4
+2026-06-05 18:57:34,894 | INFO | mainscript.py:53 | internshala() | Inserted 11 jobs into raw_data schema (PostgreSQL)
+2026-06-05 18:57:35,524 | INFO | mainscript.py:46 | internshala() | No data found on page 5 — stopping pagination for https://internshala.com/jobs/machine-learning-jobs/
+2026-06-05 18:57:36,893 | INFO | mainscript.py:49 | internshala() | Scraped 50 jobs from https://internshala.com/jobs/backend-development-jobs/
+2026-06-05 18:57:37,011 | INFO | mainscript.py:53 | internshala() | Inserted 50 jobs into raw_data schema (PostgreSQL)
+2026-06-05 18:57:39,373 | INFO | mainscript.py:49 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/backend-development-jobs/page-2
+2026-06-05 18:57:39,503 | INFO | mainscript.py:53 | internshala() | Inserted 40 jobs into raw_data schema (PostgreSQL)
+2026-06-05 18:57:40,894 | INFO | mainscript.py:49 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/backend-development-jobs/page-3
+2026-06-05 18:57:41,007 | INFO | mainscript.py:53 | internshala() | Inserted 40 jobs into raw_data schema (PostgreSQL)
+2026-06-05 18:57:42,160 | INFO | mainscript.py:49 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/backend-development-jobs/page-4
+2026-06-05 18:57:42,233 | INFO | mainscript.py:53 | internshala() | Inserted 40 jobs into raw_data schema (PostgreSQL)
+2026-06-05 18:57:43,763 | INFO | mainscript.py:49 | internshala() | Scraped 4 jobs from https://internshala.com/jobs/backend-development-jobs/page-5
+2026-06-05 18:57:43,795 | INFO | mainscript.py:53 | internshala() | Inserted 4 jobs into raw_data schema (PostgreSQL)
+2026-06-05 18:57:44,388 | INFO | mainscript.py:46 | internshala() | No data found on page 6 — stopping pagination for https://internshala.com/jobs/backend-development-jobs/
+2026-06-05 18:57:45,536 | INFO | mainscript.py:49 | internshala() | Scraped 50 jobs from https://internshala.com/fresher-jobs/front-end-development-jobs/
+2026-06-05 18:57:45,614 | INFO | mainscript.py:53 | internshala() | Inserted 50 jobs into raw_data schema (PostgreSQL)
+2026-06-05 18:57:47,218 | INFO | mainscript.py:49 | internshala() | Scraped 11 jobs from https://internshala.com/fresher-jobs/front-end-development-jobs/page-2
+2026-06-05 18:57:47,249 | INFO | mainscript.py:53 | internshala() | Inserted 11 jobs into raw_data schema (PostgreSQL)
+2026-06-05 18:57:48,017 | INFO | mainscript.py:46 | internshala() | No data found on page 3 — stopping pagination for https://internshala.com/fresher-jobs/front-end-development-jobs/
+2026-06-05 18:57:49,246 | INFO | mainscript.py:49 | internshala() | Scraped 50 jobs from https://internshala.com/jobs/mobile-app-development-jobs/
+2026-06-05 18:57:49,352 | INFO | mainscript.py:53 | internshala() | Inserted 50 jobs into raw_data schema (PostgreSQL)
+2026-06-05 18:57:50,248 | INFO | mainscript.py:49 | internshala() | Scraped 27 jobs from https://internshala.com/jobs/mobile-app-development-jobs/page-2
+2026-06-05 18:57:50,303 | INFO | mainscript.py:53 | internshala() | Inserted 27 jobs into raw_data schema (PostgreSQL)
+2026-06-05 18:57:50,941 | INFO | mainscript.py:46 | internshala() | No data found on page 3 — stopping pagination for https://internshala.com/jobs/mobile-app-development-jobs/
+2026-06-05 18:57:51,870 | INFO | mainscript.py:49 | internshala() | Scraped 26 jobs from https://internshala.com/jobs/big-data-jobs/
+2026-06-05 18:57:51,945 | INFO | mainscript.py:53 | internshala() | Inserted 26 jobs into raw_data schema (PostgreSQL)
+2026-06-05 18:57:52,738 | INFO | mainscript.py:46 | internshala() | No data found on page 2 — stopping pagination for https://internshala.com/jobs/big-data-jobs/
+2026-06-05 18:57:53,408 | INFO | db_manager.py:112 | manage_operation() | manage_operation completed successfully
+2026-06-05 18:57:53,408 | INFO | mainscript.py:62 | internshala() | Processed data inserted into clean_data schema (PostgreSQL)

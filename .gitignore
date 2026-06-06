@@ -12,3 +12,10 @@ trial.py
 app2.py
 *.zip
 *.db
+*.env
+*.json
+migrate_sql_to_postgre.py
+*db
+migrate.py
+secrets.toml
+export_data.py

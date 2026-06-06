@@ -1,209 +1,213 @@
-import sqlite3
+import psycopg2
 import pandas as pd
-from pathlib import Path
-from utils.path import JOBS_DB
+from dbconnection.dbconnect import connect_database
 
 
-# Helper to get a DB connection with helpful error when the file is missing
-def get_conn():
-    db_path = Path(JOBS_DB)
-    if not db_path.exists():
-        raise FileNotFoundError(
-            f"Database file not found at {db_path}. Ensure jobs.db is present in the repository and deployed."
-        )
-    return sqlite3.connect(str(db_path))
+
 # ------------------------------FOR OVERALL MARKET TRENDS----
+
 def topSkills():
-    # db_path = 'jobs.db'
-    conn = get_conn()
+    conn = connect_database("clean_data")
     query = '''
     SELECT s.name, count(*) as demand
     FROM skills s
-    JOIN job_skills js ON s.s_id = js.skill_id
+    JOIN job_skills js ON s.skill_id = js.skill_id
     GROUP BY s.name
     ORDER BY demand DESC
-    limit 10;
+    LIMIT 10;
     '''
     df = pd.read_sql_query(query, conn)
     conn.close()
     return df
+
+
 def roles():
-    # db_path = 'jobs.db'
-    conn = get_conn()
-    query='''
-    SELECT j.J_title,count(j.J_title) as demand
-    FROM jobs j
-    GROUP BY J_title
+    conn = connect_database("clean_data")
+    query = '''
+    SELECT j.id,j.title as title ,count(j.id) as demand
+    FROM job_data j
+    GROUP BY j.id
     ORDER BY demand DESC
     LIMIT 10;
     '''
-    df=pd.read_sql_query(query,conn)
+    df = pd.read_sql_query(query, conn)
     conn.close()
     return df
+
+
 def noOfopportunities():
-    conn = get_conn()
+    conn = connect_database()
     query = '''
     SELECT count(*) as opportunities
-    FROM jobs ;
+    FROM job_data;
     '''
-    df=pd.read_sql_query(query,conn)
+    df = pd.read_sql_query(query, conn)
     conn.close()
     return df['opportunities'][0]
+
+
 def topLocations():
-    # db_path = 'jobs.db'
-    conn = get_conn()
-    query='''
-    SELECT j.location ,count(j.location) as count
-    FROM jobs j
+    conn = connect_database("clean_data")
+    query = '''
+    SELECT j.location, count(j.location) as count
+    FROM job_data j
     GROUP BY j.location
     ORDER BY count DESC
-    limit 10;
-'''
-    df=pd.read_sql_query(query,conn)
+    LIMIT 10;
+    '''
+    df = pd.read_sql_query(query, conn)
     conn.close()
     return df
+
+
 def commonSkills():
-    # db_path = 'jobs.db'
-    conn = get_conn()
-    query='''
-        SELECT
+    conn = connect_database("clean_data")
+    query = '''
+    SELECT
         s.name AS skill,
-        COUNT(DISTINCT j.J_title) AS role_count,
+        COUNT(DISTINCT j.id) AS role_count,
         COUNT(*) AS total_occurrences
-    FROM jobs j
-    JOIN job_skills js ON j.j_id = js.job_id
-    JOIN skills s ON s.s_id = js.skill_id
-    WHERE j.J_title IN (
-        SELECT J_title
-        FROM jobs
-        GROUP BY J_title
+    FROM job_data j
+    JOIN job_skills js ON j.id = js.job_id
+    JOIN skills s ON s.skill_id = js.skill_id
+    WHERE j.id IN (
+        SELECT id
+        FROM job_data
+        GROUP BY id
         ORDER BY COUNT(*) DESC
         LIMIT 2
     )
     GROUP BY s.name
-    HAVING COUNT(DISTINCT j.J_title) = 2
-ORDER BY total_occurrences DESC;
-
-'''
-    df=pd.read_sql_query(query,conn)
+    HAVING COUNT(DISTINCT j.id) = 2
+    ORDER BY total_occurrences DESC;
+    '''
+    df = pd.read_sql_query(query, conn)
     conn.close()
     return df
+
+
 # ---------------------Role specific analysis---------
+
 def TopSkillsOfRole(role):
-    # db_path = 'jobs.db'
-    conn = get_conn()
-    query='''
-    SELECT s.name,count(*) as demand
+    conn = connect_database("clean_data")
+    query = '''
+    SELECT s.name, count(*) as demand
     FROM skills s
-    JOIN job_skills js ON s.s_id = js.skill_id
-    JOIN jobs j ON js.job_id = j.j_id  
-    WHERE j.J_title = ?
+    JOIN job_skills js ON s.skill_id = js.skill_id
+    JOIN job_data j ON js.job_id = j.id
+    WHERE j.title = %s
     GROUP BY s.name
     ORDER BY count(*) DESC
     LIMIT 10;
     '''
-    df=pd.read_sql_query(query,conn,params=(role,))
+    df = pd.read_sql_query(query, conn, params=(role,))
     conn.close()
     return df
+
+
 def jobCount(job):
-    # db_path = 'jobs.db'
-    conn = get_conn()
-    query='''
-    SELECT count(J_title) as no_of_jobs
-    FROM jobs
-    WHERE J_title=?;
-'''
-    df=pd.read_sql_query(query,conn,params=(job,))
+    conn = connect_database("clean_data")
+    query = '''
+    SELECT count(*) as no_of_jobs
+    FROM job_data
+    WHERE title = %s;
+    '''
+    df = pd.read_sql_query(query, conn, params=(job,))
     conn.close()
     return df
+
+
 # ----------------------------------------------------
 
 def last_scraped_time():
-    # db_path = 'jobs.db'
-    conn = get_conn()
-
-    query='''
-    SELECT max(scraped_time)
-    from jobs;'''
-    df=pd.read_sql_query(query,conn)
+    conn = connect_database("clean_data")
+    query = '''
+    SELECT max(scrape_time)
+    FROM job_data;
+    '''
+    df = pd.read_sql_query(query, conn)
     conn.close()
-    return df.iloc[0,0]
-def roles_trends():
-    top_roles='''
-        with TopSkills as (
-        SELECT ss.name 
-        from jobs j
-        join job_skills js on j.j_id = js.job_id
-        join skills ss on js.skill_id = ss.s_id
-        group by ss.name
-        order  by count(*) desc
-        limit 4 
-        ),
-        Ranked as (
-        select strftime("%d",jsn.scraped_date) as month,s.name,count(*) as jobCount,
-        rank() over(
-        partition by strftime("%d",jsn.scraped_date)
-        order by count(*) desc
-        ) as rank
-        from jobSnapshot jsn
-        join jobs j on jsn.job_id = j.j_id
-        join job_skills js on j.j_id = js.job_id
-        join skills s on js.skill_id = s.s_id
-        where s.name in (select name from TopSkills)
-        group by month,s.name
-        order by jobCount desc
+    return df.iloc[0, 0]
 
-        )
-        select * from Ranked
-        order by month,rank;
-        '''
-    conn = get_conn()
-    df=pd.read_sql_query(top_roles,conn)
+
+def roles_trends():
+    query = '''
+    WITH TopSkills AS (
+        SELECT ss.name
+        FROM job_data j
+        JOIN job_skills js ON j.id = js.job_id
+        JOIN skills ss ON js.skill_id = ss.skill_id
+        GROUP BY ss.name
+        ORDER BY count(*) DESC
+        LIMIT 4
+    ),
+    Ranked AS (
+        SELECT
+            TO_CHAR(jsn.scraped_date, 'DD') AS month,
+            s.name,
+            count(*) AS jobCount,
+            RANK() OVER (
+                PARTITION BY TO_CHAR(jsn.scraped_date, 'DD')
+                ORDER BY count(*) DESC
+            ) AS rank
+        FROM "job_snapshot" jsn
+        JOIN job_data j ON jsn.job_id = j.id
+        JOIN job_skills js ON j.id = js.job_id
+        JOIN skills s ON js.skill_id = s.skill_id
+        WHERE s.name IN (SELECT name FROM TopSkills)
+        GROUP BY TO_CHAR(jsn.scraped_date, 'DD'), s.name
+    )
+    SELECT * FROM Ranked
+    ORDER BY month, rank;
+    '''
+    conn = connect_database("clean_data")
+    df = pd.read_sql_query(query, conn)
     conn.close()
     return df
 
-#--------------------------FOR LAST 7 DAYS ANALYSIS -------------
+
+# --------------------------FOR LAST 7 DAYS ANALYSIS -------------
+
 def OPPORTUNITIES():
-    conn=sqlite3.connect(JOBS_DB)
+    conn = connect_database("clean_data")
     query = '''
     SELECT count(*) as opportunities
-    FROM jobs 
-    where date(postedDate) >= date("now","-10 days");
+    FROM job_data
+    WHERE postedDate::date >= CURRENT_DATE - INTERVAL '10 days';
     '''
-    df=pd.read_sql_query(query,conn)
+    df = pd.read_sql_query(query, conn)
     conn.close()
-    
-
     return df['opportunities'][0]
 
 
-# --------------------Role Specifi Analysis----------------
+# --------------------Role Specific Analysis----------------
+
 def uniqueSkills(role):
-    conn = sqlite3.connect(JOBS_DB)
+    conn = connect_database("clean_data")
     query = '''
-        select count(distinct s.name) as skills
-        from jobs j
-        join job_skills js on j.j_id = js.job_id
-        join skills s on js.skill_id = s.s_id
-        where J_title = ?
+    SELECT count(distinct s.name) as skills
+    FROM job_data j
+    JOIN job_skills js ON j.id = js.job_id
+    JOIN skills s ON js.skill_id = s.skill_id
+    WHERE j.id = %s
     '''
-    df = pd.read_sql_query(query,conn,params=(role,))
+    df = pd.read_sql_query(query, conn, params=(role,))
     conn.close()
     return df
 
+
 def uniqueSkillCount(role):
-     conn = sqlite3.connect(JOBS_DB)
-     query = '''
-        select s.name as skill,count(*) as count
-        from jobs j
-        join job_skills js on j.j_id = js.job_id
-        join skills s on js.skill_id = s.s_id
-        where j.J_title = ?
-        group by s.name
-        order by count(*) desc
-        limit 8;
-        '''
-     df = pd.read_sql_query(query,conn, params=(role,))
-     conn.close()
-     return df
-print(roles_trends())
+    conn = connect_database("clean_data")
+    query = '''
+    SELECT s.name as skill, count(*) as count
+    FROM job_data j
+    JOIN job_skills js ON j.id = js.job_id
+    JOIN skills s ON js.skill_id = s.skill_id
+    WHERE j.id = %s
+    GROUP BY s.name
+    ORDER BY count(*) DESC
+    LIMIT 8;
+    '''
+    df = pd.read_sql_query(query, conn, params=(role,))
+    conn.close()
+    return df

@@ -65,10 +65,10 @@ def commonSkills():
     query = '''
     SELECT
         s.name AS skill,
-        COUNT(DISTINCT j.id) AS role_count,
+        COUNT(DISTINCT j.job_id) AS role_count,
         COUNT(*) AS total_occurrences
     FROM job_data j
-    JOIN job_skills js ON j.id = js.job_id
+    JOIN job_skills js ON j.job_id = js.job_id
     JOIN skills s ON s.skill_id = js.skill_id
     WHERE j.job_id IN (
         SELECT id
@@ -151,7 +151,7 @@ def roles_trends():
                 ORDER BY count(*) DESC
             ) AS rank
         FROM "job_snapshot" jsn
-        JOIN job_data j ON jsn.job_id = j.jobid
+        JOIN job_data j ON jsn.job_id = j.job_id
         JOIN job_skills js ON j.job_id = js.job_id
         JOIN skills s ON js.skill_id = s.skill_id
         WHERE s.name IN (SELECT name FROM TopSkills)

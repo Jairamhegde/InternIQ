@@ -340,7 +340,7 @@ def load_dashboard():
 
         with col2:
             fig_pie = px.pie(
-                df_roles.head(8), values='demand', names='id', hole=0.55,
+                df_roles.head(8), values='demand', names='job_id', hole=0.55,
                 title='Market Share by Top Roles',
                 color_discrete_sequence=['#6366f1','#818cf8','#22d3ee','#34d399',
                                          '#f472b6','#fb923c','#a78bfa','#38bdf8']

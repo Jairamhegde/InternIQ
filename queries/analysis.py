@@ -24,14 +24,14 @@ def topSkills():
 def roles():
     conn = connect_database("clean_data")
     query = '''
-    SELECT j.id,j.title as title ,count(j.id) as demand
-    FROM job_data j
-    GROUP BY j.id,j.title
+    SELECT id,N ,count(*) as demand
+    FROM job_data 
+    GROUP BY id,title
     ORDER BY demand DESC
     LIMIT 10;
     '''
     df = pd.read_sql_query(query, conn)
-
+    
     return df
 
 
@@ -165,7 +165,6 @@ def roles_trends():
 
     return df
 
-
 # --------------------------FOR LAST 7 DAYS ANALYSIS -------------
 
 def OPPORTUNITIES():
@@ -211,3 +210,6 @@ def uniqueSkillCount(role):
     df = pd.read_sql_query(query, conn, params=(role,))
 
     return df
+
+
+print(roles())

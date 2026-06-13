@@ -185,7 +185,7 @@ def insights_section(cards_html, insight_html):
 def load_dashboard():
     st.markdown(STYLES, unsafe_allow_html=True)
 
-    @st.cache_data
+    @st.cache_data(ttl=3600)
     def load_all_data():
         return {
             'roles':        roles(),

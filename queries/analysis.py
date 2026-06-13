@@ -24,14 +24,14 @@ def topSkills():
 def roles():
     conn = connect_database("clean_data")
     query = '''
-    SELECT id,N ,count(*) as demand
+    SELECT job_id,N ,count(*) as demand
     FROM job_data 
-    GROUP BY id,title
+    GROUP BY job_id,title
     ORDER BY demand DESC
     LIMIT 10;
     '''
     df = pd.read_sql_query(query, conn)
-    
+
     return df
 
 
@@ -70,15 +70,15 @@ def commonSkills():
     FROM job_data j
     JOIN job_skills js ON j.id = js.job_id
     JOIN skills s ON s.skill_id = js.skill_id
-    WHERE j.id IN (
+    WHERE j.job_id IN (
         SELECT id
         FROM job_data
-        GROUP BY id
+        GROUP BY job_id
         ORDER BY COUNT(*) DESC
         LIMIT 2
     )
     GROUP BY s.name
-    HAVING COUNT(DISTINCT j.id) = 2
+    HAVING COUNT(DISTINCT j.job_id) = 2
     ORDER BY total_occurrences DESC;
     '''
     df = pd.read_sql_query(query, conn)
@@ -94,7 +94,7 @@ def TopSkillsOfRole(role):
     SELECT s.name, count(*) as demand
     FROM skills s
     JOIN job_skills js ON s.skill_id = js.skill_id
-    JOIN job_data j ON js.job_id = j.id
+    JOIN job_data j ON js.job_id = j.job_id
     WHERE j.title = %s
     GROUP BY s.name
     ORDER BY count(*) DESC
@@ -135,7 +135,7 @@ def roles_trends():
     WITH TopSkills AS (
         SELECT ss.name
         FROM job_data j
-        JOIN job_skills js ON j.id = js.job_id
+        JOIN job_skills js ON j.job_id = js.job_id
         JOIN skills ss ON js.skill_id = ss.skill_id
         GROUP BY ss.name
         ORDER BY count(*) DESC
@@ -151,8 +151,8 @@ def roles_trends():
                 ORDER BY count(*) DESC
             ) AS rank
         FROM "job_snapshot" jsn
-        JOIN job_data j ON jsn.job_id = j.id
-        JOIN job_skills js ON j.id = js.job_id
+        JOIN job_data j ON jsn.job_id = j.jobid
+        JOIN job_skills js ON j.job_id = js.job_id
         JOIN skills s ON js.skill_id = s.skill_id
         WHERE s.name IN (SELECT name FROM TopSkills)
         GROUP BY TO_CHAR(jsn.scraped_date, 'DD'), s.name
@@ -186,9 +186,9 @@ def uniqueSkills(role):
     query = '''
     SELECT count(distinct s.name) as skills
     FROM job_data j
-    JOIN job_skills js ON j.id = js.job_id
+    JOIN job_skills js ON j.job_id = js.job_id
     JOIN skills s ON js.skill_id = s.skill_id
-    WHERE j.id = %s
+    WHERE j.job_id = %s
     '''
     df = pd.read_sql_query(query, conn, params=(role,))
 
@@ -200,9 +200,9 @@ def uniqueSkillCount(role):
     query = '''
     SELECT s.name as skill, count(*) as count
     FROM job_data j
-    JOIN job_skills js ON j.id = js.job_id
+    JOIN job_skills js ON j.job_id = js.job_id
     JOIN skills s ON js.skill_id = s.skill_id
-    WHERE j.id = %s
+    WHERE j.job_id = %s
     GROUP BY s.name
     ORDER BY count(*) DESC
     LIMIT 8;

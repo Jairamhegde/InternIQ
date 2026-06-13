@@ -21,7 +21,7 @@ def top_skill():
     query = '''
     SELECT s.name as skill, count(*) as skill_count
     FROM job_data j
-    JOIN job_skills js ON j.id = js.job_id
+    JOIN job_skills js ON j.job_id = js.job_id
     JOIN skills s ON js.skill_id = s.skill_id
     WHERE j.posted_date::date >= CURRENT_DATE - INTERVAL '10 days'
     GROUP BY s.name

@@ -40,7 +40,7 @@ def manage_operation(job_data):
             # Fetch generated job id
             cur.execute(
                 '''
-                SELECT id
+                SELECT job_id
                 FROM job_data
                 WHERE title   = %s
                 AND   location = %s

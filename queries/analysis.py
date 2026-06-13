@@ -1,4 +1,4 @@
-import psycopg2
+
 import pandas as pd
 from dbconnection.dbconnect import connect_database
 
@@ -71,7 +71,7 @@ def commonSkills():
     JOIN job_skills js ON j.job_id = js.job_id
     JOIN skills s ON s.skill_id = js.skill_id
     WHERE j.job_id IN (
-        SELECT id
+        SELECT job_id
         FROM job_data
         GROUP BY job_id
         ORDER BY COUNT(*) DESC

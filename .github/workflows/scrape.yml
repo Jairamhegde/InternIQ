@@ -1,0 +1,51 @@
+name : "Automated Scraper"
+on:
+    schedule:
+        - cron: 0 9 * * *
+    workflow_dispatch: 
+
+jobs:
+    Scrape:
+        runs-on : ubuntu-latest
+
+        steps:
+            -   name: Checkout repo
+                uses: actions/checkout@v3
+
+            -   name : Set up python
+                uses : actions/setup-python@v4
+                with :
+                    python-version : '3.11'
+
+            -   name : Install dependencies
+                run : pip install -r requirements .txt
+
+            -   name : Test scraper pipeline
+                env : 
+                    HOST_NAME : ${{ secrets.host }}
+                    PORT      : ${{ secrets.port }}
+                    DATABASE  : ${{ secrets.database }}
+                    USER      : ${{ secrets.user }}
+                    PASSWORD  : ${{ secrets.password }}
+                    SSLMODE   : ${{ secrets.sslmode }}
+                run : |
+                 pytest testing/test_functions.py -v
+                 pytest testing/test_recent_market_trend.py -v
+
+            -   name : Run scraper pipeline
+                env : 
+                    HOST_NAME : ${{ secrets.host }}
+                    PORT      : ${{ secrets.port }}
+                    DATABASE  : ${{ secrets.database }}
+                    USER      : ${{ secrets.user }}
+                    PASSWORD  : ${{ secrets.password }}
+                    SSLMODE   : ${{ secrets.sslmode }}
+                run : python mainscript.py
+                   
+
+
+
+
+
+
+    

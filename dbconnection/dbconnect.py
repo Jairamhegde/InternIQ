@@ -6,14 +6,15 @@ import logging
 
 def connect_database(search_path="clean_data"):
 
-    if os.environ.get("host"):
+    
+    if os.environ.get("HOST_NAME"):
         PG_CONFIG = {
-            "host": os.environ['host'],
-            "database": os.environ['database'],
-            "user": os.environ['user'],
-            "password": os.environ['password'],
-            "port": os.environ['port'],
-            "sslmode" : os.environ['sslmode']
+            "host": os.environ['HOST_NAME'],
+            "database": os.environ['DATABASE'],
+            "user": os.environ['USER'],
+            "password": os.environ['PASSWORD'],
+            "port": os.environ['PORT'],
+            "sslmode": os.environ['SSLMODE']
         }
         try:
             conn = psycopg2.connect(**PG_CONFIG)

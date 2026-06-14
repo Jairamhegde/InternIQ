@@ -22,24 +22,24 @@ jobs:
 
             -   name : Test scraper pipeline
                 env : 
-                    HOST_NAME : ${{ secrets.host }}
-                    PORT      : ${{ secrets.port }}
-                    DATABASE  : ${{ secrets.database }}
-                    USER      : ${{ secrets.user }}
-                    PASSWORD  : ${{ secrets.password }}
-                    SSLMODE   : ${{ secrets.sslmode }}
+                    HOST_NAME : ${{ secrets.HOST_NAME }}
+                    PORT      : ${{ secrets.PORT }}
+                    DATABASE  : ${{ secrets.DATABASE }}
+                    USER      : ${{ secrets.USER }}
+                    PASSWORD  : ${{ secrets.PASSWORD }}
+                    SSLMODE   : ${{ secrets.SSLMODE }}
                 run : |
                  pytest testing/test_functions.py -v
                  pytest testing/test_recent_market_trend.py -v
 
             -   name : Run scraper pipeline
                 env : 
-                    HOST_NAME : ${{ secrets.host }}
-                    PORT      : ${{ secrets.port }}
-                    DATABASE  : ${{ secrets.database }}
-                    USER      : ${{ secrets.user }}
-                    PASSWORD  : ${{ secrets.password }}
-                    SSLMODE   : ${{ secrets.sslmode }}
+                    HOST_NAME : ${{ secrets.HOST_NAME }}
+                    PORT      : ${{ secrets.PORT }}
+                    DATABASE  : ${{ secrets.DATABASE }}
+                    USER      : ${{ secrets.USER }}
+                    PASSWORD  : ${{ secrets.PASSWORD }}
+                    SSLMODE   : ${{ secrets.SSLMODE }}
                 run : python mainscript.py
                    
 

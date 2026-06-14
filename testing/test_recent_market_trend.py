@@ -5,8 +5,8 @@ import pandas as pd
 def test_top_roles():
     df = Top_role()
     assert isinstance(df,pd.DataFrame)
-    assert "J_title" in df.columns
-    assert "postedDate" in df.columns
+    assert "title" in df.columns
+    assert "posted_date" in df.columns
 
 
 def test_top_skills():

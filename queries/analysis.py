@@ -172,7 +172,7 @@ def OPPORTUNITIES():
     query = '''
     SELECT count(*) as opportunities
     FROM job_data
-    WHERE postedDate::date >= CURRENT_DATE - INTERVAL '10 days';
+    WHERE posted_date::date >= CURRENT_DATE - INTERVAL '10 days';
     '''
     df = pd.read_sql_query(query, conn)
 
@@ -202,7 +202,7 @@ def uniqueSkillCount(role):
     FROM job_data j
     JOIN job_skills js ON j.job_id = js.job_id
     JOIN skills s ON js.skill_id = s.skill_id
-    WHERE j.job_id = %s
+    WHERE j.title = %s
     GROUP BY s.name
     ORDER BY count(*) DESC
     LIMIT 8;

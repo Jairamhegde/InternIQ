@@ -88,7 +88,7 @@ def loadData():
 
         for row in rows:
 
-            job_id    = row[0] if row[0] else None
+            job_id    = row[0] if row[0] is not None else None
             job_name  = " ".join(row[1].strip().split()).lower() if row[1] else None
             sal       = convertSalary(row[2]) if row[2] else (0, 0)
             min_sal   = sal[0] if sal[0] > 0 else None

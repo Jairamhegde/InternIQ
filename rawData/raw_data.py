@@ -118,5 +118,9 @@ def insertRawData(job_data):
     except Exception as e:
         conn.rollback()
         raise e
+    
+    finally:
+        if cur:
+            cur.close()
 
    

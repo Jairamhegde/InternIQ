@@ -390,7 +390,7 @@ def load_dashboard():
         toprole           = Top_role()
         topSkill_df       = top_skill()
         total_opportunity = total_opportunities()
-        salary_range      = average_salary(toprole['title'][0])
+        salary_range      = average_salary(toprole.iloc[0]['title'])
 
         st.markdown("### Last 10 Days Market Trends")
         st.markdown("<br>", unsafe_allow_html=True)

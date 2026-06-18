@@ -57,6 +57,4 @@ def average_salary(role):
     return df
 
 
-print(Top_role())
-print(top_skill())
-print(total_opportunities())
+

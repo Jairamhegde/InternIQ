@@ -1,9 +1,10 @@
 import psycopg2
 import os
 import logging
+from dotenv import load_dotenv
 
 
-
+load_dotenv()
 def connect_database(search_path="clean_data"):
     if os.environ.get("HOST_NAME"):
         PG_CONFIG = {

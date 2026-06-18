@@ -22,11 +22,12 @@ def manage_operation(job_data):
             cur.execute(
                 '''
                 INSERT INTO job_data
-                (title, location, company, scrape_time, posted_date, salary_min, salary_max)
-                VALUES (%s, %s, %s, %s, %s, %s, %s)
+                (job_id,title, location, company, scrape_time, posted_date, salary_min, salary_max)
+                VALUES (%s,%s, %s, %s, %s, %s, %s, %s)
                 ON CONFLICT DO NOTHING;
                 ''',
                 (
+                    i['job_id'],
                     i['job_title'],
                     i['location'],
                     i['company'],

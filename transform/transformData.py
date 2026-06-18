@@ -117,6 +117,7 @@ def loadData():
             ]
 
             jd = {
+                "job_id"    : job_id,
                 "job_title":    job_name,
                 "min_salary":   min_sal,
                 "max_salary":   max_sal,

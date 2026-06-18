@@ -5,8 +5,6 @@ import logging
 
 
 def connect_database(search_path="clean_data"):
-
-    
     if os.environ.get("HOST_NAME"):
         PG_CONFIG = {
             "host": os.environ['HOST_NAME'],
@@ -24,7 +22,6 @@ def connect_database(search_path="clean_data"):
             return conn
         except Exception as e:
             logging.error(f"Error occured in db_connection :{e}")
-            
     else:
         return  _connect_to_st(search_path)
          
@@ -48,7 +45,6 @@ def _connect_to_st(search_path):
                 cur = conn.cursor()
                 cur.execute("SET search_path TO %s", (search_path,))
                 cur.close()
-            
                 return conn
             except psycopg2.OperationalError as e:
                 raise ConnectionError(

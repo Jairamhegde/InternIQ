@@ -210,3 +210,8 @@ def uniqueSkillCount(role):
     df = pd.read_sql_query(query, conn, params=(role,))
 
     return df
+
+
+print(OPPORTUNITIES())
+print(roles_trends())
+print(roles())

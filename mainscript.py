@@ -53,8 +53,9 @@ def internshala(url_list):
 
             except Exception:
                 logging.exception(f"Failed scraping page {page} of {url}")
-
+    logging.info(f"Started inserting into into clean data")
     # Transform all raw data once scraping is complete
+    
     data = loadData()
     manage_operation(data)
 

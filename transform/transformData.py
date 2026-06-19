@@ -2,7 +2,6 @@ import re
 import logging
 from dbconnection.dbconnect import connect_database
 
-
 def convertSalary(s: str):
     if not s:
         return 0, 0
@@ -13,7 +12,6 @@ def convertSalary(s: str):
     minSal = currencymap(minSal, currency)
     maxSal = currencymap(maxSal, currency)
     return minSal, maxSal
-
 
 def stripedSal(s: str):
     f = detect_currency(s)
@@ -77,11 +75,9 @@ def currencymap(number, currencyType):
 def loadData():
 
     job_data = []
-
     try:
         conn = connect_database(search_path="raw_data")
         cur = conn.cursor()
-
         # row indices → [0]id, [1]title, [2]salary, [3]location, [4]company, [5]scrape_time, [6]posted_date
         cur.execute("SELECT * FROM job_data;")
         rows = cur.fetchall()

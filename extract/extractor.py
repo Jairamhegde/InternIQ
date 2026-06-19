@@ -32,6 +32,10 @@ def scrape_data(soup):
 
     job_data = []
 
+    if soup is None:
+        logging.error("scrape_data received no soup object")
+        return job_data
+
     try:
 
         job_card = soup.find_all('div', class_="internship_meta experience_meta")

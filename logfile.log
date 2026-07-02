@@ -4149,3 +4149,89 @@ DETAIL:  Key (job_id)=(2920) is not present in table "job_data".
 2026-06-19 10:54:55,811 | INFO | db_manager.py:7 | manage_operation() | Opening JIT connection for manage_operation...
 2026-06-19 11:23:14,580 | INFO | db_manager.py:109 | manage_operation() | manage_operation completed successfully
 2026-06-19 11:23:14,618 | INFO | mainscript.py:62 | internshala() | Processed data inserted into clean_data schema (PostgreSQL)
+2026-07-02 00:40:45,526 | INFO | mainscript.py:34 | internshala() | Execution started...
+2026-07-02 00:40:52,141 | INFO | mainscript.py:48 | internshala() | Scraped 50 jobs from https://internshala.com/jobs/machine-learning-jobs/
+2026-07-02 00:43:30,778 | INFO | mainscript.py:52 | internshala() | Inserted 50 jobs into raw_data schema (PostgreSQL)
+2026-07-02 00:43:37,071 | INFO | mainscript.py:48 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/machine-learning-jobs/page-2
+2026-07-02 00:45:40,186 | INFO | mainscript.py:52 | internshala() | Inserted 40 jobs into raw_data schema (PostgreSQL)
+2026-07-02 00:47:07,205 | INFO | mainscript.py:48 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/machine-learning-jobs/page-3
+2026-07-02 00:47:40,694 | INFO | mainscript.py:52 | internshala() | Inserted 40 jobs into raw_data schema (PostgreSQL)
+2026-07-02 00:47:41,913 | INFO | mainscript.py:48 | internshala() | Scraped 8 jobs from https://internshala.com/jobs/machine-learning-jobs/page-4
+2026-07-02 00:47:43,397 | INFO | mainscript.py:52 | internshala() | Inserted 8 jobs into raw_data schema (PostgreSQL)
+2026-07-02 00:47:44,522 | INFO | mainscript.py:45 | internshala() | No data found on page 5 — stopping pagination for https://internshala.com/jobs/machine-learning-jobs/
+2026-07-02 00:47:46,871 | INFO | mainscript.py:48 | internshala() | Scraped 50 jobs from https://internshala.com/jobs/backend-development-jobs/
+2026-07-02 00:49:50,628 | INFO | mainscript.py:52 | internshala() | Inserted 50 jobs into raw_data schema (PostgreSQL)
+2026-07-02 00:49:52,480 | INFO | mainscript.py:48 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/backend-development-jobs/page-2
+2026-07-02 00:50:59,910 | INFO | mainscript.py:52 | internshala() | Inserted 40 jobs into raw_data schema (PostgreSQL)
+2026-07-02 00:51:01,381 | INFO | mainscript.py:48 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/backend-development-jobs/page-3
+2026-07-02 00:53:06,639 | INFO | mainscript.py:52 | internshala() | Inserted 40 jobs into raw_data schema (PostgreSQL)
+2026-07-02 00:53:07,893 | INFO | mainscript.py:48 | internshala() | Scraped 22 jobs from https://internshala.com/jobs/backend-development-jobs/page-4
+2026-07-02 00:53:11,952 | INFO | mainscript.py:52 | internshala() | Inserted 22 jobs into raw_data schema (PostgreSQL)
+2026-07-02 00:53:12,798 | INFO | mainscript.py:45 | internshala() | No data found on page 5 — stopping pagination for https://internshala.com/jobs/backend-development-jobs/
+2026-07-02 00:53:14,341 | INFO | mainscript.py:48 | internshala() | Scraped 46 jobs from https://internshala.com/fresher-jobs/front-end-development-jobs/
+2026-07-02 00:53:56,204 | INFO | mainscript.py:52 | internshala() | Inserted 46 jobs into raw_data schema (PostgreSQL)
+2026-07-02 00:53:57,169 | INFO | mainscript.py:48 | internshala() | Scraped 6 jobs from https://internshala.com/fresher-jobs/front-end-development-jobs/page-2
+2026-07-02 00:53:58,394 | INFO | mainscript.py:52 | internshala() | Inserted 6 jobs into raw_data schema (PostgreSQL)
+2026-07-02 00:53:59,167 | INFO | mainscript.py:45 | internshala() | No data found on page 3 — stopping pagination for https://internshala.com/fresher-jobs/front-end-development-jobs/
+2026-07-02 00:54:00,476 | INFO | mainscript.py:48 | internshala() | Scraped 47 jobs from https://internshala.com/jobs/mobile-app-development-jobs/
+2026-07-02 00:55:17,574 | INFO | mainscript.py:52 | internshala() | Inserted 47 jobs into raw_data schema (PostgreSQL)
+2026-07-02 00:55:18,879 | INFO | mainscript.py:48 | internshala() | Scraped 7 jobs from https://internshala.com/jobs/mobile-app-development-jobs/page-2
+2026-07-02 00:55:20,615 | INFO | mainscript.py:52 | internshala() | Inserted 7 jobs into raw_data schema (PostgreSQL)
+2026-07-02 00:55:21,314 | INFO | mainscript.py:45 | internshala() | No data found on page 3 — stopping pagination for https://internshala.com/jobs/mobile-app-development-jobs/
+2026-07-02 00:55:22,544 | INFO | mainscript.py:48 | internshala() | Scraped 26 jobs from https://internshala.com/jobs/big-data-jobs/
+2026-07-02 00:56:11,460 | INFO | mainscript.py:52 | internshala() | Inserted 26 jobs into raw_data schema (PostgreSQL)
+2026-07-02 00:56:12,549 | INFO | mainscript.py:45 | internshala() | No data found on page 2 — stopping pagination for https://internshala.com/jobs/big-data-jobs/
+2026-07-02 00:56:12,549 | INFO | mainscript.py:56 | internshala() | Started inserting into into clean data
+2026-07-02 01:09:38,270 | INFO | db_manager.py:7 | manage_operation() | Opening JIT connection for manage_operation...
+2026-07-02 20:01:06,729 | INFO | mainscript.py:34 | internshala() | Execution started...
+2026-07-02 20:01:08,072 | INFO | mainscript.py:48 | internshala() | Scraped 50 jobs from https://internshala.com/jobs/machine-learning-jobs/
+2026-07-02 20:02:44,868 | INFO | mainscript.py:52 | internshala() | Inserted 50 jobs into raw_data schema (PostgreSQL)
+2026-07-02 20:02:46,084 | INFO | mainscript.py:48 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/machine-learning-jobs/page-2
+2026-07-02 20:04:07,315 | INFO | mainscript.py:52 | internshala() | Inserted 40 jobs into raw_data schema (PostgreSQL)
+2026-07-02 20:04:08,625 | INFO | mainscript.py:48 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/machine-learning-jobs/page-3
+2026-07-02 20:04:51,157 | INFO | mainscript.py:52 | internshala() | Inserted 40 jobs into raw_data schema (PostgreSQL)
+2026-07-02 20:04:52,152 | INFO | mainscript.py:48 | internshala() | Scraped 20 jobs from https://internshala.com/jobs/machine-learning-jobs/page-4
+2026-07-02 20:04:54,606 | INFO | mainscript.py:52 | internshala() | Inserted 20 jobs into raw_data schema (PostgreSQL)
+2026-07-02 20:04:56,048 | INFO | mainscript.py:48 | internshala() | Scraped 50 jobs from https://internshala.com/jobs/backend-development-jobs/
+2026-07-02 20:06:44,370 | INFO | mainscript.py:52 | internshala() | Inserted 50 jobs into raw_data schema (PostgreSQL)
+2026-07-02 20:06:47,058 | INFO | mainscript.py:48 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/backend-development-jobs/page-2
+2026-07-02 20:07:50,514 | INFO | mainscript.py:52 | internshala() | Inserted 40 jobs into raw_data schema (PostgreSQL)
+2026-07-02 20:07:51,854 | INFO | mainscript.py:48 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/backend-development-jobs/page-3
+2026-07-02 20:09:09,804 | INFO | mainscript.py:52 | internshala() | Inserted 40 jobs into raw_data schema (PostgreSQL)
+2026-07-02 20:09:10,776 | INFO | mainscript.py:48 | internshala() | Scraped 30 jobs from https://internshala.com/jobs/backend-development-jobs/page-4
+2026-07-02 20:09:14,822 | INFO | mainscript.py:52 | internshala() | Inserted 30 jobs into raw_data schema (PostgreSQL)
+2026-07-02 20:09:16,100 | INFO | mainscript.py:48 | internshala() | Scraped 45 jobs from https://internshala.com/fresher-jobs/front-end-development-jobs/
+2026-07-02 20:09:45,543 | INFO | mainscript.py:52 | internshala() | Inserted 45 jobs into raw_data schema (PostgreSQL)
+2026-07-02 20:09:46,391 | INFO | mainscript.py:48 | internshala() | Scraped 5 jobs from https://internshala.com/fresher-jobs/front-end-development-jobs/page-2
+2026-07-02 20:09:47,093 | INFO | mainscript.py:52 | internshala() | Inserted 5 jobs into raw_data schema (PostgreSQL)
+2026-07-02 20:09:47,813 | INFO | mainscript.py:45 | internshala() | No data found on page 3 — stopping pagination for https://internshala.com/fresher-jobs/front-end-development-jobs/
+2026-07-02 20:09:49,277 | INFO | mainscript.py:48 | internshala() | Scraped 47 jobs from https://internshala.com/jobs/mobile-app-development-jobs/
+2026-07-02 20:10:56,153 | INFO | mainscript.py:52 | internshala() | Inserted 47 jobs into raw_data schema (PostgreSQL)
+2026-07-02 20:10:56,984 | INFO | mainscript.py:48 | internshala() | Scraped 7 jobs from https://internshala.com/jobs/mobile-app-development-jobs/page-2
+2026-07-02 20:10:57,913 | INFO | mainscript.py:52 | internshala() | Inserted 7 jobs into raw_data schema (PostgreSQL)
+2026-07-02 20:10:58,787 | INFO | mainscript.py:45 | internshala() | No data found on page 3 — stopping pagination for https://internshala.com/jobs/mobile-app-development-jobs/
+2026-07-02 20:10:59,825 | INFO | mainscript.py:48 | internshala() | Scraped 28 jobs from https://internshala.com/jobs/big-data-jobs/
+2026-07-02 20:11:57,474 | INFO | mainscript.py:52 | internshala() | Inserted 28 jobs into raw_data schema (PostgreSQL)
+2026-07-02 20:11:58,429 | INFO | mainscript.py:45 | internshala() | No data found on page 2 — stopping pagination for https://internshala.com/jobs/big-data-jobs/
+2026-07-02 20:11:58,429 | INFO | mainscript.py:56 | internshala() | Started inserting into into clean data
+2026-07-02 20:22:16,614 | INFO | db_manager.py:7 | manage_operation() | Opening JIT connection for manage_operation...
+2026-07-02 20:38:24,257 | ERROR | db_manager.py:112 | manage_operation() | manage_operation failed during execution
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\db\db_manager.py", line 71, in manage_operation
+    cur.execute(
+    ~~~~~~~~~~~^
+        '''
+        ^^^
+    ...<4 lines>...
+        (tech,)
+        ^^^^^^^
+    )
+    ^
+psycopg2.OperationalError: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+
+2026-07-02 20:38:24,399 | WARNING | db_manager.py:120 | manage_operation() | Could not execute rollback; the database connection was already closed by the server.

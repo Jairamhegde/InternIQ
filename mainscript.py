@@ -34,7 +34,7 @@ def internshala(url_list):
     logging.info("Execution started...")
 
     for url in url_list:
-        for page in range(1, 21):
+        for page in range(1, 5):
 
             link = url if page == 1 else f"{url}page-{page}"
             try:

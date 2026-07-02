@@ -12,14 +12,11 @@ def insertRawData(job_data):
     cur = conn.cursor()
 
     try:
+        
+        
         for job in job_data:
 
-            if not (
-                job['tech_stack']
-                and job['company']
-                and job['job_title']
-            ):
-                continue
+            
 
             title = normalize(job['job_title'])
             company = normalize(job['company'])

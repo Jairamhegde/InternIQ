@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 
 
 load_dotenv()
+
 def connect_database(search_path="clean_data"):
     if os.environ.get("HOST_NAME"):
         PG_CONFIG = {
@@ -53,4 +54,7 @@ def _connect_to_st(search_path):
                     f"at {PG_CONFIG['host']}:{PG_CONFIG['port']}. Check your config and ensure the server is running.\n{e}"
                 )
         return _cache(search_path)
+
+
+
 

@@ -47,15 +47,18 @@ flowchart TD
         DB_RAW -->|Extract raw tuples| TD["Transformer"]
         TD -->|Standardize salaries, currencies, dates| TD
         TD -->|Cleaned Python Data Dicts| DM["DB Manager"]
-        DM -->|Insert normalized tables| DB_CLEAN[("PostgreSQL: clean_data Schema")]
+        DM -->|Insert jobs & skills| DB_CLEAN[("PostgreSQL: clean_data Schema")]
+        DM -->|Insert snapshot metrics| DB_SNAP[("clean_data.job_snapshot")]
     end
 
     %% Visualization
     subgraph Presentation ["4. Visualization & Analytics"]
-        DB_CLEAN -->|SQL Analysis Queries| QA["Analysis Queries"]
-        DB_RAW -->|SQL Recent Queries| QR["Recent Queries"]
+        DB_CLEAN -->|Long-term Queries| QA["Overall Analysis Queries"]
+        DB_CLEAN -->|Recent Queries| QR["Recent Market Trends"]
+        DB_SNAP -->|Time-series Queries| QT["Trends Over Time Queries"]
         QA -->|Pandas DataFrames| ST["Streamlit Dashboard"]
         QR -->|Pandas DataFrames| ST
+        QT -->|Pandas DataFrames| ST
         ST -->|Interactive Visualizations| US["End Users"]
     end
 ```

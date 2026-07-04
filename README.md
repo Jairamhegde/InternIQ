@@ -33,26 +33,26 @@ flowchart TD
     subgraph Extraction ["1. Data Extraction Phase"]
         IS["Internshala Job Board"] -->|HTTP GET Requests| FT["Fetcher"]
         FT -->|HTML Soup| EX["Extractor"]
-        EX -->|N-Gram Tokenization & Skill Matching| EX
+        EX -->|N-Gram Tokenization and Skill Matching| EX
     end
 
     %% Raw Ingestion
-    subgraph Ingestion ["2. Ingestion & Staging"]
+    subgraph Ingestion ["2. Ingestion and Staging"]
         EX -->|Scraped Dict List| RW["Staging Layer"]
-        RW -->|Insert raw data| DB_RAW[("PostgreSQL: raw_data Schema")]
+        RW -->|Insert raw data| DB_RAW[("PostgreSQL - raw_data Schema")]
     end
 
     %% Transformation & ETL
-    subgraph ETL ["3. ETL & Data Normalization"]
+    subgraph ETL ["3. ETL and Data Normalization"]
         DB_RAW -->|Extract raw tuples| TD["Transformer"]
         TD -->|Standardize salaries, currencies, dates| TD
         TD -->|Cleaned Python Data Dicts| DM["DB Manager"]
-        DM -->|Insert jobs & skills| DB_CLEAN[("PostgreSQL: clean_data Schema")]
+        DM -->|Insert jobs and skills| DB_CLEAN[("PostgreSQL - clean_data Schema")]
         DM -->|Insert snapshot metrics| DB_SNAP[("clean_data.job_snapshot")]
     end
 
     %% Visualization
-    subgraph Presentation ["4. Visualization & Analytics"]
+    subgraph Presentation ["4. Visualization and Analytics"]
         DB_CLEAN -->|Long-term Queries| QA["Overall Analysis Queries"]
         DB_CLEAN -->|Recent Queries| QR["Recent Market Trends"]
         DB_SNAP -->|Time-series Queries| QT["Trends Over Time Queries"]

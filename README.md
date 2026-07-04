@@ -28,34 +28,35 @@ InternIQ solves this by aggregating real-time posting data, standardizing raw fi
 The project implements a full **ELTL (Extract-Load-Transform-Load)** pipeline running on Python and a cloud PostgreSQL cluster.
 
 ```mermaid
-graph TD
+flowchart TD
     %% Extract Phase
-    subgraph Extraction [1. Data Extraction Phase]
-        IS[Internshala Job Board] -->|HTTP GET Requests| FT[Fetcher]
-        FT -->|HTML Soup| EX[Extractor]
+    subgraph Extraction ["1. Data Extraction Phase"]
+        IS["Internshala Job Board"] -->|HTTP GET Requests| FT["Fetcher"]
+        FT -->|HTML Soup| EX["Extractor"]
         EX -->|N-Gram Tokenization & Skill Matching| EX
     end
 
     %% Raw Ingestion
-    subgraph Ingestion [2. Ingestion & Staging]
-        EX -->|Scraped Dict List| RW[Staging Layer]
-        RW -->|Insert raw data| DB_RAW[(PostgreSQL: raw_data Schema)]
+    subgraph Ingestion ["2. Ingestion & Staging"]
+        EX -->|Scraped Dict List| RW["Staging Layer"]
+        RW -->|Insert raw data| DB_RAW[("PostgreSQL: raw_data Schema")]
     end
 
     %% Transformation & ETL
-    subgraph ETL [3. ETL & Data Normalization]
-        DB_RAW -->|Extract raw tuples| TD[Transformer]
+    subgraph ETL ["3. ETL & Data Normalization"]
+        DB_RAW -->|Extract raw tuples| TD["Transformer"]
         TD -->|Standardize salaries, currencies, dates| TD
-        TD -->|Cleaned Python Data Dicts| DM[DB Manager]
-        DM -->|Insert normalized tables| DB_CLEAN[(PostgreSQL: clean_data Schema)]
+        TD -->|Cleaned Python Data Dicts| DM["DB Manager"]
+        DM -->|Insert normalized tables| DB_CLEAN[("PostgreSQL: clean_data Schema")]
     end
 
     %% Visualization
-    subgraph Presentation [4. Visualization & Analytics]
-        DB_CLEAN -->|SQL Analysis Queries| QA[Analysis Queries]
-        DB_RAW -->|SQL Recent Queries| QR[Recent Queries]
-        QA & QR -->|Pandas DataFrames| ST[Streamlit Dashboard]
-        ST -->|Interactive Visualizations| US[End Users]
+    subgraph Presentation ["4. Visualization & Analytics"]
+        DB_CLEAN -->|SQL Analysis Queries| QA["Analysis Queries"]
+        DB_RAW -->|SQL Recent Queries| QR["Recent Queries"]
+        QA -->|Pandas DataFrames| ST["Streamlit Dashboard"]
+        QR -->|Pandas DataFrames| ST
+        ST -->|Interactive Visualizations| US["End Users"]
     end
 ```
 

@@ -8,7 +8,7 @@
 
 InternIQ is an end-to-end data engineering and business intelligence platform that scrapes internship postings from Internshala, processes and normalizes the data, and delivers interactive market analytics via a premium dark-glassmorphic Streamlit dashboard.
 
-**Live Dashboard Demo:** [InternIQ Market Intelligence](https://internshipjobmarketanalysis.streamlit.app/)
+**Live Dashboard Demo:** [InternIQ Market Intelligence](https://interniq.streamlit.app/)
 
 ---
 

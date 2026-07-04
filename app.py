@@ -298,7 +298,7 @@ def load_dashboard():
             avg_skills = df_role_skills['demand'].mean()
             st.metric("Avg. Skill Mentions", f"{avg_skills:.0f}", "per skill")
         with col4:
-            st.metric("AVG Salary", f"₹{int(salaries.iloc[0]['average'])//12 if salaries.iloc[0]['average'] else "NA"}", "Per month")
+            st.metric("AVG Salary", f"₹{int(salaries.iloc[0]['average'])//12 if salaries.iloc[0]['average'] else 'NA'}", "Per month")
 
         st.markdown(BR_HTML, unsafe_allow_html=True)
         st.markdown("### Skills Breakdown")

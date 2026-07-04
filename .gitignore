@@ -1,21 +1,61 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
+
+# Virtual Environments
+venv/
+.venv/
+env/
+ENV/
+
+# Environment Variables
+.env
+.env.*
+
+
+# Logs
+*.log
+
+
+# VS Code / Dev Container
+.vscode/
+.devcontainer/
+
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+
+# Databases
+*.db
+
+
+# Generated Data
+*.csv
+*.zip
+*.json
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Temporary / Trial Files
 
 databaseTrial.py
-__pycache__/
-insights/*.csv
-problemsfaced.txt
-*.csv
-ap.py
-dashboard.py
-
-*.sql
 trial.py
 app2.py
-*.zip
-*.db
-*.env
-*.json
-migrate_sql_to_postgre.py
-*db
+ap.py
+dashboard.py
 migrate.py
-secrets.toml
+migrate_sql_to_postgre.py
 export_data.py
+problemsfaced.txt
+migrate.py
+modifySchema.py
+init_db.py
+scraperenv
+.env
+pytest.ini

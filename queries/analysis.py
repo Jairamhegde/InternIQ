@@ -24,10 +24,10 @@ def topSkills():
 def roles():
     conn = connect_database("clean_data")
     query = '''
-    SELECT job_id,title,count(*) as demand
-    FROM job_data 
-    GROUP BY job_id,title
-    ORDER BY demand DESC
+    SELECT title,count(*) as demand
+    from clean_data.job_data
+    group by title
+    order by demand desc
     LIMIT 10;
     '''
     df = pd.read_sql_query(query, conn)

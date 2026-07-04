@@ -1,5 +1,6 @@
 from datetime import datetime
 from dbconnection.dbconnect import connect_database
+from psycopg2.extras import execute_values
 
 def normalize(text):
     if not text:
@@ -14,101 +15,80 @@ def insertRawData(job_data):
     try:
         
         
+        job_data_tuple = [
+                (
+                normalize(job['job_title']),
+                job['salary'],
+                normalize(job['location']),
+                job['scrape_time'],
+                job['posted_date'],
+                normalize(job['company'])
+            ) 
+            for job in job_data
+        ]
+
+
+        # Insert Job
+        query1 = \
+            '''
+            INSERT INTO job_data
+            (title, salary, location, scrape_time, posted_date, company)
+            VALUES %s
+            RETURNING id, title, salary, location, company
+            ;
+            '''
+        job_ids = execute_values(cur, query1, job_data_tuple, fetch=True)
+
+        
+
+        #Create skill set batch to insert at once
+        skill_set = set()
         for job in job_data:
+            skill_set.update(job.get('tech_stack',[]))
 
-            
-
-            title = normalize(job['job_title'])
-            company = normalize(job['company'])
-            location = normalize(job['location'])
-
-            # Insert Job
-            cur.execute(
+        skill_tuple = [(skill,) for skill in skill_set]
+        skill_query =\
                 '''
-                INSERT INTO job_data
-                (title, salary, location, scrape_time, posted_date, company)
-                VALUES (%s, %s, %s, %s, %s, %s)
+                INSERT INTO skills (name)
+                VALUES %s
                 ON CONFLICT DO NOTHING;
-                ''',
-                (
-                    title,
-                    job['salary'],
-                    location,
-                    job['scrape_time'],
-                    job['posted_date'],
-                    company
-                )
-            )
-
-            # Fetch job_id
-            cur.execute(
                 '''
-                SELECT id
-                FROM job_data
-                WHERE title = %s
-                AND location = %s
-                AND company = %s;
-                ''',
-                (title, location, company)
-            )
+        if skill_tuple:
+            execute_values(cur,skill_query,skill_tuple)
 
-            result = cur.fetchone()
-            job_id = result[0] if result else None
+        job_map = {
+            (job_m[1],job_m[2],job_m[3],job_m[4]):job_m[0] for job_m in job_ids
+        }
 
-            if not job_id:
-                continue
 
-            # Insert skills
-            for tech in job['tech_stack']:
+        cur.execute('''
+        select skill_id,name from skills;
+        ''')
+        rows = cur.fetchall()
+        skill_map = {row[1]:row[0] for row in rows}
 
-                tech = normalize(tech)
 
-                if not tech:
-                    continue
+        skill_job_map = []
 
-                cur.execute(
-                    '''
-                    INSERT INTO skills (name)
-                    VALUES (%s)
-                    ON CONFLICT DO NOTHING;
-                    ''',
-                    (tech,)
-                )
+        for j in job_data:
+            job_tuple = (normalize(j.get('job_title')),j.get('salary'),normalize(j.get('location')),normalize(j.get('company')))
 
-                cur.execute(
-                    '''
-                    SELECT skill_id
-                    FROM skills
-                    WHERE name = %s;
-                    ''',
-                    (tech,)
-                )
+            for skill in j.get('tech_stack',[]):
+                skill_id = skill_map[skill]
 
-                skill = cur.fetchone()
-                skill_id = skill[0] if skill else None
+                job_id = job_map[job_tuple]
+                skill_job_map.append((job_id,skill_id))
 
-                if skill_id:
-                    cur.execute(
-                        '''
-                        INSERT INTO job_skills (job_id, skill_id)
-                        VALUES (%s, %s)
-                        ON CONFLICT DO NOTHING;
-                        ''',
-                        (job_id, skill_id)
-                    )
 
-            # Insert snapshot
-            cur.execute(
+        
+            job_skill_query = \
                 '''
-                INSERT INTO job_snapshot (job_id, scraped_date)
-                VALUES (%s, %s)
+                INSERT INTO job_skills (job_id, skill_id)
+                VALUES %s
                 ON CONFLICT DO NOTHING;
-                ''',
-                (
-                    job_id,
-                    datetime.now().strftime("%Y-%m-%d")
-                )
-            )
+                '''
+        if skill_job_map:
+            execute_values(cur,job_skill_query,skill_job_map)
 
         conn.commit()
 
@@ -119,5 +99,6 @@ def insertRawData(job_data):
     finally:
         if cur:
             cur.close()
+      
 
    

@@ -30,102 +30,14 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-STYLES = """
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap');
-
-html, body, [class*="css"] { font-family: 'Outfit', sans-serif !important; }
-.material-icons, .material-symbols-outlined { font-family: 'Material Icons' !important; }
-
-.stApp {
-    background-color: #080b14;
-    background-image:
-        radial-gradient(ellipse 80% 50% at 20% -10%, rgba(99,102,241,0.12) 0%, transparent 60%),
-        radial-gradient(ellipse 60% 40% at 80% 100%, rgba(34,211,238,0.07) 0%, transparent 55%);
-}
-.block-container { padding: 1.5rem 2.5rem !important; max-width: 1600px !important; }
-
-h1 {
-    font-size: 2rem !important; font-weight: 700 !important;
-    background: linear-gradient(120deg, #e2e8f0, #6366f1);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    letter-spacing: -0.5px; padding-bottom: 0 !important;
-}
-h2, h3 { color: #e2e8f0 !important; font-weight: 600 !important; letter-spacing: -0.3px; }
-
-[data-testid="stMetric"] {
-    background: linear-gradient(135deg, #13172a 0%, #1a1f35 100%);
-    border: 1px solid rgba(99,102,241,0.25); border-radius: 16px;
-    padding: 20px 22px !important; position: relative; overflow: hidden;
-    transition: border-color 0.25s, box-shadow 0.25s;
-}
-[data-testid="stMetric"]:hover { border-color: rgba(99,102,241,0.55); box-shadow: 0 0 24px rgba(99,102,241,0.12); }
-[data-testid="stMetric"]::before {
-    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-    background: linear-gradient(90deg, #6366f1, #22d3ee); border-radius: 16px 16px 0 0;
-}
-[data-testid="stMetricLabel"] p { font-size: 10px !important; font-weight: 600 !important; color: #64748b !important; text-transform: uppercase; letter-spacing: 1.2px; }
-[data-testid="stMetricValue"] { font-family: 'JetBrains Mono', monospace !important; font-size: 26px !important; font-weight: 600 !important; color: #f1f5f9 !important; }
-[data-testid="stMetricDelta"] { font-size: 12px !important; color: #34d399 !important; }
-
-div[data-testid="stPlotlyChart"] {
-    background: linear-gradient(145deg, #0d1117, #131825) !important;
-    border: 1px solid rgba(255,255,255,0.07) !important; border-radius: 16px !important;
-    padding: 8px !important; transition: border-color 0.25s;
-}
-div[data-testid="stPlotlyChart"]:hover { border-color: rgba(99,102,241,0.3) !important; }
-div[data-testid="stPlotlyChart"] * { background: transparent !important; }
-
-/* ── SIDEBAR ── */
-section[data-testid="stSidebar"] {
-    background: #0d0f14 !important;
-    border-right: 1px solid rgba(255,255,255,0.05);
-}
-section[data-testid="stSidebar"] .block-container { padding: 0 !important; }
-
-/* Nav buttons */
-div.stButton > button {
-    background: transparent !important;
-    border: none !important;
-    color: #4a5272 !important;
-    border-radius: 8px !important;
-    font-size: 13.5px !important;
-    font-weight: 400 !important;
-    font-family: 'DM Sans', sans-serif !important;
-    padding: 9px 12px !important;
-    transition: all 0.18s ease !important;
-    text-align: left !important;
-    margin-bottom: 2px;
-    width: 100%;
-    letter-spacing: 0;
-}
-div.stButton > button:hover {
-    background: #161a26 !important;
-    color: #c8d0e8 !important;
-    transform: none !important;
-}
-div.stButton > button:focus,
-div.stButton > button:active {
-    background: #131827 !important;
-    color: #ffffff !important;
-    border: none !important;
-    box-shadow: none !important;
-}
-
-[data-testid="stMarkdownContainer"] h3 { padding-left: 12px; border-left: 3px solid #6366f1; color: #e2e8f0 !important; }
-[data-testid="stDataFrame"] { background: #0d1117 !important; border: 1px solid rgba(255,255,255,0.07) !important; border-radius: 12px !important; overflow: hidden; }
-[data-testid="stSelectbox"] > div, [data-testid="stMultiSelect"] > div { background: #13172a !important; border: 1px solid rgba(99,102,241,0.25) !important; border-radius: 10px !important; color: #e2e8f0 !important; }
-[data-testid="stProgress"] > div > div { background: linear-gradient(90deg, #6366f1, #22d3ee) !important; border-radius: 99px; }
-[data-testid="stExpander"] { background: #0d1117 !important; border: 1px solid rgba(255,255,255,0.07) !important; border-radius: 12px !important; }
-
-hr { border-color: rgba(255,255,255,0.06) !important; }
-[data-testid="stCaptionContainer"] { color: #475569 !important; font-size: 12px !important; }
-::-webkit-scrollbar { width: 5px; height: 5px; }
-::-webkit-scrollbar-track { background: #0c0f1e; }
-::-webkit-scrollbar-thumb { background: #2d3556; border-radius: 99px; }
-::-webkit-scrollbar-thumb:hover { background: #6366f1; }
-</style>
-"""
+from utils.html_templates import (
+    STYLES, BRAND_HEADER_HTML, COMPARE_DIVIDER_HTML, PAGE_SUBTITLE_HTML,
+    CROSS_FUNCTIONAL_SUBTEXT_HTML, MOST_IN_DEMAND_SKILLS_HEADER,
+    SKILL_PRIORITY_SUBTEXT_HTML, MUST_HAVE_SKILLS_HEADER_HTML,
+    EMERGING_SKILLS_HEADER_HTML, CLOSE_DIV_HTML, BR_HTML,
+    insight_card, key_insight_card, insights_section,
+    get_market_analysis_html, get_skill_market_analysis_html
+)
 
 NAV_ICONS = {
     "Overall Market Trends":  "",
@@ -134,52 +46,6 @@ NAV_ICONS = {
     "Comparative Analysis":   "",
     "Trends Over Time":       "",
 }
-
-
-def insight_card(icon, label, label_color, value, sub, sub_color, bg_color):
-    return f"""
-    <div style="background:#13172a;border:1px solid rgba(99,102,241,0.2);border-radius:14px;
-                padding:18px 20px;display:flex;align-items:flex-start;gap:14px">
-      <div style="width:42px;height:42px;border-radius:50%;background:{bg_color};
-                  display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">{icon}</div>
-      <div>
-        <p style="color:{label_color};font-size:12px;font-weight:600;letter-spacing:.6px;
-                  text-transform:uppercase;margin:0 0 4px">{label}</p>
-        <p style="color:#fff;font-size:18px;font-weight:700;margin:0 0 4px">{value}</p>
-        <p style="color:{sub_color};font-size:13px;margin:0">{sub}</p>
-      </div>
-    </div>"""
-
-
-def key_insight_card(text):
-    return f"""
-    <div style="background:#13172a;border:1px solid rgba(99,102,241,0.15);border-radius:14px;
-                padding:18px 20px;display:flex;align-items:flex-start;gap:14px">
-      <div style="width:42px;height:42px;border-radius:50%;background:#2a1f00;
-                  display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0"></div>
-      <div>
-        <p style="color:#f59e0b;font-size:13px;font-weight:700;letter-spacing:.5px;
-                  text-transform:uppercase;margin:0 0 6px">Key Insight</p>
-        <p style="color:#cbd5e1;font-size:14px;line-height:1.6;margin:0">{text}</p>
-      </div>
-    </div>"""
-
-
-def insights_section(cards_html, insight_html):
-    grid = "".join(cards_html)
-    return f"""
-    <div style="background:#0d1117;border-radius:16px;padding:28px;margin-top:16px">
-      <div style="display:flex;align-items:center;gap:14px;margin-bottom:24px;
-                  border-left:3px solid #6366f1;padding-left:14px">
-        <div style="background:#1e1b4b;border-radius:10px;width:42px;height:42px;
-                    display:flex;align-items:center;justify-content:center;font-size:20px"></div>
-        <p style="color:#fff;font-size:22px;font-weight:600;margin:0">Insights received</p>
-      </div>
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:16px">
-        {grid}
-      </div>
-      {insight_html}
-    </div>"""
 
 
 def load_dashboard():
@@ -204,20 +70,7 @@ def load_dashboard():
     # ── SIDEBAR ───────────────────────────────────────────────────────────────
     with st.sidebar:
         # Brand header
-        st.markdown("""
-        <div style="padding:28px 20px 24px;font-family:'DM Sans',sans-serif">
-            <div style="display:flex;align-items:center;gap:10px;margin-bottom:32px">
-                <div style="width:30px;height:30px;background:#4f8ef7;border-radius:8px;
-                            display:flex;align-items:center;justify-content:center;
-                            font-size:13px;font-weight:700;color:#fff;flex-shrink:0">IQ</div>
-                <span style="font-size:15px;font-weight:500;color:#fff;font-family:'DM Sans',sans-serif">
-                    Intern<span style="color:#4f8ef7">IQ</span>
-                </span>
-            </div>
-            <p style="font-size:10px;font-weight:500;letter-spacing:0.12em;color:#2e3450;
-                      text-transform:uppercase;margin:0 0 6px;padding:0 4px">Analytics</p>
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown(BRAND_HEADER_HTML, unsafe_allow_html=True)
 
         pages = [
             "Overall Market Trends",
@@ -238,13 +91,7 @@ def load_dashboard():
                 st.session_state.page = pg
 
         # Divider + second section label
-        st.markdown("""
-        <div style="padding:0 20px;font-family:'DM Sans',sans-serif">
-            <div style="height:0.5px;background:#161a24;margin:10px 0 14px"></div>
-            <p style="font-size:10px;font-weight:500;letter-spacing:0.12em;color:#2e3450;
-                      text-transform:uppercase;margin:0 0 6px;padding:0 4px">Compare</p>
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown(COMPARE_DIVIDER_HTML, unsafe_allow_html=True)
 
         for pg in compare_pages:
             
@@ -257,11 +104,7 @@ def load_dashboard():
 
     # ── PAGE HEADER ───────────────────────────────────────────────────────────
     st.markdown("# Internship Job Market Intelligence")
-    st.markdown(
-        "<p style='color:#64748b;font-size:14px;margin-top:-8px;margin-bottom:24px'>"
-        "Real-time insights from scraped job postings</p>",
-        unsafe_allow_html=True
-    )
+    st.markdown(PAGE_SUBTITLE_HTML, unsafe_allow_html=True)
 
     # ── PAGE: OVERALL MARKET TRENDS ──────────────────────────────────────────
     if page == "Overall Market Trends":
@@ -282,9 +125,9 @@ def load_dashboard():
             st.metric("Top Location", df_locations.iloc[0]['location'].capitalize(),
                       f"{df_locations.iloc[0]['count']} jobs")
 
-        st.markdown("<br>", unsafe_allow_html=True)
+        st.markdown(BR_HTML, unsafe_allow_html=True)
         st.markdown("### Market Demand Analysis")
-        st.markdown("<br>", unsafe_allow_html=True)
+        st.markdown(BR_HTML, unsafe_allow_html=True)
 
         col1, col2 = st.columns(2)
         with col1:
@@ -319,7 +162,7 @@ def load_dashboard():
             )
             st.plotly_chart(fig_skills, use_container_width=True)
 
-        st.markdown("<br>", unsafe_allow_html=True)
+        st.markdown(BR_HTML, unsafe_allow_html=True)
         st.markdown("### Geographic Distribution")
 
         col1, col2 = st.columns([1, 1])
@@ -340,7 +183,7 @@ def load_dashboard():
 
         with col2:
             fig_pie = px.pie(
-                df_roles.head(8), values='demand', names='job_id', hole=0.55,
+                df_roles.head(8), values='demand', names='title', hole=0.55,
                 title='Market Share by Top Roles',
                 color_discrete_sequence=['#6366f1','#818cf8','#22d3ee','#34d399',
                                          '#f472b6','#fb923c','#a78bfa','#38bdf8']
@@ -352,13 +195,9 @@ def load_dashboard():
             st.plotly_chart(fig_pie, use_container_width=True)
 
         if not cross_functional_skills.empty:
-            st.markdown("<br>", unsafe_allow_html=True)
+            st.markdown(BR_HTML, unsafe_allow_html=True)
             st.markdown("### Cross-Functional Skills")
-            st.markdown(
-                "<p style='color:#64748b;font-size:13px;margin-top:-6px'>"
-                "Skills required across multiple top roles</p>",
-                unsafe_allow_html=True
-            )
+            st.markdown(CROSS_FUNCTIONAL_SUBTEXT_HTML, unsafe_allow_html=True)
             fig_common = px.bar(
                 cross_functional_skills.head(15), x='total_occurrences', y='skill',
                 orientation='h', text='total_occurrences',
@@ -393,7 +232,7 @@ def load_dashboard():
         salary_range      = average_salary(toprole.iloc[0]['title'])
 
         st.markdown("### Last 10 Days Market Trends")
-        st.markdown("<br>", unsafe_allow_html=True)
+        st.markdown(BR_HTML, unsafe_allow_html=True)
 
         col1, col2, col3, col4 = st.columns(4)
         with col1:
@@ -415,29 +254,11 @@ def load_dashboard():
         chart.update_traces(textposition='outside')
         st.plotly_chart(chart, use_container_width=True)
 
-        st.markdown(f"""<div style='
-                background:linear-gradient(135deg,#13172a,#1a1f35);
-                border:1px solid rgba(99,102,241,0.2);
-                border-radius:16px;padding:24px 28px;font-size:18px'>
-                <h3>Market Analysis</h3><br>
-                <p style="font-size:20px">
-                The current hiring trend is led by
-                <b style='color:#6366f1'>{toprole['title'][0].capitalize()}</b>
-                with <b style='color:#34d399'>{toprole['job_count'][0]}</b> openings,
-                followed by <b style="color:#6366f1;">{toprole['title'][1].capitalize()}</b>
-                (<b style='color:#34d399'>{toprole['job_count'][1]} openings</b>),
-                <b style="color:#6366f1">{toprole['title'][2]}</b>
-                (<b style='color:#34d399'>{toprole['job_count'][2]} openings</b>),
-                {toprole['title'][3].capitalize()} ({toprole['job_count'][3]} openings), and
-                <b style="color:#6366f1">{toprole['title'][4].capitalize()}</b>
-                (<b style='color:#34d399'>{toprole['job_count'][4]} openings</b>),
-                highlighting strong demand for modern software and data-focused roles across the tech industry.
-                </p></div>
-            """, unsafe_allow_html=True)
+        st.markdown(get_market_analysis_html(toprole), unsafe_allow_html=True)
 
-        st.markdown('<br>', unsafe_allow_html=True)
-        st.markdown("<h3>Most In-Demand Skills</h3>", unsafe_allow_html=True)
-        st.markdown('<br>', unsafe_allow_html=True)
+        st.markdown(BR_HTML, unsafe_allow_html=True)
+        st.markdown(MOST_IN_DEMAND_SKILLS_HEADER, unsafe_allow_html=True)
+        st.markdown(BR_HTML, unsafe_allow_html=True)
 
         skill_chart = px.bar(
             topSkill_df, x="skill", y="skill_count",
@@ -447,17 +268,9 @@ def load_dashboard():
         )
         st.plotly_chart(skill_chart, use_container_width=True)
 
-        st.markdown(f"""<div style='
-                background:linear-gradient(135deg,#13172a,#1a1f35);
-                border:1px solid rgba(99,102,241,0.2);
-                border-radius:16px;padding:24px 28px;font-size:18px'>
-                <h3>Skill Market Analysis</h3><br>
-                <p>The current market trend is dominated by strong demand for
-                <b style='color:#6366f1'>{topSkill_df['skill'][0].capitalize()}</b> and
-                <b style='color:#6366f1'>{topSkill_df['skill'][1].capitalize()}</b></p></div>
-            """, unsafe_allow_html=True)
+        st.markdown(get_skill_market_analysis_html(topSkill_df), unsafe_allow_html=True)
 
-        st.markdown("<br>", unsafe_allow_html=True)
+        st.markdown(BR_HTML, unsafe_allow_html=True)
 
     # ── PAGE: ROLE-SPECIFIC ANALYSIS ──────────────────────────────────────────
     elif page == "Role-Specific Analysis":
@@ -475,7 +288,7 @@ def load_dashboard():
         df_job_count   = jobCount(selected_role)
         total_jobs     = df_job_count.iloc[0]['no_of_jobs']
 
-        st.markdown("<br>", unsafe_allow_html=True)
+        st.markdown(BR_HTML, unsafe_allow_html=True)
         col1, col2, col3, col4 = st.columns(4)
         with col1:
             st.metric("Total Openings", f"{total_jobs}", "Active Positions")
@@ -485,9 +298,9 @@ def load_dashboard():
             avg_skills = df_role_skills['demand'].mean()
             st.metric("Avg. Skill Mentions", f"{avg_skills:.0f}", "per skill")
         with col4:
-            st.metric("AVG Salary", f"₹{int(salaries.iloc[0]['average'])//12}", "Per month")
+            st.metric("AVG Salary", f"₹{int(salaries.iloc[0]['average'])//12 if salaries.iloc[0]['average'] else "NA"}", "Per month")
 
-        st.markdown("<br>", unsafe_allow_html=True)
+        st.markdown(BR_HTML, unsafe_allow_html=True)
         st.markdown("### Skills Breakdown")
 
         col1, col2 = st.columns([2, 1])
@@ -520,46 +333,30 @@ def load_dashboard():
             st.plotly_chart(fig_skill_pie, use_container_width=True)
 
             if len(df_role_skills) > 0:
-                st.markdown(
-                    "<p style='color:#64748b;font-size:11px;font-weight:600;text-transform:uppercase;"
-                    "letter-spacing:1px;margin-bottom:6px'>Skill Priority</p>",
-                    unsafe_allow_html=True
-                )
+                st.markdown(SKILL_PRIORITY_SUBTEXT_HTML, unsafe_allow_html=True)
                 top_skill_pct = (df_role_skills.iloc[0]['demand'] / df_role_skills['demand'].sum()) * 100
                 st.progress(top_skill_pct / 100)
                 st.caption(f"**{df_role_skills.iloc[0]['name']}** in {top_skill_pct:.1f}% of requirements")
 
-        st.markdown("<br>", unsafe_allow_html=True)
+        st.markdown(BR_HTML, unsafe_allow_html=True)
         st.markdown("### Career Insights")
 
         col1, col2 = st.columns(2)
         with col1:
-            st.markdown(
-                "<div style='background:#0d1117;border:1px solid rgba(99,102,241,0.2);"
-                "border-radius:12px;padding:18px 22px'>"
-                "<p style='color:#6366f1;font-weight:600;font-size:12px;text-transform:uppercase;"
-                "letter-spacing:1px;margin-bottom:12px'>Must-Have Skills</p>",
-                unsafe_allow_html=True
-            )
+            st.markdown(MUST_HAVE_SKILLS_HEADER_HTML, unsafe_allow_html=True)
             for idx, row in df_role_skills.head(3).iterrows():
                 pct = (row['demand'] / total_jobs) * 100
                 st.markdown(f"**{idx+1}. {row['name']}** — Required in {pct:.0f}% of postings")
-            st.markdown("</div>", unsafe_allow_html=True)
+            st.markdown(CLOSE_DIV_HTML, unsafe_allow_html=True)
 
         with col2:
-            st.markdown(
-                "<div style='background:#0d1117;border:1px solid rgba(52,211,153,0.2);"
-                "border-radius:12px;padding:18px 22px'>"
-                "<p style='color:#34d399;font-weight:600;font-size:12px;text-transform:uppercase;"
-                "letter-spacing:1px;margin-bottom:12px'>Emerging Skills</p>",
-                unsafe_allow_html=True
-            )
+            st.markdown(EMERGING_SKILLS_HEADER_HTML, unsafe_allow_html=True)
             if len(df_role_skills) > 5:
                 for _, row in df_role_skills.tail(3).iterrows():
                     st.markdown(f"• **{row['name']}** — {row['demand']} mentions")
             else:
                 st.info("Not enough data for emerging skills analysis")
-            st.markdown("</div>", unsafe_allow_html=True)
+            st.markdown(CLOSE_DIV_HTML, unsafe_allow_html=True)
 
         with st.expander("View Complete Skills Data"):
             st.dataframe(df_role_skills, use_container_width=True, height=380)
@@ -621,7 +418,7 @@ def load_dashboard():
                                               title=dict(font=dict(color='#94a3b8', size=13)))
                 st.plotly_chart(fig_comp_skills, use_container_width=True)
 
-            st.markdown("<br>", unsafe_allow_html=True)
+            st.markdown(BR_HTML, unsafe_allow_html=True)
             st.markdown("### Skills Overlap Analysis")
 
             all_skills = set()
@@ -665,7 +462,7 @@ def load_dashboard():
                         + ("…" if len(common) > 10 else "")
                     )
 
-            st.markdown("<br>", unsafe_allow_html=True)
+            st.markdown(BR_HTML, unsafe_allow_html=True)
             st.markdown("### Comparison Table")
             st.dataframe(df_comparison, use_container_width=True, height=200)
         else:

@@ -78,12 +78,14 @@ def loadData():
     try:
         conn = connect_database(search_path="raw_data")
         cur = conn.cursor()
+      
         # row indices → [0]id, [1]title, [2]salary, [3]location, [4]company, [5]scrape_time, [6]posted_date
         cur.execute("SELECT * FROM job_data;")
         rows = cur.fetchall()
-
+       
         for row in rows:
-
+            
+           
             job_id    = row[0] if row[0] is not None else None
             job_name  = " ".join(row[1].strip().split()).lower() if row[1] else None
             sal       = convertSalary(row[2]) if row[2] else (0, 0)
@@ -124,6 +126,7 @@ def loadData():
                 "skills":       skill_list
             }
             job_data.append(jd)
+         
 
         cur.close()
         conn.close()

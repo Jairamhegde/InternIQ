@@ -80,7 +80,3 @@ def test_unique_skill_count():
 
 
 
-test_common_skills()
-test_jobCount()
-test_noof_opportunities()
-test_opportunities_10days()

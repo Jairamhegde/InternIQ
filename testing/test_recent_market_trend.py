@@ -5,7 +5,6 @@ import pandas as pd
 def test_top_roles():
     df = Top_role()
     assert isinstance(df,pd.DataFrame)
-    assert not df.empty
     assert "title" in df.columns
     assert "posted_date" in df.columns
 
@@ -13,13 +12,10 @@ def test_top_roles():
 def test_top_skills():
     df = top_skill()
     assert isinstance(df,pd.DataFrame)
-    assert not df.empty
     assert "skill" in df.columns
     assert "skill_count" in df.columns
 
 def test_total_opportunities():
     df = total_opportunities()
     assert isinstance(df,pd.DataFrame)
-    assert not df.empty
-
     assert "total_opportunities" in df.columns

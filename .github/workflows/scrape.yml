@@ -22,6 +22,7 @@ jobs:
 
             -   name : Test scraper pipeline
                 env : 
+                    PYTHONPATH: .
                     HOST_NAME : ${{ secrets.HOST_NAME }}
                     PORT      : ${{ secrets.PORT }}
                     DATABASE  : ${{ secrets.DATABASE }}

@@ -16,4 +16,6 @@ TEST_DB = BASE_DIR/"transform"/"test.db"
 
 rawjson = BASE_DIR/"rawdata.json"
 
+KEYWORDS = BASE_DIR/"keyword_match"
+
 

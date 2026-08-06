@@ -77,3 +77,10 @@ def test_unique_skill_count():
     df = uniqueSkillCount(roles()['title'][0])  
     assert "skill" in df.columns
     assert "count" in df.columns
+
+
+
+test_common_skills()
+test_jobCount()
+test_noof_opportunities()
+test_opportunities_10days()

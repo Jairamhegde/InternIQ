@@ -1,4 +1,4 @@
-
+#________________Used in job description scraping_________________________________________
 PROGRAMMING_LANGUAGES = {
     "python",
     "java",
@@ -22,7 +22,6 @@ PROGRAMMING_LANGUAGES = {
     "powershell"
 }
 
-
 FRONTEND = {
     "html",
     "html5",
@@ -43,9 +42,6 @@ FRONTEND = {
     "vite"
 }
 
-
-
-
 BACKEND = {
     "node.js",
     "express.js",
@@ -63,8 +59,6 @@ BACKEND = {
     "rest api",
     "microservices"
 }
-
-
 
 DATABASES = {
     "mysql",
@@ -119,7 +113,6 @@ DEVOPS = {
     "unix"
 }
 
-
 DATA_ENGINEERING = {
     "etl",
     "elt",
@@ -168,7 +161,6 @@ AI_ML = {
     "contrastive learning"
 }
 
-
 ARCHITECTURE = {
     "rest",
     "restful api",
@@ -181,7 +173,6 @@ ARCHITECTURE = {
     "message queues",
     "pub/sub"
 }
-
 
 NORMALIZATION = {
     "llms": "llm",
@@ -205,7 +196,6 @@ NORMALIZATION = {
 }
 
 
-
 ALL_SKILLS = (
     PROGRAMMING_LANGUAGES
     | FRONTEND
@@ -217,3 +207,6 @@ ALL_SKILLS = (
     | AI_ML
     | ARCHITECTURE
 )
+
+#_____________________________________For deve_field match___________________________________
+

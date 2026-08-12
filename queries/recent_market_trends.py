@@ -57,4 +57,18 @@ def average_salary(role):
     return df
 
 
+if __name__ == "__main__":
+    print(Top_role())
+    print("✅ Top_role() done\n")
+
+    print(top_skill())
+    print("✅ top_skill() done\n")
+
+    print(total_opportunities())
+    print("✅ total_opportunities() done\n")
+
+    print(average_salary("Full Stack Developer"))
+    print("✅ average_salary() done\n")
+
+    print("\n🎉 All functions ran successfully!")
 

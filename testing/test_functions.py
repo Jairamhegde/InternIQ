@@ -79,4 +79,36 @@ def test_unique_skill_count():
     assert "count" in df.columns
 
 
+if __name__ == "__main__":
+    test_top_skills()
+    print("✅ test_top_skills passed")
+
+    test_top_locations()
+    print("✅ test_top_locations passed")
+
+    test_top_roles()
+    print("✅ test_top_roles passed")
+
+    test_noof_opportunities()
+    print("✅ test_noof_opportunities passed")
+
+    test_common_skills()
+    print("✅ test_common_skills passed")
+
+    test_topSkill_roles()
+    print("✅ test_topSkill_roles passed")
+
+    test_jobCount()
+    print("✅ test_jobCount passed")
+
+    test_role_trends()
+    print("✅ test_role_trends passed")
+
+    test_opportunities_10days()
+    print("✅ test_opportunities_10days passed")
+
+    test_unique_skill_count()
+    print("✅ test_unique_skill_count passed")
+
+    print("\n🎉 All tests passed!")
 

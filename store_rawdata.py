@@ -3,8 +3,6 @@ from extract.extractor import scrape_data
 from db.db_manager import manage_operation
 
 
-soup = get_soup()
-
 import logging
 import psycopg2
 from extract.fetcher import get_soup

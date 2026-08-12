@@ -1,16 +1,12 @@
-from extract.fetcher import get_soup
-from extract.extractor import scrape_data
-from db.db_manager import manage_operation
-
-
 import logging
 import psycopg2
+
 from extract.fetcher import get_soup
 from extract.extractor import scrape_data
-
 from rawData.raw_data import insertRawData
 from db.db_manager import manage_operation
 from transform.transformData import loadData
+
 
 
 logging.basicConfig(

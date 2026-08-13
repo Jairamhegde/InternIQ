@@ -117,7 +117,7 @@ def jobCount(job):
     return df
 
 
-# ----------------------------------------------------
+# ----------------------------------------------------ROLE TRENDS(TRENDS OVER TIME)-------------------
 
 def last_scraped_time():
     conn = connect_database("clean_data")
@@ -211,5 +211,28 @@ def uniqueSkillCount(role):
 
     return df
 
+<<<<<<< Updated upstream
 
 print(roles())
+=======
+#------------------------JOB-POSTINGS----------------------
+
+def job_postings(year):
+    conn = connect_database('clean_data')
+    query = '''
+    SELECT 
+    TO_CHAR( posted_date::date,'month') AS month,
+    COUNT(*) AS jobs
+    FROM raw_data.job_data
+    WHERE EXTRACT(year from posted_date::date) = %s
+    GROUP BY TO_CHAR( posted_date::date,'month')
+    ORDER BY min(extract(month from posted_date::date)) asc;
+    '''
+    df = pd.read_sql_query(query,conn,params=(year,))
+    return df
+
+
+if __name__ == '__main__':
+    print(job_postings(2026))
+
+>>>>>>> Stashed changes

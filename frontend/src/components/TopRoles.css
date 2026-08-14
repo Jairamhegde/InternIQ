@@ -1,0 +1,141 @@
+/* ----------------TOP ROLES & TOP ROLE CHART STYLES------------------- */
+
+.top-roles-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 24px;
+  margin-top: 24px;
+  flex: 1;
+  min-width: 0;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+  transition: all 0.25s ease;
+}
+
+.top-roles-card:hover {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+}
+
+.top-roles-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.top-roles-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: -0.01em;
+}
+
+.view-full-btn {
+  font-size: 13px;
+  font-weight: 600;
+  color: #2563eb;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.view-full-btn:hover {
+  color: #1d4ed8;
+  transform: translateX(2px);
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.top-roles-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.top-roles-table th {
+  background: #f8fafc;
+  padding: 12px 18px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #64748b;
+  text-transform: uppercase;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.top-roles-table tr {
+  transition: background-color 0.15s ease;
+}
+
+.top-roles-table tbody tr:hover {
+  background-color: #f8fafc;
+}
+
+.top-roles-table td {
+  padding: 16px 18px;
+  font-size: 14px;
+  color: #334155;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.top-roles-table tr:last-child td {
+  border-bottom: none;
+}
+
+.role-name {
+  font-weight: 600;
+  color: #0f172a;
+  text-transform: capitalize;
+}
+
+.domain-name {
+  color: #64748b;
+}
+
+.volume-val {
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.align-right {
+  text-align: right;
+}
+
+.growth-val {
+  font-weight: 600;
+}
+
+.growth-val.green {
+  color: #059669;
+}
+
+.growth-val.amber {
+  color: #d97706;
+}
+
+.toprole-barchart {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 24px;
+  margin-top: 24px;
+  flex: 1;
+  min-width: 0;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+  transition: all 0.25s ease;
+}
+
+.toprole-barchart:hover {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+}
+
+.toprole-barchart h3 {
+  margin: 0 0 20px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: -0.01em;
+}

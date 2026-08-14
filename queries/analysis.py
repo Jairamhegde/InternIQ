@@ -1,7 +1,7 @@
 
 import pandas as pd
 from dbconnection.dbconnect import connect_database
-
+from datetime import datetime
 
 
 # ------------------------------FOR OVERALL MARKET TRENDS----
@@ -14,7 +14,7 @@ def topSkills():
     JOIN job_skills js ON s.skill_id = js.skill_id
     GROUP BY s.name
     ORDER BY demand DESC
-    LIMIT 10;
+    LIMIT 6;
     '''
     df = pd.read_sql_query(query, conn)
 
@@ -33,6 +33,21 @@ def roles():
     df = pd.read_sql_query(query, conn)
 
     return df
+
+def toproles():
+    conn = connect_database("clean_data")
+    query = '''
+    select title as role,count(*) as volume
+    from job_data
+    group by title
+    order by  volume desc
+    LIMIT 6;
+    '''
+    df = pd.read_sql_query(query, conn)
+
+    return df
+
+
 
 
 def noOfopportunities():
@@ -211,10 +226,7 @@ def uniqueSkillCount(role):
 
     return df
 
-<<<<<<< Updated upstream
 
-print(roles())
-=======
 #------------------------JOB-POSTINGS----------------------
 
 def job_postings(year):
@@ -223,7 +235,7 @@ def job_postings(year):
     SELECT 
     TO_CHAR( posted_date::date,'month') AS month,
     COUNT(*) AS jobs
-    FROM raw_data.job_data
+    FROM clean_data.job_data
     WHERE EXTRACT(year from posted_date::date) = %s
     GROUP BY TO_CHAR( posted_date::date,'month')
     ORDER BY min(extract(month from posted_date::date)) asc;
@@ -231,8 +243,50 @@ def job_postings(year):
     df = pd.read_sql_query(query,conn,params=(year,))
     return df
 
+def current_year_postings(year):
+    conn = connect_database('clean_data')
+    query = '''
+    select count(*) as job_postings
+    from job_data
+    where extract(year from posted_date::date) = %s
+    '''
+    df = pd.read_sql_query(query,conn,params=(year,))
+    return df.iloc[0]['job_postings']
+
+
+
+# -----------------------COMPARITIVE ANALYSIS--------------------
+
+def common_skills(job_roles):
+    conn = connect_database('clean_data')
+
+    n = len(job_roles)
+    if n < 1:
+        return []
+
+    parameter = ", ".join(["%s"]*n)
+    query =f'''
+    SELECT s.name 
+    FROM clean_data.job_data j
+    JOIN clean_data.job_skills js ON j.job_id = js.job_id
+    JOIN clean_data.skills s ON js.skill_id = s.skill_id
+    WHERE j.title in ({parameter})
+    GROUP BY s.name
+    HAVING count(distinct j.title) = %s;
+    '''
+    place_hollder = (*job_roles,n)
+
+    df = pd.read_sql_query(query,conn,params=place_hollder)
+    return df
+
+
+
+
+
+
+
+
+
 
 if __name__ == '__main__':
-    print(job_postings(2026))
-
->>>>>>> Stashed changes
+    print(common_skills(['full stack developer','data scientist','data engineer']))

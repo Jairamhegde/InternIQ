@@ -1,0 +1,210 @@
+import { useState, useEffect } from 'react'
+import "./ComparitiveAnalysis.css"
+import Select from 'react-select';
+import {
+    BarChart,
+    Bar,
+    XAxis,
+    YAxis,
+    CartesianGrid,
+    Tooltip,
+    ResponsiveContainer
+} from 'recharts';
+
+import {
+    Radar,
+    RadarChart,
+    PolarGrid,
+    PolarAngleAxis,
+    PolarRadiusAxis,
+
+} from 'recharts';
+
+
+
+function ComparitiveAnalysis() {
+    const [selectedJobs, setSelectedJobs] = useState([]);
+    return (
+        <div className='comparitive-analysis-page'>
+            <div className='comparitive-header'>
+                <h1>Comparitive Analysis</h1>
+                <p>Compare multiple jobs across key metrics and trends</p>
+            </div>
+            <SelectBox selectedJobs={selectedJobs} setSelectedJobs
+                ={setSelectedJobs} />
+
+        </div>
+    );
+}
+
+
+function SelectBox({ selectedJobs, setSelectedJobs }) {
+    const [topRoles, setTopRoles] = useState([])
+
+    useEffect(() => {
+        fetch(`http://localhost:8000/api/top-role-table`)
+            .then((response) => response.json())
+            .then((result) => {
+                const options = result.map((item) => ({
+                    value: item.role,
+                    label: item.role,
+                }));
+                setTopRoles(options);
+            })
+            .catch((error) => console.log("Failed to connect to top-role endpoint"))
+    }, [])
+
+    const handleChange = (selected) => {
+        if (!selected || selected.length <= 3) {
+            setSelectedJobs(selected || []);
+        }
+    };
+
+    return (
+        <div className="select-box-container">
+            <h3>
+                Select two or three job roles to compare
+            </h3>
+            <Select
+                options={topRoles}
+                isMulti
+                value={selectedJobs}
+                onChange={handleChange}
+                isOptionDisabled={() => selectedJobs.length >= 3}
+                placeholder="Search and select 2 to 3 roles..."
+            />
+            <div className="selection-status">
+                {selectedJobs.length < 2 ? (
+                    <span className="status-hint warning">
+                        Please select at least 2 roles (Selected: {selectedJobs.length}/3)
+                    </span>
+                ) : (
+                    <>
+                        <span className="status-hint success">
+                            ✓ Ready for comparison ({selectedJobs.length}/3 selected)
+                        </span>
+
+                        <ComaparitiveCharts selectedJobs={selectedJobs} />
+                    </>
+                )}
+            </div>
+        </div>
+    );
+}
+
+
+function ComaparitiveCharts({ selectedJobs }) {
+    const [chartData, setChartData] = useState([])
+    const [commonSkills, setCommonSkills] = useState([])
+
+    useEffect(() => {
+        fetch(`http://localhost:8000/api/common-skill`,
+            {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ roles: selectedJobs })
+            }
+
+        )
+            .then((response) => response.json())
+            .then((result) => setCommonSkills(result))
+            .catch((err) => console.log("failed to connect to common skill endpoint"))
+    }, [])
+
+    useEffect(() => {
+        if (!selectedJobs || selectedJobs.length < 2) {
+            setChartData([])
+            return;
+        }
+
+        const roleNames = selectedJobs.map(job => job.value || job)
+
+        fetch(`http://localhost:8000/api/get-role-posting`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ roles: roleNames }),
+            }
+        )
+            .then((response) => response.json())
+            .then((result) => setChartData(result))
+            .catch((error) => console.log("Failed to connect to role posting endpoint"))
+    }, [selectedJobs])
+
+
+    return (
+        <div className='comparitive-dashboard'>
+            <div className='comparitive-chart'>
+                <div className='comp-header'>
+                    <h3>Postings comparision</h3>
+                </div>
+                <ResponsiveContainer width="100%" height={350}>
+                    <BarChart
+                        data={chartData}
+                        margin={{
+                            top: 10,
+                            left: 30,
+                            right: 30,
+                            bottom: 10
+                        }}
+                    >
+                        <XAxis dataKey='role' />
+                        <YAxis />
+                        <Tooltip />
+                        <Bar dataKey="volume" fill="#3f74e7"
+                            label={{ position: 'top', fill: '#0f172a', fontSize: 13, fontWeight: 600 }} />
+
+                    </BarChart>
+                </ResponsiveContainer>
+
+            </div>
+            <div className='Radar-chart'>
+                <ResponsiveContainer>
+                    <RadarChart
+                        data={commonSkills}
+                        width={500}
+                        height={400}>
+
+
+                    </RadarChart>
+
+                </ResponsiveContainer>
+
+
+            </div>
+            <div className="insights-card">
+
+                {/* Card Header */}
+                <div className="insights-header">
+                    <span className="insights-icon">
+                        <img src="/bulb.png" alt="insights" width="22" height="22" />
+                    </span>
+                    <h3>Key Insights</h3>
+                </div>
+
+                {/* Divider */}
+                <div className="divider"></div>
+
+                {/* Insight 1 */}
+                <div className="insight">
+                    <h4>bried</h4>
+                </div>
+                {/* Highlighted Insight */}
+                <div className="highlighted-insight">
+                    <p>
+                        ...
+                    </p>
+                </div>
+
+            </div>
+        </div>
+
+
+
+    );
+}
+export default ComparitiveAnalysis;

@@ -8,14 +8,12 @@ import {
     Tooltip,
     ResponsiveContainer
 } from 'recharts';
+import "./JobpostedChart.css";
 
-function JobPosting_chart() {
-    // Updated data to match the smooth curve and values from your image
+function JobPosting_chart({ selectedYear, setSelectedYear }) {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
-
-    const years = [new Date().getFullYear() - 2, new Date().getFullYear() - 1, new Date().getFullYear()]
+    const years = [new Date().getFullYear() - 2, new Date().getFullYear() - 1, new Date().getFullYear()];
 
 
     useEffect(() => {

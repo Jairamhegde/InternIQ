@@ -1,4 +1,6 @@
 
+import "./Navbar.css";
+
 function Navbar() {
     return (
         <nav>
@@ -7,9 +9,8 @@ function Navbar() {
             </h2>
             <div>
                 <a href="">Dashboard</a>
-                <a href="">Analysis</a>
-                <a href="">Predictions</a>
-
+                <a href="">Comaparitive Analysis</a>
+                <a href="">Recent Market Trends</a>
             </div>
         </nav>
     );

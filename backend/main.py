@@ -9,30 +9,35 @@ from datetime import datetime
 import google.generativeai as genai
 import os
 import json
+import pandas as pd
 from pydantic import BaseModel
 from queries.analysis import topSkills,topLocations,current_year_postings,toproles,common_skills,get_percentage_ofskills
 from typing import List,Dict,Any
+from queries.recent_market_trends import (Top_role,top_skill,total_opportunities,average_salary)
 
 
 load_dotenv()
+app = FastAPI()
 
 
-# -------------BASE MODELS------------------------
-class ComparitiveModel(BaseModel):
+
+class Basemodel(BaseModel):
     pass
+# -------------BASE MODELS------------------------
 
-class RolesPostingsModel(ComparitiveModel):
+
+class RolesPostingsModel(Basemodel):
     roles :List[str]
 
-class CommonSkillModal(ComparitiveModel):
+class CommonSkillModal(Basemodel):
     roles : List[str]
 
-class ComparitiveInsightsModal(ComparitiveModel):
+class ComparitiveInsightsModal(Basemodel):
     role_frequency : List[Any]
     common_skill : List[Any]
 
+# __________recent market trend model_____________
 
-app = FastAPI()
 
 # Allow all origins for local development
 app.add_middleware(
@@ -130,13 +135,10 @@ def comparitive_insights(role_freq, common_skills):
         return {}
 
 
-
 @app.get('/api/job-postings')
 def get_job_postings(year: int = datetime.now().year):
     data = job_postings(year)
     return data.to_dict(orient='records')
-
-
 
 @app.get('/api/job-posting-card-insights')
 def get_job_posting_insights(year: int = datetime.now().year):
@@ -186,7 +188,30 @@ def get_comparitive_insights(request:ComparitiveInsightsModal):
     return insights
 
 
+# _________________________Recent Market Trends endpoints______________________
+@app.get("/api/recent-market-trend")
+def get_recent_trends():
+    df_top_role = Top_role()
+    df_top_skill = top_skill()
+    df_opportunities = total_opportunities()
+
+    top_role = df_top_role.iloc[0]["title"]
+    top_role_count = int(df_top_role.iloc[0]["job_count"])
+
+    top_skilll = df_top_skill.iloc[0]["skill"] 
+    top_skilll_count = int(df_top_skill.iloc[0]["skill_count"])
+
+    total_opportunity = int(df_opportunities.iloc[0]["total_opportunities"])
     
+
+    chart_data = df_top_role.rename(columns={"title": "role", "job_count": "volume"}).to_dict(orient='records')
+    
+    return {
+        "role": [top_role, top_role_count],
+        "skill": [top_skilll, top_skilll_count],
+        "postings": total_opportunity,
+        "toproles": chart_data
+    }
 
 
 if __name__ == '__main__':

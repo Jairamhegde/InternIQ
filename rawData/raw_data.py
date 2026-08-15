@@ -1,5 +1,6 @@
 from datetime import datetime
 from dbconnection.dbconnect import connect_database
+from psycopg2.extras import execute_values
 
 
 def normalize(text):
@@ -9,114 +10,13 @@ def normalize(text):
 
 
 def insertRawData(job_data):
-
-    conn = connect_database(search_path="raw_data")
+    engine = connect_database(search_path="raw_data")
+    
+    # Extract the raw psycopg2 connection from the SQLAlchemy engine
+    conn = engine.raw_connection()
     cur = conn.cursor()
 
     try:
-<<<<<<< Updated upstream
-        for job in job_data:
-
-            if not (
-                job['tech_stack']
-                and job['company']
-                and job['job_title']
-            ):
-                continue
-
-            title = normalize(job['job_title'])
-            company = normalize(job['company'])
-            location = normalize(job['location'])
-
-            # Insert Job
-            cur.execute(
-                '''
-                INSERT INTO job_data
-                (title, salary, location, scrape_time, posted_date, company)
-                VALUES (%s, %s, %s, %s, %s, %s)
-                ON CONFLICT DO NOTHING;
-                ''',
-                (
-                    title,
-                    job['salary'],
-                    location,
-                    job['scrape_time'],
-                    job['posted_date'],
-                    company
-                )
-            )
-
-            # Fetch job_id
-            cur.execute(
-                '''
-                SELECT id
-                FROM job_data
-                WHERE title = %s
-                AND location = %s
-                AND company = %s;
-                ''',
-                (title, location, company)
-            )
-
-            result = cur.fetchone()
-            job_id = result[0] if result else None
-
-            if not job_id:
-                continue
-
-            # Insert skills
-            for tech in job['tech_stack']:
-
-                tech = normalize(tech)
-
-                if not tech:
-                    continue
-
-                cur.execute(
-                    '''
-                    INSERT INTO skills (name)
-                    VALUES (%s)
-                    ON CONFLICT DO NOTHING;
-                    ''',
-                    (tech,)
-                )
-
-                cur.execute(
-                    '''
-                    SELECT skill_id
-                    FROM skills
-                    WHERE name = %s;
-                    ''',
-                    (tech,)
-                )
-
-                skill = cur.fetchone()
-                skill_id = skill[0] if skill else None
-
-                if skill_id:
-                    cur.execute(
-                        '''
-                        INSERT INTO job_skills (job_id, skill_id)
-                        VALUES (%s, %s)
-                        ON CONFLICT DO NOTHING;
-                        ''',
-                        (job_id, skill_id)
-                    )
-
-            # Insert snapshot
-            cur.execute(
-                '''
-                INSERT INTO job_snapshot (job_id, scraped_date)
-                VALUES (%s, %s)
-                ON CONFLICT DO NOTHING;
-                ''',
-                (
-                    job_id,
-                    datetime.now().strftime("%Y-%m-%d")
-                )
-            )
-=======
-
         job_data_tuple = [
             (
                 normalize(job['job_title']),
@@ -127,7 +27,11 @@ def insertRawData(job_data):
                 normalize(job['company'])
             )
             for job in job_data
+            if job.get('tech_stack') and job.get('company') and job.get('job_title')
         ]
+
+        if not job_data_tuple:
+            return
 
         # Insert Jobs — skip duplicates, return only newly inserted rows
         query1 = '''
@@ -145,12 +49,13 @@ def insertRawData(job_data):
             conn.commit()
             return
 
-        # ---- Process skills only for newly inserted jobs ----
 
         # Collect all unique skills from the new jobs
         skill_set = set()
         for job in job_data:
-            skill_set.update(job.get('tech_stack', []))
+            skill_set.update([normalize(s) for s in job.get('tech_stack', []) if s])
+            
+        skill_set = {s for s in skill_set if s} # Remove empty
 
         skill_tuple = [(skill,) for skill in skill_set]
 
@@ -162,8 +67,7 @@ def insertRawData(job_data):
         if skill_tuple:
             execute_values(cur, skill_query, skill_tuple)
 
-        # Build a map: (title, salary, location, company) -> job_id
-        # RETURNING gives: id=0, title=1, salary=2, location=3, company=4
+        #building map
         job_map = {
             (job_m[1], job_m[2], job_m[3], job_m[4]): job_m[0]
             for job_m in job_ids
@@ -192,7 +96,7 @@ def insertRawData(job_data):
                 continue  # skip if this job was a duplicate (not newly inserted)
 
             for skill in j.get('tech_stack', []):
-                skill_id = skill_map.get(skill)
+                skill_id = skill_map.get(normalize(skill))
                 if skill_id is None:
                     continue
                 job_id = job_map[job_tuple]
@@ -200,20 +104,26 @@ def insertRawData(job_data):
 
         if skill_job_map:
             execute_values(cur, job_skill_query, skill_job_map)
->>>>>>> Stashed changes
+            
+        # Build job_snapshot pairs
+        snapshot_query = '''
+            INSERT INTO job_snapshot (job_id, scraped_date)
+            VALUES %s
+            ON CONFLICT DO NOTHING;
+        '''
+        today_date = datetime.now().strftime("%Y-%m-%d")
+        snapshot_tuples = [(job_m[0], today_date) for job_m in job_ids]
+        
+        if snapshot_tuples:
+            execute_values(cur, snapshot_query, snapshot_tuples)
 
         conn.commit()
 
     except Exception as e:
         conn.rollback()
         raise e
-
-<<<<<<< Updated upstream
-   
-=======
     finally:
         if cur:
             cur.close()
         if conn:
             conn.close()
->>>>>>> Stashed changes

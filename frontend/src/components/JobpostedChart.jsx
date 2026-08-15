@@ -58,10 +58,7 @@ function JobPosting_chart({ selectedYear, setSelectedYear }) {
                         >{year}</button>
                     ))}
                 </div>
-
             </div>
-
-
             {/* Chart section with a light gray background just like the image */}
             <div className='job-container' style={{ height: '320px', width: '100%', background: '#fafafa', borderRadius: '8px', padding: '20px 10px 10px 0', border: '1px solid #f3f4f6' }}>
                 <ResponsiveContainer width='100%' height='100%'>
@@ -93,13 +90,11 @@ function JobPosting_chart({ selectedYear, setSelectedYear }) {
                             tick={{ fill: '#6b7280', fontSize: 13 }}
                             tickFormatter={(value) => `${value === 0 ? 0 : value / 1000}k`}
                             domain={[0, 10000]}
-                            ticks={[0, 100, 500, 1000, 5000, 10000]}
+                            ticks={[0, 100, 500, 1000, 5000]}
                         />
-
                         <Tooltip
                             contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
                         />
-
                         {/* The actual curve and gradient area */}
                         <Area
                             type="monotone"

@@ -201,8 +201,6 @@ function ComaparitiveCharts({ selectedJobs }) {
                     </ResponsiveContainer>
 
                     <ComparitiveAnalysisInsights title="Insights" data={compInsights?.role_insights} />
-
-
                 </div>
                 <div className='Radar-chart'>
                     <div className='comp-header'>
@@ -239,13 +237,8 @@ function ComaparitiveCharts({ selectedJobs }) {
             <ComparitiveAnalysisInsights title="Key takeaway" data={compInsights?.takeaway} />
 
         </>
-
-
-
     );
 }
-
-
 
 function ComparitiveAnalysisInsights({ title, data }) {
     return (

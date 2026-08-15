@@ -3298,3 +3298,103 @@ psycopg2.InterfaceError: connection already closed
 2026-06-14 01:43:10,462 | INFO | mainscript.py:48 | internshala() | Scraped 25 jobs from https://internshala.com/jobs/big-data-jobs/
 2026-06-14 01:43:35,093 | INFO | mainscript.py:52 | internshala() | Inserted 25 jobs into raw_data schema (PostgreSQL)
 2026-06-14 01:43:35,835 | INFO | mainscript.py:45 | internshala() | No data found on page 2 — stopping pagination for https://internshala.com/jobs/big-data-jobs/
+2026-08-15 18:08:06,424 | INFO | mainscript.py:34 | internshala() | Execution started...
+2026-08-15 18:08:07,508 | INFO | mainscript.py:48 | internshala() | Scraped 50 jobs from https://internshala.com/jobs/machine-learning-jobs/
+2026-08-15 18:08:09,570 | INFO | mainscript.py:52 | internshala() | Inserted 50 jobs into raw_data schema (PostgreSQL)
+2026-08-15 18:08:10,442 | INFO | mainscript.py:48 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/machine-learning-jobs/page-2
+2026-08-15 18:08:10,854 | INFO | mainscript.py:52 | internshala() | Inserted 40 jobs into raw_data schema (PostgreSQL)
+2026-08-15 18:08:11,505 | INFO | mainscript.py:48 | internshala() | Scraped 21 jobs from https://internshala.com/jobs/machine-learning-jobs/page-3
+2026-08-15 18:08:11,880 | INFO | mainscript.py:52 | internshala() | Inserted 21 jobs into raw_data schema (PostgreSQL)
+2026-08-15 18:08:12,420 | INFO | mainscript.py:45 | internshala() | No data found on page 4 — stopping pagination for https://internshala.com/jobs/machine-learning-jobs/
+2026-08-15 18:08:13,397 | INFO | mainscript.py:48 | internshala() | Scraped 50 jobs from https://internshala.com/jobs/backend-development-jobs/
+2026-08-15 18:08:13,782 | INFO | mainscript.py:52 | internshala() | Inserted 50 jobs into raw_data schema (PostgreSQL)
+2026-08-15 18:08:14,634 | INFO | mainscript.py:48 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/backend-development-jobs/page-2
+2026-08-15 18:08:15,028 | INFO | mainscript.py:52 | internshala() | Inserted 40 jobs into raw_data schema (PostgreSQL)
+2026-08-15 18:08:15,630 | INFO | mainscript.py:48 | internshala() | Scraped 14 jobs from https://internshala.com/jobs/backend-development-jobs/page-3
+2026-08-15 18:08:15,960 | INFO | mainscript.py:52 | internshala() | Inserted 14 jobs into raw_data schema (PostgreSQL)
+2026-08-15 18:08:16,505 | INFO | mainscript.py:45 | internshala() | No data found on page 4 — stopping pagination for https://internshala.com/jobs/backend-development-jobs/
+2026-08-15 18:08:17,288 | INFO | mainscript.py:48 | internshala() | Scraped 29 jobs from https://internshala.com/fresher-jobs/front-end-development-jobs/
+2026-08-15 18:08:17,751 | INFO | mainscript.py:52 | internshala() | Inserted 29 jobs into raw_data schema (PostgreSQL)
+2026-08-15 18:08:18,296 | INFO | mainscript.py:45 | internshala() | No data found on page 2 — stopping pagination for https://internshala.com/fresher-jobs/front-end-development-jobs/
+2026-08-15 18:08:19,004 | INFO | mainscript.py:48 | internshala() | Scraped 30 jobs from https://internshala.com/jobs/mobile-app-development-jobs/
+2026-08-15 18:08:19,379 | INFO | mainscript.py:52 | internshala() | Inserted 30 jobs into raw_data schema (PostgreSQL)
+2026-08-15 18:08:20,154 | INFO | mainscript.py:45 | internshala() | No data found on page 2 — stopping pagination for https://internshala.com/jobs/mobile-app-development-jobs/
+2026-08-15 18:08:20,962 | INFO | mainscript.py:48 | internshala() | Scraped 17 jobs from https://internshala.com/jobs/big-data-jobs/
+2026-08-15 18:08:21,316 | INFO | mainscript.py:52 | internshala() | Inserted 17 jobs into raw_data schema (PostgreSQL)
+2026-08-15 18:08:21,837 | INFO | mainscript.py:45 | internshala() | No data found on page 2 — stopping pagination for https://internshala.com/jobs/big-data-jobs/
+2026-08-15 18:08:21,838 | ERROR | transformData.py:136 | loadData() | loadData failed: 'Engine' object has no attribute 'cursor'
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\transform\transformData.py", line 83, in loadData
+    cur = conn.cursor()
+          ^^^^^^^^^^^
+AttributeError: 'Engine' object has no attribute 'cursor'
+2026-08-15 18:11:26,937 | INFO | mainscript.py:34 | internshala() | Execution started...
+2026-08-15 18:11:54,136 | INFO | mainscript.py:48 | internshala() | Scraped 50 jobs from https://internshala.com/jobs/machine-learning-jobs/
+2026-08-15 18:12:03,462 | INFO | mainscript.py:52 | internshala() | Inserted 50 jobs into raw_data schema (PostgreSQL)
+2026-08-15 18:12:05,029 | INFO | mainscript.py:48 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/machine-learning-jobs/page-2
+2026-08-15 18:12:12,151 | INFO | mainscript.py:52 | internshala() | Inserted 40 jobs into raw_data schema (PostgreSQL)
+2026-08-15 18:12:12,903 | INFO | mainscript.py:48 | internshala() | Scraped 21 jobs from https://internshala.com/jobs/machine-learning-jobs/page-3
+2026-08-15 18:12:28,173 | INFO | mainscript.py:52 | internshala() | Inserted 21 jobs into raw_data schema (PostgreSQL)
+2026-08-15 18:12:31,151 | INFO | mainscript.py:45 | internshala() | No data found on page 4 — stopping pagination for https://internshala.com/jobs/machine-learning-jobs/
+2026-08-15 18:12:43,994 | INFO | mainscript.py:48 | internshala() | Scraped 50 jobs from https://internshala.com/jobs/backend-development-jobs/
+2026-08-15 18:12:53,212 | INFO | mainscript.py:52 | internshala() | Inserted 50 jobs into raw_data schema (PostgreSQL)
+2026-08-15 18:12:55,759 | INFO | mainscript.py:48 | internshala() | Scraped 40 jobs from https://internshala.com/jobs/backend-development-jobs/page-2
+2026-08-15 18:12:58,177 | INFO | mainscript.py:52 | internshala() | Inserted 40 jobs into raw_data schema (PostgreSQL)
+2026-08-15 18:12:59,949 | INFO | mainscript.py:48 | internshala() | Scraped 14 jobs from https://internshala.com/jobs/backend-development-jobs/page-3
+2026-08-15 18:13:02,730 | INFO | mainscript.py:52 | internshala() | Inserted 14 jobs into raw_data schema (PostgreSQL)
+2026-08-15 18:13:04,341 | INFO | mainscript.py:45 | internshala() | No data found on page 4 — stopping pagination for https://internshala.com/jobs/backend-development-jobs/
+2026-08-15 18:13:07,115 | INFO | mainscript.py:48 | internshala() | Scraped 29 jobs from https://internshala.com/fresher-jobs/front-end-development-jobs/
+2026-08-15 18:13:11,088 | INFO | mainscript.py:52 | internshala() | Inserted 29 jobs into raw_data schema (PostgreSQL)
+2026-08-15 18:13:22,236 | INFO | mainscript.py:45 | internshala() | No data found on page 2 — stopping pagination for https://internshala.com/fresher-jobs/front-end-development-jobs/
+2026-08-15 18:14:19,208 | ERROR | fetcher.py:13 | get_soup() | ("Connection broken: ConnectionAbortedError(10053, 'An established connection was aborted by the software in your host machine', None, 10053, None)", ConnectionAbortedError(10053, 'An established connection was aborted by the software in your host machine', None, 10053, None))
+2026-08-15 18:14:19,214 | ERROR | extractor.py:104 | scrape_data() | Failed to extract data :'NoneType' object has no attribute 'find_all'
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\extract\extractor.py", line 37, in scrape_data
+    job_card = soup.find_all('div', class_="internship_meta experience_meta")
+               ^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'find_all'
+2026-08-15 18:14:19,220 | INFO | mainscript.py:45 | internshala() | No data found on page 1 — stopping pagination for https://internshala.com/jobs/mobile-app-development-jobs/
+2026-08-15 18:14:19,235 | ERROR | fetcher.py:13 | get_soup() | HTTPSConnectionPool(host='internshala.com', port=443): Max retries exceeded with url: /jobs/big-data-jobs/ (Caused by NameResolutionError("HTTPSConnection(host='internshala.com', port=443): Failed to resolve 'internshala.com' ([Errno 11001] getaddrinfo failed)"))
+2026-08-15 18:14:19,237 | ERROR | extractor.py:104 | scrape_data() | Failed to extract data :'NoneType' object has no attribute 'find_all'
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\extract\extractor.py", line 37, in scrape_data
+    job_card = soup.find_all('div', class_="internship_meta experience_meta")
+               ^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'find_all'
+2026-08-15 18:14:19,239 | INFO | mainscript.py:45 | internshala() | No data found on page 1 — stopping pagination for https://internshala.com/jobs/big-data-jobs/
+2026-08-15 18:14:19,243 | ERROR | transformData.py:137 | loadData() | loadData failed: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\transform\transformData.py", line 87, in loadData
+    cur.execute("SELECT * FROM job_data;")
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+
+2026-08-15 18:14:19,245 | ERROR | base.py:1008 | _finalize_fairy() | Exception during reset or similar
+Traceback (most recent call last):
+  File "D:\intern_jobscraper\scraperenv\Lib\site-packages\sqlalchemy\pool\base.py", line 986, in _finalize_fairy
+    fairy._reset(
+    ~~~~~~~~~~~~^
+        pool,
+        ^^^^^
+    ...<2 lines>...
+        asyncio_safe=can_manipulate_connection,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\intern_jobscraper\scraperenv\Lib\site-packages\sqlalchemy\pool\base.py", line 1441, in _reset
+    pool._dialect.do_rollback(self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "D:\intern_jobscraper\scraperenv\Lib\site-packages\sqlalchemy\engine\default.py", line 712, in do_rollback
+    dbapi_connection.rollback()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+psycopg2.InterfaceError: connection already closed

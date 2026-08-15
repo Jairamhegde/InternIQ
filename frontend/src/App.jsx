@@ -3,8 +3,10 @@ import Navbar from "./components/Navbar";
 import JobPosting_chart from "./components/JobpostedChart";
 import Key_insights from "./components/KeyInsights"
 import MarketOverview from './components/MarketOverview';
-import TopRoles, { TopRoleChart } from "./components/TopRoles"
-import ComparitiveAnalysis from "./components/ComparitiveAnalysis"
+import TopRoles, { TopRoleChart } from "./components/TopRoles";
+import ComparitiveAnalysis from "./components/ComparitiveAnalysis";
+import RecentMarketTrend from "./components/RecentMarketTrend";
+
 import "./App.css";
 
 function App() {
@@ -30,8 +32,10 @@ function App() {
 
         <section id="comp-analysis" className='comparitive-analysis-secttion'>
           <ComparitiveAnalysis />
+        </section>
 
-
+        <section id='recent-market-trend'>
+          <RecentMarketTrend />
         </section>
 
 

@@ -8,9 +8,9 @@ function Navbar() {
                 Intern<span>IQ</span>
             </h2>
             <div>
-                <a href="">Dashboard</a>
-                <a href="">Comaparitive Analysis</a>
-                <a href="">Recent Market Trends</a>
+                <a href="#market-overview">Market Overview</a>
+                <a href="#comp-analysis">Comaparitive Analysis</a>
+                <a href="#recent-market-trend">Recent Market Trends</a>
             </div>
         </nav>
     );

@@ -5,10 +5,10 @@ import pandas as pd
 def Top_role():
     conn = connect_database("clean_data")
     query = '''
-    SELECT title, count(*) as job_count, posted_date
+    SELECT title, count(*) as job_count
     FROM job_data
     WHERE posted_date::date >= CURRENT_DATE - INTERVAL '10 days'
-    GROUP BY title, posted_date
+    GROUP BY title
     ORDER BY job_count DESC
     LIMIT 5;
     '''
@@ -57,5 +57,6 @@ def average_salary(role):
     return df
 
 
-# print(average_salary("python developer"))
 
+if __name__ == '__main__':
+    print(Top_role())

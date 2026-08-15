@@ -279,6 +279,94 @@ def common_skills(job_roles):
     df = pd.read_sql_query(query,conn,params=place_hollder)
     return df
 
+def get_percentage_ofskills(job_roles):
+
+    n = len(job_roles)
+    conn = connect_database('clean_data')
+
+
+    parameter = ", ".join(["%s"]*n)
+    query = f"""
+        WITH common_skills AS (
+
+            SELECT
+                s.name AS skill
+
+            FROM clean_data.job_data j
+
+            JOIN clean_data.job_skills js
+                ON j.job_id = js.job_id
+
+            JOIN clean_data.skills s
+                ON js.skill_id = s.skill_id
+
+            WHERE j.title IN ({parameter})
+
+            GROUP BY s.name
+
+            HAVING COUNT(DISTINCT j.title) = %s
+        ),
+
+        role_totals AS (
+
+            SELECT
+                title,
+                COUNT(*) AS total_jobs
+
+            FROM clean_data.job_data
+
+            WHERE title IN ({parameter})
+
+            GROUP BY title
+        ),
+
+        skill_counts AS (
+
+            SELECT
+                j.title,
+                s.name AS skill,
+                COUNT(DISTINCT j.job_id) AS skill_jobs
+
+            FROM clean_data.job_data j
+
+            JOIN clean_data.job_skills js
+                ON j.job_id = js.job_id
+
+            JOIN clean_data.skills s
+                ON js.skill_id = s.skill_id
+
+            JOIN common_skills cs
+                ON s.name = cs.skill
+
+            WHERE j.title IN ({parameter})
+
+            GROUP BY j.title, s.name
+        )
+
+        SELECT
+            sc.title,
+            sc.skill,
+
+            ROUND(
+                sc.skill_jobs * 100.0 / rt.total_jobs,
+                2
+            ) AS percentage
+
+        FROM skill_counts sc
+
+        JOIN role_totals rt
+            ON sc.title = rt.title
+
+        ORDER BY sc.skill, sc.title;
+    """
+
+    df = pd.read_sql_query(query,conn,params=(*job_roles,n,*job_roles,*job_roles,))
+
+    return df
+    
+
+
+
 
 
 
@@ -289,4 +377,4 @@ def common_skills(job_roles):
 
 
 if __name__ == '__main__':
-    print(common_skills(['full stack developer','data scientist','data engineer']))
+    print(get_percentage_ofskills(['full stack developer','data scientist','data engineer']))

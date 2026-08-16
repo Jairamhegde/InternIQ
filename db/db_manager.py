@@ -3,139 +3,132 @@ import psycopg2
 from datetime import datetime
 from psycopg2.extras import execute_values
 from dbconnection.dbconnect import connect_database
-
+from psycopg2.extras import execute_values
+from keyword_match.dev_trend import similarity_check
 def manage_operation(job_data):
-    logging.info("Opening JIT connection for manage_operation...")
-    conn = connect_database(search_path="clean_data")
-  
 
+    engine = connect_database(search_path="clean_data")
+    conn = engine.raw_connection()
     cur  = conn.cursor()
 
     try:
-        job_tuple = {}
-        for job in job_data:
-            if job.get('job_title') and job.get("location") and job.get("company"):
-                key = (
-                    job.get('job_title'),
-                    job.get("location") ,
-                    job.get("company")
-                )
-                values = \
-                (
-                job['job_title'],
-                job['location'],
-                job['company'],
-                job.get('scraped_time'),
-                job.get('posted_date'),
-                job.get('min_salary'),
-                job.get('max_salary')
-                )
-                job_tuple[key] = values
+        # Build job tuples
+        job_data_tuple = []
+        for i in job_data:
+            job_title = i.get('job_title','')
+            skills_set = i.get('skills',[])
+            check = similarity_check(job_title,job_title,skills_set)
+
+            if i.get('skills') and i.get('company') and i.get('job_title'):
+                job_data_tuple.append((
+                    i['job_title'],
+                    i['location'],
+                    i['company'],
+                    i['scraped_time'],
+                    i['posted_date'],
+                    i['min_salary'],
+                    i['max_salary'],
+                    check[0],
+                    float(check[1])
+                ))
 
         
 
-        insert_to_job = \
-            '''
-                INSERT INTO job_data
-                (title, location, company, scrape_time, posted_date, salary_min, salary_max)
-                VALUES %s
-                ON CONFLICT (title,location,company) 
-                DO UPDATE
-                set title = EXCLUDED.title
-                RETURNING job_id,title,company,location;
-            '''
-        # Insert all the jobs at once
-        job_rows = execute_values(cur,insert_to_job,list(job_tuple.values()),fetch=True)
-        print("Inserted the data into the table once")
-        job_data_map = {(row[1],row[3],row[2]):row[0] for row in job_rows}
+        if not job_data_tuple:
+            return
 
-
-        # Insert all skills at once
+        # 1. Insert jobs using execute_values
+        query1 = '''
+            INSERT INTO job_data
+            (title, location, company, scrape_time, posted_date, salary_min, salary_max,primary_field, field_confidence)
+            VALUES %s
+            ON CONFLICT DO NOTHING
+            RETURNING job_id, title, location, company;
+        '''
+        job_ids = execute_values(cur, query1, job_data_tuple, fetch=True)
+        
+        if not job_ids:
+            conn.commit()
+            return
+            
+        # 2. Extract unique skills
         skill_set = set()
         for i in job_data:
-            skill_set.update(i.get('skills',[]))
-
+            if i.get('skills') and i.get('company') and i.get('job_title'):
+                skill_set.update([s.lower().strip() for s in i['skills'] if s])
+        
+        skill_set = {s for s in skill_set if s}
         skill_tuple = [(skill,) for skill in skill_set]
-
-        skill_insert = \
-        '''
-        INSERT INTO skills (name)
-        VALUES %s
-        ON CONFLICT (name) DO NOTHING;
+        
+        # 3. Insert skills
+        skill_query = '''
+            INSERT INTO skills (name)
+            VALUES %s
+            ON CONFLICT DO NOTHING;
         '''
         if skill_tuple:
-            execute_values(cur,skill_insert,skill_tuple)
+            execute_values(cur, skill_query, skill_tuple)
+            
+        # Build a map: (title, location, company) -> job_id
+        # RETURNING gives: job_id=0, title=1, location=2, company=3
+        job_map = {
+            (job_m[1], job_m[2], job_m[3]): job_m[0]
+            for job_m in job_ids
+        }
 
-       
-        #Create skill map
-        cur.execute(
-            "select skill_id,name from skills where name = any(%s);",(list(skill_set),)
-        )
-        sk_row = cur.fetchall()
-        skillmap = {row[1]:row[0] for row in sk_row}
-
+        # Fetch all skill name -> skill_id mappings
+        cur.execute('SELECT skill_id, name FROM skills;')
+        skill_map = {row[1]: row[0] for row in cur.fetchall()}
         
-        job_skill_map = set()
-        for j in job_data:
-            if j.get('job_title') and j.get('location') and j.get('company') and j.get('skills'):
-                job_id = job_data_map[
-                    (j['job_title'],j['location'],j['company'])
-                ]
-
-                for skill in j['skills']:
-                    skill_id = skillmap[skill]
-                    job_skill_map.add(
-                        (job_id,skill_id)
-                    )
-        insert_to_jobskill = \
-            '''
+        # Build job_skills pairs for batch insert
+        job_skill_query = '''
             INSERT INTO job_skills (job_id, skill_id)
             VALUES %s
-            ON CONFLICT (job_id, skill_id) DO NOTHING;
-            '''
-        execute_values(cur,insert_to_jobskill,job_skill_map)
+            ON CONFLICT DO NOTHING;
+        '''
+        skill_job_map = []
+        for j in job_data:
+            if not (j.get('skills') and j.get('company') and j.get('job_title')):
+                continue
+                
+            job_key = (j['job_title'], j['location'], j['company'])
+            if job_key not in job_map:
+                continue
 
-        # Insert snapshot
-        # 4. Use the clean_job_id for the snapshot
-        today = datetime.now().strftime('%Y-%m-%d')
-        snapshot_tuple = [
-            (jobid,today)
-            for jobid in job_data_map.values()
-        ]
-        
+            for skill in j['skills']:
+                skill_id = skill_map.get(skill.lower().strip())
+                if skill_id is None:
+                    continue
+                skill_job_map.append((job_map[job_key], skill_id))
+
+        if skill_job_map:
+            execute_values(cur, job_skill_query, skill_job_map)
+            
+        # Build job_snapshot pairs
         snapshot_query = '''
-      
             INSERT INTO job_snapshot (job_id, scraped_date)
             VALUES %s
-            ON CONFLICT (job_id, scraped_date) DO NOTHING;
+            ON CONFLICT DO NOTHING;
         '''
-        execute_values(cur,snapshot_query,snapshot_tuple)
+        today_date = datetime.now().strftime("%Y-%m-%d")
+        snapshot_tuples = [(job_m[0], today_date) for job_m in job_ids]
         
+        if snapshot_tuples:
+            execute_values(cur, snapshot_query, snapshot_tuples)
+
         conn.commit()
        
         logging.info("manage_operation completed successfully")
 
     except Exception as e:
-        logging.exception("manage_operation failed during execution")
-        
-        # Safely attempt rollback, but catch the error if the connection is already dead
         try:
-            if conn:
-                conn.rollback()
-                logging.info("Rollback executed successfully.")
-        except (psycopg2.InterfaceError, psycopg2.OperationalError):
-            logging.warning("Could not execute rollback; the database connection was already closed by the server.")
-        raise
+            conn.rollback()
+        except Exception:
+            pass # Ignore rollback errors if connection is closed
+        logging.exception(f"manage_operation failed: {e}")
 
     finally:
-        # Safely close cursor and connection, ignoring errors if they are already dead
         if cur:
-            try:
-                cur.close()
-            except Exception:
-                pass
+            cur.close()
         if conn:
-            try:
-                conn.close()
-            except Exception:
-                pass
+            conn.close()

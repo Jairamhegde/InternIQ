@@ -1,0 +1,241 @@
+from typing import Any
+from operator import index
+from pandas.core.methods.to_dict import to_dict
+from dotenv import load_dotenv
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from queries.analysis import job_postings
+from datetime import datetime
+import google.generativeai as genai
+import os
+import json
+import pandas as pd
+from pydantic import BaseModel,Field
+from queries.analysis import topSkills,topLocations,current_year_postings,toproles,common_skills,get_percentage_ofskills
+from typing import List,Dict,Any
+from queries.recent_market_trends import (Top_role,top_skill,total_opportunities,average_salary)
+
+
+load_dotenv()
+app = FastAPI()
+
+
+
+class Basemodel(BaseModel):
+    pass
+# -------------BASE MODELS------------------------
+
+class OverviewInsightsModel(Basemodel):
+    year: int = Field(default_factory=lambda: datetime.now().year)
+    tile_data:Dict[str,Any]
+    field: str = 'all'
+    
+class RolesPostingsModel(Basemodel):
+    roles :List[str]
+
+class CommonSkillModal(Basemodel):
+    roles : List[str]
+
+class ComparitiveInsightsModal(Basemodel):
+    role_frequency : List[Any]
+    common_skill : List[Any]
+
+class JobpostingModel(BaseModel):
+    year : int
+    field : str
+
+# __________recent market trend model_____________
+
+
+# Allow all origins for local development
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+genai.configure(api_key= os.getenv("GEMINI_API"))
+def market_overview_insights(job_posting_data,tile_data):
+    prompt = f"""
+        You are a job market analyst. You are given monthly job posting data for a specific year.
+        Data (JSON format - month name and number of job postings):
+        {job_posting_data}
+        and most mentioned location and skill and total number of postings :{tile_data}
+
+        Analyze this data and return a SINGLE JSON object with exactly 3 keys:
+        - "brief": 5-7 words. The single most important takeaway (e.g. peak month or trend).
+        - "detail": 2 sentences, max 40 words. Cover: peak month with count, lowest month with count, and one trend observation.
+        - "overview" : 3-4 line sentence, cover most mentioned location, skill and total postings recorded till no. explai that in brief.
+        Return ONLY a raw JSON object (no markdown, no extra text):
+        {{"brief": "...", "detail": "..."}}
+        """
+    try:
+        model = genai.GenerativeModel('gemini-flash-lite-latest')
+        model_response = model.generate_content(prompt)
+        raw = model_response.text.strip()
+
+        if not raw:
+          
+            return []
+
+        # Strip markdown code blocks if model added them despite instructions
+        if raw.startswith("```"):
+            raw = raw.split("```")[1]
+            if raw.startswith("json"):
+                raw = raw[4:]
+            raw = raw.strip()
+
+        clean_response = json.loads(raw)
+        return clean_response
+    except Exception as e:
+       
+        return []
+def comparitive_insights(role_freq, common_skills):
+    prompt = f"""
+        # Persona
+        You are an elite Labor Market Data Scientist and Career Intelligence Strategist. You specialize in analyzing job market trends, skills gaps, and hiring demands. Your insights are data-driven, actionable, and tailored to help tech professionals and executives make strategic career decisions.
+
+        # Objective
+        Analyze the comparative hiring demand and skill requirements between the following job roles to generate a high-value, concise executive summary.
+
+        # Input Data
+        1. Role Hiring Volume (Total Job Postings):
+        {json.dumps(role_freq, indent=2)}
+
+        2. Skill Matrix & Percentage Distribution (How often skills appear for these roles):
+        {json.dumps(common_skills, indent=2)}
+
+        # Output Requirements
+        Analyze the data and return a SINGLE JSON object with exactly 3 keys:
+        - "role_insights": 1-2 concise sentences analyzing the hiring demand. Identify the dominant role in terms of total postings and highlight the volume gap or trend.
+        - "skill_insights": 1-2 concise sentences analyzing the skill matrix. Identify the foundational skills shared across the roles, and pinpoint the specialized skills that differentiate them.
+        - "takeaway": One strategic, forward-looking takeaway. Offer actionable advice for a candidate trying to pivot between these roles or maximize their marketability.
+
+        # Tone and Style
+        - Professional, analytical, and authoritative.
+        - Avoid fluff; be direct and data-centric.
+        - Do not use first-person pronouns ("I", "we").
+
+        Return ONLY a valid, raw JSON object (no markdown, no backticks, no extra text):
+        {{"role_insights": "...", "skill_insights": "...", "takeaway": "..."}}
+    """
+    try:
+        model = genai.GenerativeModel('gemini-flash-lite-latest')
+        model_response = model.generate_content(prompt)
+        raw = model_response.text.strip()
+        if not raw:  
+            return {}
+
+        # Strip markdown code blocks if model added them despite instructions
+        if raw.startswith("```"):
+            raw = raw.split("```")[1]
+            if raw.startswith("json"):
+                raw = raw[4:]
+            raw = raw.strip()
+
+        clean_response = json.loads(raw)
+        return clean_response
+    except Exception as e:
+     
+        return {}
+
+
+@app.post('/api/job-postings')
+def get_job_postings(request:JobpostingModel):
+    actual_field = None if request.field.lower() == 'all' else request.field
+    data = job_postings(request.year, actual_field)
+    return data.to_dict(orient='records')
+
+@app.post('/api/job-posting-card-insights')
+def get_job_posting_insights(request:OverviewInsightsModel):
+    actual_field = None if request.field.lower() == 'all' else request.field
+    data = job_postings(request.year, actual_field)
+    res = market_overview_insights(data,request.tile_data)
+    return res
+
+@app.get('/api/job-tiles')
+def get_data_for_jobtile(field:str = 'all'):
+    actual_field = None if field.lower() == 'all' else field
+    skill = topSkills(actual_field).iloc[0]['name']
+    location = topLocations(actual_field).iloc[0]['location']
+    year_posting = int(current_year_postings(datetime.now().year,actual_field))
+    return {
+        "skill": skill,
+        "location": location,
+        "year_posting": f"{year_posting:,}"
+    }
+
+
+@app.get('/api/top-role-table')
+def get_top_roles(field:str = 'all'):
+    actual_field = None if field.lower() == 'all' else field
+    data = toproles(actual_field)
+    return data.to_dict(orient='records')
+
+
+@app.post('/api/get-role-posting')
+def get_role_postings(request:RolesPostingsModel):
+    role_list = [role.lower() for role in request.roles]
+    data = toproles()
+    filtered_data = data[data['role'].str.lower().isin(role_list)]
+    return filtered_data.to_dict(orient='records')
+    
+
+@app.post('/api/common-skill')
+def get_common_skill(request:CommonSkillModal):
+    df = get_percentage_ofskills(request.roles)
+    pivot_df = df.pivot(index='skill', columns = 'title', values='percentage').reset_index().fillna(0)
+    return pivot_df.to_dict(orient='records')
+
+
+@app.post('/api/get-comparitive-insights')
+def get_comparitive_insights(request:ComparitiveInsightsModal):
+    roles_frequency = request.role_frequency
+    common_skills = request.common_skill
+    insights = comparitive_insights(roles_frequency,common_skills)
+    return insights
+
+
+# _________________________Recent Market Trends endpoints______________________
+@app.get("/api/recent-market-trend")
+def get_recent_trends():
+    df_top_role = Top_role()
+    df_top_skill = top_skill()
+    df_opportunities = total_opportunities()
+
+    top_role = df_top_role.iloc[0]["title"]
+    top_role_count = int(df_top_role.iloc[0]["job_count"])
+
+    top_skilll = df_top_skill.iloc[0]["skill"] 
+    top_skilll_count = int(df_top_skill.iloc[0]["skill_count"])
+
+    total_opportunity = int(df_opportunities.iloc[0]["total_opportunities"])
+    
+
+    chart_data = df_top_role.rename(columns={"title": "role", "job_count": "volume"}).to_dict(orient='records')
+    
+    return {
+        "role": [top_role, top_role_count],
+        "skill": [top_skilll, top_skilll_count],
+        "postings": total_opportunity,
+        "toproles": chart_data
+    }
+
+
+if __name__ == '__main__':
+    print(get_common_skill(['full stack developer','data scientist','data engineer']))
+
+
+
+
+
+
+
+
+
+    
+    
+
+

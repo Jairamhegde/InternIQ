@@ -73,60 +73,51 @@ def currencymap(number, currencyType):
 
 
 def loadData():
-
     job_data = []
     try:
-        conn = connect_database(search_path="raw_data")
+        engine = connect_database(search_path="raw_data")
+        conn = engine.raw_connection()
         cur = conn.cursor()
-      
-        # row indices → [0]id, [1]title, [2]salary, [3]location, [4]company, [5]scrape_time, [6]posted_date
-        cur.execute("SELECT * FROM job_data;")
+
+        # Fetch all jobs
+        cur.execute("SELECT id, title, salary, location, company, scrape_time, posted_date FROM job_data;")
         rows = cur.fetchall()
-       
+
+        job_dict = {}
         for row in rows:
-            
-           
-            job_id    = row[0] if row[0] is not None else None
+            job_id = row[0] if row[0] else None
+            if not job_id:
+                continue
+                
             job_name  = " ".join(row[1].strip().split()).lower() if row[1] else None
             sal       = convertSalary(row[2]) if row[2] else (0, 0)
-            min_sal   = sal[0] if sal[0] > 0 else None
-            max_sal   = sal[1] if sal[1] > 0 else None
             location  = " ".join(row[3].strip().split()).lower() if row[3] else None
             company   = " ".join(row[4].strip().split()).lower() if row[4] else None
-            scrape_time  = row[5] if row[5] else None
-            posted_date  = row[6] if row[6] else None
 
-            # Fetch skills for this job
-            cur.execute(
-                '''
-                SELECT s.skill_id, s.name
-                FROM job_data j
-                JOIN job_skills js ON j.id = js.job_id
-                JOIN skills s ON js.skill_id = s.skill_id
-                WHERE j.id = %s;
-                ''',
-                (job_id,)
-            )
-
-            skills = cur.fetchall()
-            skill_list = [
-                " ".join(skill[1].lower().strip().split())
-                for skill in skills
-            ]
-
-            jd = {
-                "job_id"    : job_id,
+            job_dict[job_id] = {
                 "job_title":    job_name,
-                "min_salary":   min_sal,
-                "max_salary":   max_sal,
+                "min_salary":   sal[0] if sal[0] > 0 else None,
+                "max_salary":   sal[1] if sal[1] > 0 else None,
                 "location":     location,
-                "scraped_time": scrape_time,
-                "posted_date":  posted_date,
+                "scraped_time": row[5] if row[5] else None,
+                "posted_date":  row[6] if row[6] else None,
                 "company":      company,
-                "skills":       skill_list
+                "skills":       []
             }
-            job_data.append(jd)
-         
+
+        # Fetch all skills at once
+        cur.execute('''
+            SELECT js.job_id, s.name
+            FROM job_skills js
+            JOIN skills s ON js.skill_id = s.skill_id;
+        ''')
+        skill_rows = cur.fetchall()
+
+        for job_id, skill_name in skill_rows:
+            if job_id in job_dict and skill_name:
+                job_dict[job_id]["skills"].append(" ".join(skill_name.lower().strip().split()))
+
+        job_data = list(job_dict.values())
 
         cur.close()
         conn.close()

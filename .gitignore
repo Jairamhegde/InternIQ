@@ -50,6 +50,7 @@ app2.py
 ap.py
 dashboard.py
 migrate.py
+
 migrate_sql_to_postgre.py
 export_data.py
 problemsfaced.txt
@@ -60,3 +61,7 @@ scraperenv
 .env
 pytest.ini
 project_details.md
+
+secrets.toml
+export_data.py
+trash

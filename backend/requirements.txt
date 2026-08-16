@@ -1,0 +1,12 @@
+streamlit
+pandas
+numpy
+plotly
+seaborn
+matplotlib
+beautifulsoup4
+requests
+altair
+psycopg2-binary==2.9.9
+sqlalchemy
+google-generativeai

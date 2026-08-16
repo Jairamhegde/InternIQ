@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from 'react'
-import { API_URL } from '../config';
+import { API_URL } from '../config.js';
 import "./MarketOverview.css"
 import Loader from "./Loader"
 import Select from 'react-select';

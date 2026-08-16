@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { API_URL } from '../config';
+import { API_URL } from '../config.js';
 import "./RecentMarketTrend.css"
 import { result, values } from "lodash";
 import startCase from "lodash/startCase";

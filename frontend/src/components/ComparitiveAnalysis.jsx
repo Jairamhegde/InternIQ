@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { API_URL } from '../config';
+import { API_URL } from '../config.js';
 import "./ComparitiveAnalysis.css"
 import Select from 'react-select';
 import startCase from "lodash/startCase";

@@ -197,10 +197,22 @@ function ComaparitiveCharts({ selectedJobs }) {
                                 bottom: 10
                             }}
                         >
+                            <defs>
+                                <linearGradient id="barGradient" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stopColor="#60a5fa" stopOpacity={1} />   /* Lighter Blue */
+                                    <stop offset="100%" stopColor="#2e53b8ff" stopOpacity={1} />  /* Deep Blue */
+                                </linearGradient>
+                            </defs>
                             <XAxis dataKey='role' />
                             <YAxis />
-                            <Tooltip />
-                            <Bar dataKey="volume" fill="#3f74e7"
+                            <Tooltip labelFormatter={startCase}
+                                contentStyle={{
+                                    borderRadius: '12px',
+                                    border: 'none',
+                                    boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)'
+                                }}
+                            />
+                            <Bar dataKey="volume" fill="url(#barGradient)" radius={[6, 6, 0, 0]} animationDuration={1300}
                                 label={{ position: 'top', fill: '#0f172a', fontSize: 13, fontWeight: 600 }} />
 
                         </BarChart>

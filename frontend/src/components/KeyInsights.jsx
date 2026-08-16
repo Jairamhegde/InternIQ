@@ -3,13 +3,30 @@ import "./KeyInsights.css"
 
 import Loader from './Loader'
 
-function Key_insights({ selectedYear }) {
+function Key_insights({ selectedYear, data }) {
 
-    const [data, setData] = useState({})
+    const [keydata, setData] = useState({})
     const [isLoading, setLoading] = useState(true)
 
     useEffect(() => {
-        fetch(`http://localhost:8000/api/job-posting-card-insights?year=${selectedYear}`)
+        if (Object.keys(data).length === 0) {
+            return;
+        }
+        setLoading(true);
+        fetch(`http://localhost:8000/api/job-posting-card-insights`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(
+                    {
+                        year: selectedYear,
+                        tile_data: data
+                    }
+                )
+            }
+        )
             .then((Response) => Response.json())
             .then((jsonData => {
                 setData(jsonData);
@@ -35,12 +52,17 @@ function Key_insights({ selectedYear }) {
 
                     {/* Insight 1 */}
                     <div className="insight">
-                        <h4>{data.brief || ""}</h4>
+                        <h4>{keydata.brief || ""}</h4>
                     </div>
                     {/* Highlighted Insight */}
                     <div className="highlighted-insight">
                         <p>
-                            {data.detail || ""}
+                            {keydata.detail || ""}
+                        </p>
+                    </div>
+                    <div className="detail">
+                        <p>
+                            {keydata.overview || ""}
                         </p>
                     </div>
                 </>

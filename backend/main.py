@@ -10,7 +10,7 @@ import google.generativeai as genai
 import os
 import json
 import pandas as pd
-from pydantic import BaseModel
+from pydantic import BaseModel,Field
 from queries.analysis import topSkills,topLocations,current_year_postings,toproles,common_skills,get_percentage_ofskills
 from typing import List,Dict,Any
 from queries.recent_market_trends import (Top_role,top_skill,total_opportunities,average_salary)
@@ -25,7 +25,9 @@ class Basemodel(BaseModel):
     pass
 # -------------BASE MODELS------------------------
 
-
+class OverviewInsightsModel(Basemodel):
+    year: int = Field(default_factory=lambda: datetime.now().year)
+    tile_data:Dict[str,Any]
 class RolesPostingsModel(Basemodel):
     roles :List[str]
 
@@ -35,6 +37,7 @@ class CommonSkillModal(Basemodel):
 class ComparitiveInsightsModal(Basemodel):
     role_frequency : List[Any]
     common_skill : List[Any]
+
 
 # __________recent market trend model_____________
 
@@ -49,16 +52,17 @@ app.add_middleware(
 )
 
 genai.configure(api_key= os.getenv("GEMINI_API"))
-def get_ai_data(job_posting_data):
+def market_overview_insights(job_posting_data,tile_data):
     prompt = f"""
         You are a job market analyst. You are given monthly job posting data for a specific year.
         Data (JSON format - month name and number of job postings):
         {job_posting_data}
+        and most mentioned location and skill and total number of postings :{tile_data}
 
-        Analyze this data and return a SINGLE JSON object with exactly 2 keys:
+        Analyze this data and return a SINGLE JSON object with exactly 3 keys:
         - "brief": 5-7 words. The single most important takeaway (e.g. peak month or trend).
         - "detail": 2 sentences, max 40 words. Cover: peak month with count, lowest month with count, and one trend observation.
-
+        - "overview" : 3-4 line sentence, cover most mentioned location, skill and total postings recorded till no. explai that in brief.
         Return ONLY a raw JSON object (no markdown, no extra text):
         {{"brief": "...", "detail": "..."}}
         """
@@ -68,7 +72,7 @@ def get_ai_data(job_posting_data):
         raw = model_response.text.strip()
 
         if not raw:
-            print("Gemini returned empty response")
+          
             return []
 
         # Strip markdown code blocks if model added them despite instructions
@@ -81,7 +85,7 @@ def get_ai_data(job_posting_data):
         clean_response = json.loads(raw)
         return clean_response
     except Exception as e:
-        print(f"Failed to generate response: {e}")
+       
         return []
 def comparitive_insights(role_freq, common_skills):
     prompt = f"""
@@ -116,9 +120,7 @@ def comparitive_insights(role_freq, common_skills):
         model = genai.GenerativeModel('gemini-flash-lite-latest')
         model_response = model.generate_content(prompt)
         raw = model_response.text.strip()
-
-        if not raw:
-            print("Gemini returned empty response")
+        if not raw:  
             return {}
 
         # Strip markdown code blocks if model added them despite instructions
@@ -131,21 +133,20 @@ def comparitive_insights(role_freq, common_skills):
         clean_response = json.loads(raw)
         return clean_response
     except Exception as e:
-        print(f"Failed to generate comparative insights: {e}")
+     
         return {}
 
 
 @app.get('/api/job-postings')
-def get_job_postings(year: int = datetime.now().year):
+def get_job_postings(year: int= datetime.now().year ):
     data = job_postings(year)
     return data.to_dict(orient='records')
 
-@app.get('/api/job-posting-card-insights')
-def get_job_posting_insights(year: int = datetime.now().year):
-    data = get_job_postings(year)
-    res = get_ai_data(data)
+@app.post('/api/job-posting-card-insights')
+def get_job_posting_insights(request:OverviewInsightsModel):
+    data = get_job_postings(request.year)
+    res = market_overview_insights(data,request.tile_data)
     return res
-
 
 @app.get('/api/job-tiles')
 def get_data_for_jobtile():

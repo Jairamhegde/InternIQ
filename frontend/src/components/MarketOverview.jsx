@@ -2,14 +2,12 @@
 import { useState, useEffect } from 'react'
 import "./MarketOverview.css"
 import Loader from "./Loader"
-
-function MarketOverview() {
-    const [data, setData] = useState({})
+import Select from 'react-select';
+function MarketOverview({ data, setData, selectedField, setField }) {
 
     const [isLoading, setLoading] = useState(true)
-
     useEffect(() => {
-        fetch(`http://localhost:8000/api/job-tiles`)
+        fetch(`http://localhost:8000/api/job-tiles?field=${selectedField}`)
             .then((response) => response.json())
             .then((result) => { setData(result), setLoading(false) })
             .catch((error) => {
@@ -17,7 +15,7 @@ function MarketOverview() {
 
                 )
             })
-    }, [])
+    }, [selectedField])
 
     const stats = [
         {
@@ -38,15 +36,21 @@ function MarketOverview() {
         <>
             {isLoading ? (<Loader />) : (
                 <div className="market-overview">
+                    <div className='overview-sec1'>
+                        <div className="market-overview-text">
+                            <h2 className="market-title">State of the Market</h2>
+                            <p className="market-description">
+                                An analytical overview of the current hiring landscape,
+                                tracking key volume indicators and compensation trends
+                                across major domains.
+                            </p>
+                        </div>
 
-                    <div className="market-overview-text">
-                        <h2 className="market-title">State of the Market</h2>
-                        <p className="market-description">
-                            An analytical overview of the current hiring landscape,
-                            tracking key volume indicators and compensation trends
-                            across major domains.
-                        </p>
+                        <div className='selectBoxContainer'>
+                            <SelectBox selectedField={selectedField} setField={setField} />
+                        </div>
                     </div>
+
 
                     <div className="overview-cards">
                         {stats.map((stat, index) => (
@@ -66,6 +70,47 @@ function MarketOverview() {
 
 
         </>
+    );
+}
+
+
+function SelectBox({ selectedField, setField }) {
+    const myOptions = [
+        { value: 'all', label: 'All' },
+        { value: 'backend', label: 'Backend' },
+        { value: 'frontend', label: 'Frontend ' },
+        { value: 'mobile', label: 'Mobile' },
+        { value: 'machine learning', label: 'Lachine Learning' },
+        { value: 'data science', label: 'Data Science' },
+        { value: 'big data', label: 'Big Data' },
+        { value: 'fullstack', label: 'Fullstack' },
+
+    ]
+
+    const [isLoading, setLoading] = useState(false)
+
+
+    const handleChange = (selected) => {
+        setField(selected)
+
+    };
+
+    return (
+        <div className="select-box-container">
+            {isLoading ? (<Loader />) : (
+                <>
+                    <h3>
+                        Select Field
+                    </h3>
+                    <Select
+                        options={myOptions}
+                        value={selectedField}
+                        onChange={handleChange}
+                        classNamePrefix='my-select'
+                    />
+                </>
+            )}
+        </div>
     );
 }
 

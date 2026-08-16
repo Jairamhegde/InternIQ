@@ -10,6 +10,7 @@ import {
 } from 'recharts';
 import "./TopRoles.css"
 import Loader from './Loader';
+import { startCase } from 'lodash';
 
 function TopRoles() {
     const [rolesData, setRolesData] = useState([]);
@@ -73,6 +74,7 @@ function TopRoleChart() {
                     <ResponsiveContainer width="100%" height={350}>
                         <BarChart
                             data={rolesData}
+
                             layout='vertical'
                             margin={{
                                 top: 10,
@@ -82,15 +84,21 @@ function TopRoleChart() {
                             }}
                         >
 
+
                             <XAxis type="number" />
                             <YAxis
                                 dataKey='role'
                                 type='category'
                                 width={150}
+                                tickLine={false}
+                                tick={{ fontSize: 12 }}
+                                tickFormatter={startCase}
+
 
                             />
+
                             <Tooltip />
-                            <Bar dataKey="volume" fill="#2563eb"
+                            <Bar dataKey="volume" fill="#60a5fa" radius={[0, 6, 6, 0]} animationDuration={1300}
                             />
 
                         </BarChart>

@@ -11,17 +11,19 @@ import "./App.css";
 
 function App() {
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+  const [data, setData] = useState({})
+  const [selectedField, setField] = useState({ value: 'all', label: 'All' })
 
   return (
     <div>
       <Navbar />
       <main className='dashboard'>
         <section id='market-overview' className='market-overview-section'>
-          <MarketOverview />
+          <MarketOverview data={data} setData={setData} selectedField={selectedField} setField={setField} />
           <div className='grid-class'>
             <div className='job-posting-chart' style={{ display: 'flex', gap: '2px' }}>
               <JobPosting_chart selectedYear={selectedYear} setSelectedYear={setSelectedYear} />
-              <Key_insights selectedYear={selectedYear} />
+              <Key_insights selectedYear={selectedYear} data={data} />
             </div>
           </div>
           <div className='top-role-charts' style={{ display: 'flex', gap: '24px' }}>

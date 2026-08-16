@@ -2,7 +2,7 @@ import logging
 from datetime import datetime
 from dbconnection.dbconnect import connect_database
 from psycopg2.extras import execute_values
-
+from keyword_match.dev_trend import similarity_check
 def manage_operation(job_data):
 
     engine = connect_database(search_path="clean_data")
@@ -13,6 +13,10 @@ def manage_operation(job_data):
         # Build job tuples
         job_data_tuple = []
         for i in job_data:
+            job_title = i.get('job_title','')
+            skills_set = i.get('skills',[])
+            check = similarity_check(job_title,job_title,skills_set)
+
             if i.get('skills') and i.get('company') and i.get('job_title'):
                 job_data_tuple.append((
                     i['job_title'],
@@ -21,8 +25,12 @@ def manage_operation(job_data):
                     i['scraped_time'],
                     i['posted_date'],
                     i['min_salary'],
-                    i['max_salary']
+                    i['max_salary'],
+                    check[0],
+                    float(check[1])
                 ))
+
+        
 
         if not job_data_tuple:
             return
@@ -30,7 +38,7 @@ def manage_operation(job_data):
         # 1. Insert jobs using execute_values
         query1 = '''
             INSERT INTO job_data
-            (title, location, company, scrape_time, posted_date, salary_min, salary_max)
+            (title, location, company, scrape_time, posted_date, salary_min, salary_max,primary_field, field_confidence)
             VALUES %s
             ON CONFLICT DO NOTHING
             RETURNING job_id, title, location, company;

@@ -398,62 +398,165 @@ def score_job_field(title,skills):
         return f"aiml{aiml_score}"
 
 dictionaries = {
-    "frontend" : """
-                frontend frontend developer frontend engineer ui developer web developer javascript developer
-                react developer reactjs developer angular developer vue developer nextjs developer html css developer
-                typescript javascript html css sass bootstrap tailwind material ui responsive web design
-                user interface ui ux client side browser dom ajax fetch axios redux context api state management
-                single page application spa progressive web app pwa web components accessibility responsive layouts
-                figma adobe xd pixel perfect cross browser compatibility frontend optimization performance optimization
-                webpack vite npm yarn git testing jest cypress frontend application user experience animations
-                develop responsive interfaces build reusable components implement user interface collaborate with designers
-                """,
-    "fullstack" : """
-                full stack developer fullstack developer full stack engineer fullstack engineer full stack software engineer
-                mern stack developer mean stack developer lamp stack developer mevn stack developer
-                python full stack developer java full stack developer dotnet full stack developer php full stack developer
-                frontend backend react nodejs express django flask fastapi spring boot angular vue nextjs
-                html css javascript typescript sql mysql postgresql mongodb redis rest api graphql authentication
-                docker kubernetes aws git ci cd software architecture end to end application development
-                develop frontend and backend build complete web applications design database integrate apis
-                deploy maintain scalable applications collaborate across frontend backend full lifecycle development
-                """,
-    "backend" :"""
-                A Backend Developer is responsible for designing, developing, testing, deploying, and maintaining server-side applications that power web and mobile applications. The role involves building scalable backend services, designing REST APIs and GraphQL APIs, implementing business logic, integrating databases, optimizing application performance, ensuring security, and maintaining cloud-based applications.
+    "frontend": """
+                A Frontend Developer is responsible for designing, building, and maintaining the
+                user-facing part of web applications, translating designs into responsive, accessible,
+                and performant interfaces that run in the browser. The role involves building reusable
+                UI components, managing client-side state, consuming REST and GraphQL APIs, and
+                ensuring a consistent experience across browsers and devices.
 
-                Typical responsibilities include developing RESTful APIs, designing microservices, implementing authentication and authorization, writing reusable and maintainable code, debugging production issues, optimizing SQL queries, integrating third-party services, managing databases, improving scalability, ensuring high availability, writing unit and integration tests, deploying applications to cloud platforms, and collaborating with frontend developers.
+                Typical responsibilities include implementing responsive layouts, building and
+                maintaining component libraries, managing application state, optimizing page load and
+                rendering performance, ensuring cross-browser compatibility, writing unit and UI tests,
+                collaborating with designers on pixel-accurate implementation, and improving
+                accessibility for users relying on assistive technology.
 
-                Common job titles include Backend Developer, Backend Engineer, Backend Software Engineer, Python Developer, Java Developer, Spring Boot Developer, Django Developer, Flask Developer, FastAPI Developer, Node.js Developer, Express.js Developer, Golang Developer, PHP Developer, Laravel Developer, Ruby on Rails Developer, API Developer, and Software Engineer Backend.
+                Common job titles include Frontend Developer, Frontend Engineer, UI Developer, Web
+                Developer, React Developer, Angular Developer, Vue Developer, Next.js Developer, and
+                JavaScript Developer.
 
-                Common technologies include Python, Java, Spring Boot, Django, Flask, FastAPI, Node.js, Express.js, Golang, PHP, Laravel, Ruby on Rails, REST API, GraphQL, gRPC, SQL, PostgreSQL, MySQL, Oracle, MongoDB, Redis, Cassandra, Elasticsearch, RabbitMQ, Kafka, Docker, Kubernetes, AWS, Azure, GCP, Linux, Git, Nginx, Apache, CI/CD, JWT, OAuth2, Authentication, Authorization, Microservices, Distributed Systems, Object-Oriented Programming, Concurrency, Multithreading, Caching, Logging, Monitoring, Cloud Deployment, and Software Architecture.
-
-                Backend developers are expected to understand server-side programming, API development, database management, software architecture, security best practices, cloud computing, scalability, performance optimization, debugging, testing, deployment, and the complete backend software development lifecycle.
+                Common technologies include HTML, CSS, JavaScript, TypeScript, React, Angular, Vue,
+                Next.js, Redux, Context API, Sass, Tailwind CSS, Bootstrap, Material UI, Webpack, Vite,
+                npm, Figma, Jest, Cypress, DOM APIs, Fetch, Axios, and responsive/accessible web design
+                principles.
                 """,
-    "machine learning" : """
-                artificial intelligence ai engineer ai developer machine learning engineer ml engineer
-                deep learning engineer computer vision engineer nlp engineer llm engineer generative ai engineer
-                prompt engineer ai researcher research scientist applied scientist machine learning developer
-                tensorflow pytorch keras scikit learn huggingface transformers langchain llamaindex openai
-                large language models llm retrieval augmented generation rag embeddings vector database pinecone chromadb faiss
-                computer vision image processing object detection segmentation ocr facial recognition
-                natural language processing nlp text classification sentiment analysis summarization translation
-                supervised learning unsupervised learning reinforcement learning neural networks cnn rnn lstm transformer bert gpt diffusion
-                model training model evaluation hyperparameter tuning feature engineering inference deployment mlops
-                python pandas numpy matplotlib seaborn jupyter notebook data preprocessing prediction classification regression clustering
+
+    "fullstack": """
+                A Full Stack Developer is responsible for designing, building, and maintaining both the
+                client-facing and server-side parts of a web application, working across the entire
+                stack from database to user interface. The role involves designing schemas, building
+                APIs, implementing business logic, and building the interfaces that consume those APIs.
+
+                Typical responsibilities include developing and consuming REST or GraphQL APIs,
+                designing and integrating databases, implementing authentication end to end, building
+                responsive user interfaces, writing tests across both frontend and backend layers,
+                deploying and maintaining applications on cloud infrastructure, and owning a feature
+                from database schema through to the deployed UI.
+
+                Common job titles include Full Stack Developer, Full Stack Engineer, MERN Stack
+                Developer, MEAN Stack Developer, Python Full Stack Developer, Java Full Stack Developer,
+                and .NET Full Stack Developer.
+
+                Common technologies include React, Angular, Vue, Next.js, Node.js, Express, Django,
+                Flask, FastAPI, Spring Boot, HTML, CSS, JavaScript, TypeScript, SQL, MySQL, PostgreSQL,
+                MongoDB, REST API, GraphQL, Docker, Kubernetes, AWS, Git, and CI/CD pipelines spanning
+                the whole application lifecycle.
                 """,
-    "data science" : """
-                data scientist data science engineer data analyst business analyst analytics engineer business intelligence analyst
-                research analyst quantitative analyst statistical analyst decision scientist
-                python r sql excel power bi tableau pandas numpy scipy matplotlib seaborn plotly
-                data cleaning exploratory data analysis eda feature engineering feature selection statistics probability hypothesis testing
-                linear regression logistic regression decision tree random forest xgboost lightgbm clustering kmeans dbscan
-                classification regression forecasting recommendation systems time series anomaly detection
-                machine learning predictive analytics statistical modeling data visualization dashboards reporting
-                jupyter notebook data wrangling data preprocessing insights business intelligence descriptive analytics
-                inferential statistics correlation covariance sampling distributions experimentation a b testing
-                """
-    
-    }
+
+    "backend": """
+                A Backend Developer is responsible for designing, developing, testing, deploying, and
+                maintaining server-side applications that power web and mobile applications. The role
+                involves building scalable backend services, designing REST APIs and GraphQL APIs,
+                implementing business logic, integrating databases, optimizing application performance,
+                ensuring security, and maintaining cloud-based applications.
+
+                Typical responsibilities include developing RESTful APIs, designing microservices,
+                implementing authentication and authorization, writing reusable and maintainable code,
+                debugging production issues, optimizing SQL queries, integrating third-party services,
+                managing databases, improving scalability, ensuring high availability, writing unit and
+                integration tests, deploying applications to cloud platforms, and collaborating with
+                frontend developers.
+
+                Common job titles include Backend Developer, Backend Engineer, Backend Software
+                Engineer, Python Developer, Java Developer, Spring Boot Developer, Django Developer,
+                Flask Developer, FastAPI Developer, Node.js Developer, Express.js Developer, Golang
+                Developer, PHP Developer, Laravel Developer, Ruby on Rails Developer, API Developer,
+                and Software Engineer Backend.
+
+                Common technologies include Python, Java, Spring Boot, Django, Flask, FastAPI, Node.js,
+                Express.js, Golang, PHP, Laravel, Ruby on Rails, REST API, GraphQL, gRPC, SQL,
+                PostgreSQL, MySQL, Oracle, MongoDB, Redis, Cassandra, Elasticsearch, RabbitMQ, Kafka,
+                Docker, Kubernetes, AWS, Azure, GCP, Linux, Git, Nginx, Apache, CI/CD, JWT, OAuth2,
+                Microservices, and Distributed Systems.
+                """,
+
+    "machine learning": """
+                A Machine Learning Engineer is responsible for designing, training, evaluating, and
+                deploying machine learning and deep learning models into production systems. The role
+                is engineering-heavy: taking a model from experimentation to a reliable, monitored
+                service that other systems depend on.
+
+                Typical responsibilities include building and training neural networks, fine-tuning and
+                deploying large language models, engineering retrieval-augmented generation pipelines,
+                optimizing model inference and latency, building model-serving infrastructure, setting
+                up MLOps pipelines for continuous training and deployment, monitoring models in
+                production for drift, and integrating models into applications via APIs.
+
+                Common job titles include Machine Learning Engineer, ML Engineer, Deep Learning
+                Engineer, Computer Vision Engineer, NLP Engineer, LLM Engineer, Generative AI Engineer,
+                MLOps Engineer, and AI Engineer.
+
+                Common technologies include TensorFlow, PyTorch, Keras, Hugging Face Transformers,
+                LangChain, LlamaIndex, OpenAI API, vector databases such as Pinecone, ChromaDB and
+                FAISS, CUDA, model serving tools such as TorchServe or Triton, Docker, Kubernetes,
+                MLflow, CNNs, RNNs, LSTMs, Transformers, BERT, GPT, and diffusion models.
+                """,
+
+    "data science": """
+                A Data Scientist is responsible for analyzing data to answer business questions, build
+                predictive models, and communicate insights that inform decisions made by stakeholders
+                and leadership. The role is analysis-and-communication-heavy: turning raw data into a
+                recommendation, report, or dashboard a non-technical audience can act on.
+
+                Typical responsibilities include exploratory data analysis, cleaning and wrangling messy
+                datasets, running statistical tests and hypothesis testing, building dashboards and
+                reports for stakeholders, designing and analyzing A/B tests, building forecasting and
+                recommendation models, presenting findings to business and product teams, and defining
+                the KPIs used to track a product or business.
+
+                Common job titles include Data Scientist, Data Analyst, Business Analyst, Analytics
+                Engineer, Business Intelligence Analyst, Research Analyst, Quantitative Analyst, and
+                Decision Scientist.
+
+                Common technologies include Python, R, SQL, Excel, Power BI, Tableau, Pandas, NumPy,
+                SciPy, Matplotlib, Seaborn, Plotly, Jupyter Notebook, scikit-learn, linear and logistic
+                regression, decision trees, random forests, XGBoost, A/B testing frameworks, and
+                statistical inference methods such as hypothesis testing and confidence intervals.
+                """,
+
+    "mobile": """
+                A Mobile App Developer is responsible for designing, building, testing, and deploying
+                native or cross-platform applications for iOS and Android devices. The role involves
+                building on-device user interfaces, managing local storage, integrating with backend
+                APIs, and shipping apps through the App Store and Play Store.
+
+                Typical responsibilities include building responsive mobile UI screens, integrating
+                REST or GraphQL APIs, handling offline data storage and syncing, implementing push
+                notifications, managing app state and navigation, optimizing app performance and memory
+                usage, testing across multiple devices and OS versions, and publishing and maintaining
+                releases on the App Store and Google Play Store.
+
+                Common job titles include Mobile App Developer, Android Developer, iOS Developer,
+                Flutter Developer, React Native Developer, Kotlin Developer, Swift Developer, Mobile
+                Engineer, and Cross-Platform App Developer.
+
+                Common technologies include Kotlin, Java, Swift, Objective-C, Flutter, Dart, React
+                Native, Android SDK, Jetpack Compose, SwiftUI, Xcode, Android Studio, Firebase, SQLite,
+                Room, Core Data, REST API, Push Notifications, Play Store and App Store deployment, and
+                MVVM architecture.
+                """,
+
+    "big data": """
+                A Big Data Engineer is responsible for designing, building, and maintaining large-scale
+                data pipelines and distributed systems that ingest, process, and store massive volumes
+                of structured and unstructured data. The role is infrastructure-heavy: building the
+                pipelines that other teams' analytics and models depend on.
+
+                Typical responsibilities include building ETL and ELT pipelines, managing distributed
+                storage and compute clusters, optimizing large-scale batch and streaming data jobs,
+                orchestrating data workflows, ensuring data quality and reliability at scale, designing
+                data warehouses and lakehouses, and scaling infrastructure to handle growing data
+                volume.
+
+                Common job titles include Big Data Engineer, Data Engineer, Hadoop Developer, Spark
+                Developer, ETL Developer, Data Pipeline Engineer, and Data Platform Engineer.
+
+                Common technologies include Hadoop, Apache Spark, Hive, Kafka, Flink, Airflow, HDFS,
+                Scala, Java, Python, SQL, NoSQL databases such as Cassandra and HBase, Snowflake,
+                Redshift, BigQuery, Databricks, AWS EMR, Azure Data Factory, GCP Dataflow, and data
+                warehousing and distributed systems design.
+                """,
+}
 
 corpus = list(dictionaries.values())
 labels = list(dictionaries.keys())
@@ -468,6 +571,7 @@ def similarity_check(title,description,skills):
     
     best_idx = similarity.argmax()
     return labels[best_idx] , round(similarity[best_idx],3)
+
 
 
 

@@ -83,12 +83,31 @@ function TrendsChart({ chartData }) {
                         left: 30,
                         right: 30,
                         bottom: 10
-                    }}
-                >
-                    <XAxis dataKey='role' tickFormatter={startCase} />
+                    }}>
+
+                    <defs>
+                        <linearGradient id="barGradient" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stopColor="#60a5fa" stopOpacity={1} />
+                            <stop offset="100%" stopColor="#2e53b8ff" stopOpacity={1} />
+                        </linearGradient>
+                    </defs>
+
+
+                    <XAxis dataKey='role'
+                        tickFormatter={startCase}
+                        tickLine={false}
+                        tick={{ fontSize: 14 }} />
                     <YAxis />
-                    <Tooltip labelFormatter={startCase} />
-                    <Bar dataKey="volume" fill="#3c9affff"
+                    <Tooltip
+                        labelFormatter={startCase}
+                        cursor={{ fill: '#f1f5f9' }}
+                        contentStyle={{
+                            borderRadius: '12px',
+                            border: 'none',
+                            boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)'
+                        }}
+                    />
+                    <Bar dataKey="volume" fill="url(#barGradient)" radius={[6, 6, 0, 0]} animationDuration={1500}
                         label={{ position: 'top', fill: '#0f172a', fontSize: 7, fontWeight: 600 }} />
                 </BarChart>
             </ResponsiveContainer>

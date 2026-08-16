@@ -68,14 +68,20 @@
 
 .highlighted-insight h4 {
   margin: 0 0 6px;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
   color: #1e40af;
 }
 
 .highlighted-insight p {
   margin: 0;
-  font-size: 13px;
+  font-size: 15px;
+  text-align: justify;
   line-height: 1.55;
   color: #1e3a8a;
+}
+
+.detail {
+  font-size: 15px;
+  text-align: justify;
 }

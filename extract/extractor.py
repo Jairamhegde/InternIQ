@@ -28,6 +28,52 @@ def dateFromtext(i):
     return None
 
 
+ 
+LOCATION_HINTS = re.compile(r"work from home|work from office|hybrid", re.IGNORECASE)
+def find_location(job_card):
+    map_icon = job_card.find('i', class_=re.compile(r"map-pin", re.IGNORECASE))
+    if map_icon:
+        container = map_icon.find_parent(class_=re.compile(r"row-1-item"))
+        if container:
+            text = container.get_text(" ", strip=True)
+            if text:
+                return text
+ 
+    loc_tag = job_card.find('p', class_=re.compile(r"\blocations\b", re.IGNORECASE))
+    if loc_tag and loc_tag.get_text(strip=True):
+        return loc_tag.get_text(strip=True)
+ 
+    loc_tag = job_card.find(class_=re.compile(r"location", re.IGNORECASE))
+    if loc_tag and loc_tag.get_text(strip=True):
+        return loc_tag.get_text(strip=True)
+ 
+    text = job_card.get_text(" ", strip=True)
+    match = LOCATION_HINTS.search(text)
+    return match.group(0).strip() if match else None
+
+SALARY_PATTERN = re.compile(
+    r"(₹|rs\.?|inr)\s?[\d,]+(\s?-\s?[\d,]+)?\s?(/month|/week|lpa|per month)?"
+    r"|unpaid|not disclosed|performance based",
+    re.IGNORECASE,
+)
+def extract_sal(job_card):
+    money_icon = job_card.find('i', class_=re.compile(r"money", re.IGNORECASE))
+    if money_icon:
+        container = money_icon.find_parent(class_=re.compile(r"row-1-item"))
+        if container:
+            sal_tag = container.find('span', class_=re.compile(r"^desktop$", re.IGNORECASE))
+            if sal_tag and sal_tag.get_text(strip=True):
+                return sal_tag.get_text(strip=True)
+ 
+    sal_tag = job_card.find(class_=re.compile(r"stipend|salary", re.IGNORECASE))
+    if sal_tag and sal_tag.get_text(strip=True):
+        return sal_tag.get_text(strip=True)
+ 
+    text = job_card.get_text(" ", strip=True)
+    match = SALARY_PATTERN.search(text)
+    return match.group(0).strip() if match else None
+
+
 def scrape_data(soup):
 
     job_data = []
@@ -74,13 +120,11 @@ def scrape_data(soup):
                 status_tag = job.find('div', class_="actively-hiring-badge")
                 status = status_tag.text if status_tag else None
 
-                sal_tag = job.find('span', class_="desktop")
-                sal = sal_tag.text if sal_tag else None
+                sal = extract_sal(job)
 
                 techstack = skills
 
-                location_tag = job.select_one("p.locations a")
-                location = location_tag.get_text(strip=True) if location_tag else None
+                location = find_location(job)
 
                 jobPostedDate = dateFromtext(posted_time.lower()) if posted_time else None
 

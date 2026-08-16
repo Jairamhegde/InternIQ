@@ -21,7 +21,7 @@ import {
 
 } from 'recharts';
 import { result } from 'lodash';
-
+import Loader from './Loader';
 
 
 function ComparitiveAnalysis() {
@@ -44,6 +44,7 @@ function ComparitiveAnalysis() {
 
 function SelectBox({ selectedJobs, setSelectedJobs }) {
     const [topRoles, setTopRoles] = useState([])
+    const [isLoading, setLoading] = useState(true)
 
     useEffect(() => {
         fetch(`http://localhost:8000/api/top-role-table`)
@@ -54,8 +55,9 @@ function SelectBox({ selectedJobs, setSelectedJobs }) {
                     label: item.role,
                 }));
                 setTopRoles(options);
+                setLoading(false);
             })
-            .catch((error) => console.log("Failed to connect to top-role endpoint"))
+            .catch((error) => { console.log("Failed to connect to top-role endpoint"); setLoading(false); })
     }, [])
 
     const handleChange = (selected) => {
@@ -66,32 +68,36 @@ function SelectBox({ selectedJobs, setSelectedJobs }) {
 
     return (
         <div className="select-box-container">
-            <h3>
-                Select two or three job roles to compare
-            </h3>
-            <Select
-                options={topRoles}
-                isMulti
-                value={selectedJobs}
-                onChange={handleChange}
-                isOptionDisabled={() => selectedJobs.length >= 3}
-                placeholder="Search and select 2 to 3 roles..."
-            />
-            <div className="selection-status">
-                {selectedJobs.length < 2 ? (
-                    <span className="status-hint warning">
-                        Please select at least 2 roles (Selected: {selectedJobs.length}/3)
-                    </span>
-                ) : (
-                    <>
-                        <span className="status-hint success">
-                            ✓ Ready for comparison ({selectedJobs.length}/3 selected)
-                        </span>
+            {isLoading ? (<Loader />) : (
+                <>
+                    <h3>
+                        Select two or three job roles to compare
+                    </h3>
+                    <Select
+                        options={topRoles}
+                        isMulti
+                        value={selectedJobs}
+                        onChange={handleChange}
+                        isOptionDisabled={() => selectedJobs.length >= 3}
+                        placeholder="Search and select 2 to 3 roles..."
+                    />
+                    <div className="selection-status">
+                        {selectedJobs.length < 2 ? (
+                            <span className="status-hint warning">
+                                Please select at least 2 roles (Selected: {selectedJobs.length}/3)
+                            </span>
+                        ) : (
+                            <>
+                                <span className="status-hint success">
+                                    ✓ Ready for comparison ({selectedJobs.length}/3 selected)
+                                </span>
 
-                        <ComaparitiveCharts selectedJobs={selectedJobs} />
-                    </>
-                )}
-            </div>
+                                <ComaparitiveCharts selectedJobs={selectedJobs} />
+                            </>
+                        )}
+                    </div>
+                </>
+            )}
         </div>
     );
 }

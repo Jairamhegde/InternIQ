@@ -11,17 +11,19 @@ import {
     Tooltip,
     ResponsiveContainer
 } from 'recharts';
+import Loader from './Loader';
 
 
 function RecentMarketTrend() {
 
     const [statsdata, setStatsData] = useState([])
+    const [isLoading, setLoading] = useState(true)
     useEffect(() => {
         fetch(`http://localhost:8000/api/recent-market-trend`)
             .then((response) => response.json())
-            .then((result) => setStatsData(result))
-            .catch((err) => console.log("failed to connect to recent-market-trend"))
-    }, [statsdata])
+            .then((result) => { setStatsData(result); setLoading(false); })
+            .catch((err) => { console.log("failed to connect to recent-market-trend"); setLoading(false); })
+    }, [])
     const data = [
         {
             label: "TOTAL OPPORTUNITIES",
@@ -38,26 +40,30 @@ function RecentMarketTrend() {
     ]
     return (
         <div className="recent-market-trend">
-            <div className="rmt-header">
-                <h1>Recent Market Trends</h1>
-                <p>Last 10 days market analysis</p>
-            </div>
-            <div className="rmt-body">
-                <div className="overview-cards">
-                    {data.map((stat, index) => (
-                        <div className="stat-card" key={index}>
-                            <span className="stat-label">{startCase(stat.label)}</span>
-                            <div className="stat-value-row">
-                                <h3 className="stat-value">{stat.value}</h3>
-                            </div>
+            {isLoading ? (<Loader />) : (
+                <>
+                    <div className="rmt-header">
+                        <h1>Recent Market Trends</h1>
+                        <p>Last 10 days market analysis</p>
+                    </div>
+                    <div className="rmt-body">
+                        <div className="overview-cards">
+                            {data.map((stat, index) => (
+                                <div className="stat-card" key={index}>
+                                    <span className="stat-label">{startCase(stat.label)}</span>
+                                    <div className="stat-value-row">
+                                        <h3 className="stat-value">{stat.value}</h3>
+                                    </div>
+                                </div>
+                            ))}
                         </div>
-                    ))}
-                </div>
-                <div className="chart-container">
-                    <TrendsChart chartData={statsdata?.toproles} />
-                </div>
+                        <div className="chart-container">
+                            <TrendsChart chartData={statsdata?.toproles} />
+                        </div>
 
-            </div>
+                    </div>
+                </>
+            )}
         </div>
     );
 }

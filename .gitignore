@@ -19,3 +19,4 @@ migrate_sql_to_postgre.py
 migrate.py
 secrets.toml
 export_data.py
+trash

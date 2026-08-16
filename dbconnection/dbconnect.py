@@ -18,15 +18,15 @@ def _build_url(user, password, host, port, database, sslmode):
     )
 
 def connect_database(search_path="clean_data"):
-    if os.environ.get("HOST_NAME"):
+    if os.environ.get("DB_HOST"):
         try:
             url = _build_url(
-                user=os.environ["USER"],
-                password=os.environ["PASSWORD"],
-                host=os.environ["HOST_NAME"],
-                port=os.environ["PORT"],
-                database=os.environ["DATABASE"],
-                sslmode=os.environ["SSLMODE"],
+                user=os.environ["DB_USER"],
+                password=os.environ["DB_PASSWORD"],
+                host=os.environ["DB_HOST"],
+                port=os.environ["DB_PORT"],
+                database=os.environ["DB_NAME"],
+                sslmode=os.environ.get("SSLMODE", "require"),
             )
             engine = create_engine(
                 url,

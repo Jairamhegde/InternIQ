@@ -203,6 +203,10 @@ def get_comparitive_insights(request:ComparitiveInsightsModal):
 
 
 # _________________________Recent Market Trends endpoints______________________
+@app.get("/")
+def health_check():
+    return {"status": "ok", "message": "API is running"}
+
 @app.get("/api/recent-market-trend")
 def get_recent_trends():
     df_top_role = Top_role()

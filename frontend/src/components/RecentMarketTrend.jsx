@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { API_URL } from '../config';
 import "./RecentMarketTrend.css"
 import { result, values } from "lodash";
 import startCase from "lodash/startCase";
@@ -19,7 +20,7 @@ function RecentMarketTrend() {
     const [statsdata, setStatsData] = useState([])
     const [isLoading, setLoading] = useState(true)
     useEffect(() => {
-        fetch(`http://localhost:8000/api/recent-market-trend`)
+        fetch(`${API_URL}/api/recent-market-trend`)
             .then((response) => response.json())
             .then((result) => { setStatsData(result); setLoading(false); })
             .catch((err) => { console.log("failed to connect to recent-market-trend"); setLoading(false); })

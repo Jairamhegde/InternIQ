@@ -28,6 +28,8 @@ class Basemodel(BaseModel):
 class OverviewInsightsModel(Basemodel):
     year: int = Field(default_factory=lambda: datetime.now().year)
     tile_data:Dict[str,Any]
+    field: str = 'all'
+    
 class RolesPostingsModel(Basemodel):
     roles :List[str]
 
@@ -38,6 +40,9 @@ class ComparitiveInsightsModal(Basemodel):
     role_frequency : List[Any]
     common_skill : List[Any]
 
+class JobpostingModel(BaseModel):
+    year : int
+    field : str
 
 # __________recent market trend model_____________
 
@@ -137,22 +142,25 @@ def comparitive_insights(role_freq, common_skills):
         return {}
 
 
-@app.get('/api/job-postings')
-def get_job_postings(year: int= datetime.now().year ):
-    data = job_postings(year)
+@app.post('/api/job-postings')
+def get_job_postings(request:JobpostingModel):
+    actual_field = None if request.field.lower() == 'all' else request.field
+    data = job_postings(request.year, actual_field)
     return data.to_dict(orient='records')
 
 @app.post('/api/job-posting-card-insights')
 def get_job_posting_insights(request:OverviewInsightsModel):
-    data = get_job_postings(request.year)
+    actual_field = None if request.field.lower() == 'all' else request.field
+    data = job_postings(request.year, actual_field)
     res = market_overview_insights(data,request.tile_data)
     return res
 
 @app.get('/api/job-tiles')
-def get_data_for_jobtile():
-    skill = topSkills().iloc[0]['name']
-    location = topLocations().iloc[0]['location']
-    year_posting = int(current_year_postings(datetime.now().year))
+def get_data_for_jobtile(field:str = 'all'):
+    actual_field = None if field.lower() == 'all' else field
+    skill = topSkills(actual_field).iloc[0]['name']
+    location = topLocations(actual_field).iloc[0]['location']
+    year_posting = int(current_year_postings(datetime.now().year,actual_field))
     return {
         "skill": skill,
         "location": location,
@@ -161,8 +169,9 @@ def get_data_for_jobtile():
 
 
 @app.get('/api/top-role-table')
-def get_top_roles():
-    data = toproles()
+def get_top_roles(field:str = 'all'):
+    actual_field = None if field.lower() == 'all' else field
+    data = toproles(actual_field)
     return data.to_dict(orient='records')
 
 

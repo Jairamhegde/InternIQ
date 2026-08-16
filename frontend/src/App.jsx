@@ -22,13 +22,13 @@ function App() {
           <MarketOverview data={data} setData={setData} selectedField={selectedField} setField={setField} />
           <div className='grid-class'>
             <div className='job-posting-chart' style={{ display: 'flex', gap: '2px' }}>
-              <JobPosting_chart selectedYear={selectedYear} setSelectedYear={setSelectedYear} />
-              <Key_insights selectedYear={selectedYear} data={data} />
+              <JobPosting_chart selectedYear={selectedYear} setSelectedYear={setSelectedYear} selectedField={selectedField} />
+              <Key_insights selectedYear={selectedYear} data={data} selectedField={selectedField} />
             </div>
           </div>
           <div className='top-role-charts' style={{ display: 'flex', gap: '24px' }}>
-            <TopRoles />
-            <TopRoleChart />
+            <TopRoles selectedField={selectedField} />
+            <TopRoleChart selectedField={selectedField} />
           </div>
         </section>
 

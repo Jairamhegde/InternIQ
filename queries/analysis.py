@@ -1,4 +1,6 @@
 
+
+
 import pandas as pd
 from dbconnection.dbconnect import connect_database
 from datetime import datetime
@@ -6,17 +8,28 @@ from datetime import datetime
 
 # ------------------------------FOR OVERALL MARKET TRENDS----
 
-def topSkills():
+def topSkills(field:str | None= None):
     conn = connect_database("clean_data")
     query = '''
     SELECT s.name, count(*) as demand
     FROM skills s
-    JOIN job_skills js ON s.skill_id = js.skill_id
+    JOIN job_skills js ON s.skill_id = js.skill_id'''
+
+    params = []
+    if field:
+        query += \
+        ''' JOIN job_data j on js.job_id = j.job_id
+            where primary_field = %s
+        '''
+        params.append(field)
+
+    query += \
+    '''
     GROUP BY s.name
     ORDER BY demand DESC
-    LIMIT 6;
-    '''
-    df = pd.read_sql_query(query, conn)
+    LIMIT 6;'''
+    
+    df = pd.read_sql_query(query, conn, params=(tuple(params) if params else None))
 
     return df
 
@@ -31,46 +44,61 @@ def roles():
     LIMIT 10;
     '''
     df = pd.read_sql_query(query, conn)
-
     return df
 
-def toproles():
+def toproles(field:str | None = None):
     conn = connect_database("clean_data")
     query = '''
     select title as role,count(*) as volume
     from job_data
+    '''
+    params = []
+    if field:
+        query += " where primary_field = %s"
+        params.append(field)
+        
+    query += '''
     group by title
     order by  volume desc
     LIMIT 6;
     '''
-    df = pd.read_sql_query(query, conn)
+    df = pd.read_sql_query(query, conn, params=(tuple(params) if params else None))
 
     return df
 
 
 
 
-def noOfopportunities():
+def noOfopportunities(field:str | None = None):
     conn = connect_database()
     query = '''
     SELECT count(*) as opportunities
-    FROM job_data;
+    FROM job_data
     '''
-    df = pd.read_sql_query(query, conn)
+    parameter = []
+    if field:
+        query += " where primary_field = %s"
+        parameter.append(field)
+    df = pd.read_sql_query(query, conn, params=(tuple(parameter) if parameter else None))
 
     return df['opportunities'][0]
 
 
-def topLocations():
+def topLocations(field:str | None = None):
     conn = connect_database("clean_data")
     query = '''
     SELECT j.location, count(j.location) as count
-    FROM job_data j
+    FROM job_data j'''
+    parameter = []
+    if field:
+        query += " where primary_field = %s"
+        parameter.append(field)
+    query += '''
     GROUP BY j.location
     ORDER BY count DESC
     LIMIT 10;
     '''
-    df = pd.read_sql_query(query, conn)
+    df = pd.read_sql_query(query, conn, params=(tuple(parameter) if parameter else None))
 
     return df
 
@@ -145,24 +173,31 @@ def last_scraped_time():
     return df.iloc[0, 0]
 
 
-def roles_trends():
+def roles_trends(field:str | None = None):
     query = '''
     WITH TopSkills AS (
         SELECT ss.name
         FROM job_data j
         JOIN job_skills js ON j.job_id = js.job_id
         JOIN skills ss ON js.skill_id = ss.skill_id
+    '''
+    params = []
+    if field:
+        query += " WHERE j.primary_field = %s"
+        params.append(field)
+        
+    query += '''
         GROUP BY ss.name
         ORDER BY count(*) DESC
         LIMIT 4
     ),
     Ranked AS (
         SELECT
-            TO_CHAR(jsn.scraped_date, 'DD') AS month,
+            TO_CHAR(jsn.scraped_date, 'YYYY-MM-DD') AS month,
             s.name,
             count(*) AS jobCount,
             RANK() OVER (
-                PARTITION BY TO_CHAR(jsn.scraped_date, 'DD')
+                PARTITION BY TO_CHAR(jsn.scraped_date, 'YYYY-MM-DD')
                 ORDER BY count(*) DESC
             ) AS rank
         FROM "job_snapshot" jsn
@@ -170,13 +205,20 @@ def roles_trends():
         JOIN job_skills js ON j.job_id = js.job_id
         JOIN skills s ON js.skill_id = s.skill_id
         WHERE s.name IN (SELECT name FROM TopSkills)
-        GROUP BY TO_CHAR(jsn.scraped_date, 'DD'), s.name
+    '''
+    
+    if field:
+        query += " AND j.primary_field = %s"
+        params.append(field)
+        
+    query += '''
+        GROUP BY TO_CHAR(jsn.scraped_date, 'YYYY-MM-DD'), s.name
     )
     SELECT * FROM Ranked
     ORDER BY month, rank;
     '''
     conn = connect_database("clean_data")
-    df = pd.read_sql_query(query, conn)
+    df = pd.read_sql_query(query, conn, params=(tuple(params) if params else None))
 
     return df
 
@@ -229,28 +271,40 @@ def uniqueSkillCount(role):
 
 #------------------------JOB-POSTINGS----------------------
 
-def job_postings(year):
+def job_postings(year,field:str | None = None):
     conn = connect_database('clean_data')
+    parameter =[]
+    parameter.append(year)
     query = '''
     SELECT 
     TO_CHAR( posted_date::date,'month') AS month,
     COUNT(*) AS jobs
     FROM clean_data.job_data
-    WHERE EXTRACT(year from posted_date::date) = %s
+    WHERE EXTRACT(year from posted_date::date) = %s'''
+
+    if field:
+        query += " and primary_field = %s"
+        parameter.append(field)
+    query += '''
     GROUP BY TO_CHAR( posted_date::date,'month')
     ORDER BY min(extract(month from posted_date::date)) asc;
     '''
-    df = pd.read_sql_query(query,conn,params=(year,))
+    df = pd.read_sql_query(query,conn,params=tuple(parameter))
     return df
 
-def current_year_postings(year):
+def current_year_postings(year ,field:str | None =None):
     conn = connect_database('clean_data')
     query = '''
     select count(*) as job_postings
     from job_data
     where extract(year from posted_date::date) = %s
     '''
-    df = pd.read_sql_query(query,conn,params=(year,))
+    parameter = []
+    parameter.append(year)
+    if field:
+        query += " and primary_field = %s"
+        parameter.append(field)
+    df = pd.read_sql_query(query,conn,params=tuple(parameter))
     return df.iloc[0]['job_postings']
 
 

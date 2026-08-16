@@ -3,7 +3,7 @@ import "./KeyInsights.css"
 
 import Loader from './Loader'
 
-function Key_insights({ selectedYear, data }) {
+function Key_insights({ selectedYear, data, selectedField }) {
 
     const [keydata, setData] = useState({})
     const [isLoading, setLoading] = useState(true)
@@ -22,7 +22,8 @@ function Key_insights({ selectedYear, data }) {
                 body: JSON.stringify(
                     {
                         year: selectedYear,
-                        tile_data: data
+                        tile_data: data,
+                        field: selectedField?.value || 'all'
                     }
                 )
             }
@@ -33,7 +34,7 @@ function Key_insights({ selectedYear, data }) {
                 setLoading(false)
             }))
             .catch((error) => { console.log("Failed to connect to job-posting-insighs endpoint", error), setLoading(false) })
-    }, [selectedYear])
+    }, [selectedYear, data, selectedField])
 
     return (
         <div className="insights-card">

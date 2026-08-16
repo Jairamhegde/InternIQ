@@ -12,16 +12,17 @@ import "./TopRoles.css"
 import Loader from './Loader';
 import { startCase } from 'lodash';
 
-function TopRoles() {
+function TopRoles({ selectedField }) {
     const [rolesData, setRolesData] = useState([]);
     const [isLoading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch('http://localhost:8000/api/top-role-table')
+        setLoading(true);
+        fetch(`http://localhost:8000/api/top-role-table?field=${selectedField?.value || 'all'}`)
             .then((response) => response.json())
             .then((data) => { setRolesData(data); setLoading(false); })
             .catch((error) => { console.log("Failed to fetch top roles", error); setLoading(false); });
-    }, []);
+    }, [selectedField]);
 
     return (
         <div className="top-roles-card">
@@ -56,16 +57,17 @@ function TopRoles() {
 }
 
 
-function TopRoleChart() {
+function TopRoleChart({ selectedField }) {
     const [rolesData, setRolesData] = useState([]);
     const [isLoading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch('http://localhost:8000/api/top-role-table')
+        setLoading(true);
+        fetch(`http://localhost:8000/api/top-role-table?field=${selectedField?.value || 'all'}`)
             .then((response) => response.json())
             .then((data) => { setRolesData(data); setLoading(false); })
             .catch((error) => { console.log("Failed to fetch top roles", error); setLoading(false); });
-    }, []);
+    }, [selectedField]);
     return (
         <div className='toprole-barchart'>
             {isLoading ? (<Loader />) : (

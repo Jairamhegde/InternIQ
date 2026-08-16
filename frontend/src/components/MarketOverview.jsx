@@ -7,12 +7,11 @@ function MarketOverview({ data, setData, selectedField, setField }) {
 
     const [isLoading, setLoading] = useState(true)
     useEffect(() => {
-        fetch(`http://localhost:8000/api/job-tiles?field=${selectedField}`)
+        fetch(`http://localhost:8000/api/job-tiles?field=${selectedField.value}`)
             .then((response) => response.json())
             .then((result) => { setData(result), setLoading(false) })
             .catch((error) => {
-                console.log("Failed to connect to jobtile endpoint"), setLoading(false
-
+                console.log("Failed to connect to jobtile endpoint", error), setLoading(false
                 )
             })
     }, [selectedField])
@@ -80,7 +79,7 @@ function SelectBox({ selectedField, setField }) {
         { value: 'backend', label: 'Backend' },
         { value: 'frontend', label: 'Frontend ' },
         { value: 'mobile', label: 'Mobile' },
-        { value: 'machine learning', label: 'Lachine Learning' },
+        { value: 'machine learning', label: 'Machine Learning' },
         { value: 'data science', label: 'Data Science' },
         { value: 'big data', label: 'Big Data' },
         { value: 'fullstack', label: 'Fullstack' },

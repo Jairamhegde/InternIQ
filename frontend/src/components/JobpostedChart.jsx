@@ -12,7 +12,7 @@ import {
 import './JobpostedChart.css';
 import Loader from './Loader';
 
-function JobPosting_chart({ selectedYear, setSelectedYear }) {
+function JobPosting_chart({ selectedYear, setSelectedYear, selectedField }) {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -23,7 +23,11 @@ function JobPosting_chart({ selectedYear, setSelectedYear }) {
     ];
 
     useEffect(() => {
-        fetch(`http://localhost:8000/api/job-postings?year=${selectedYear}`)
+        fetch(`http://localhost:8000/api/job-postings`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ year: selectedYear, field: selectedField?.value || 'all' })
+        })
             .then((response) => response.json())
             .then((fetchData) => {
                 setData(fetchData);
@@ -33,7 +37,7 @@ function JobPosting_chart({ selectedYear, setSelectedYear }) {
                 console.log('Failed to connect to the endpoint', error);
                 setLoading(false);
             });
-    }, [selectedYear]);
+    }, [selectedYear, selectedField]);
 
     return (
         <div

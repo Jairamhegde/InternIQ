@@ -23,24 +23,38 @@ jobs:
             -   name : Test scraper pipeline
                 env : 
                     PYTHONPATH: .
+                    # New variables for dbconnect.py
+                    DB_HOST     : ${{ secrets.HOST_NAME }}
+                    DB_PORT     : ${{ secrets.PORT }}
+                    DB_NAME     : ${{ secrets.DATABASE }}
+                    DB_USER     : ${{ secrets.USER }}
+                    DB_PASSWORD : ${{ secrets.PASSWORD }}
+                    SSLMODE     : ${{ secrets.SSLMODE }}
+                    # Original variables (kept to prevent breaking anything else)
                     HOST_NAME : ${{ secrets.HOST_NAME }}
                     PORT      : ${{ secrets.PORT }}
                     DATABASE  : ${{ secrets.DATABASE }}
                     USER      : ${{ secrets.USER }}
                     PASSWORD  : ${{ secrets.PASSWORD }}
-                    SSLMODE   : ${{ secrets.SSLMODE }}
                 run : |
                  python -m pytest testing/test_functions.py -v
                  python -m pytest testing/test_recent_market_trend.py -v
 
             -   name : Run scraper pipeline
                 env : 
+                    # New variables for dbconnect.py
+                    DB_HOST     : ${{ secrets.HOST_NAME }}
+                    DB_PORT     : ${{ secrets.PORT }}
+                    DB_NAME     : ${{ secrets.DATABASE }}
+                    DB_USER     : ${{ secrets.USER }}
+                    DB_PASSWORD : ${{ secrets.PASSWORD }}
+                    SSLMODE     : ${{ secrets.SSLMODE }}
+                    # Original variables (kept to prevent breaking anything else)
                     HOST_NAME : ${{ secrets.HOST_NAME }}
                     PORT      : ${{ secrets.PORT }}
                     DATABASE  : ${{ secrets.DATABASE }}
                     USER      : ${{ secrets.USER }}
                     PASSWORD  : ${{ secrets.PASSWORD }}
-                    SSLMODE   : ${{ secrets.SSLMODE }}
                 run : python store_rawdata.py
                    
 

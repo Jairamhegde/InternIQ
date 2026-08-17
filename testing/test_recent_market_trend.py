@@ -6,7 +6,7 @@ def test_top_roles():
     df = Top_role()
     assert isinstance(df,pd.DataFrame)
     assert "title" in df.columns
-    assert "posted_date" in df.columns
+    assert "job_count" in df.columns
 
 
 def test_top_skills():

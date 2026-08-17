@@ -74,7 +74,7 @@ def market_overview_insights(job_posting_data,tile_data):
         - "detail": 2 sentences, max 40 words. Cover: peak month with count, lowest month with count, and one trend observation.
         - "overview" : 3-4 line sentence, cover most mentioned location, skill and total postings recorded till no. explai that in brief.
         Return ONLY a raw JSON object (no markdown, no extra text):
-        {{"brief": "...", "detail": "..."}}
+        {{"brief": "...", "detail": "...", "overview": "..."}}
         """
     try:
         model = genai.GenerativeModel('gemini-flash-lite-latest')

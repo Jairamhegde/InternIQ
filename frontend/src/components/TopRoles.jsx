@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { API_URL } from '../config.js';
 import {
     BarChart,
     Bar,
@@ -18,7 +19,7 @@ function TopRoles({ selectedField }) {
 
     useEffect(() => {
         setLoading(true);
-        fetch(`http://localhost:8000/api/top-role-table?field=${selectedField?.value || 'all'}`)
+        fetch(`${API_URL}/api/top-role-table?field=${selectedField?.value || 'all'}`)
             .then((response) => response.json())
             .then((data) => { setRolesData(data); setLoading(false); })
             .catch((error) => { console.log("Failed to fetch top roles", error); setLoading(false); });
@@ -63,7 +64,7 @@ function TopRoleChart({ selectedField }) {
 
     useEffect(() => {
         setLoading(true);
-        fetch(`http://localhost:8000/api/top-role-table?field=${selectedField?.value || 'all'}`)
+        fetch(`${API_URL}/api/top-role-table?field=${selectedField?.value || 'all'}`)
             .then((response) => response.json())
             .then((data) => { setRolesData(data); setLoading(false); })
             .catch((error) => { console.log("Failed to fetch top roles", error); setLoading(false); });

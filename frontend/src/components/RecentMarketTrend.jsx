@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { API_URL } from '../config.js';
 import "./RecentMarketTrend.css"
 import { result, values } from "lodash";
 import startCase from "lodash/startCase";
@@ -19,7 +20,7 @@ function RecentMarketTrend() {
     const [statsdata, setStatsData] = useState([])
     const [isLoading, setLoading] = useState(true)
     useEffect(() => {
-        fetch(`http://localhost:8000/api/recent-market-trend`)
+        fetch(`${API_URL}/api/recent-market-trend`)
             .then((response) => response.json())
             .then((result) => { setStatsData(result); setLoading(false); })
             .catch((err) => { console.log("failed to connect to recent-market-trend"); setLoading(false); })
@@ -27,7 +28,7 @@ function RecentMarketTrend() {
     const data = [
         {
             label: "TOTAL OPPORTUNITIES",
-            value: statsdata?.postings
+            value: statsdata?.postings || "Loading.."
         },
         {
             label: "MOST DEMANDING SKILL",
@@ -36,6 +37,10 @@ function RecentMarketTrend() {
         {
             label: "DEMANDING ROLE",
             value: statsdata?.role?.[0] || "Loading..."
+        },
+        {
+            label: "TOP LOCATION",
+            value: statsdata?.toplocation?.[0] || "Loading..."
         },
     ]
     return (

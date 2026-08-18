@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { API_URL } from '../config.js';
 import {
     AreaChart,
     Area,
@@ -23,7 +24,7 @@ function JobPosting_chart({ selectedYear, setSelectedYear, selectedField }) {
     ];
 
     useEffect(() => {
-        fetch(`http://localhost:8000/api/job-postings`, {
+        fetch(`${API_URL}/api/job-postings`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ year: selectedYear, field: selectedField?.value || 'all' })

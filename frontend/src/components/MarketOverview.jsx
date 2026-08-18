@@ -1,5 +1,6 @@
 
 import { useState, useEffect } from 'react'
+import { API_URL } from '../config.js';
 import "./MarketOverview.css"
 import Loader from "./Loader"
 import Select from 'react-select';
@@ -7,7 +8,7 @@ function MarketOverview({ data, setData, selectedField, setField }) {
 
     const [isLoading, setLoading] = useState(true)
     useEffect(() => {
-        fetch(`http://localhost:8000/api/job-tiles?field=${selectedField.value}`)
+        fetch(`${API_URL}/api/job-tiles?field=${selectedField.value}`)
             .then((response) => response.json())
             .then((result) => { setData(result), setLoading(false) })
             .catch((error) => {
@@ -28,6 +29,10 @@ function MarketOverview({ data, setData, selectedField, setField }) {
         {
             label: "TOP LOCATION",
             value: data.location || "...",
+        },
+        {
+            label: "DEMANDING ROLE",
+            value: data.role || "..."
         }
     ];
 

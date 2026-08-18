@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { API_URL } from '../config.js';
 import "./ComparitiveAnalysis.css"
 import Select from 'react-select';
 import startCase from "lodash/startCase";
@@ -47,7 +48,7 @@ function SelectBox({ selectedJobs, setSelectedJobs }) {
     const [isLoading, setLoading] = useState(true)
 
     useEffect(() => {
-        fetch(`http://localhost:8000/api/top-role-table`)
+        fetch(`${API_URL}/api/top-role-table`)
             .then((response) => response.json())
             .then((result) => {
                 const options = result.map((item) => ({
@@ -117,7 +118,7 @@ function ComaparitiveCharts({ selectedJobs }) {
 
         const roleNames = selectedJobs.map(job => job.value || job)
 
-        fetch(`http://localhost:8000/api/common-skill`,
+        fetch(`${API_URL}/api/common-skill`,
             {
                 method: "POST",
                 headers: {
@@ -140,7 +141,7 @@ function ComaparitiveCharts({ selectedJobs }) {
 
         const roleNames = selectedJobs.map(job => job.value || job)
 
-        fetch(`http://localhost:8000/api/get-role-posting`,
+        fetch(`${API_URL}/api/get-role-posting`,
             {
                 method: 'POST',
                 headers: {
@@ -160,7 +161,7 @@ function ComaparitiveCharts({ selectedJobs }) {
         ) {
             return;
         }
-        fetch(`http://localhost:8000/api/get-comparitive-insights`,
+        fetch(`${API_URL}/api/get-comparitive-insights`,
             {
                 method: 'POST',
                 headers: {

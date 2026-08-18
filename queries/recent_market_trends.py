@@ -16,6 +16,8 @@ def Top_role():
     return df
 
 
+
+
 def top_skill():
     conn = connect_database("clean_data")
     query = '''
@@ -56,7 +58,26 @@ def average_salary(role):
     df = pd.read_sql_query(query,conn,params=(role,))
     return df
 
+def recenttopLocations(field:str | None = None):
+    conn = connect_database("clean_data")
+    query = '''
+    SELECT j.location, count(j.location) as count
+    FROM job_data j'''
+    parameter = []
+    if field:
+        query += " where primary_field = %s"
+        parameter.append(field)
+    query += '''
+    WHERE posted_date::date >= CURRENT_DATE - INTERVAL '10 days'
+    GROUP BY j.location
+    ORDER BY count DESC
+    LIMIT 10;
+    '''
+    df = pd.read_sql_query(query, conn, params=(tuple(parameter) if parameter else None))
+
+    return df
+
 
 
 if __name__ == '__main__':
-    print(Top_role())
+    print(topLocations())

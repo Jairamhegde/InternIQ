@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { API_URL } from '../config.js';
 import "./KeyInsights.css"
 
 import Loader from './Loader'
@@ -13,7 +14,7 @@ function Key_insights({ selectedYear, data, selectedField }) {
             return;
         }
         setLoading(true);
-        fetch(`http://localhost:8000/api/job-posting-card-insights`,
+        fetch(`${API_URL}/api/job-posting-card-insights`,
             {
                 method: "POST",
                 headers: {

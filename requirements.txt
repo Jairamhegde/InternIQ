@@ -16,3 +16,6 @@ python-dotenv
 pydantic
 pytest
 scikit-learn
+PyMuPDF
+python-docx
+python-multipart

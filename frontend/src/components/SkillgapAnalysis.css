@@ -1,0 +1,354 @@
+.skillgap-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.skillgap-header {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+
+.skillgap-header h1 {
+    margin: 0 0 8px;
+    font-size: 28px;
+    font-weight: 800;
+    color: #0f172a;
+    letter-spacing: -0.02em;
+}
+
+.skillgap-header p {
+    margin: 0 auto;
+    font-size: 14px;
+    color: #64748b;
+    line-height: 1.6;
+    max-width: 520px;
+}
+
+.select-upload {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: space-between;
+    background-color: white;
+    border-radius: 14px;
+    padding: 14px 20px;
+}
+
+
+.select-box {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+
+
+.custom-select {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #0f172a;
+    background-color: #f8fafc;
+    border: 1px solid #cbd5e1;
+    /* Reverted outer border radius */
+    border-radius: 12px; 
+    outline: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    appearance: none;
+    /* Adding a custom dropdown arrow icon using background-image */
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%233b82f6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    background-size: 16px;
+    padding-right: 42px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.custom-select:hover {
+    border-color: #94a3b8;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.04);
+}
+
+.custom-select:focus {
+    border-color: #3b82f6;
+    /* Soft, rounded focus glow */
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+}
+
+
+/* ------------file uploader styling------------- */
+/* Container for the upload area */
+.doc-upload-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+/* 
+  Styling the native file input element directly.
+  Note: Using your exact class name 'documnet-upload' (with the typo)
+*/
+.documnet-upload input[type="file"] {
+    font-family: inherit;
+    font-size: 14px;
+    color: #475569;
+    background-color: #f8fafc;
+    border: 1px dashed #cbd5e1;
+    border-radius: 12px;
+    padding: 8px;
+    width: 100%;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.documnet-upload input[type="file"]:hover {
+    background-color: #f1f5f9;
+    border-color: #94a3b8;
+}
+
+.documnet-upload input[type="file"]:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Styling the button part of the file input */
+.documnet-upload input[type="file"]::file-selector-button {
+    font-weight: 600;
+    color: #ffffff;
+    background-color: #0f172a;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 16px;
+    margin-right: 12px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.documnet-upload input[type="file"]::file-selector-button:hover {
+    background-color: #334155;
+}
+
+/* Styling the selected file text area */
+.resume-title {
+    background-color: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    color: #065f46;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.resume-title p {}
+
+/* ------------ Analyze Button Styling ------------- */
+.analyze-button {
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 600;
+    color: #ffffff;
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    border: none;
+    border-radius: 12px;
+    padding: 12px 24px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.2), 0 2px 4px -1px rgba(59, 130, 246, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.analyze-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 8px -1px rgba(59, 130, 246, 0.3), 0 4px 6px -1px rgba(59, 130, 246, 0.2);
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+}
+
+.analyze-button:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 4px -1px rgba(59, 130, 246, 0.2);
+}
+
+.analyze-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.4);
+}
+
+.analyze-button:disabled {
+    background: #e2e8f0;
+    color: #94a3b8;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
+
+.missing-matched-container {
+    display: flex;
+    gap: 30px;
+    margin-top: 30px;
+    width: 100%;
+}
+
+.matched-skills,
+.missing-skills {
+    flex: 1;
+    background-color: #f8f9fa;
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.skills-heading {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+    color: #333;
+    font-weight: 600;
+}
+
+.skills-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.skill-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #ffffff;
+    padding: 10px 16px;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 1px solid #eee;
+}
+
+.skill-box p {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.skill-box:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+}
+
+.skill-box.matched {
+    background-color: #acfad1;
+    border-color: #9be4bd;
+}
+
+.skill-box.matched .symbol {
+    color: #00bd3c;
+    font-weight: bold;
+}
+
+/* .skill-box.missing {
+    border-left: 4px solid #e74c3c;
+} */
+
+.skill-box.missing .symbol {
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+.progressbar-container {
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+    border-radius: 7px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.progressbar-container label {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #333;
+}
+
+/* Div-based Progress Bar styling with animation */
+.progress-track {
+    width: 100%;
+    height: 12px;
+    background-color: #eee;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #4caf50, #8bc34a);
+    border-radius: 10px;
+    transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Container for the missing skill categories */
+.must-needed,
+.good-to-have {
+    margin-bottom: 25px;
+}
+
+/* Titles for the categories */
+.must-needed>p,
+.good-to-have>p {
+    font-size: .8rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #eee;
+}
+
+.must-needed>p {
+    color: #000000;
+    /* Red for essential */
+}
+
+.good-to-have>p {
+    color: #000000;
+    /* Orange/Yellow for good to have */
+}
+
+/* The flex container that holds the skill boxes */
+.skill-tile-holder {
+    display: flex;
+    flex-wrap: wrap;
+    /* Allows items to wrap to the next line instead of shrinking */
+    gap: 12px;
+    /* Adds space between the skill boxes */
+}
+
+/* Custom background for Must Needed boxes */
+.must-needed .skill-box {
+    background-color: #fdf3f2;
+    border-color: #fadbd8;
+}
+
+.must-needed .skill-box .symbol {
+    color: #e74c3c;
+}
+
+/* Custom background for Good to Have boxes */
+.good-to-have .skill-box {
+    background-color: #fef9e7;
+    border-color: #fcf3cf;
+}
+
+.good-to-have .skill-box .symbol {
+    color: #f39c12;
+}

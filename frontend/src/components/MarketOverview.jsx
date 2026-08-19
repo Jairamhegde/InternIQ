@@ -29,6 +29,10 @@ function MarketOverview({ data, setData, selectedField, setField }) {
         {
             label: "TOP LOCATION",
             value: data.location || "...",
+        },
+        {
+            label: "DEMANDING ROLE",
+            value: data.role || "..."
         }
     ];
 

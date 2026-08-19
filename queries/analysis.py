@@ -1,5 +1,6 @@
 
-
+from sqlalchemy import true
+import numpy as np
 
 import pandas as pd
 from dbconnection.dbconnect import connect_database
@@ -417,9 +418,97 @@ def get_percentage_ofskills(job_roles):
     df = pd.read_sql_query(query,conn,params=(*job_roles,n,*job_roles,*job_roles,))
 
     return df
+
+
+
+# ----------------skillgap analyzer_____________
+
+def find_reuiqred_skills(field):
+    engine = connect_database('clean_data')
+    conn = engine.raw_connection()
+
+    query = '''
+    select s.name,count(*) as count
+    from job_data j
+    join job_skills js on j.job_id = js.job_id
+    join skills s on js.skill_id = s.skill_id
+    where j.primary_field = %s
+    group by s.name
+    order by count desc
+    limit 10;
+    '''
+    df= pd.read_sql_query(query,conn,params=(field,))
+
+    essential_skills = set(df['name'].to_list())
+    return essential_skills
+
+
+import numpy as np
+
+# ---- Run ONCE when server starts, loads everything from DB ----
+def build_tfidf_scores():
+    engine = connect_database('clean_data')
+    conn = engine.raw_connection()
+    #group by skills and primary fields together
+    query = '''
+    SELECT j.primary_field, s.name as skill, COUNT(*) as term_freq
+    FROM job_data j
+    JOIN job_skills js ON j.job_id = js.job_id
+    JOIN skills s ON js.skill_id = s.skill_id
+    GROUP BY j.primary_field, s.name
+    '''
+    df = pd.read_sql_query(query, conn) 
+    # count total no of primary fields
+    total_fields = df['primary_field'].nunique()
+
+    # find total no of unique fields in which it appears in
+    doc_freq = df.groupby('skill')['primary_field'].nunique().reset_index()
+    doc_freq.rename(columns={'primary_field': 'doc_freq'}, inplace=True)
+    # then merge it into the main table . now freq of that skill & precent no of another table
+    df = pd.merge(df, doc_freq, on='skill')
+    df['idf'] = np.log(total_fields / df['doc_freq'])
+    df['tf_idf'] = df['term_freq'] * df['idf']
+
+    return df  
+
+def ffind_reuiqred_skills(tfidf_df, target_field):
+    target_df = tfidf_df[tfidf_df['primary_field'] == target_field]
+    target_df = target_df.sort_values(by='tf_idf', ascending=False)
+    essential_skills = set(target_df.head(10)['skill'].tolist())
+    return essential_skills
+
+def find_freq_skills(field : str |None= None):
+    engine = connect_database("clean_data")
+    conn = engine.raw_connection()
+    query = '''
+    SELECT j.primary_field, s.name as skill, COUNT(*) as term_freq
+    FROM job_data j
+    JOIN job_skills js ON j.job_id = js.job_id
+    JOIN skills s ON js.skill_id = s.skill_id'''
+    if field:
+        query += " WHERE primary_field = %s"
+    query += '''
+    GROUP BY j.primary_field, s.name
+    order by term_freq desc
+    limit 15;
+    '''
+    if field:
+        df = pd.read_sql_query(query,conn,params=(field,))
+    else:
+        df = pd.read_sql_query(query,conn)
+
+    return df
     
 
 
+
+
+
+
+# IDF = log(total_fields / how_many_fields_skill_appears_in)
+    
+
+# confidance = total_freq * idf_freq
 
 
 
@@ -431,4 +520,4 @@ def get_percentage_ofskills(job_roles):
 
 
 if __name__ == '__main__':
-    print(get_percentage_ofskills(['full stack developer','data scientist','data engineer']))
+    print(find_freq_skills('backend'))

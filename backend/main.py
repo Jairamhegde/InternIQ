@@ -1,27 +1,39 @@
-import sys
-import os
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
+from numpy import require
 from typing import Any
 from operator import index
 from pandas.core.methods.to_dict import to_dict
 from dotenv import load_dotenv
-from fastapi import FastAPI
+from fastapi import FastAPI,File,UploadFile,Form
 from fastapi.middleware.cors import CORSMiddleware
 from queries.analysis import job_postings
 from datetime import datetime
 import google.generativeai as genai
 import os
 import json
+import re
 import pandas as pd
 from pydantic import BaseModel,Field
-from queries.analysis import topSkills,topLocations,current_year_postings,toproles,common_skills,get_percentage_ofskills
+from queries.analysis import (topSkills,topLocations,current_year_postings,toproles,
+            common_skills,get_percentage_ofskills,build_tfidf_scores,find_reuiqred_skills,find_freq_skills)
 from typing import List,Dict,Any
-from queries.recent_market_trends import (Top_role,top_skill,total_opportunities,average_salary)
+from queries.recent_market_trends import (Top_role,top_skill,total_opportunities,average_salary,recenttopLocations,
+)
+import fitz
+from docx import Document
+
+
 
 
 load_dotenv()
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allows all origins
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all methods
+    allow_headers=["*"],  # Allows all headers
+)
 
 
 
@@ -49,6 +61,8 @@ class JobpostingModel(BaseModel):
     field : str
 
 # __________recent market trend model_____________
+
+# ___________skillgap anayzer models______________
 
 
 # Allow all origins for local development
@@ -165,11 +179,13 @@ def get_data_for_jobtile(field:str = 'all'):
     actual_field = None if field.lower() == 'all' else field
     skill = topSkills(actual_field).iloc[0]['name']
     location = topLocations(actual_field).iloc[0]['location']
+    toprole =  toproles(actual_field).iloc[0]['role']
     year_posting = int(current_year_postings(datetime.now().year,actual_field))
     return {
         "skill": skill,
         "location": location,
-        "year_posting": f"{year_posting:,}"
+        "year_posting": f"{year_posting:,}",
+        "role":toprole
     }
 
 
@@ -213,6 +229,8 @@ def get_recent_trends():
     df_top_role = Top_role()
     df_top_skill = top_skill()
     df_opportunities = total_opportunities()
+    df_toplocation = recenttopLocations()
+
 
     top_role = df_top_role.iloc[0]["title"]
     top_role_count = int(df_top_role.iloc[0]["job_count"])
@@ -221,7 +239,9 @@ def get_recent_trends():
     top_skilll_count = int(df_top_skill.iloc[0]["skill_count"])
 
     total_opportunity = int(df_opportunities.iloc[0]["total_opportunities"])
-    
+
+    top_location = df_toplocation.iloc[0]['location']
+    top_location_count = int(df_toplocation.iloc[0]['count'])
 
     chart_data = df_top_role.rename(columns={"title": "role", "job_count": "volume"}).to_dict(orient='records')
     
@@ -229,12 +249,81 @@ def get_recent_trends():
         "role": [top_role, top_role_count],
         "skill": [top_skilll, top_skilll_count],
         "postings": total_opportunity,
-        "toproles": chart_data
+        "toproles": chart_data,
+        "toplocation":[top_location,top_location_count]
     }
 
 
+# _____________Skill gap analyzer endpoints________________
+
+def extract_pdf(file):
+    data = fitz.open(stream=file.read(),filetype='pdf')
+    text = ""
+    for page in data:
+        text += page.get_text()
+    return text
+
+
+def extract_docx(file):
+    doc = Document(file)
+    text = ""
+    for paragraph in doc.paragraphs:
+        text += paragraph.text + "\n"
+    return text
+
+tf_idf = build_tfidf_scores()
+
+def analyze_gap(text, required_set):
+    matched_skill = set()
+    missing_skill = set()
+    for skill in required_set:
+        pattern = r"\b" + re.escape(skill) + r"\b"
+        if re.search(pattern, text, re.IGNORECASE):
+            matched_skill.add(skill)
+        else:
+            missing_skill.add(skill)
+    return matched_skill, missing_skill
+
+    
+
+@app.post("/api/analyze-gap")
+def skillgap_analyzer(field:str = Form(...),resume:UploadFile=File(...)):
+    file_byte = resume.file
+    if resume.filename.lower().endswith(".pdf"):
+        text = extract_pdf(file_byte)
+    
+    elif resume.filename.lower().endswith(".docx"):
+        text = extract_docx(file_byte)
+    else:
+        return {"error":"Unsupported file type."}
+    
+    df  = find_freq_skills(field)
+    df_fre = dict(zip(df["skill"],df["term_freq"]))
+
+
+   
+    matched ,missing= analyze_gap(text,set(df_fre.keys()))
+    # A much cleaner, Pythonic way to calculate the average. 
+    # The 'if missing' check prevents a ZeroDivisionError in case they have 0 missing skills!
+    average_score = sum(df_fre[j] for j in missing) / len(missing) if missing else 0
+
+
+
+    missing_with_freq = [{"skill":s,"freq":df_fre[s],"priority":"e" if df_fre[s]>=average_score else "r"} for s in missing]
+    matched_with_freq = [{"skill":s,"freq":df_fre[s]} for s in matched]
+
+    matched_with_freq.sort(key=lambda x:x['freq'],reverse=True)
+    missing_with_freq.sort(key=lambda x:x['freq'],reverse=True)
+    return {
+        "matched":matched_with_freq,
+        "missing":missing_with_freq
+    }
+    
+
+
 if __name__ == '__main__':
-    print(get_common_skill(['full stack developer','data scientist','data engineer']))
+    pass
+    
 
 
 

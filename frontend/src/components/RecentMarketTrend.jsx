@@ -28,7 +28,7 @@ function RecentMarketTrend() {
     const data = [
         {
             label: "TOTAL OPPORTUNITIES",
-            value: statsdata?.postings
+            value: statsdata?.postings || "Loading.."
         },
         {
             label: "MOST DEMANDING SKILL",
@@ -37,6 +37,10 @@ function RecentMarketTrend() {
         {
             label: "DEMANDING ROLE",
             value: statsdata?.role?.[0] || "Loading..."
+        },
+        {
+            label: "TOP LOCATION",
+            value: statsdata?.toplocation?.[0] || "Loading..."
         },
     ]
     return (

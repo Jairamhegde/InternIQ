@@ -6,7 +6,7 @@ import MarketOverview from './components/MarketOverview';
 import TopRoles, { TopRoleChart } from "./components/TopRoles";
 import ComparitiveAnalysis from "./components/ComparitiveAnalysis";
 import RecentMarketTrend from "./components/RecentMarketTrend";
-
+import SkillgapAnalysis from './components/SkillgapAnalysis';
 import "./App.css";
 
 function App() {
@@ -40,6 +40,9 @@ function App() {
           <RecentMarketTrend />
         </section>
 
+        <section id='skill-gap-analysis'>
+          <SkillgapAnalysis />
+        </section>
 
 
       </main>

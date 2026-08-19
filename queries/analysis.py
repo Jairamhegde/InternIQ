@@ -425,7 +425,6 @@ def get_percentage_ofskills(job_roles):
 
 def find_reuiqred_skills(field):
     engine = connect_database('clean_data')
-    conn = engine.raw_connection()
 
     query = '''
     select s.name,count(*) as count
@@ -437,7 +436,7 @@ def find_reuiqred_skills(field):
     order by count desc
     limit 10;
     '''
-    df= pd.read_sql_query(query,conn,params=(field,))
+    df= pd.read_sql_query(query,engine,params=(field,))
 
     essential_skills = set(df['name'].to_list())
     return essential_skills
@@ -448,7 +447,6 @@ import numpy as np
 # ---- Run ONCE when server starts, loads everything from DB ----
 def build_tfidf_scores():
     engine = connect_database('clean_data')
-    conn = engine.raw_connection()
     #group by skills and primary fields together
     query = '''
     SELECT j.primary_field, s.name as skill, COUNT(*) as term_freq
@@ -457,7 +455,7 @@ def build_tfidf_scores():
     JOIN skills s ON js.skill_id = s.skill_id
     GROUP BY j.primary_field, s.name
     '''
-    df = pd.read_sql_query(query, conn) 
+    df = pd.read_sql_query(query, engine) 
     # count total no of primary fields
     total_fields = df['primary_field'].nunique()
 
@@ -479,7 +477,6 @@ def ffind_reuiqred_skills(tfidf_df, target_field):
 
 def find_freq_skills(field : str |None= None):
     engine = connect_database("clean_data")
-    conn = engine.raw_connection()
     query = '''
     SELECT j.primary_field, s.name as skill, COUNT(*) as term_freq
     FROM job_data j
@@ -493,9 +490,9 @@ def find_freq_skills(field : str |None= None):
     limit 15;
     '''
     if field:
-        df = pd.read_sql_query(query,conn,params=(field,))
+        df = pd.read_sql_query(query,engine,params=(field,))
     else:
-        df = pd.read_sql_query(query,conn)
+        df = pd.read_sql_query(query,engine)
 
     return df
     

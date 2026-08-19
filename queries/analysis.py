@@ -477,6 +477,33 @@ def ffind_reuiqred_skills(tfidf_df, target_field):
     essential_skills = set(target_df.head(10)['skill'].tolist())
     return essential_skills
 
+def find_freq_skills(field : str |None= None):
+    engine = connect_database("clean_data")
+    conn = engine.raw_connection()
+    query = '''
+    SELECT j.primary_field, s.name as skill, COUNT(*) as term_freq
+    FROM job_data j
+    JOIN job_skills js ON j.job_id = js.job_id
+    JOIN skills s ON js.skill_id = s.skill_id'''
+    if field:
+        query += " WHERE primary_field = %s"
+    query += '''
+    GROUP BY j.primary_field, s.name
+    order by term_freq desc
+    limit 15;
+    '''
+    if field:
+        df = pd.read_sql_query(query,conn,params=(field,))
+    else:
+        df = pd.read_sql_query(query,conn)
+
+    return df
+    
+
+
+
+
+
 
 # IDF = log(total_fields / how_many_fields_skill_appears_in)
     
@@ -493,4 +520,4 @@ def ffind_reuiqred_skills(tfidf_df, target_field):
 
 
 if __name__ == '__main__':
-    print(topLocations())
+    print(find_freq_skills('backend'))

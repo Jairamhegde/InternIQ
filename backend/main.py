@@ -14,7 +14,7 @@ import re
 import pandas as pd
 from pydantic import BaseModel,Field
 from queries.analysis import (topSkills,topLocations,current_year_postings,toproles,
-            common_skills,get_percentage_ofskills,build_tfidf_scores,find_reuiqred_skills)
+            common_skills,get_percentage_ofskills,build_tfidf_scores,find_reuiqred_skills,find_freq_skills)
 from typing import List,Dict,Any
 from queries.recent_market_trends import (Top_role,top_skill,total_opportunities,average_salary,recenttopLocations,
 )
@@ -292,12 +292,26 @@ def skillgap_analyzer(field:str = Form(...),resume:UploadFile=File(...)):
     else:
         return {"error":"Unsupported file type."}
     
-    
-    required_skill_set = find_reuiqred_skills(field)
-    matched ,missing= analyze_gap(text,required_skill_set)
+    df  = find_freq_skills(field)
+    df_fre = dict(zip(df["skill"],df["term_freq"]))
+
+
+   
+    matched ,missing= analyze_gap(text,set(df_fre.keys()))
+    # A much cleaner, Pythonic way to calculate the average. 
+    # The 'if missing' check prevents a ZeroDivisionError in case they have 0 missing skills!
+    average_score = sum(df_fre[j] for j in missing) / len(missing) if missing else 0
+
+
+
+    missing_with_freq = [{"skill":s,"freq":df_fre[s],"priority":"e" if df_fre[s]>=average_score else "r"} for s in missing]
+    matched_with_freq = [{"skill":s,"freq":df_fre[s]} for s in matched]
+
+    matched_with_freq.sort(key=lambda x:x['freq'],reverse=True)
+    missing_with_freq.sort(key=lambda x:x['freq'],reverse=True)
     return {
-        "matched":list(matched),
-        "missing":list(missing)
+        "matched":matched_with_freq,
+        "missing":missing_with_freq
     }
     
 

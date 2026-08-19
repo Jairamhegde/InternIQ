@@ -8,6 +8,7 @@ function SkillgapAnalysis() {
     const [resume, setResume] = useState(null)
     const [gapData, setgapData] = useState(null)
 
+
     const Analyze = async () => {
         if (!resume) return;
 
@@ -29,6 +30,21 @@ function SkillgapAnalysis() {
         }
     }
 
+    // Calculate progress score safely
+    const progressScore = gapData && gapData.matched ?
+        Math.round((gapData.matched.length / (gapData.matched.length + gapData.missing.length)) * 100)
+        : 0;
+
+    // Filter missing skills by priority
+    let missingEssential = [];
+    let missingNiceToHave = [];
+
+    if (gapData && gapData.missing) {
+        missingEssential = gapData.missing.filter(obj => obj.priority === 'e');
+        missingNiceToHave = gapData.missing.filter(obj => obj.priority === 'r');
+    }
+
+
 
     return (
 
@@ -46,30 +62,53 @@ function SkillgapAnalysis() {
 
             </div>
             {gapData && (
-                <div className='missing-matched-container'>
-                    <div className='matched-skills'>
-                        <h3 className="skills-heading">Matched Skills</h3>
-                        <div className="skills-grid">
-                            {gapData.matched.map((obj, index) => (
-                                <div className='skill-box matched' key={index}>
-                                    <span className='symbol'>✓</span>
-                                    <p>{obj}</p>
+                <>
+                    <ProgressBar progressValue={progressScore} />
+                    <div className='missing-matched-container'>
+                        <div className='matched-skills'>
+                            <h3 className="skills-heading">Matched Skills</h3>
+                            <div className="skills-grid">
+                                {gapData.matched.map((obj, index) => (
+                                    <div className='skill-box matched' key={index}>
+                                        <span className='symbol'>✓</span>
+                                        <p>{obj.skill}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                        <div className='missing-skills'>
+                            <h3 className="skills-heading">Missing Skills</h3>
+                            <div className="skills-grid">
+                                <div className='must-needed'>
+                                    <p>Essential to have</p>
+                                    <div className='skill-tile-holder'>
+                                        {missingEssential.map((obj, index) => (
+                                            <div className='skill-box missing' key={index}>
+                                                <span className='symbol'>×</span>
+                                                <p>{obj.skill}</p>
+                                            </div>
+                                        ))}
+                                    </div>
                                 </div>
-                            ))}
+                                <div className='good-to-have'>
+                                    <p>Good to have</p>
+                                    <div className='skill-tile-holder'>
+                                        {missingNiceToHave.map((obj, index) => (
+                                            <div className='skill-box missing' key={index}>
+                                                <span className='symbol'>×</span>
+                                                <p>{obj.skill}</p>
+                                            </div>
+                                        ))}
+
+                                    </div>
+
+                                </div>
+
+                            </div>
                         </div>
                     </div>
-                    <div className='missing-skills'>
-                        <h3 className="skills-heading">Missing Skills</h3>
-                        <div className="skills-grid">
-                            {gapData.missing.map((obj, index) => (
-                                <div className='skill-box missing' key={index}>
-                                    <span className='symbol'>✕</span>
-                                    <p>{obj}</p>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </div>
+                </>
+
             )}
 
         </div>
@@ -114,6 +153,17 @@ function DocumentUpload({ resume, setResume }) {
                 <input type="file" id='resume' accept='.pdf,.docx,.doc' onChange={callHandler} />
             </div>
 
+        </div>
+    );
+}
+
+function ProgressBar({ progressValue }) {
+    return (
+        <div className='progressbar-container'>
+            <label>Match Score : {progressValue}%</label>
+            <div className="progress-track">
+                <div className="progress-fill" style={{ width: `${progressValue}%` }}></div>
+            </div>
         </div>
     );
 }

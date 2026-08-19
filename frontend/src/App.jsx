@@ -40,7 +40,7 @@ function App() {
           <RecentMarketTrend />
         </section>
 
-        <section>
+        <section id='skill-gap-analysis'>
           <SkillgapAnalysis />
         </section>
 

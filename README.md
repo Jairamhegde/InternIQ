@@ -4,7 +4,7 @@
 
 InternIQ is a full-stack data engineering and analytics platform that scrapes job postings from Internshala, runs them through a resilient ETL pipeline into a normalized PostgreSQL warehouse, classifies each posting by role category using a TF-IDF classifier, and serves the results through a FastAPI backend and React dashboard — with AI-generated market summaries powered by Gemini.
 
-**Live App:** [intern-iq.vercel.app](https://intern-iq.vercel.app) &nbsp;•&nbsp; **API Docs:** [interniq-api-5tmj.onrender.com/docs](https://interniq-api-5tmj.onrender.com/docs)
+**Live App:** [intern-iq.vercel.app](https://intern-iq-five.vercel.app/) &nbsp;•&nbsp; **API Docs:** [interniq-api-5tmj.onrender.com/docs](https://interniq-api-5tmj.onrender.com/docs)
 
 > Note: the backend runs on Render's free tier, which sleeps after periods of inactivity. The first request after idle time may take 30–50 seconds to respond.
 

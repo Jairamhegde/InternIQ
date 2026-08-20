@@ -29,7 +29,8 @@ def manage_operation(job_data):
                     i['min_salary'],
                     i['max_salary'],
                     check[0],
-                    float(check[1])
+                    float(check[1]),
+                    i['job_link']
                 ))
 
         
@@ -40,7 +41,7 @@ def manage_operation(job_data):
         # 1. Insert jobs using execute_values
         query1 = '''
             INSERT INTO job_data
-            (title, location, company, scrape_time, posted_date, salary_min, salary_max,primary_field, field_confidence)
+            (title, location, company, scrape_time, posted_date, salary_min, salary_max,primary_field, field_confidence,job_link)
             VALUES %s
             ON CONFLICT DO NOTHING
             RETURNING job_id, title, location, company;

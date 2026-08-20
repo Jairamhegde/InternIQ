@@ -24,7 +24,8 @@ def insertRawData(job_data):
                 normalize(job['location']),
                 job['scrape_time'],
                 job['posted_date'],
-                normalize(job['company'])
+                normalize(job['company']),
+                job['job_link']
             )
             for job in job_data
             if job.get('tech_stack') and job.get('company') and job.get('job_title')
@@ -36,7 +37,7 @@ def insertRawData(job_data):
         # Insert Jobs — skip duplicates, return only newly inserted rows
         query1 = '''
             INSERT INTO job_data
-            (title, salary, location, scrape_time, posted_date, company)
+            (title, salary, location, scrape_time, posted_date, company,job_link)
             VALUES %s
             ON CONFLICT(title, location, company, posted_date) DO NOTHING
             RETURNING id, title, salary, location, company

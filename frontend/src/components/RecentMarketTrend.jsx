@@ -28,7 +28,8 @@ function RecentMarketTrend() {
     const data = [
         {
             label: "TOTAL OPPORTUNITIES",
-            value: statsdata?.postings || "Loading.."
+            value: statsdata?.postings || "Loading..",
+            increment: statsdata?.increment
         },
         {
             label: "MOST DEMANDING SKILL",
@@ -39,9 +40,14 @@ function RecentMarketTrend() {
             value: statsdata?.role?.[0] || "Loading..."
         },
         {
+            label: "TOP ROLE AVG SALARY",
+            value: statsdata?.average_sal ? `₹${Number(statsdata.average_sal).toLocaleString("en-IN")}` : "Loading..."
+        },
+        {
             label: "TOP LOCATION",
             value: statsdata?.toplocation?.[0] || "Loading..."
         },
+
     ]
     return (
         <div className="recent-market-trend">
@@ -56,14 +62,33 @@ function RecentMarketTrend() {
                             {data.map((stat, index) => (
                                 <div className="stat-card" key={index}>
                                     <span className="stat-label">{startCase(stat.label)}</span>
-                                    <div className="stat-value-row">
+                                    <div className="stat-value-row" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                                         <h3 className="stat-value">{stat.value}</h3>
+
+                                        {stat.increment !== undefined && (
+                                            <span style={{
+                                                fontSize: '0.85rem',
+                                                fontWeight: '600',
+                                                color: stat.increment > 0 ? '#16a34a' : (stat.increment < 0 ? '#dc2626' : '#64748b'),
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                gap: '2px',
+                                                backgroundColor: stat.increment > 0 ? '#dcfce7' : (stat.increment < 0 ? '#fee2e2' : '#f1f5f9'),
+                                                padding: '2px 8px',
+                                                borderRadius: '12px'
+                                            }}>
+                                                {stat.increment > 0 ? '↑' : (stat.increment < 0 ? '↓' : '−')} {Math.abs(stat.increment)}%
+                                            </span>
+                                        )}
                                     </div>
                                 </div>
                             ))}
                         </div>
                         <div className="chart-container">
                             <TrendsChart chartData={statsdata?.toproles} />
+                        </div>
+                        <div className="job-posting-table">
+                            <RecentPostingList />
                         </div>
 
                     </div>
@@ -120,7 +145,62 @@ function TrendsChart({ chartData }) {
     )
 }
 
+function RecentPostingList() {
+    const [jolListing, setListing] = useState([])
+    useEffect(() => {
+        fetch(`${API_URL}/api/job-posting-list`)
+            .then((response) => response.json())
+            .then((result) => setListing(result))
+            .catch((error) => console.log(error))
+    }, [])
+    return (
+        <div className="top-roles-card">
 
+            <>
+                <div className="top-roles-header">
+                    <h3>Recent Job Postings</h3>
+                </div>
+
+                <div className="table-responsive">
+                    <table className="top-roles-table">
+                        <thead>
+                            <tr>
+                                <th>Role Profile</th>
+                                <th>Company</th>
+                                <th>Posted Date</th>
+                                <th className="align-right">Link</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {jolListing.map((item, index) => (
+                                <tr key={index}>
+                                    <td className="role-name">{startCase(item.title)}</td>
+                                    <td className="company-name">{startCase(item.company)}</td>
+                                    <td className="company-name">{item.posted_date}</td>
+                                    <td className="volume-val align-right">
+                                        {item.job_link ? (
+                                            <button onClick={() => window.open(item.job_link, "_blank")} className="llink-button">Check</button>
+
+                                        ) : (
+                                            <span style={{ fontSize: "0.8rem", color: "#dc2626", display: "block" }}>
+                                                Link unavailable
+                                            </span>
+                                        )}
+
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            </>
+
+        </div>
+    );
+
+
+
+}
 
 export default RecentMarketTrend;
 

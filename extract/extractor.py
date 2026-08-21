@@ -120,6 +120,14 @@ def scrape_data(soup):
                 job_tag = job.find('a', id='job_title')
                 jobb = job_tag.text if job_tag else None
 
+                raw_href = job_tag.get('href') if job_tag else None
+                if raw_href and raw_href.startswith('http'):
+                    job_link = raw_href
+                elif raw_href:
+                    job_link = f"https://internshala.com{raw_href}"
+                else:
+                    job_link = None
+
                 company_tag = job.find('p', class_="company-name")
                 comp = company_tag.text if company_tag else None
 
@@ -144,7 +152,8 @@ def scrape_data(soup):
                         "tech_stack": techstack,
                         "location": location,
                         "scrape_time": scrape_time,
-                        "posted_date": jobPostedDate
+                        "posted_date": jobPostedDate,
+                        "job_link":job_link
                     }
                 if not jd['job_title'] and  jd['company'] and jd['salary']:
                     continue

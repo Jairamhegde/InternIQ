@@ -79,8 +79,8 @@ def loadData():
         conn = engine.raw_connection()
         cur = conn.cursor()
 
-        # Fetch all jobs
-        cur.execute("SELECT id, title, salary, location, company, scrape_time, posted_date FROM job_data;")
+        # Fetch jobs scraped today
+        cur.execute("SELECT id, title, salary, location, company, scrape_time, posted_date,job_link FROM job_data WHERE scrape_time::date = CURRENT_DATE;")
         rows = cur.fetchall()
 
         job_dict = {}
@@ -93,7 +93,7 @@ def loadData():
             sal       = convertSalary(row[2]) if row[2] else (0, 0)
             location  = " ".join(row[3].strip().split()).lower() if row[3] else None
             company   = " ".join(row[4].strip().split()).lower() if row[4] else None
-
+            
             job_dict[job_id] = {
                 "job_title":    job_name,
                 "min_salary":   sal[0] if sal[0] > 0 else None,
@@ -102,14 +102,17 @@ def loadData():
                 "scraped_time": row[5] if row[5] else None,
                 "posted_date":  row[6] if row[6] else None,
                 "company":      company,
-                "skills":       []
+                "skills":       [],
+                "job_link" :   row[7] if  row[7] else None
             }
 
-        # Fetch all skills at once
+        # Fetch skills for jobs scraped today
         cur.execute('''
             SELECT js.job_id, s.name
             FROM job_skills js
-            JOIN skills s ON js.skill_id = s.skill_id;
+            JOIN skills s ON js.skill_id = s.skill_id
+            JOIN job_data jd ON js.job_id = jd.id
+            WHERE jd.scrape_time::date = CURRENT_DATE;
         ''')
         skill_rows = cur.fetchall()
 

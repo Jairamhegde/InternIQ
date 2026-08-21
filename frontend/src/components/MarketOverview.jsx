@@ -50,9 +50,7 @@ function MarketOverview({ data, setData, selectedField, setField }) {
                             </p>
                         </div>
 
-                        <div className='selectBoxContainer'>
-                            <SelectBox selectedField={selectedField} setField={setField} />
-                        </div>
+
                     </div>
 
 
@@ -65,6 +63,9 @@ function MarketOverview({ data, setData, selectedField, setField }) {
                                 </div>
                             </div>
                         ))}
+                        <div className='selectBoxContainer'>
+                            <SelectBox selectedField={selectedField} setField={setField} />
+                        </div>
                     </div>
 
                 </div>

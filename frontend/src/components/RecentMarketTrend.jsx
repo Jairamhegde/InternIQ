@@ -3,6 +3,7 @@ import { API_URL } from '../config.js';
 import "./RecentMarketTrend.css"
 import { result, values } from "lodash";
 import startCase from "lodash/startCase";
+import Loader from "./Loader";
 import {
     BarChart,
     Bar,
@@ -10,9 +11,15 @@ import {
     YAxis,
     CartesianGrid,
     Tooltip,
-    ResponsiveContainer
+    ResponsiveContainer,
+
+    PieChart,
+    Pie,
+    Legend,
+    Sector
+
 } from 'recharts';
-import Loader from './Loader';
+
 
 
 function RecentMarketTrend() {
@@ -84,9 +91,19 @@ function RecentMarketTrend() {
                                 </div>
                             ))}
                         </div>
-                        <div className="chart-container">
-                            <TrendsChart chartData={statsdata?.toproles} />
+                        <div className="loc-posting-chart">
+                            <div className="chart-container">
+                                <h4>Top Locations</h4>
+                                <TrendsChart chartData={statsdata?.toproles} />
+
+                            </div>
+                            <div className="chart-container">
+                                <h4>Top Locations</h4>
+                                <TopLocationChart />
+                            </div>
                         </div>
+
+
                         <div className="job-posting-table">
                             <RecentPostingList />
                         </div>
@@ -102,9 +119,7 @@ function RecentMarketTrend() {
 function TrendsChart({ chartData }) {
     return (
         <div className="barchart" >
-            <div className='comp-header'>
-                <h3>Top Roles</h3>
-            </div>
+
             <ResponsiveContainer width="100%" height={350}>
                 <BarChart
                     data={chartData}
@@ -150,7 +165,10 @@ function RecentPostingList() {
     useEffect(() => {
         fetch(`${API_URL}/api/job-posting-list`)
             .then((response) => response.json())
-            .then((result) => setListing(result))
+            .then((result) => {
+                if (Array.isArray(result)) setListing(result);
+                else setListing([]); // Fallback so .map() doesn't crash!
+            })
             .catch((error) => console.log(error))
     }, [])
     return (
@@ -179,10 +197,9 @@ function RecentPostingList() {
                                     <td className="company-name">{item.posted_date}</td>
                                     <td className="volume-val align-right">
                                         {item.job_link ? (
-                                            <button onClick={() => window.open(item.job_link, "_blank")} className="llink-button">Check</button>
-
+                                            <button onClick={() => window.open(item.job_link, "_blank")} className="link-button">Check</button>
                                         ) : (
-                                            <span style={{ fontSize: "0.8rem", color: "#dc2626", display: "block" }}>
+                                            <span style={{ fontSize: "0.8rem", color: "#424242ff", display: "block" }}>
                                                 Link unavailable
                                             </span>
                                         )}
@@ -201,6 +218,55 @@ function RecentPostingList() {
 
 
 }
+
+function TopLocationChart() {
+    const [isLoading, setIsLoading] = useState(true)
+    const [locData, setLocData] = useState([])
+
+    useEffect(() => {
+        fetch(`${API_URL}/api/get-top-locations`)
+            .then((response) => response.json())
+            .then((result) => {
+                setLocData(result)
+                setIsLoading(false)
+            })
+            .catch((error) => { console.log(error); setIsLoading(false); })
+    }, [])
+
+    return (
+
+        <div className="piechart-container">
+            {isLoading ? (<Loader />) : (
+
+                <ResponsiveContainer width='100%' height={300}>
+                    <PieChart>
+                        <Pie
+                            data={locData}
+                            cx='50%'
+                            cy='50%'
+                            innerRadius={60}
+                            outerRadius={100}
+                            paddingAngle={5}
+                            dataKey='value'
+                            nameKey='name'
+                            label={({ name, percent, x, y, textAnchor }) => (
+                                <text x={x} y={y} textAnchor={textAnchor} fill="#0f172a" fontSize="12px" fontWeight="600">
+                                    {`${startCase(name)} (${(percent * 100).toFixed(0)}%)`}
+                                </text>
+                            )}
+                        />
+                        <Tooltip />
+
+                    </PieChart>
+                </ResponsiveContainer>
+
+
+            )}
+        </div>
+    )
+}
+
+
 
 export default RecentMarketTrend;
 

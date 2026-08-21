@@ -272,7 +272,25 @@ def get_recent_trends():
 @app.get('/api/job-posting-list')
 def job_posting_list():
     df = recent_job_postings()
-    return df.to_dict(orient='records')
+    # Convert dates to a clean string format (YYYY-MM-DD) so they don't look like random epoch numbers
+    df['posted_date'] = pd.to_datetime(df['posted_date']).dt.strftime('%Y-%m-%d')
+    # Use to_json to safely serialize Pandas data and NaNs!
+    return json.loads(df.to_json(orient='records'))
+
+@app.get("/api/get-top-locations")
+def get_top_locations():
+    location = recenttopLocations()
+    top_4 = location.iloc[:4][:]
+
+    top_4 = top_4.rename(columns={"location":"name","count":"value"})
+    data = top_4.to_dict(orient='records')
+   
+    COLORS = ['#f43f5e', '#f97316', '#f59e0b', '#facc15']
+    for i,j in enumerate(data):
+        j['fill'] = COLORS[i % len(COLORS)]
+
+    return data
+
 
 
 # _________________________ Skill Gap Analyzer Endpoints ________________________
@@ -337,6 +355,8 @@ def skillgap_analyzer(field: str = Form(...), resume: UploadFile = File(...)):
         "matched": matched_with_freq,
         "missing": missing_with_freq
     }
+
+
 
 
 if __name__ == '__main__':

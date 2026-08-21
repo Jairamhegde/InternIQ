@@ -99,7 +99,14 @@
 /* -----------------------------barchart---------------------- */
 .chart-container {
     background-color: white;
-    padding: 24px;
+    padding: 12px 24px 24px 27px;
     border-radius: 14px;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+    flex: 1;
+    min-width: 0;
 }
+
+.loc-posting-chart {
+    display: flex;
+    gap: 20px;
+}

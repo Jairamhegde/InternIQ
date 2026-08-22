@@ -1,21 +1,25 @@
 
 import { useState, useEffect } from 'react'
 import { API_URL } from '../config.js';
+import { useQuery } from '@tanstack/react-query';
 import "./MarketOverview.css"
 import Loader from "./Loader"
 import Select from 'react-select';
 function MarketOverview({ data, setData, selectedField, setField }) {
+    const { data: fetchedData = {}, isLoading } = useQuery({
+        queryKey: ['marketOverview', selectedField.value],
+        queryFn: async () => {
+            const response = await fetch(`${API_URL}/api/job-tiles?field=${selectedField.value}`);
+            if (!response.ok) throw new Error("Failed to connect to jobtile endpoint");
+            return response.json();
+        }
+    });
 
-    const [isLoading, setLoading] = useState(true)
     useEffect(() => {
-        fetch(`${API_URL}/api/job-tiles?field=${selectedField.value}`)
-            .then((response) => response.json())
-            .then((result) => { setData(result), setLoading(false) })
-            .catch((error) => {
-                console.log("Failed to connect to jobtile endpoint", error), setLoading(false
-                )
-            })
-    }, [selectedField])
+        if (Object.keys(fetchedData).length > 0) {
+            setData(fetchedData);
+        }
+    }, [fetchedData, setData]);
 
     const stats = [
         {

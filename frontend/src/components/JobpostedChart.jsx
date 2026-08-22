@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { API_URL } from '../config.js';
+import { useQuery } from '@tanstack/react-query';
 import {
     AreaChart,
     Area,
@@ -14,31 +15,24 @@ import './JobpostedChart.css';
 import Loader from './Loader';
 
 function JobPosting_chart({ selectedYear, setSelectedYear, selectedField }) {
-    const [data, setData] = useState([]);
-    const [loading, setLoading] = useState(true);
-
     const years = [
         new Date().getFullYear() - 2,
         new Date().getFullYear() - 1,
         new Date().getFullYear()
     ];
 
-    useEffect(() => {
-        fetch(`${API_URL}/api/job-postings`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ year: selectedYear, field: selectedField?.value || 'all' })
-        })
-            .then((response) => response.json())
-            .then((fetchData) => {
-                setData(fetchData);
-                setLoading(false);
-            })
-            .catch((error) => {
-                console.log('Failed to connect to the endpoint', error);
-                setLoading(false);
+    const { data = [], isLoading: loading } = useQuery({
+        queryKey: ['jobPostings', selectedYear, selectedField?.value],
+        queryFn: async () => {
+            const response = await fetch(`${API_URL}/api/job-postings`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ year: selectedYear, field: selectedField?.value || 'all' })
             });
-    }, [selectedYear, selectedField]);
+            if (!response.ok) throw new Error('Failed to connect to the endpoint');
+            return response.json();
+        }
+    });
 
     return (
         <div

@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import { API_URL } from '../config.js';
 import {
     BarChart,
@@ -12,18 +11,23 @@ import {
 import "./TopRoles.css"
 import Loader from './Loader';
 import { startCase } from 'lodash';
+import { useQuery } from '@tanstack/react-query';
 
 function TopRoles({ selectedField }) {
-    const [rolesData, setRolesData] = useState([]);
-    const [isLoading, setLoading] = useState(true);
 
-    useEffect(() => {
-        setLoading(true);
-        fetch(`${API_URL}/api/top-role-table?field=${selectedField?.value || 'all'}`)
-            .then((response) => response.json())
-            .then((data) => { setRolesData(data); setLoading(false); })
-            .catch((error) => { console.log("Failed to fetch top roles", error); setLoading(false); });
-    }, [selectedField]);
+    const { data: rolesData = [], isLoading, isError } = useQuery({
+        queryKey: ['top-role-table', selectedField?.value],
+        queryFn: async () => {
+            const response = await fetch(`${API_URL}/api/top-role-table?field=${selectedField?.value || 'all'}`)
+            if (!response.ok) {
+                throw new Error("Network response not ok");
+            }
+            return response.json();
+        }
+    })
+    if (isError) {
+        console.log("failed to connect to top-role-table.")
+    }
 
     return (
         <div className="top-roles-card">
@@ -59,16 +63,15 @@ function TopRoles({ selectedField }) {
 
 
 function TopRoleChart({ selectedField }) {
-    const [rolesData, setRolesData] = useState([]);
-    const [isLoading, setLoading] = useState(true);
+    const { data: rolesData = [], isLoading } = useQuery({
+        queryKey: ['top-role-table', selectedField?.value],
+        queryFn: async () => {
+            const response = await fetch(`${API_URL}/api/top-role-table?field=${selectedField?.value || 'all'}`)
+            if (!response.ok) throw new Error("Network response not ok");
+            return response.json();
+        }
+    });
 
-    useEffect(() => {
-        setLoading(true);
-        fetch(`${API_URL}/api/top-role-table?field=${selectedField?.value || 'all'}`)
-            .then((response) => response.json())
-            .then((data) => { setRolesData(data); setLoading(false); })
-            .catch((error) => { console.log("Failed to fetch top roles", error); setLoading(false); });
-    }, [selectedField]);
     return (
         <div className='toprole-barchart'>
             {isLoading ? (<Loader />) : (

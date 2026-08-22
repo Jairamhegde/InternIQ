@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
 import { API_URL } from '../config.js';
 import "./RecentMarketTrend.css"
 import { result, values } from "lodash";
 import startCase from "lodash/startCase";
 import Loader from "./Loader";
+import { useQuery } from '@tanstack/react-query';
 import {
     BarChart,
     Bar,
@@ -23,15 +23,15 @@ import {
 
 
 function RecentMarketTrend() {
+    const { data: statsdata = [], isLoading } = useQuery({
+        queryKey: ['recentMarketTrend'],
+        queryFn: async () => {
+            const response = await fetch(`${API_URL}/api/recent-market-trend`);
+            if (!response.ok) throw new Error("failed to connect to recent-market-trend");
+            return response.json();
+        }
+    });
 
-    const [statsdata, setStatsData] = useState([])
-    const [isLoading, setLoading] = useState(true)
-    useEffect(() => {
-        fetch(`${API_URL}/api/recent-market-trend`)
-            .then((response) => response.json())
-            .then((result) => { setStatsData(result); setLoading(false); })
-            .catch((err) => { console.log("failed to connect to recent-market-trend"); setLoading(false); })
-    }, [])
     const data = [
         {
             label: "TOTAL OPPORTUNITIES",
@@ -93,7 +93,7 @@ function RecentMarketTrend() {
                         </div>
                         <div className="loc-posting-chart">
                             <div className="chart-container">
-                                <h4>Top Locations</h4>
+                                <h4>Job Postings</h4>
                                 <TrendsChart chartData={statsdata?.toproles} />
 
                             </div>
@@ -161,16 +161,16 @@ function TrendsChart({ chartData }) {
 }
 
 function RecentPostingList() {
-    const [jolListing, setListing] = useState([])
-    useEffect(() => {
-        fetch(`${API_URL}/api/job-posting-list`)
-            .then((response) => response.json())
-            .then((result) => {
-                if (Array.isArray(result)) setListing(result);
-                else setListing([]); // Fallback so .map() doesn't crash!
-            })
-            .catch((error) => console.log(error))
-    }, [])
+    const { data: jolListing = [] } = useQuery({
+        queryKey: ['recentPostingList'],
+        queryFn: async () => {
+            const response = await fetch(`${API_URL}/api/job-posting-list`);
+            if (!response.ok) throw new Error("failed to connect to job-posting-list");
+            const result = await response.json();
+            return Array.isArray(result) ? result : [];
+        }
+    });
+
     return (
         <div className="top-roles-card">
 
@@ -220,18 +220,14 @@ function RecentPostingList() {
 }
 
 function TopLocationChart() {
-    const [isLoading, setIsLoading] = useState(true)
-    const [locData, setLocData] = useState([])
-
-    useEffect(() => {
-        fetch(`${API_URL}/api/get-top-locations`)
-            .then((response) => response.json())
-            .then((result) => {
-                setLocData(result)
-                setIsLoading(false)
-            })
-            .catch((error) => { console.log(error); setIsLoading(false); })
-    }, [])
+    const { data: locData = [], isLoading } = useQuery({
+        queryKey: ['topLocations'],
+        queryFn: async () => {
+            const response = await fetch(`${API_URL}/api/get-top-locations`);
+            if (!response.ok) throw new Error("failed to connect to get-top-locations");
+            return response.json();
+        }
+    });
 
     return (
 

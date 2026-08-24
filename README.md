@@ -6,7 +6,7 @@ InternIQ is a full-stack data engineering and analytics platform that scrapes jo
 
 **Live App:** [intern-iq.vercel.app](https://intern-iq-five.vercel.app/) &nbsp;•&nbsp; **API Docs:** [interniq-api-5tmj.onrender.com/docs](https://interniq-api-5tmj.onrender.com/docs)
 
-> Note: the backend runs on Render's free tier, which sleeps after periods of inactivity. The first request after idle time may take 30–50 seconds to respond.
+> Note: the backend runs on Render's free tier, which sleeps after periods of inactivity. The first request after idle time may take 30–50 seconds to respond. **Revoke here:** [interniq-api-5tmj.onrender.com/health](https://interniq-api-5tmj.onrender.com/docs/api/health)
 
 ---
 

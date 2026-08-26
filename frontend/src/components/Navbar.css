@@ -1,10 +1,8 @@
-/* ----------------NAVBAR------------------- */
-
 nav {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  padding: 14px 40px;
+  padding: 10px 40px;
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(8px);
   border-bottom: 1px solid #e2e8f0;
@@ -12,33 +10,6 @@ nav {
   top: 0;
   z-index: 100;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04);
-}
-
-nav h2 {
-  margin: 0;
-  color: #0f172a;
-  font-size: 20px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-}
-
-nav div {
-  display: flex;
-  gap: 28px;
-}
-
-nav a {
-  text-decoration: none;
-  color: #64748b;
-  font-size: 14px;
-  font-weight: 500;
-  transition: all 0.2s ease;
-  position: relative;
-  padding: 4px 0;
-}
-
-nav a:hover {
-  color: #2563eb;
 }
 
 .logo {
@@ -50,4 +21,43 @@ nav a:hover {
 
 .logo span {
   color: #2563eb;
+}
+
+.profile-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.profile-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid #e2e8f0;
+  background-color: #f8fafc;
+  color: #475569;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.profile-btn:hover {
+  background-color: #f1f5f9;
+  color: #2563eb;
+  border-color: #cbd5e1;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.profile-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.profile-container h4 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #334155;
 }

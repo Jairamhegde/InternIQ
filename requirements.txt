@@ -19,3 +19,4 @@ scikit-learn
 pymupdf
 python-docx
 python-multipart
+async_lru

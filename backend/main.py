@@ -22,6 +22,15 @@ from queries.recent_market_trends import (
     recenttopLocations, previous_total_opportunities, recent_job_postings
 )
 
+from backend.models import (
+    OverviewInsightsModel, RolesPostingsModel, CommonSkillModal, 
+    ComparitiveInsightsModal, JobpostingModel
+)
+from backend.crud import (
+     extract_pdf, 
+    extract_docx, analyze_gap,get_ai_response
+)
+
 
 load_dotenv()
 app = FastAPI()
@@ -36,127 +45,9 @@ app.add_middleware(
 
 genai.configure(api_key=os.getenv("GEMINI_API"))
 
-
-# -------------BASE MODELS------------------------
-
-class Basemodel(BaseModel):
-    pass
-
-
-class OverviewInsightsModel(Basemodel):
-    year: int = Field(default_factory=lambda: datetime.now().year)
-    tile_data: Dict[str, Any]
-    field: str = 'all'
-
-
-class RolesPostingsModel(Basemodel):
-    roles: List[str]
-
-
-class CommonSkillModal(Basemodel):
-    roles: List[str]
-
-
-class ComparitiveInsightsModal(Basemodel):
-    role_frequency: List[Any]
-    common_skill: List[Any]
-
-
-class JobpostingModel(BaseModel):
-    year: int
-    field: str
-
-
-# ------------- HELPER FUNCTIONS ------------------------
-
-def market_overview_insights(job_posting_data, tile_data):
-    prompt = f"""
-        You are a job market analyst. You are given monthly job posting data for a specific year.
-        Data (JSON format - month name and number of job postings):
-        {job_posting_data}
-        and most mentioned location and skill and total number of postings :{tile_data}
-
-        Analyze this data and return a SINGLE JSON object with exactly 3 keys:
-        - "brief": 5-7 words. The single most important takeaway (e.g. peak month or trend).
-        - "detail": 2 sentences, max 40 words. Cover: peak month with count, lowest month with count, and one trend observation.
-        - "overview" : 3-4 line sentence, cover most mentioned location, skill and total postings recorded till no. explai that in brief.
-        Return ONLY a raw JSON object (no markdown, no extra text):
-        {{"brief": "...", "detail": "...", "overview": "..."}}
-        """
-    try:
-        model = genai.GenerativeModel('gemini-flash-lite-latest')
-        model_response = model.generate_content(prompt)
-        raw = model_response.text.strip()
-
-        if not raw:
-            return []
-
-        # Strip markdown code blocks if model added them despite instructions
-        if raw.startswith("```"):
-            raw = raw.split("```")[1]
-            if raw.startswith("json"):
-                raw = raw[4:]
-            raw = raw.strip()
-
-        clean_response = json.loads(raw)
-        return clean_response
-    except Exception as e:
-        return []
-
-
-def comparitive_insights(role_freq, common_skills):
-    prompt = f"""
-        # Persona
-        You are an elite Labor Market Data Scientist and Career Intelligence Strategist. You specialize in analyzing job market trends, skills gaps, and hiring demands. Your insights are data-driven, actionable, and tailored to help tech professionals and executives make strategic career decisions.
-
-        # Objective
-        Analyze the comparative hiring demand and skill requirements between the following job roles to generate a high-value, concise executive summary.
-
-        # Input Data
-        1. Role Hiring Volume (Total Job Postings):
-        {json.dumps(role_freq, indent=2)}
-
-        2. Skill Matrix & Percentage Distribution (How often skills appear for these roles):
-        {json.dumps(common_skills, indent=2)}
-
-        # Output Requirements
-        Analyze the data and return a SINGLE JSON object with exactly 3 keys:
-        - "role_insights": 1-2 concise sentences analyzing the hiring demand. Identify the dominant role in terms of total postings and highlight the volume gap or trend.
-        - "skill_insights": 1-2 concise sentences analyzing the skill matrix. Identify the foundational skills shared across the roles, and pinpoint the specialized skills that differentiate them.
-        - "takeaway": One strategic, forward-looking takeaway. Offer actionable advice for a candidate trying to pivot between these roles or maximize their marketability.
-
-        # Tone and Style
-        - Professional, analytical, and authoritative.
-        - Avoid fluff; be direct and data-centric.
-        - Do not use first-person pronouns ("I", "we").
-
-        Return ONLY a valid, raw JSON object (no markdown, no backticks, no extra text):
-        {{"role_insights": "...", "skill_insights": "...", "takeaway": "..."}}
-    """
-    try:
-        model = genai.GenerativeModel('gemini-flash-lite-latest')
-        model_response = model.generate_content(prompt)
-        raw = model_response.text.strip()
-        
-        if not raw:  
-            return {}
-
-        # Strip markdown code blocks if model added them despite instructions
-        if raw.startswith("```"):
-            raw = raw.split("```")[1]
-            if raw.startswith("json"):
-                raw = raw[4:]
-            raw = raw.strip()
-
-        clean_response = json.loads(raw)
-        return clean_response
-    except Exception as e:
-        return {}
-
-
 # _________________________ API ENDPOINTS ______________________
 
-@app.get("/")
+@app.get("/api/health")
 def health_check():
     return {"status": "ok", "message": "API is running"}
 
@@ -169,10 +60,11 @@ def get_job_postings(request: JobpostingModel):
 
 
 @app.post('/api/job-posting-card-insights')
-def get_job_posting_insights(request: OverviewInsightsModel):
+async def get_job_posting_insights(request: OverviewInsightsModel):
     actual_field = None if request.field.lower() == 'all' else request.field
     data = job_postings(request.year, actual_field)
-    res = market_overview_insights(data, request.tile_data)
+    data_dict = data.to_dict(orient='records')
+    res = await get_ai_response(data_dict, request.tile_data, 'overview')
     return res
 
 
@@ -215,10 +107,10 @@ def get_common_skill(request: CommonSkillModal):
 
 
 @app.post('/api/get-comparitive-insights')
-def get_comparitive_insights(request: ComparitiveInsightsModal):
+async def get_comparitive_insights(request: ComparitiveInsightsModal):
     roles_frequency = request.role_frequency
     common_skills = request.common_skill
-    insights = comparitive_insights(roles_frequency, common_skills)
+    insights = await get_ai_response(roles_frequency, common_skills, 'comparision')
     return insights
 
 
@@ -295,35 +187,7 @@ def get_top_locations():
 
 # _________________________ Skill Gap Analyzer Endpoints ________________________
 
-def extract_pdf(file):
-    data = fitz.open(stream=file.read(), filetype='pdf')
-    text = ""
-    for page in data:
-        text += page.get_text()
-    return text
-
-
-def extract_docx(file):
-    doc = Document(file)
-    text = ""
-    for paragraph in doc.paragraphs:
-        text += paragraph.text + "\n"
-    return text
-
-
 tf_idf = build_tfidf_scores()
-
-
-def analyze_gap(text, required_set):
-    matched_skill = set()
-    missing_skill = set()
-    for skill in required_set:
-        pattern = r"\b" + re.escape(skill) + r"\b"
-        if re.search(pattern, text, re.IGNORECASE):
-            matched_skill.add(skill)
-        else:
-            missing_skill.add(skill)
-    return matched_skill, missing_skill
 
 
 @app.post("/api/analyze-gap")

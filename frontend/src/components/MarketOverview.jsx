@@ -1,21 +1,25 @@
 
 import { useState, useEffect } from 'react'
 import { API_URL } from '../config.js';
+import { useQuery } from '@tanstack/react-query';
 import "./MarketOverview.css"
 import Loader from "./Loader"
 import Select from 'react-select';
 function MarketOverview({ data, setData, selectedField, setField }) {
+    const { data: fetchedData = {}, isFetching } = useQuery({
+        queryKey: ['marketOverview', selectedField.value],
+        queryFn: async () => {
+            const response = await fetch(`${API_URL}/api/job-tiles?field=${selectedField.value}`);
+            if (!response.ok) throw new Error("Failed to connect to jobtile endpoint");
+            return response.json();
+        }
+    });
 
-    const [isLoading, setLoading] = useState(true)
     useEffect(() => {
-        fetch(`${API_URL}/api/job-tiles?field=${selectedField.value}`)
-            .then((response) => response.json())
-            .then((result) => { setData(result), setLoading(false) })
-            .catch((error) => {
-                console.log("Failed to connect to jobtile endpoint", error), setLoading(false
-                )
-            })
-    }, [selectedField])
+        if (Object.keys(fetchedData).length > 0) {
+            setData(fetchedData);
+        }
+    }, [fetchedData, setData]);
 
     const stats = [
         {
@@ -37,44 +41,36 @@ function MarketOverview({ data, setData, selectedField, setField }) {
     ];
 
     return (
-        <>
-            {isLoading ? (<Loader />) : (
-                <div className="market-overview">
-                    <div className='overview-sec1'>
-                        <div className="market-overview-text">
-                            <h2 className="market-title">State of the Market</h2>
-                            <p className="market-description">
-                                An analytical overview of the current hiring landscape,
-                                tracking key volume indicators and compensation trends
-                                across major domains.
-                            </p>
-                        </div>
+        <div className="market-overview">
 
+            <div className="market-overview-text">
+                <h1 className="market-title">Internship Job Market Overview</h1>
+                <p className="market-description">
+                    An analytical overview of the current hiring landscape,
+                    tracking key volume indicators and compensation trends
+                    across major domains.
+                </p>
+            </div>
 
-                    </div>
-
-
-                    <div className="overview-cards">
-                        {stats.map((stat, index) => (
-                            <div className="stat-card" key={index}>
-                                <span className="stat-label">{stat.label}</span>
-                                <div className="stat-value-row">
-                                    <h3 className="stat-value">{stat.value}</h3>
-                                </div>
-                            </div>
-                        ))}
-                        <div className='selectBoxContainer'>
-                            <SelectBox selectedField={selectedField} setField={setField} />
+            <div className="overview-cards">
+                {stats.map((stat, index) => (
+                    <div 
+                        className="stat-card" 
+                        key={index} 
+                        style={{ opacity: isFetching ? 0.6 : 1, transition: 'opacity 0.2s ease-in-out' }}
+                    >
+                        <span className="stat-label">{stat.label}</span>
+                        <div className="stat-value-row">
+                            <h3 className="stat-value">{isFetching ? "..." : stat.value}</h3>
                         </div>
                     </div>
-
+                ))}
+                <div className='selectBoxContainer'>
+                    <SelectBox selectedField={selectedField} setField={setField} />
                 </div>
+            </div>
 
-
-            )}
-
-
-        </>
+        </div>
     );
 }
 

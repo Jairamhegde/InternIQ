@@ -1,34 +1,36 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import "./SkillgapAnalysis.css"
 import { API_URL } from '../config';
-import { method } from 'lodash';
+import { useMutation } from '@tanstack/react-query';
 
 function SkillgapAnalysis() {
+
+
     const [selectedValue, setSelectedValue] = useState("backend");
-    const [resume, setResume] = useState(null)
-    const [gapData, setgapData] = useState(null)
+    const [resume, setResume] = useState(null);
 
+    const mutation = useMutation({
+        mutationFn: async () => {
+            if (!resume) throw new Error("No resume uploaded");
 
-    const Analyze = async () => {
-        if (!resume) return;
+            const formData = new FormData();
+            formData.append("field", selectedValue);
+            formData.append("resume", resume);
 
-        const formData = new FormData();
-        formData.append("field", selectedValue)
-        formData.append("resume", resume)
+            const response = await fetch(`${API_URL}/api/analyze-gap`, {
+                method: 'POST',
+                body: formData,
+            });
 
-        try {
-            const response = await fetch(`${API_URL}/api/analyze-gap`,
-                {
-                    method: 'POST',
-                    body: formData,
-                }
-            );
-            const result = await response.json()
-            setgapData(result)
-        } catch (error) {
-            console.log("Failed to connect to gap-analyzer")
+            if (!response.ok) {
+                throw new Error("Failed to connect to gap-analyzer");
+            }
+
+            return response.json();
         }
-    }
+    });
+
+    const gapData = mutation.data;
 
     // Calculate progress score safely
     const progressScore = gapData && gapData.matched ?
@@ -58,7 +60,13 @@ function SkillgapAnalysis() {
             <div className='select-upload'>
                 <SelectBox selectedValue={selectedValue} setSelectedValue={setSelectedValue} />
                 <DocumentUpload resume={resume} setResume={setResume} />
-                <button className='analyze-button' onClick={Analyze} disabled={!resume}>Analyze</button>
+                <button
+                    className='analyze-button'
+                    onClick={() => mutation.mutate()}
+                    disabled={!resume || mutation.isPending}
+                >
+                    {mutation.isPending ? "Analyzing..." : "Analyze"}
+                </button>
 
             </div>
             {gapData && (

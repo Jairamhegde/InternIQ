@@ -23,6 +23,7 @@ import {
 } from 'recharts';
 import { result } from 'lodash';
 import Loader from './Loader';
+import { useQuery } from '@tanstack/react-query';
 
 
 function ComparitiveAnalysis() {
@@ -44,22 +45,18 @@ function ComparitiveAnalysis() {
 
 
 function SelectBox({ selectedJobs, setSelectedJobs }) {
-    const [topRoles, setTopRoles] = useState([])
-    const [isLoading, setLoading] = useState(true)
-
-    useEffect(() => {
-        fetch(`${API_URL}/api/top-role-table`)
-            .then((response) => response.json())
-            .then((result) => {
-                const options = result.map((item) => ({
-                    value: item.role,
-                    label: item.role,
-                }));
-                setTopRoles(options);
-                setLoading(false);
-            })
-            .catch((error) => { console.log("Failed to connect to top-role endpoint"); setLoading(false); })
-    }, [])
+    const { data: topRoles = [], isLoading } = useQuery({
+        queryKey: ['topRolesSelect'],
+        queryFn: async () => {
+            const response = await fetch(`${API_URL}/api/top-role-table`);
+            if (!response.ok) throw new Error("Failed to connect to top-role endpoint");
+            const result = await response.json();
+            return result.map((item) => ({
+                value: item.role,
+                label: item.role,
+            }));
+        }
+    });
 
     const handleChange = (selected) => {
         if (!selected || selected.length <= 3) {
@@ -103,83 +100,55 @@ function SelectBox({ selectedJobs, setSelectedJobs }) {
     );
 }
 function ComaparitiveCharts({ selectedJobs }) {
-    const [chartData, setChartData] = useState([])
-    const [commonSkills, setCommonSkills] = useState([])
+    const roleNames = selectedJobs?.map(job => job.value || job) || [];
+    const hasEnoughJobs = roleNames.length >= 2;
 
-    const [compInsights, setInsights] = useState([])
-
-
-
-    useEffect(() => {
-        if (!selectedJobs || selectedJobs.length < 2) {
-            setCommonSkills([])
-            return;
-        }
-
-        const roleNames = selectedJobs.map(job => job.value || job)
-
-        fetch(`${API_URL}/api/common-skill`,
-            {
+    const { data: commonSkills = [] } = useQuery({
+        queryKey: ['commonSkills', roleNames],
+        queryFn: async () => {
+            const response = await fetch(`${API_URL}/api/common-skill`, {
                 method: "POST",
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ roles: roleNames })
-            }
-        )
-            .then((response) => response.json())
-            .then((result) => setCommonSkills(result))
-            .catch((err) => console.log("failed to connect to common skill endpoint"))
-    }, [selectedJobs])
+            });
+            if (!response.ok) throw new Error("failed to connect to common skill endpoint");
+            return response.json();
+        },
+        enabled: hasEnoughJobs
+    });
 
+    const { data: chartData = [] } = useQuery({
+        queryKey: ['chartData', roleNames],
+        queryFn: async () => {
+            const response = await fetch(`${API_URL}/api/get-role-posting`, {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ roles: roleNames })
+            });
+            if (!response.ok) throw new Error("Failed to connect to role posting endpoint");
+            return response.json();
+        },
+        enabled: hasEnoughJobs
+    });
 
-    useEffect(() => {
-        if (!selectedJobs || selectedJobs.length < 2) {
-            setChartData([])
-            return;
-        }
+    const hasDataForInsights = chartData.length > 0 && commonSkills.length > 0;
 
-        const roleNames = selectedJobs.map(job => job.value || job)
-
-        fetch(`${API_URL}/api/get-role-posting`,
-            {
+    const { data: compInsights = {} } = useQuery({
+        queryKey: ['compInsights', chartData, commonSkills],
+        queryFn: async () => {
+            const response = await fetch(`${API_URL}/api/get-comparitive-insights`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ roles: roleNames }),
-            }
-        )
-            .then((response) => response.json())
-            .then((result) => setChartData(result))
-            .catch((error) => console.log("Failed to connect to role posting endpoint"))
-    }, [selectedJobs])
-
-    useEffect(() => {
-        if (!chartData || chartData.length == 0
-            || !commonSkills || commonSkills.length == 0
-        ) {
-            return;
-        }
-        fetch(`${API_URL}/api/get-comparitive-insights`,
-            {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'Application/json',
-                },
-                body: JSON.stringify(
-                    {
-                        role_frequency: chartData,
-                        common_skill: commonSkills
-                    })
-            }
-        )
-            .then((response) => response.json())
-            .then((result) => setInsights(result))
-            .then(() => console.log("Result fetch succesfully"))
-            .catch((err) => console.log("Failed to connec to get-comparitive-insights", err))
-
-    }, [chartData])
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    role_frequency: chartData,
+                    common_skill: commonSkills
+                })
+            });
+            if (!response.ok) throw new Error("Failed to connect to get-comparitive-insights");
+            return response.json();
+        },
+        enabled: hasDataForInsights
+    });
 
     return (
         <>

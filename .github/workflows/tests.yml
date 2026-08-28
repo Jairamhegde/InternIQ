@@ -26,4 +26,12 @@ jobs:
           pip install pytest
 
       - name: Run test with pytest
+        env:
+          PYTHONPATH: .
+          DB_HOST: ${{ secrets.HOST_NAME }}
+          DB_PORT: ${{ secrets.PORT }}
+          DB_NAME: ${{ secrets.DATABASE }}
+          DB_USER: ${{ secrets.USER }}
+          DB_PASSWORD: ${{ secrets.PASSWORD }}
+          SSLMODE: ${{ secrets.SSLMODE }}
         run: python -m pytest testing/

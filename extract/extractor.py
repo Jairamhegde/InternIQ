@@ -20,12 +20,20 @@ def dateFromtext(i):
     value = int(match.group(1))
     measure = match.group(2)
 
+    if measure == "hour" or measure == "hours":
+        date = (datetime.now() - timedelta(hours=value)).strftime("%Y-%m-%d")
+        return date
+
     if measure == "day" or measure == "days":
         date = (datetime.now() - timedelta(days=value)).strftime("%Y-%m-%d")
         return date
 
     if measure == "week" or measure == "weeks":
         date = (datetime.now() - timedelta(weeks=value)).strftime("%Y-%m-%d")
+        return date
+        
+    if measure == "month" or measure == "months":
+        date = (datetime.now() - timedelta(days=value*30)).strftime("%Y-%m-%d")
         return date
 
     return None

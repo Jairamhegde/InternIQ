@@ -17,7 +17,7 @@ function App() {
 
   return (
     <div>
-      <Navbar />
+
       <div className='app-body'>
         <div className='sidebar-div'>
           <Sidebar />

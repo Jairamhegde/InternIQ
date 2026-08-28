@@ -87,7 +87,7 @@ function JobPosting_chart({ selectedYear, setSelectedYear, selectedField }) {
                                         cursor: 'pointer',
                                         background:
                                             selectedYear === year
-                                                ? '#2563eb'
+                                                ? '#2574ebff'
                                                 : 'white',
                                         color:
                                             selectedYear === year
@@ -132,12 +132,12 @@ function JobPosting_chart({ selectedYear, setSelectedYear, selectedField }) {
                                     >
                                         <stop
                                             offset="5%"
-                                            stopColor="#2563eb"
+                                            stopColor="#0bec65ff"
                                             stopOpacity={0.4}
                                         />
                                         <stop
                                             offset="95%"
-                                            stopColor="#2563eb"
+                                            stopColor="#25eb74ff"
                                             stopOpacity={0.0}
                                         />
                                     </linearGradient>
@@ -186,7 +186,7 @@ function JobPosting_chart({ selectedYear, setSelectedYear, selectedField }) {
                                 <Area
                                     type="monotone"
                                     dataKey="jobs"
-                                    stroke="#1d4ed8"
+                                    stroke="#17d181ff"
                                     strokeWidth={2}
                                     fillOpacity={1}
                                     fill="url(#colorJobs)"

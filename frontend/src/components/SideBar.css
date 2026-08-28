@@ -1,46 +1,94 @@
 .sidebar {
     position: fixed;
-    top: 80px;
-    /* distance from top (below navbar) */
-    left: 16px;
-    /* distance from left edge */
+    top: 0;
+    left: 0;
     width: 230px;
-    height: calc(100vh - 96px);
-    /* full height minus top gap + bottom gap */
+    height: 100vh;
     display: flex;
+    gap: 10px;
     flex-direction: column;
     padding: 24px 16px;
-    background: #ffffff;
-    border-radius: 16px;
-    /* box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.11); */
+    background: #171923;
     z-index: 50;
     box-sizing: border-box;
     overflow-y: auto;
-    border: #e3e3e3 solid 1px;
+    border-right: none;
+}
 
+.interniq-logo {
+    color: #ffffff;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0 0 12px 0;
+}
+
+.interniq-logo span {
+    color: #45a8ff;
 }
 
 .nav-links {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 16px;
 }
 
 .nav-links a {
     text-decoration: none;
-    color: #212121;
+    background-color: transparent;
+    color: #8b949e;
     font-size: 14px;
     font-weight: 500;
     padding: 10px 14px;
     border-radius: 10px;
     transition: all 0.2s ease;
     border-radius: 20px;
-
 }
 
 .nav-links a:hover {
-    color: #fdfafa;
-    background: #313131;
+    color: #ffffff;
+    background: #232533;
+}
 
-    /* transition: ease-in-out 0.4s; */
+/* Added to match screenshot active state temporarily */
+.nav-links a:first-child {
+    background-color: #232533;
+    color: #ffffff;
+}
+
+.pipeline-status {
+    margin-top: auto;
+    padding: 16px 0px;
+}
+
+.pipeline-title {
+    color: #8b949e;
+    font-size: 13px;
+    font-weight: 500;
+    margin: 0 0 0 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.pipeline-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+}
+
+.status-live {
+    color: #7ee787;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.status-dot {
+    font-size: 10px;
+}
+
+.status-time {
+    color: #8b949e;
 }

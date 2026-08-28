@@ -3,17 +3,30 @@ import logging
 from dbconnection.dbconnect import connect_database
 
 def convertSalary(s: str):
+    if s.lower() == "Competitive salary":
+        return None,None
     if not s:
         return 0, 0
     s = "".join(s.split()).lower()
     s = s.replace(",", "")
     currency = detect_currency(s)
+    detect = per_month_detector(s)
     minSal, maxSal = stripedSal(s)
     minSal = currencymap(minSal, currency)
     maxSal = currencymap(maxSal, currency)
+    if detect:
+        minSal *= 12
+        maxSal *= 12
     return minSal, maxSal
 
+def per_month_detector(s:str):
+    find_month = re.search(r'month', s)
+    if find_month:
+        return True
+    return False
+
 def stripedSal(s: str):
+    
     f = detect_currency(s)
     if f == "0":
         return 0, 0
@@ -26,6 +39,7 @@ def stripedSal(s: str):
         s = s.replace("inr", "")
     if f == "usd":
         s = s.replace("$", "")
+
     if f == "unknown":
         minsal = maxsal = 0
         s = re.findall(r'\d+', s)
@@ -62,6 +76,7 @@ def detect_currency(s):
 
 def currencymap(number, currencyType):
     d = {
+        
         "inr": 1,
         "usd": 90,
         "euro": 98,

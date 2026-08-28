@@ -5,7 +5,9 @@ from queries.analysis import (topLocations, topSkills, roles,
                               OPPORTUNITIES, uniqueSkillCount)
 import numpy as np
 import pandas as pd
-
+from extract.extractor import dateFromtext 
+from datetime import datetime
+from transform.transformData import convertSalary,stripedSal,detect_currency,currencymap
 
 def test_top_skills():
     df = topSkills()
@@ -79,36 +81,19 @@ def test_unique_skill_count():
     assert "count" in df.columns
 
 
+
+#________________________________________________________________
+
+def test_DateFromText():
+    assert dateFromtext('today') == datetime.now().strftime("%Y-%m-%d")
+    assert dateFromtext('few hours ago') == datetime.now().strftime("%Y-%m-%d")
+
+def test_convertSalary():
+    assert convertSalary('₹ 2,00,000 - 3,00,000') == (200000, 300000)
+    assert convertSalary('₹ 25,000 - 35,000 /month') == (300000, 420000)
+
+
 if __name__ == "__main__":
-    test_top_skills()
-    print("✅ test_top_skills passed")
+    pass
 
-    test_top_locations()
-    print("✅ test_top_locations passed")
-
-    test_top_roles()
-    print("✅ test_top_roles passed")
-
-    test_noof_opportunities()
-    print("✅ test_noof_opportunities passed")
-
-    test_common_skills()
-    print("✅ test_common_skills passed")
-
-    test_topSkill_roles()
-    print("✅ test_topSkill_roles passed")
-
-    test_jobCount()
-    print("✅ test_jobCount passed")
-
-    test_role_trends()
-    print("✅ test_role_trends passed")
-
-    test_opportunities_10days()
-    print("✅ test_opportunities_10days passed")
-
-    test_unique_skill_count()
-    print("✅ test_unique_skill_count passed")
-
-    print("\n🎉 All tests passed!")
-
+    

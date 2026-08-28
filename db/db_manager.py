@@ -5,6 +5,12 @@ from psycopg2.extras import execute_values
 from dbconnection.dbconnect import connect_database
 from psycopg2.extras import execute_values
 from keyword_match.dev_trend import similarity_check
+
+def normalize(text):
+    if not text:
+        return None
+    return " ".join(text.split()).strip().lower()
+
 def manage_operation(job_data):
 
     engine = connect_database(search_path="clean_data")
@@ -21,9 +27,9 @@ def manage_operation(job_data):
 
             if i.get('skills') and i.get('company') and i.get('job_title'):
                 job_data_tuple.append((
-                    i['job_title'],
-                    i['location'],
-                    i['company'],
+                    normalize(i['job_title']),
+                    normalize(i['location']),
+                    normalize(i['company']),
                     i['scraped_time'],
                     i['posted_date'],
                     i['min_salary'],
@@ -43,7 +49,7 @@ def manage_operation(job_data):
             INSERT INTO job_data
             (title, location, company, scrape_time, posted_date, salary_min, salary_max,primary_field, field_confidence,job_link)
             VALUES %s
-            ON CONFLICT DO NOTHING
+            ON CONFLICT(title, location, company, posted_date) DO NOTHING
             RETURNING job_id, title, location, company;
         '''
         job_ids = execute_values(cur, query1, job_data_tuple, fetch=True)
@@ -56,7 +62,7 @@ def manage_operation(job_data):
         skill_set = set()
         for i in job_data:
             if i.get('skills') and i.get('company') and i.get('job_title'):
-                skill_set.update([s.lower().strip() for s in i['skills'] if s])
+                skill_set.update([normalize(s) for s in i['skills'] if s])
         
         skill_set = {s for s in skill_set if s}
         skill_tuple = [(skill,) for skill in skill_set]
@@ -97,7 +103,7 @@ def manage_operation(job_data):
                 continue
 
             for skill in j['skills']:
-                skill_id = skill_map.get(skill.lower().strip())
+                skill_id = skill_map.get(normalize(skill))
                 if skill_id is None:
                     continue
                 skill_job_map.append((job_map[job_key], skill_id))

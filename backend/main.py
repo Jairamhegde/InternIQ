@@ -15,16 +15,18 @@ from docx import Document
 
 from queries.analysis import (
     job_postings, topSkills, topLocations, current_year_postings, toproles,
-    common_skills, get_percentage_ofskills, build_tfidf_scores, find_reuiqred_skills, find_freq_skills
+    common_skills, get_percentage_ofskills, find_reuiqred_skills, find_freq_skills
+    ,top_hiring_company
 )
 from queries.recent_market_trends import (
     Top_role, top_skill, total_opportunities, average_salary, 
-    recenttopLocations, previous_total_opportunities, recent_job_postings
+    recenttopLocations, previous_total_opportunities, recent_job_postings, get_last_sync_time
+   
 )
 
 from backend.models import (
     OverviewInsightsModel, RolesPostingsModel, CommonSkillModal, 
-    ComparitiveInsightsModal, JobpostingModel
+    ComparitiveInsightsModal, JobpostingModel, TopCompanyModel
 )
 from backend.crud import (
      extract_pdf, 
@@ -55,6 +57,17 @@ genai.configure(api_key=os.getenv("GEMINI_API"))
 @app.get("/api/health")
 def health_check():
     return {"status": "ok", "message": "API is running"}
+
+@app.get("/api/last-sync")
+def last_sync():
+    return {"last_sync": get_last_sync_time()}
+
+@app.post('/api/top-companies')
+def get_top_companies(request:TopCompanyModel):
+    actual_field = None if request.field.lower() == 'all' else request.field
+    top_companies = top_hiring_company(request.year, actual_field)
+    return top_companies.to_dict(orient='records')
+
 
 
 @app.post('/api/job-postings')
@@ -162,7 +175,7 @@ def get_recent_trends():
         "increment": increment,
         "toproles": chart_data,
         "toplocation": [top_location, top_location_count],
-        "average_sal": avg_sal if avg_sal else None
+        "average_sal": avg_sal 
     }
 
 
@@ -171,7 +184,7 @@ def job_posting_list():
     df = recent_job_postings()
     # Convert dates to a clean string format (YYYY-MM-DD) so they don't look like random epoch numbers
     df['posted_date'] = pd.to_datetime(df['posted_date']).dt.strftime('%Y-%m-%d')
-    # Use to_json to safely serialize Pandas data and NaNs!
+    # Use to_json to safely serialize Pandas data and NaNs
     return json.loads(df.to_json(orient='records'))
 
 @app.get("/api/get-top-locations")
@@ -192,9 +205,6 @@ def get_top_locations():
 
 # _________________________ Skill Gap Analyzer Endpoints ________________________
 
-tf_idf = build_tfidf_scores()
-
-
 @app.post("/api/analyze-gap")
 def skillgap_analyzer(field: str = Form(...), resume: UploadFile = File(...)):
     file_byte = resume.file
@@ -211,9 +221,13 @@ def skillgap_analyzer(field: str = Form(...), resume: UploadFile = File(...)):
 
     matched, missing = analyze_gap(text, set(df_fre.keys()))
     
-    # Calculate the average score (avoid division by zero if missing is empty)
+    
     average_score = sum(df_fre[j] for j in missing) / len(missing) if missing else 0
 
+    '''
+    create dict which holds missing skills along with frequency, with label as 'e' (essential)
+    or 'r' required. if freq > avg -> label as 'e'. else 'r'
+    '''
     missing_with_freq = [{"skill": s, "freq": df_fre[s], "priority": "e" if df_fre[s] >= average_score else "r"} for s in missing]
     matched_with_freq = [{"skill": s, "freq": df_fre[s]} for s in matched]
 
@@ -224,9 +238,6 @@ def skillgap_analyzer(field: str = Form(...), resume: UploadFile = File(...)):
         "matched": matched_with_freq,
         "missing": missing_with_freq
     }
-
-
-
 
 if __name__ == '__main__':
     pass

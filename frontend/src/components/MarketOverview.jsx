@@ -5,6 +5,8 @@ import { useQuery } from '@tanstack/react-query';
 import "./MarketOverview.css"
 import Loader from "./Loader"
 import Select from 'react-select';
+
+
 function MarketOverview({ data, setData, selectedField, setField }) {
     const { data: fetchedData = {}, isFetching } = useQuery({
         queryKey: ['marketOverview', selectedField.value],
@@ -54,10 +56,10 @@ function MarketOverview({ data, setData, selectedField, setField }) {
 
             <div className="overview-cards">
                 {stats.map((stat, index) => (
-                    <div 
-                        className="stat-card" 
-                        key={index} 
-                        style={{ opacity: isFetching ? 0.6 : 1, transition: 'opacity 0.2s ease-in-out' }}
+                    <div
+                        className="stat-card"
+                        key={index}
+                        style={{ opacity: isFetching ? 0.6 : 1 }}
                     >
                         <span className="stat-label">{stat.label}</span>
                         <div className="stat-value-row">

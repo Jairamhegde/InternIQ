@@ -49,7 +49,7 @@
     padding: 10px 20px;
     font-size: 16px;
     color: #0f172a;
-    background-color: #f8fafc;
+    background-color: #ffffff;
     border: 1px solid #cbd5e1;
     /* Reverted outer border radius */
     border-radius: 12px; 
@@ -97,7 +97,7 @@
     font-family: inherit;
     font-size: 14px;
     color: #475569;
-    background-color: #f8fafc;
+    background-color: #ffffff;
     border: 1px dashed #cbd5e1;
     border-radius: 12px;
     padding: 8px;

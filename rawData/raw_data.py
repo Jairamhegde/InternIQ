@@ -3,12 +3,6 @@ from dbconnection.dbconnect import connect_database
 from psycopg2.extras import execute_values
 
 
-def normalize(text):
-    if not text:
-        return None
-    return " ".join(text.split()).strip().lower()
-
-
 def insertRawData(job_data):
     engine = connect_database(search_path="raw_data")
     
@@ -19,12 +13,12 @@ def insertRawData(job_data):
     try:
         job_data_tuple = [
             (
-                normalize(job['job_title']),
+                job['job_title'],
                 job['salary'],
-                normalize(job['location']),
+                job['location'],
                 job['scrape_time'],
                 job['posted_date'],
-                normalize(job['company']),
+                job['company'],
                 job['job_link']
             )
             for job in job_data
@@ -34,18 +28,17 @@ def insertRawData(job_data):
         if not job_data_tuple:
             return
 
-        # Insert Jobs — skip duplicates, return only newly inserted rows
+        # Insert Jobs — allow duplicates, return all inserted rows
         query1 = '''
             INSERT INTO job_data
             (title, salary, location, scrape_time, posted_date, company,job_link)
             VALUES %s
-            ON CONFLICT(title, location, company, posted_date) DO NOTHING
             RETURNING id, title, salary, location, company
             ;
         '''
         job_ids = execute_values(cur, query1, job_data_tuple, fetch=True)
 
-        # If all jobs were duplicates, nothing to do — commit and exit
+        # If no jobs were inserted, nothing to do — commit and exit
         if not job_ids:
             conn.commit()
             return
@@ -54,7 +47,7 @@ def insertRawData(job_data):
         # Collect all unique skills from the new jobs
         skill_set = set()
         for job in job_data:
-            skill_set.update([normalize(s) for s in job.get('tech_stack', []) if s])
+            skill_set.update([s for s in job.get('tech_stack', []) if s])
             
         skill_set = {s for s in skill_set if s} # Remove empty
 
@@ -88,16 +81,16 @@ def insertRawData(job_data):
         skill_job_map = []
         for j in job_data:
             job_tuple = (
-                normalize(j.get('job_title')),
+                j.get('job_title'),
                 j.get('salary'),
-                normalize(j.get('location')),
-                normalize(j.get('company'))
+                j.get('location'),
+                j.get('company')
             )
             if job_tuple not in job_map:
                 continue  # skip if this job was a duplicate (not newly inserted)
 
             for skill in j.get('tech_stack', []):
-                skill_id = skill_map.get(normalize(skill))
+                skill_id = skill_map.get(skill)
                 if skill_id is None:
                     continue
                 job_id = job_map[job_tuple]

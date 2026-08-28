@@ -2,7 +2,7 @@ import pandas as pd
 from dbconnection.dbconnect import connect_database
 
 
-def Top_role() -> pd.DataFrame:
+def Top_role():
     """Fetches the top 5 most demanded roles in the last 10 days."""
     conn = connect_database("clean_data")
     query = '''
@@ -17,7 +17,7 @@ def Top_role() -> pd.DataFrame:
     return df
 
 
-def previous_top_role() -> pd.DataFrame:
+def previous_top_role():
     """Fetches the top 5 most demanded roles in the previous 10-20 day window."""
     conn = connect_database("clean_data")
     query = '''
@@ -33,7 +33,7 @@ def previous_top_role() -> pd.DataFrame:
     return df
 
 
-def top_skill() -> pd.DataFrame:
+def top_skill():
     """Fetches the top 5 most in-demand skills in the last 10 days."""
     conn = connect_database("clean_data")
     query = '''
@@ -50,7 +50,7 @@ def top_skill() -> pd.DataFrame:
     return df
 
 
-def total_opportunities() -> pd.DataFrame:
+def total_opportunities():
     """Fetches the total number of job opportunities posted in the last 10 days."""
     conn = connect_database("clean_data")
     query = '''
@@ -62,7 +62,7 @@ def total_opportunities() -> pd.DataFrame:
     return df
 
 
-def previous_total_opportunities() -> pd.DataFrame:
+def previous_total_opportunities():
     """Fetches the total number of job opportunities posted in the previous 10-20 day window."""
     conn = connect_database("clean_data")
     query = '''
@@ -75,7 +75,7 @@ def previous_total_opportunities() -> pd.DataFrame:
     return df
 
 
-def average_salary(role: str) -> pd.DataFrame:
+def average_salary(role: str):
     """Calculates the minimum, maximum, and average salary for a specific role."""
     conn = connect_database("clean_data")
     query = '''
@@ -92,7 +92,7 @@ def average_salary(role: str) -> pd.DataFrame:
     return df
 
 
-def recenttopLocations(field: str | None = None) -> pd.DataFrame:
+def recenttopLocations(field: str | None = None):
     """Fetches the top 10 locations with the most job postings in the last 10 days."""
     conn = connect_database("clean_data")
     
@@ -117,7 +117,7 @@ def recenttopLocations(field: str | None = None) -> pd.DataFrame:
     return df
 
 
-def recent_job_postings() -> pd.DataFrame:
+def recent_job_postings():
     """Fetches the 10 most recent job postings from the last 10 days."""
     conn = connect_database('clean_data')
     query = '''
@@ -131,5 +131,14 @@ def recent_job_postings() -> pd.DataFrame:
     return df
 
 
+def get_last_sync_time() -> str:
+    """Fetches the most recent scrape time from the database."""
+    conn = connect_database('clean_data')
+    query = "SELECT MAX(scrape_time) as last_sync FROM job_data;"
+    df = pd.read_sql_query(query, conn)
+    if not df.empty and pd.notnull(df.iloc[0]['last_sync']):
+        return str(df.iloc[0]['last_sync'])
+    return "Never"
+
 if __name__ == '__main__':
-    pass
+    print(average_salary("python development"))

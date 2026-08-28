@@ -48,7 +48,14 @@ function TopRoles({ selectedField }) {
                             <tbody>
                                 {rolesData.map((item, index) => (
                                     <tr key={index}>
-                                        <td className="role-name">{item.role}</td>
+                                        <td className="role-name">
+                                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" style={{ width: '18px', height: '18px', color: '#27da48ff' }}>
+                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 18 9 11.25l4.306 4.306a11.95 11.95 0 0 1 5.814-5.518l2.74-1.22m0 0-5.94-2.281m5.94 2.28-2.28 5.941" />
+                                                </svg>
+                                                {item.role}
+                                            </div>
+                                        </td>
                                         <td className="volume-val align-right">{item.volume}</td>
                                     </tr>
                                 ))}

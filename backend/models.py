@@ -25,3 +25,8 @@ class ComparitiveInsightsModal(Basemodel):
 class JobpostingModel(BaseModel):
     year: int
     field: str
+
+class TopCompanyModel(BaseModel):
+    year: int
+    field: str
+

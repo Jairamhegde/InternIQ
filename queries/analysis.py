@@ -1,7 +1,6 @@
 
 from sqlalchemy import true
 import numpy as np
-
 import pandas as pd
 from dbconnection.dbconnect import connect_database
 from datetime import datetime
@@ -9,7 +8,7 @@ from datetime import datetime
 
 # ------------------------------FOR OVERALL MARKET TRENDS----
 
-def topSkills(field:str | None= None):
+def topSkills(field:str | None= None) -> pd.DataFrame:
     conn = connect_database("clean_data")
     query = '''
     SELECT s.name, count(*) as demand
@@ -35,7 +34,7 @@ def topSkills(field:str | None= None):
     return df
 
 
-def roles():
+def roles() -> pd.DataFrame:
     conn = connect_database("clean_data")
     query = '''
     SELECT title,count(*) as demand
@@ -47,7 +46,7 @@ def roles():
     df = pd.read_sql_query(query, conn)
     return df
 
-def toproles(field:str | None = None):
+def toproles(field:str | None = None) -> pd.DataFrame:
     conn = connect_database("clean_data")
     query = '''
     select title as role,count(*) as volume
@@ -68,8 +67,6 @@ def toproles(field:str | None = None):
     return df
 
 
-
-
 def noOfopportunities(field:str | None = None):
     conn = connect_database()
     query = '''
@@ -85,7 +82,7 @@ def noOfopportunities(field:str | None = None):
     return df['opportunities'][0]
 
 
-def topLocations(field:str | None = None):
+def topLocations(field:str | None = None) -> pd.DataFrame:
     conn = connect_database("clean_data")
     query = '''
     SELECT j.location, count(j.location) as count
@@ -104,7 +101,7 @@ def topLocations(field:str | None = None):
     return df
 
 
-def commonSkills():
+def commonSkills() -> pd.DataFrame:
     conn = connect_database("clean_data")
     query = '''
     SELECT
@@ -132,7 +129,7 @@ def commonSkills():
 
 # ---------------------Role specific analysis---------
 
-def TopSkillsOfRole(role):
+def TopSkillsOfRole(role) -> pd.DataFrame:
     conn = connect_database("clean_data")
     query = '''
     SELECT s.name, count(*) as demand
@@ -149,7 +146,7 @@ def TopSkillsOfRole(role):
     return df
 
 
-def jobCount(job):
+def jobCount(job) -> pd.DataFrame:
     conn = connect_database("clean_data")
     query = '''
     SELECT count(*) as no_of_jobs
@@ -170,11 +167,10 @@ def last_scraped_time():
     FROM job_data;
     '''
     df = pd.read_sql_query(query, conn)
-
     return df.iloc[0, 0]
 
 
-def roles_trends(field:str | None = None):
+def roles_trends(field:str | None = None) -> pd.DataFrame:
     query = '''
     WITH TopSkills AS (
         SELECT ss.name
@@ -223,7 +219,7 @@ def roles_trends(field:str | None = None):
 
     return df
 
-# --------------------------FOR LAST 7 DAYS ANALYSIS -------------
+# --------------------------FOR LAST 10 DAYS ANALYSIS -------------
 
 def OPPORTUNITIES():
     conn = connect_database("clean_data")
@@ -239,7 +235,7 @@ def OPPORTUNITIES():
 
 # --------------------Role Specific Analysis----------------
 
-def uniqueSkills(role):
+def uniqueSkills(role) -> pd.DataFrame:
     conn = connect_database("clean_data")
     query = '''
     SELECT count(distinct s.name) as skills
@@ -253,7 +249,7 @@ def uniqueSkills(role):
     return df
 
 
-def uniqueSkillCount(role):
+def uniqueSkillCount(role) -> pd.DataFrame:
     conn = connect_database("clean_data")
     query = '''
     SELECT s.name as skill, count(*) as count
@@ -272,7 +268,7 @@ def uniqueSkillCount(role):
 
 #------------------------JOB-POSTINGS----------------------
 
-def job_postings(year,field:str | None = None):
+def job_postings(year,field:str | None = None) -> pd.DataFrame:
     conn = connect_database('clean_data')
     parameter =[]
     parameter.append(year)
@@ -312,12 +308,12 @@ def current_year_postings(year ,field:str | None =None):
 
 # -----------------------COMPARITIVE ANALYSIS--------------------
 
-def common_skills(job_roles):
+def common_skills(job_roles) -> pd.DataFrame:
     conn = connect_database('clean_data')
 
     n = len(job_roles)
     if n < 1:
-        return []
+        return pd.DataFrame()
 
     parameter = ", ".join(["%s"]*n)
     query =f'''
@@ -334,11 +330,22 @@ def common_skills(job_roles):
     df = pd.read_sql_query(query,conn,params=place_hollder)
     return df
 
-def get_percentage_ofskills(job_roles):
+
+def get_percentage_ofskills(job_roles) -> pd.DataFrame:
+    '''
+    at first we select common skills which is overlapping in selected roles
+    then we take role count of each of the role.
+    then we have to find  how strongly this role is connected to overlapping skills, 
+    so we create job_title and skill, group them together and count the number of roles in it
+    this will create[title 1 ,skill1,count]
+                    [title 1 ,skill2,count]
+    then we take each job grouped with these skills and find confidence percentage using
+    formula (total jobs with this skill * 100 / total no of this job)
+    '''
+
 
     n = len(job_roles)
     conn = connect_database('clean_data')
-
 
     parameter = ", ".join(["%s"]*n)
     query = f"""
@@ -424,58 +431,38 @@ def get_percentage_ofskills(job_roles):
 # ----------------skillgap analyzer_____________
 
 def find_reuiqred_skills(field):
-    engine = connect_database('clean_data')
+    '''
+    using common skills which is mentioned across the different roles of the same field
+    this will help to get only the common , rather than extracting all of the skills from
+    backend
+    in query,first group by skill name and count distinct no of jobs in each of skill.
+    then order them by count and take first 10 skills
+    '''
 
-    query = '''
-    select s.name,count(*) as count
+    engine = connect_database('clean_data')
+    query2 = '''
+    select s.name, count (distinct j.title) as job_count
     from job_data j
     join job_skills js on j.job_id = js.job_id
     join skills s on js.skill_id = s.skill_id
     where j.primary_field = %s
     group by s.name
-    order by count desc
+    order by job_count desc
     limit 10;
     '''
-    df= pd.read_sql_query(query,engine,params=(field,))
+    df= pd.read_sql_query(query2,engine,params=(field,))
 
     essential_skills = set(df['name'].to_list())
     return essential_skills
 
 
-import numpy as np
 
-# ---- Run ONCE when server starts, loads everything from DB ----
-def build_tfidf_scores():
-    engine = connect_database('clean_data')
-    #group by skills and primary fields together
-    query = '''
-    SELECT j.primary_field, s.name as skill, COUNT(*) as term_freq
-    FROM job_data j
-    JOIN job_skills js ON j.job_id = js.job_id
-    JOIN skills s ON js.skill_id = s.skill_id
-    GROUP BY j.primary_field, s.name
+def find_freq_skills(field : str |None= None) -> pd.DataFrame:
     '''
-    df = pd.read_sql_query(query, engine) 
-    # count total no of primary fields
-    total_fields = df['primary_field'].nunique()
+    find frequency of each skill in specified field, take top 10
+    skills for analyzing the skill gap.
+    '''
 
-    # find total no of unique fields in which it appears in
-    doc_freq = df.groupby('skill')['primary_field'].nunique().reset_index()
-    doc_freq.rename(columns={'primary_field': 'doc_freq'}, inplace=True)
-    # then merge it into the main table . now freq of that skill & precent no of another table
-    df = pd.merge(df, doc_freq, on='skill')
-    df['idf'] = np.log(total_fields / df['doc_freq'])
-    df['tf_idf'] = df['term_freq'] * df['idf']
-
-    return df  
-
-def ffind_reuiqred_skills(tfidf_df, target_field):
-    target_df = tfidf_df[tfidf_df['primary_field'] == target_field]
-    target_df = target_df.sort_values(by='tf_idf', ascending=False)
-    essential_skills = set(target_df.head(10)['skill'].tolist())
-    return essential_skills
-
-def find_freq_skills(field : str |None= None):
     engine = connect_database("clean_data")
     query = '''
     SELECT j.primary_field, s.name as skill, COUNT(*) as term_freq
@@ -499,22 +486,28 @@ def find_freq_skills(field : str |None= None):
 
 
 
-
-
-
-# IDF = log(total_fields / how_many_fields_skill_appears_in)
-    
-
-# confidance = total_freq * idf_freq
-
-
-
-
-
-
-
-
+#__________________________top hiring company____________________
+def top_hiring_company(year: int = datetime.now().year, field: str = None) -> pd.DataFrame:
+    '''
+    get most hiring company in current year
+    '''
+    params = [year]
+    db = connect_database('clean_data')
+    query = '''
+    select company,count(company) as count
+    from job_data
+    where extract(year from posted_date::date) = %s '''
+    if field:
+        query += " AND primary_field = %s "
+        params.append(field)
+    query +='''
+    group by company
+    order by count desc
+    limit 10;
+    '''
+    df = pd.read_sql_query(query,db,params=tuple(params))
+    return df
 
 
 if __name__ == '__main__':
-    print(find_freq_skills('backend'))
+    print(top_hiring_company(2026))

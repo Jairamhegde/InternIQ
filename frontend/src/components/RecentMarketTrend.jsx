@@ -4,6 +4,15 @@ import { result, values } from "lodash";
 import startCase from "lodash/startCase";
 import Loader from "./Loader";
 import { useQuery } from '@tanstack/react-query';
+
+import BuildingSvg from '../assets/building.svg'
+import BriefCase from '../assets/briefcase.svg'
+
+
+
+
+
+
 import {
     BarChart,
     Bar,
@@ -47,7 +56,7 @@ function RecentMarketTrend() {
             value: statsdata?.role?.[0] || "Loading..."
         },
         {
-            label: "TOP ROLE AVG SALARY",
+            label: "TOP ROLE AVG STIPEND",
             value: statsdata?.average_sal ? `₹${Number(statsdata.average_sal).toLocaleString("en-IN")}` : "Loading..."
         },
         {
@@ -192,8 +201,18 @@ function RecentPostingList() {
                         <tbody>
                             {jolListing.map((item, index) => (
                                 <tr key={index}>
-                                    <td className="role-name">{startCase(item.title)}</td>
-                                    <td className="company-name">{startCase(item.company)}</td>
+                                    <td className="role-name">
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                                            <img src={BriefCase} alt="BriefCase" style={{ width: '16px', height: '16px', opacity: 0.7 }} />
+                                            {startCase(item.title)}
+                                        </div>
+                                    </td>
+                                    <td className="company-name">
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                                            <img src={BuildingSvg} alt="Building" style={{ width: '16px', height: '16px', opacity: 0.7 }} />
+                                            {startCase(item.company)}
+                                        </div>
+                                    </td>
                                     <td className="company-name">{item.posted_date}</td>
                                     <td className="volume-val align-right">
                                         {item.job_link ? (
@@ -261,6 +280,7 @@ function TopLocationChart() {
         </div>
     )
 }
+
 
 
 

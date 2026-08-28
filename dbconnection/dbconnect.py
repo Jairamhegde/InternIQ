@@ -43,26 +43,4 @@ def connect_database(search_path="clean_data"):
                 raise
         return _engines[search_path]
     else:
-        return _connect_to_st(search_path)
-
-
-def _connect_to_st(search_path):
-    import streamlit as st
-
-    @st.cache_resource
-    def _cache(search_path):
-        data = st.secrets["database"]
-        url = _build_url(
-            user=data["user"],
-            password=data["password"],
-            host=data["host"],
-            port=data["port"],
-            database=data["database"],
-            sslmode=data["sslmode"],
-        )
-        return create_engine(
-            url,
-            connect_args={"options": f"-c search_path={search_path}"}
-        )
-
-    return _cache(search_path)
+        raise ValueError("DB_HOST environment variable is missing. Please ensure your .env file is loaded.")

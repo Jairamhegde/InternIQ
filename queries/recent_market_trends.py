@@ -97,18 +97,20 @@ def recenttopLocations(field: str | None = None):
     conn = connect_database("clean_data")
     
     query = '''
-    SELECT location, COUNT(location) as count
-    FROM job_data
-    WHERE posted_date::date >= CURRENT_DATE - INTERVAL '10 days'
+    SELECT l.loc as location, COUNT(l.loc) as count
+    FROM job_data j
+    JOIN job_location jl ON j.job_id = jl.job_id
+    JOIN locations l ON jl.loc_id = l.id
+    WHERE j.posted_date::date >= CURRENT_DATE - INTERVAL '10 days'
     '''
     
     params = []
     if field:
-        query += " AND primary_field = %s"
+        query += " AND j.primary_field = %s"
         params.append(field)
         
     query += '''
-    GROUP BY location
+    GROUP BY l.loc
     ORDER BY count DESC
     LIMIT 10;
     '''

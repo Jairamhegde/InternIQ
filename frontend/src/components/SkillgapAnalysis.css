@@ -52,7 +52,7 @@
     background-color: #ffffff;
     border: 1px solid #cbd5e1;
     /* Reverted outer border radius */
-    border-radius: 12px; 
+    border-radius: 12px;
     outline: none;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -79,7 +79,7 @@
 }
 
 
-/* ------------file uploader styling------------- */
+
 /* Container for the upload area */
 .doc-upload-container {
     display: flex;

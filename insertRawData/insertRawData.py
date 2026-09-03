@@ -1,6 +1,16 @@
+from sqlalchemy.orm import query
 from datetime import datetime
 from dbconnection.dbconnect import connect_database
 from psycopg2.extras import execute_values
+
+
+
+
+    
+
+
+
+
 
 
 def insertRawData(job_data):
@@ -33,6 +43,7 @@ def insertRawData(job_data):
             INSERT INTO job_data
             (title, salary, location, scrape_time, posted_date, company,job_link)
             VALUES %s
+            ON CONFLICT(title, location, company, posted_date) DO NOTHING
             RETURNING id, title, salary, location, company
             ;
         '''
@@ -42,12 +53,19 @@ def insertRawData(job_data):
         if not job_ids:
             conn.commit()
             return
+        #building map
+        job_map = {
+            (job_m[1], job_m[2], job_m[3], job_m[4]): job_m[0]
+            for job_m in job_ids
+        }
 
+       
 
         # Collect all unique skills from the new jobs
         skill_set = set()
         for job in job_data:
-            skill_set.update([s for s in job.get('tech_stack', []) if s])
+            tech_stack = job.get('tech_stack') or []
+            skill_set.update([s for s in tech_stack if s])
             
         skill_set = {s for s in skill_set if s} # Remove empty
 
@@ -61,11 +79,7 @@ def insertRawData(job_data):
         if skill_tuple:
             execute_values(cur, skill_query, skill_tuple)
 
-        #building map
-        job_map = {
-            (job_m[1], job_m[2], job_m[3], job_m[4]): job_m[0]
-            for job_m in job_ids
-        }
+        
 
         # Fetch all skill name -> skill_id mappings
         cur.execute('SELECT skill_id, name FROM skills;')
@@ -84,12 +98,14 @@ def insertRawData(job_data):
                 j.get('job_title'),
                 j.get('salary'),
                 j.get('location'),
-                j.get('company')
+                j.get('company'),
+                j.get('posted_date')
             )
             if job_tuple not in job_map:
                 continue  # skip if this job was a duplicate (not newly inserted)
 
-            for skill in j.get('tech_stack', []):
+            tech_stack = j.get('tech_stack') or []
+            for skill in tech_stack:
                 skill_id = skill_map.get(skill)
                 if skill_id is None:
                     continue

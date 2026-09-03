@@ -150,6 +150,9 @@ function TrendsChart({ chartData }) {
                     <XAxis dataKey='role'
                         tickFormatter={startCase}
                         tickLine={false}
+                        angle={-45}
+                        textAnchor='end'
+                        height={80}
                         tick={{ fontSize: 14 }} />
                     <YAxis />
                     <Tooltip

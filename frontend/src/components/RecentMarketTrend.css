@@ -1,6 +1,6 @@
 .recent-market-trend {
     page: 100%;
-
+    min-height: 800px;
 }
 
 .rmt-header {
@@ -104,6 +104,7 @@
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.03);
     flex: 1;
     min-width: 0;
+    min-height: 400px;
 }
 
 .loc-posting-chart {

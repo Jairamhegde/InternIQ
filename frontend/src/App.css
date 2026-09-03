@@ -25,9 +25,8 @@ html {
   padding: 32px 40px;
   background: #ebece2;
   min-height: 100vh;
-  max-width: 1400px;
-  /* margin: 0 auto; */
-  margin-left: 220px;
+  width: calc(100% - 230px);
+  margin-left: 230px;
   box-sizing: border-box;
 }
 

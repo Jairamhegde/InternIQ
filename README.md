@@ -1,164 +1,236 @@
 # InternIQ
 ### End-to-End Internship Job Market Intelligence Platform
 
-[![Python](https://img.shields.io/badge/Python-3.10%2B-blue?logo=python&logoColor=white)](https://python.org)
-[![Streamlit](https://img.shields.io/badge/Streamlit-Dashboard-FF4B4B?logo=streamlit&logoColor=white)](https://streamlit.io)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Data%20Store-336791?logo=postgresql&logoColor=white)](https://postgresql.org)
+[![Python](https://img.shields.io/badge/Python-3.11-blue?logo=python&logoColor=white)](https://python.org)
+[![FastAPI](https://img.shields.io/badge/FastAPI-Backend-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
+[![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)](https://react.dev)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Aiven-336791?logo=postgresql&logoColor=white)](https://aiven.io)
+[![Tests](https://github.com/Jairamhegde/InternIQ/actions/workflows/tests.yml/badge.svg)](https://github.com/Jairamhegde/InternIQ/actions/workflows/tests.yml)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-InternIQ is an end-to-end data engineering and business intelligence platform that scrapes internship postings from Internshala, processes and normalizes the data, and delivers interactive market analytics via a premium dark-glassmorphic Streamlit dashboard.
+InternIQ is an end-to-end data engineering platform that scrapes internship postings from Internshala, runs them through an ELTL pipeline into a normalized PostgreSQL warehouse, classifies each posting by role using a hybrid keyword + TF-IDF model, and serves the results through a FastAPI backend to a React analytics dashboard — including AI-generated market insights and a resume skill-gap analyzer.
 
-**Live Dashboard Demo:** [InternIQ Market Intelligence](https://interniq.streamlit.app/)
+**Live Dashboard:** [interniq on Vercel](https://intern-cymil83e6-j-d7e1.vercel.app/)
+**Backend API:** [interniq-api on Render](https://interniq-api-5tmj.onrender.com/api/health)
+
+> The backend is hosted on Render's free tier and spins down after periods of inactivity. **Before opening the dashboard, hit the [health check link](https://interniq-api-5tmj.onrender.com/api/health) once and wait a few seconds** to warm up the API — otherwise the dashboard's first data request will time out while Render cold-starts the service.
 
 ---
 
 ## Problem Statement
 
-For job seekers and students, understanding the modern internship landscape is difficult:
-* Which technical roles are in highest demand?
-* Which specific technical skills are required across different stacks?
-* What are the actual salary ranges across various specialties, converted and normalized to a single standard?
+For job seekers and students, understanding the internship landscape is difficult:
+* Which technical roles are actually in highest demand right now?
+* Which specific skills are required across different tech stacks, and how does that compare between roles?
+* What are real salary ranges across specialties, once currencies and pay periods are normalized to a single standard?
+* Given a specific target role, which skills on *my* resume are missing?
 
-InternIQ solves this by aggregating real-time posting data, standardizing raw fields, and dynamically rendering market intelligence directly from a normalized analytics database.
+InternIQ answers all four by aggregating real posting data on a schedule, standardizing it into an analytics-ready warehouse, and exposing it through interactive market intelligence and a personal skill-gap tool — rather than relying on a static, manually-curated list.
 
 ---
 
 ## System Architecture
 
-The project implements a full **ELTL (Extract-Load-Transform-Load)** pipeline running on Python and a cloud PostgreSQL cluster.
+The platform is split into three independently deployed, independently scalable services connected by a managed Postgres instance — there is no single point of coupling between the pipeline, the API, and the UI.
 
 ```mermaid
 flowchart TD
-    %% Extract Phase
-    subgraph Extraction ["1. Data Extraction Phase"]
-        IS["Internshala Job Board"] -->|HTTP GET Requests| FT["Fetcher"]
-        FT -->|HTML Soup| EX["Extractor"]
-        EX -->|N-Gram Tokenization and Skill Matching| EX
+    subgraph Extraction["1 — Scheduled Extraction (GitHub Actions, daily cron)"]
+        IS["Internshala Job Board"] -->|HTTP GET| FT["Fetcher (requests + BeautifulSoup)"]
+        FT --> EX["Extractor: parses cards, salary, location, posted-date"]
+        EX -->|"No skills tags found"| TOK["N-gram Tokenizer + Skill Matcher"]
     end
 
-    %% Raw Ingestion
-    subgraph Ingestion ["2. Ingestion and Staging"]
-        EX -->|Scraped Dict List| RW["Staging Layer"]
-        RW -->|Insert raw data| DB_RAW[("PostgreSQL - raw_data Schema")]
+    subgraph Ingestion["2 — Raw Ingestion"]
+        EX --> RW["Staging Insert"]
+        TOK --> RW
+        RW -->|batched INSERT| DB_RAW[("Aiven PostgreSQL\nraw_data schema")]
     end
 
-    %% Transformation & ETL
-    subgraph ETL ["3. ETL and Data Normalization"]
-        DB_RAW -->|Extract raw tuples| TD["Transformer"]
-        TD -->|Standardize salaries, currencies, dates| TD
-        TD -->|Cleaned Python Data Dicts| DM["DB Manager"]
-        DM -->|Insert jobs and skills| DB_CLEAN[("PostgreSQL - clean_data Schema")]
-        DM -->|Insert snapshot metrics| DB_SNAP[("clean_data.job_snapshot")]
+    subgraph ETL["3 — Transform & Classify"]
+        DB_RAW -->|today's rows| TD["Transformer:\nsalary + currency normalization,\ndedup, date parsing"]
+        TD --> CLS["Hybrid Classifier:\nkeyword rules + TF-IDF\ncosine similarity"]
+        CLS --> DM["DB Manager: batched upsert"]
+        DM --> DB_CLEAN[("Aiven PostgreSQL\nclean_data schema")]
+        DM --> DB_SNAP[("clean_data.job_snapshot\n(dedup for trend analysis)")]
     end
 
-    %% Visualization
-    subgraph Presentation ["4. Visualization and Analytics"]
-        DB_CLEAN -->|Long-term Queries| QA["Overall Analysis Queries"]
-        DB_CLEAN -->|Recent Queries| QR["Recent Market Trends"]
-        DB_SNAP -->|Time-series Queries| QT["Trends Over Time Queries"]
-        QA -->|Pandas DataFrames| ST["Streamlit Dashboard"]
-        QR -->|Pandas DataFrames| ST
-        QT -->|Pandas DataFrames| ST
-        ST -->|Interactive Visualizations| US["End Users"]
+    subgraph API["4 — FastAPI Backend (Render)"]
+        DB_CLEAN --> Q1["Analysis Queries"]
+        DB_CLEAN --> Q2["Recent Trend Queries"]
+        DB_CLEAN --> Q3["Comparative Queries"]
+        Q1 & Q2 & Q3 --> AI["Gemini: AI insight generation\n(async, LRU-cached)"]
+        RESUME["Resume Upload (PDF/DOCX)"] --> PARSE["Text Extraction\n(PyMuPDF / python-docx)"]
+        PARSE --> GAP["Skill-Gap Matcher"]
+        Q1 & Q2 & Q3 & AI & GAP --> REST["REST Endpoints"]
+    end
+
+    subgraph UI["5 — React Dashboard (Vercel)"]
+        REST -->|JSON| DASH["Market Overview, Trends,\nComparative Analysis, Skill Gap"]
+        DASH --> USER["End Users"]
     end
 ```
+
+**Why raw_data → clean_data as two schemas, not one:** scraped HTML is messy and inconsistent — salary strings, relative dates, free-text skill tags. Keeping a staging schema means a bad scrape or a broken transform never corrupts the analytics tables; `clean_data` is always safe to query directly from the dashboard.
+
+**Why a `job_snapshot` table:** without it, a job re-scraped on multiple days would either double-count in trend charts or require a full historical dedup on every query. `job_snapshot` records one row per (job, scrape-date), so "postings this week" is a simple count query instead of a fragile window function over raw text.
+
+**Why three independently deployed services instead of one monolith:** the scraper runs on a schedule and doesn't need to be always-on; the API needs to be always-on but has no scraping load; the frontend is static and scales trivially on a CDN. Splitting them means each piece scales — or fails — independently, and a slow scrape run can never degrade dashboard response times.
 
 ---
 
 ## Tech Stack
 
-* **Language:** Python 3.10+
-* **Scraping & NLP:** BeautifulSoup4, Requests, Regex Tokenizer (Unigram & Bigram matching)
-* **Databases:** PostgreSQL (Cloud staging & analytics), SQLite (Local development support)
-* **Data Processing:** Pandas, NumPy
-* **Visualization:** Plotly Express, Plotly Graph Objects
-* **Web UI Framework:** Streamlit (Custom styled layout with dark theme CSS overlays)
+| Layer | Technology |
+|---|---|
+| Scraping | Requests, BeautifulSoup4 |
+| NLP / Classification | Keyword rule sets + scikit-learn TF-IDF + cosine similarity |
+| Database | PostgreSQL (Aiven, managed & independently scalable), SQLAlchemy + psycopg2 |
+| API | FastAPI, Uvicorn, Pydantic |
+| AI Insights | Google Gemini (`gemini-flash-lite-latest`), `async_lru` response caching |
+| Resume Parsing | PyMuPDF (PDF), python-docx (DOCX) |
+| Frontend | React 19, Vite, TanStack Query, Recharts, react-select |
+| CI/CD | GitHub Actions (scheduled scrape job, test suite on every push/PR) |
+| Hosting | Frontend → Vercel · Backend → Render · Database → Aiven |
+
+---
+
+## Key Features
+
+1. **Automated daily ELTL pipeline** — a GitHub Actions cron job scrapes five job categories across paginated listings, runs the existing test suite first, and only then executes the live scrape — so a broken pipeline can't silently write bad data.
+2. **Hybrid role classifier** — every posting is scored against curated title/keyword dictionaries for Backend, Frontend, Full-Stack, and AI/ML; ties or ambiguous titles fall back to a TF-IDF + cosine-similarity match against reference role descriptions for seven fields (including Data Science, Mobile, and Big Data), so classification degrades gracefully instead of defaulting to "Other."
+3. **Salary & currency standardizer** — parses free-text compensation strings, detects INR/USD/EUR/AED, converts to INR at fixed rates, and annualizes monthly figures, splitting every result into `salary_min`/`salary_max`.
+4. **AI-generated market insights** — Gemini turns raw query results (top roles, skill frequency, monthly trends) into short executive-style insights, called asynchronously and LRU-cached so repeated dashboard views don't re-hit the API.
+5. **Comparative role analysis** — select 2–3 roles and get posting-volume comparisons and a skills-overlap radar chart, backed by a single parameterized SQL query (no per-role query loop).
+6. **Resume skill-gap analyzer** — upload a PDF or DOCX resume, pick a target field, and get matched vs. missing skills ranked by real market demand frequency, with missing skills split into "essential" vs. "nice to have" based on how often each appears in current postings.
+7. **Recent market trends** — a rolling 10-day view (via the `job_snapshot` table) separate from all-time analytics, so the dashboard can show what's changing right now, not just historical totals.
 
 ---
 
 ## Database Schema
 
-The database relies on two isolated schemas within a PostgreSQL instance:
+Two isolated schemas inside a single Aiven-managed PostgreSQL instance:
 
-### 1. `raw_data` Schema (Staging Area)
-* `raw_data.job_data`: Raw scraped postings containing text fields, raw salary strings, and timestamps.
-* `raw_data.skills`: Staging table mapping distinct skill names.
-* `raw_data.job_skills`: Many-to-many relationship mapping raw postings to staging skills.
+### `raw_data` (Staging)
+* `job_data` — raw scraped postings: text fields, unparsed salary strings, timestamps.
+* `skills`, `job_skills` — staging skill tags and their many-to-many mapping to postings.
 
-### 2. `clean_data` Schema (Sanitized Analytics)
-* `clean_data.job_data`: Normalized titles, normalized locations, clean date formats, and parsed/converted `salary_min` and `salary_max` columns.
-* `clean_data.skills`: Normalized skill names mapped to unique IDs.
-* `clean_data.job_skills`: Clean join table relating jobs and skills.
-* `clean_data.job_snapshot`: Daily tracker relating job IDs to scraping dates, avoiding duplicate counts during long-term trend analysis.
+### `clean_data` (Analytics)
+* `job_data` — normalized titles/locations, parsed dates, `salary_min`/`salary_max`, `primary_field` + `field_confidence` from the classifier.
+* `skills`, `job_skills` — normalized skill names and their clean join table.
+* `job_snapshot` — one row per (job, scrape-date), the basis for all time-series and "recent trend" queries.
 
 ---
 
-## Key Pipeline Features
+## API Endpoints (FastAPI)
 
-1. **N-Gram Skill Extractor**: Converts raw text descriptions into unigrams and bigrams, matches them against a dictionary of ~100+ standard tech keywords (e.g. databases, cloud, programming languages), and maps variations (e.g., `tf` -> `tensorflow`, `k8s` -> `kubernetes`).
-2. **Salary & Currency Standardizer**: Parses compensation strings (e.g. `Competitive salary`, `₹ 2,04,000 - 2,70,000`), detects currency types (USD, EUR, AED, INR), converts foreign currencies to INR using exchange rates, and splits ranges into minimum/maximum numerical fields.
-3. **Transaction Resilience**: Explicitly qualifies PostgreSQL tables with their target schemas (`raw_data.*`, `clean_data.*`) and handles connection re-entrancy, ensuring session variable state (like `search_path`) does not revert on transaction rollbacks.
+| Endpoint | Method | Description |
+|---|---|---|
+| `/api/health` | GET | Health check |
+| `/api/last-sync` | GET | Timestamp of the most recent successful scrape |
+| `/api/job-tiles` | GET | Top skill, location, role, and posting count for the overview cards |
+| `/api/top-role-table` | GET | Full ranked table of roles by demand |
+| `/api/job-postings` | POST | Posting volume by year and field |
+| `/api/job-posting-card-insights` | POST | AI-generated overview insight for the current filter |
+| `/api/get-role-posting` | POST | Posting counts for a specific set of roles (comparative view) |
+| `/api/common-skill` | POST | Skill-overlap matrix for a set of roles |
+| `/api/get-comparative-insights` | POST | AI-generated comparative insight across selected roles |
+| `/api/recent-market-trend` | GET | Rolling 10-day trend summary (top role, skill, location, opportunity delta) |
+| `/api/job-posting-list` | GET | Recent individual postings |
+| `/api/get-top-locations` | GET | Top hiring locations, recent window |
+| `/api/analyze-gap` | POST | Resume upload (PDF/DOCX) → matched vs. missing skills for a target field |
 
 ---
 
-## Dashboard Highlights
+## Project Structure
 
-* **Overall Market Trends**: Market overview metrics, top locations, distribution of top roles, and cross-functional skill frequency.
-* **Recent Market Trends**: Analytics limited to the last 10 days to highlight real-time market changes.
-* **Role-Specific Analysis**: Career insights detailing "must-have" and "emerging" skills for individual roles (e.g., Full Stack Developer, Data Scientist).
-* **Comparative Role Analysis**: Side-by-side comparison of 2-4 roles including job count and a detailed skills overlap heatmap.
-* **Trends Over Time**: Line and spline chart visualizations tracking hiring demand over time.
+```
+extract/            # fetcher.py, extractor.py — scraping & parsing
+transform/           # transformData.py — salary/currency normalization
+keyword_match/        # dev_trend.py (TF-IDF classifier), text_tockenization.py
+insertRawData/                # insertRawData.py — staging layer writes
+insertCleanData/          # insertCleanData.py — clean_data upserts
+dbconnection/               # dbconnect.py — pooled SQLAlchemy engines per schema
+queries/                       # analysis.py, recent_market_trends.py — read layer
+backend/                        # FastAPI app: main.py, crud.py (AI + resume parsing), models.py
+frontend/                        # React + Vite dashboard
+  src/components/                  # MarketOverview, ComparativeAnalysis, SkillgapAnalysis, etc.
+testing/                        # pytest suite
+.github/workflows/              # tests.yml (CI), scrape.yml (scheduled pipeline)
+mainscript.py                # Pipeline entrypoint — scrape → stage → transform → load
+```
 
 ---
 
 ## Setup & Installation
 
-### 1. Clone the Repository
+### 1. Clone the repository
 ```bash
 git clone https://github.com/Jairamhegde/InternIQ.git
 cd InternIQ
 ```
 
-### 2. Setup Virtual Environment & Dependencies
-```bash
-python -m venv scraperenv
-scraperenv\Scripts\activate
-pip install -r requirements.txt
-```
-
-### 3. Database Credentials Configuration
-Create a `.env` file in the root directory for local runs:
+### 2. Backend & pipeline — environment variables
+Create a `.env` file in the project root:
 ```env
-DB_HOST=your-postgres-host
+DB_HOST=your-aiven-postgres-host
+DB_PORT=your-aiven-postgres-port
 DB_NAME=your-database-name
 DB_USER=your-database-user
 DB_PASSWORD=your-database-password
-DB_PORT=your-database-port
-```
-Alternatively, configure a `.streamlit/secrets.toml` file:
-```toml
-[database]
-host = "your-postgres-host"
-port = 10791
-database = "your-database-name"
-user = "your-database-user"
-password = "your-database-password"
-sslmode = "require"
+SSLMODE=require
+GEMINI_API=your-gemini-api-key
 ```
 
-### 4. Run the Ingestion & ETL Pipeline
-To pull the latest postings, ingest into raw staging tables, normalize, and load into clean schema:
+### 3. Install dependencies & run the pipeline
 ```bash
+python -m venv venv
+venv\Scripts\activate        # or source venv/bin/activate on macOS/Linux
+pip install -r requirements.txt
 python mainscript.py
 ```
 
-### 5. Launch the Streamlit Dashboard
+### 4. Run the backend API
 ```bash
-streamlit run app.py
+uvicorn backend.main:app --reload
+```
+
+### 5. Run the frontend
+```bash
+cd frontend
+npm install
+npm run dev
+```
+By default the frontend calls the deployed Render API. To point it at your local backend, create `frontend/.env`:
+```env
+VITE_API_URL=http://localhost:8000
 ```
 
 ---
-https://intern-cymil83e6-j-d7e1.vercel.app/
+
+## Testing & CI
+
+Two GitHub Actions workflows:
+* **`tests.yml`** — runs the full pytest suite on every push and pull request to `main`.
+* **`scrape.yml`** — runs daily on a cron schedule; runs the test suite first, and only executes the live scraper if tests pass, so the automated pipeline can never write from a known-broken codebase.
+
+```bash
+python -m pytest testing/
+```
+
+---
+
+## Known Limitations
+
+* Currency conversion uses fixed exchange rates rather than a live FX API — acceptable for INR-dominant Internshala data, but would drift on international listings over time.
+* Scraper selectors are coupled to Internshala's current HTML structure; a site redesign would require updating `extract/extractor.py`.
+* Render's free tier cold-starts after inactivity (see the warm-up note above) — a paid tier or a keep-alive ping would remove this for a production deployment.
+* CI runs against a live Aiven database rather than an isolated test database — sufficient for a portfolio project, but a production setup would use a dedicated test schema or containerized Postgres for CI.
+
 ## License
 
 Distributed under the MIT License. See `LICENSE` for more information.
+
+## Author
+
+Jairam Hegde

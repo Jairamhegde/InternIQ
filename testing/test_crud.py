@@ -19,6 +19,9 @@ def test_extract_pdf():
     assert "Python" in text
     assert "Django" in text
 
+
+
+
 if __name__ == '__main__':
     print("Running tests...")
     

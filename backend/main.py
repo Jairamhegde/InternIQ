@@ -1,3 +1,4 @@
+import logging
 import os
 import json
 import re
@@ -24,9 +25,11 @@ from queries.recent_market_trends import (
    
 )
 
+from queries.comparative_analysis import compare_role_trend
+
 from backend.models import (
     OverviewInsightsModel, RolesPostingsModel, CommonSkillModal, 
-    ComparitiveInsightsModal, JobpostingModel, TopCompanyModel
+    ComparativeInsightsModel, JobpostingModel, TopCompanyModel , LinechartData
 )
 from backend.crud import (
      extract_pdf, 
@@ -39,7 +42,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  
+    allow_origins=["https://interniq-api-5tmj.onrender.com", "http://localhost:5173", "http://127.0.0.1:5173"],  
     allow_credentials=True,
     allow_methods=["*"],  
     allow_headers=["*"],  
@@ -97,6 +100,9 @@ def get_data_for_jobtile(field: str = 'all'):
     }
 
 
+#---------------------Comparative analysis endpoints--------------------
+
+
 @app.get('/api/top-role-table')
 def get_top_roles(field: str = 'all'):
     actual_field = None if field.lower() == 'all' else field
@@ -119,12 +125,24 @@ def get_common_skill(request: CommonSkillModal):
     return pivot_df.to_dict(orient='records')
 
 
-@app.post('/api/get-comparitive-insights')
-async def get_comparitive_insights(request: ComparitiveInsightsModal):
+@app.post('/api/get-comparative-insights')
+async def get_comparative_insights(request: ComparativeInsightsModel):
     roles_frequency = request.role_frequency
     common_skills = request.common_skill
     insights = await get_ai_response(roles_frequency, common_skills, 'comparision')
     return insights
+
+@app.post('/api/get-linechart-data')
+def get_linechart_data(request:LinechartData):
+    if not request.selected_jobs:
+        return []
+        
+    df = compare_role_trend(*request.selected_jobs)
+    
+    if df is None or df.empty:
+        return []
+        
+    return df.to_dict(orient='records')
 
 
 # _________________________ Recent Market Trends Endpoints ______________________

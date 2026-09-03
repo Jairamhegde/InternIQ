@@ -4,6 +4,7 @@ import "./KeyInsights.css"
 
 import Loader from './Loader'
 import { startCase } from 'lodash';
+import growthIcon from '../assets/growth-audience.svg';
 
 function Key_insights({ selectedYear, data, selectedField }) {
     const hasData = Object.keys(data || {}).length > 0;
@@ -51,7 +52,7 @@ function Key_insights({ selectedYear, data, selectedField }) {
 
                     <div className="insights-header">
                         <span className="insights-icon">
-                            <img src="/bulb.png" alt="insights" width="22" height="22" />
+                            <img src={growthIcon} alt="insights" width="20" height="20" />
                         </span>
                         <h3>Key Insights</h3>
                     </div>

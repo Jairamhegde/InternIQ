@@ -3,8 +3,8 @@ import psycopg2
 from extract.fetcher import get_soup
 from extract.extractor import scrape_data
 
-from rawData.raw_data import insertRawData
-from db.db_manager import manage_operation
+from insertRawData.insertRawData import insertRawData
+from insertCleanData.insertCleanData import manage_operation
 from transform.transformData import loadData
 
 
@@ -34,7 +34,7 @@ def internshala(url_list):
     logging.info("Execution started...")
 
     for url in url_list:
-        for page in range(1, 5):
+        for page in range(1, 10):
 
             link = url if page == 1 else f"{url}page-{page}"
             try:
@@ -51,8 +51,8 @@ def internshala(url_list):
 
                 logging.info(f"Inserted {len(raw_data)} jobs into raw_data schema (PostgreSQL)")
 
-            except Exception:
-                logging.exception(f"Failed scraping page {page} of {url}")
+            except Exception as e:
+                logging.exception(f"Failed scraping page {page} of {url}:{e}")
     logging.info(f"Started inserting into into clean data")
     # Transform all raw data once scraping is complete
     

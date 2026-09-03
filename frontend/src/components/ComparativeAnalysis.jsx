@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { API_URL } from '../config.js';
-import "./ComparitiveAnalysis.css"
+import "./ComparativeAnalysis.css"
 import Select from 'react-select';
 import startCase from "lodash/startCase";
 import {
@@ -21,30 +21,20 @@ import {
     PolarRadiusAxis,
 
 } from 'recharts';
+import {
+    LineChart,
+    Line,
+    Legend,
+
+} from 'recharts';
+
 import { result } from 'lodash';
 import Loader from './Loader';
 import { useQuery } from '@tanstack/react-query';
 
 
-function ComparitiveAnalysis() {
-    const [selectedJobs, setSelectedJobs] = useState([]);
-    return (
-        <div className='comparitive-analysis-page'>
-            <div className='comparitive-header'>
-                <h1>Comparitive Analysis</h1>
-                <p>Compare multiple jobs across key metrics and trends</p>
-            </div>
-            <SelectBox selectedJobs={selectedJobs} setSelectedJobs
-                ={setSelectedJobs} />
+function ComparativeAnalysis() {
 
-
-
-        </div>
-    );
-}
-
-
-function SelectBox({ selectedJobs, setSelectedJobs }) {
     const { data: topRoles = [], isLoading } = useQuery({
         queryKey: ['topRolesSelect'],
         queryFn: async () => {
@@ -57,6 +47,29 @@ function SelectBox({ selectedJobs, setSelectedJobs }) {
             }));
         }
     });
+    const [selectedJobs, setSelectedJobs] = useState([]);
+    useEffect(() => {
+        if (topRoles.length > 2 && selectedJobs.length === 0) {
+            setSelectedJobs([topRoles[0], topRoles[1]]);
+
+        }
+
+    })
+    return (
+        <div className='comparative-analysis-page'>
+            <div className='comparative-header'>
+                <h1>Comparative Analysis</h1>
+                <p>Compare multiple jobs across key metrics and trends</p>
+            </div>
+            <SelectBox selectedJobs={selectedJobs} setSelectedJobs
+                ={setSelectedJobs} topRoles={topRoles} isLoading={isLoading} />
+
+        </div>
+    );
+}
+
+
+function SelectBox({ selectedJobs, setSelectedJobs, topRoles, isLoading }) {
 
     const handleChange = (selected) => {
         if (!selected || selected.length <= 3) {
@@ -136,7 +149,7 @@ function ComaparitiveCharts({ selectedJobs }) {
     const { data: compInsights = {} } = useQuery({
         queryKey: ['compInsights', chartData, commonSkills],
         queryFn: async () => {
-            const response = await fetch(`${API_URL}/api/get-comparitive-insights`, {
+            const response = await fetch(`${API_URL}/api/get-comparative-insights`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -144,16 +157,16 @@ function ComaparitiveCharts({ selectedJobs }) {
                     common_skill: commonSkills
                 })
             });
-            if (!response.ok) throw new Error("Failed to connect to get-comparitive-insights");
+            if (!response.ok) throw new Error("Failed to connect to get-comparative-insights");
             return response.json();
         },
         enabled: hasDataForInsights
     });
 
     return (
-        <>
-            <div className='comparitive-dashboard'>
-                <div className='comparitive-chart'>
+        <div className='comparative-main'>
+            <div className='comparative-dashboard'>
+                <div className='comparative-chart'>
                     <div className='comp-header'>
                         <h3>Postings comparision</h3>
                     </div>
@@ -188,7 +201,7 @@ function ComaparitiveCharts({ selectedJobs }) {
                         </BarChart>
                     </ResponsiveContainer>
 
-                    <ComparitiveAnalysisInsights title="Insights" data={compInsights?.role_insights} />
+                    <ComparativeAnalysisInsights title="Insights" data={compInsights?.role_insights} />
                 </div>
                 <div className='Radar-chart'>
                     <div className='comp-header'>
@@ -218,17 +231,21 @@ function ComaparitiveCharts({ selectedJobs }) {
                             }
                         </RadarChart>
                     </ResponsiveContainer>
-                    <ComparitiveAnalysisInsights title="Insights" data={compInsights?.skill_insights} />
+                    <ComparativeAnalysisInsights title="Insights" data={compInsights?.skill_insights} />
 
                 </div>
             </div>
-            <ComparitiveAnalysisInsights title="Key takeaway" data={compInsights?.takeaway} />
+            <div className='line-chart-div'>
+                <Compare_line_chart selectedJobs={selectedJobs} />
+            </div>
 
-        </>
+            <ComparativeAnalysisInsights title="Key takeaway" data={compInsights?.takeaway} />
+
+        </div>
     );
 }
 
-function ComparitiveAnalysisInsights({ title, data }) {
+function ComparativeAnalysisInsights({ title, data }) {
     return (
         <div className='comp-insights-card'>
             <h3>{title}</h3>
@@ -241,4 +258,104 @@ function ComparitiveAnalysisInsights({ title, data }) {
     );
 }
 
-export default ComparitiveAnalysis;
+
+function Compare_line_chart({ selectedJobs }) {
+    const { data: data, isLoading } = useQuery({
+        queryKey: ["linechart-data", selectedJobs],
+        queryFn: async () => {
+
+            const rolesList = selectedJobs.map(job => job.value);
+
+            const response = await fetch(`${API_URL}/api/get-linechart-data`,
+                {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ selected_jobs: rolesList })
+                }
+            )
+            if (!response.ok) {
+                throw new Error("Failed to connect to linechart data.")
+
+            }
+            return response.json()
+        }
+    })
+
+    if (isLoading) {
+        return <div className="linechart-status-container"><Loader /></div>;
+    }
+
+    if (!data || data.length === 0) {
+        return <div className="linechart-status-container empty">No data available for the selected roles</div>;
+    }
+
+    // Modern vibrant color palette
+    const colours = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899', '#06b6d4'];
+
+    const allFields = Object.keys(data[0])
+
+    const allRoles = allFields.filter(key => key != 'month')
+
+    return (
+
+        <ResponsiveContainer width="100%" height={450} className="modern-line-chart-container" >
+            <LineChart
+                data={data}
+                margin={{ top: 20, right: 30, left: 10, bottom: 20 }}
+            >
+                <CartesianGrid vertical={false} stroke="#f1f5f9" strokeDasharray="4 4" />
+
+                <XAxis 
+                    dataKey='month' 
+                    axisLine={false} 
+                    tickLine={false} 
+                    tick={{ fill: '#64748b', fontSize: 13, fontWeight: 500 }}
+                    dy={15}
+                />
+                
+                <YAxis 
+                    axisLine={false}
+                    tickLine={false}
+                    tick={{ fill: '#64748b', fontSize: 13, fontWeight: 500 }}
+                    dx={-10}
+                    tickFormatter={(value) => `${value >= 1000 ? (value/1000).toFixed(1) + 'k' : value}`}
+                />
+                
+                <Tooltip 
+                    contentStyle={{ 
+                        backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                        borderRadius: '12px',
+                        border: '1px solid #e2e8f0',
+                        boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)',
+                        padding: '12px 16px',
+                        fontWeight: 500
+                    }}
+                    cursor={{ stroke: '#cbd5e1', strokeWidth: 1, strokeDasharray: '3 3' }}
+                />
+                
+                <Legend 
+                    verticalAlign='top' 
+                    height={40}
+                    iconType="circle"
+                    wrapperStyle={{ paddingBottom: '20px', fontWeight: 600, color: '#334155' }}
+                />
+
+                {allRoles.map((key, index) => (
+                    <Line
+                        key={key}
+                        type="monotone"
+                        dataKey={key}
+                        stroke={colours[index % colours.length]}
+                        strokeWidth={3}
+                        dot={{ r: 5, strokeWidth: 2, fill: '#ffffff', stroke: colours[index % colours.length] }}
+                        activeDot={{ r: 8, strokeWidth: 0, fill: colours[index % colours.length], filter: 'drop-shadow(0px 4px 6px rgba(0,0,0,0.3))' }}
+                        animationDuration={1500}
+                    />
+                ))}
+
+            </LineChart>
+
+        </ResponsiveContainer>
+    );
+}
+export default ComparativeAnalysis;

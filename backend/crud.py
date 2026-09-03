@@ -1,5 +1,6 @@
 from sys import maxsize
 import json
+from datetime import datetime
 import re
 import google.generativeai as genai
 import fitz
@@ -57,7 +58,10 @@ async def ask_ai(field1: str, field2: str, type: str = 'overview'):
 
         Analyze this data and return a SINGLE JSON object with exactly 3 keys:
         - "brief": 5-7 words. The single most important takeaway (e.g. peak month or trend).
-        - "detail": 2 sentences, max 40 words. Cover: peak month with count, lowest month with count, and one trend observation.
+        - "detail": 2 sentences, max 40 words. Cover: peak month with count, lowest month with count, and one trend observation. 
+                    NOTE: Today's date is {datetime.now().strftime("%B %d, %Y")}. If we are currently at the very beginning of the month, 
+                    the current month's job count will naturally be much lower. Do NOT falsely report this as a "massive drop" or decline; instead,
+                    explicitly state that the current month has just started so data is still accumulating.
         - "overview" : 3-4 line sentence, cover most mentioned location, skill and total postings recorded till no. explai that in brief.
         Return ONLY a raw JSON object (no markdown, no extra text):
         {{"brief": "...", "detail": "...", "overview": "..."}}

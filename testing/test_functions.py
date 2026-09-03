@@ -91,6 +91,8 @@ def test_DateFromText():
 def test_convertSalary():
     assert convertSalary('₹ 2,00,000 - 3,00,000') == (200000, 300000)
     assert convertSalary('₹ 25,000 - 35,000 /month') == (300000, 420000)
+    assert convertSalary("Unpaid") == (0,0)
+    assert convertSalary("Competative Salary") == (0,0)
 
 
 if __name__ == "__main__":

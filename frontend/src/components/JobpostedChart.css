@@ -9,6 +9,7 @@
   box-sizing: border-box;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.03);
   transition: all 0.25s ease;
+  min-height: 420px;
 }
 
 .job-posting:hover {
@@ -30,18 +31,33 @@
   letter-spacing: -0.01em;
 }
 
+.year-buttons {
+  display: flex;
+  gap: 8px;
+}
+
 .year-buttons button {
   padding: 6px 14px !important;
   font-weight: 600 !important;
   font-size: 13px !important;
   border-radius: 8px !important;
+  border: 1px solid #e5e7eb;
   transition: all 0.2s ease !important;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  background: white;
+  color: #4b5563;
+  cursor: pointer;
 }
 
 .year-buttons button:hover {
   transform: translateY(-1px);
   box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
+}
+
+.year-buttons button.active {
+  background: #2574ebff;
+  color: white;
+  border-color: #2574ebff;
 }
 
 .expand-btn {
@@ -90,5 +106,28 @@
 
 .job-container {
   width: 100%;
-  height: 300px;
+  height: 320px;
+  background: #fafafa;
+  border-radius: 8px;
+  padding: 20px 10px 10px 0;
+  border: 1px solid #f3f4f6;
+  box-sizing: border-box;
+}
+
+.no-data-container {
+  height: 320px;
+  width: 100%;
+  background: #fafafa;
+  border-radius: 8px;
+  padding: 20px;
+  border: 1px solid #f3f4f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.no-data-text {
+  color: #6b7280;
+  font-size: 14px;
 }

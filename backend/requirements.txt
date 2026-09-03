@@ -1,12 +1,7 @@
-streamlit
 pandas
 numpy
-plotly
-seaborn
-matplotlib
 beautifulsoup4
 requests
-altair
 psycopg2-binary
 sqlalchemy
 google-generativeai
@@ -14,3 +9,8 @@ fastapi
 uvicorn
 python-dotenv
 pydantic
+scikit-learn
+pymupdf
+python-docx
+python-multipart
+async_lru

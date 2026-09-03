@@ -85,14 +85,16 @@ def noOfopportunities(field:str | None = None):
 def topLocations(field:str | None = None) -> pd.DataFrame:
     conn = connect_database("clean_data")
     query = '''
-    SELECT j.location, count(j.location) as count
-    FROM job_data j'''
+    SELECT l.loc as location, count(l.loc) as count
+    FROM job_data j
+    JOIN job_location jl ON j.job_id = jl.job_id
+    JOIN locations l ON jl.loc_id = l.id'''
     parameter = []
     if field:
-        query += " where primary_field = %s"
+        query += " where j.primary_field = %s"
         parameter.append(field)
     query += '''
-    GROUP BY j.location
+    GROUP BY l.loc
     ORDER BY count DESC
     LIMIT 10;
     '''
@@ -306,7 +308,7 @@ def current_year_postings(year ,field:str | None =None):
 
 
 
-# -----------------------COMPARITIVE ANALYSIS--------------------
+# -----------------------COMPARATIVE ANALYSIS--------------------
 
 def common_skills(job_roles) -> pd.DataFrame:
     conn = connect_database('clean_data')

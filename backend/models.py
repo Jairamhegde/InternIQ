@@ -18,7 +18,7 @@ class RolesPostingsModel(Basemodel):
 class CommonSkillModal(Basemodel):
     roles: List[str]
 
-class ComparitiveInsightsModal(Basemodel):
+class ComparativeInsightsModel(Basemodel):
     role_frequency: List[Any]
     common_skill: List[Any]
 
@@ -29,4 +29,7 @@ class JobpostingModel(BaseModel):
 class TopCompanyModel(BaseModel):
     year: int
     field: str
+
+class LinechartData(BaseModel):
+    selected_jobs:List[str]
 

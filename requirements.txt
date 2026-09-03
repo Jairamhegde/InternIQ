@@ -1,12 +1,7 @@
-
 pandas
 numpy
-plotly
-seaborn
-matplotlib
 beautifulsoup4
 requests
-altair
 psycopg2-binary
 sqlalchemy
 google-generativeai

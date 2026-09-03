@@ -43,7 +43,6 @@ def insertRawData(job_data):
             INSERT INTO job_data
             (title, salary, location, scrape_time, posted_date, company,job_link)
             VALUES %s
-            ON CONFLICT(title, location, company, posted_date) DO NOTHING
             RETURNING id, title, salary, location, company
             ;
         '''

@@ -1,5 +1,4 @@
 # InternIQ
-### End-to-End Internship Job Market Intelligence Platform
 
 [![Python](https://img.shields.io/badge/Python-3.11-blue?logo=python&logoColor=white)](https://python.org)
 [![FastAPI](https://img.shields.io/badge/FastAPI-Backend-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
@@ -29,7 +28,7 @@ InternIQ answers all four by aggregating real posting data on a schedule, standa
 
 ---
 
-## System Architecture
+## Architecture
 
 The platform is split into three independently deployed, independently scalable services connected by a managed Postgres instance — there is no single point of coupling between the pipeline, the API, and the UI.
 
@@ -69,6 +68,26 @@ flowchart TD
         REST -->|JSON| DASH["Market Overview, Trends,\nComparative Analysis, Skill Gap"]
         DASH --> USER["End Users"]
     end
+
+    subgraph Clean["clean_data schema"]
+        CLEANDB[("Normalized jobs, skills,<br/>daily job_snapshot")]
+    end
+
+    subgraph Serving["Serving Layer"]
+        API["FastAPI Backend<br/>(Render)"]
+        AI["Gemini API<br/>AI-generated insights"]
+        WEB["React Frontend<br/>(Vercel)"]
+    end
+
+    CRON --> SCRAPER
+    SRC --> SCRAPER
+    SCRAPER --> RAW
+    RAW --> NGRAM --> CLEANDB
+    RAW --> SALARY --> CLEANDB
+    RAW --> CLASSIFIER --> CLEANDB
+    CLEANDB --> API
+    API <--> AI
+    API -->|REST| WEB
 ```
 
 **Why raw_data → clean_data as two schemas, not one:** scraped HTML is messy and inconsistent — salary strings, relative dates, free-text skill tags. Keeping a staging schema means a bad scrape or a broken transform never corrupts the analytics tables; `clean_data` is always safe to query directly from the dashboard.
@@ -162,7 +181,7 @@ mainscript.py                # Pipeline entrypoint — scrape → stage → tran
 
 ---
 
-## Setup & Installation
+## Local Setup
 
 ### 1. Clone the repository
 ```bash

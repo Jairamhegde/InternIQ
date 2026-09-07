@@ -4,16 +4,8 @@ from dbconnection.dbconnect import connect_database
 from psycopg2.extras import execute_values
 
 
-
-
-    
-
-
-
-
-
-
 def insertRawData(job_data):
+    
     engine = connect_database(search_path="raw_data")
     
     # Extract the raw psycopg2 connection from the SQLAlchemy engine
@@ -36,14 +28,15 @@ def insertRawData(job_data):
         ]
 
         if not job_data_tuple:
-            return
+            return 
 
         # Insert Jobs — allow duplicates, return all inserted rows
         query1 = '''
             INSERT INTO job_data
             (title, salary, location, scrape_time, posted_date, company,job_link)
             VALUES %s
-            RETURNING id, title, salary, location, company
+            on conflict (title, location, company, posted_date) do nothing
+            RETURNING id, title, salary, location, company, posted_date
             ;
         '''
         job_ids = execute_values(cur, query1, job_data_tuple, fetch=True)
@@ -54,7 +47,7 @@ def insertRawData(job_data):
             return
         #building map
         job_map = {
-            (job_m[1], job_m[2], job_m[3], job_m[4]): job_m[0]
+            (job_m[1], job_m[2], job_m[3], job_m[4], job_m[5]): job_m[0]
             for job_m in job_ids
         }
 
@@ -127,6 +120,7 @@ def insertRawData(job_data):
             execute_values(cur, snapshot_query, snapshot_tuples)
 
         conn.commit()
+        return True
 
     except Exception as e:
         conn.rollback()

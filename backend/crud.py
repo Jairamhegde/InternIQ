@@ -7,7 +7,6 @@ import fitz
 from docx import Document
 from async_lru import alru_cache
 
-
 # ------------- HELPER FUNCTIONS ------------------------
 async def get_ai_response(field1,field2,type):
     # Convert inputs to strings to make them hashable for the lru_cache

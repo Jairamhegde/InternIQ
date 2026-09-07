@@ -54,6 +54,7 @@ app2.py
 ap.py
 dashboard.py
 migrate.py
+trial.py
 
 migrate_sql_to_postgre.py
 export_data.py

@@ -5,6 +5,18 @@ from psycopg2.extras import execute_values
 from dbconnection.dbconnect import connect_database
 from psycopg2.extras import execute_values
 from keyword_match.dev_trend import similarity_check
+logging.basicConfig(
+    level=logging.INFO,
+    format=(
+        "%(asctime)s | %(levelname)s | "
+        "%(filename)s:%(lineno)d | "
+        "%(funcName)s() | %(message)s"
+    ),
+    handlers=[
+        logging.FileHandler("./logfile.log"),
+        logging.StreamHandler()
+    ]
+)
 
 def normalize(text):
     if not text:
@@ -18,6 +30,7 @@ def get_loc_list(location):
 
 
 def manage_operation(job_data):
+    
 
     engine = connect_database(search_path="clean_data")
     conn = engine.raw_connection()
@@ -45,7 +58,7 @@ def manage_operation(job_data):
                 ))
 
         if not job_data_tuple:
-            return
+            return "No job data"
 
         # 1. Insert jobs using execute_values
         query1 = '''
@@ -54,7 +67,7 @@ def manage_operation(job_data):
             VALUES %s
             ON CONFLICT(title,company, posted_date) DO NOTHING;
         '''
-        execute_values(cur, query1, job_data_tuple)
+        values = execute_values(cur, query1, job_data_tuple)
         
         #Getting job id's and other details by creating a vetual table using VALUES and joining it.
         query2 = '''
@@ -73,7 +86,7 @@ def manage_operation(job_data):
 
         if not job_ids:
             conn.commit()
-            return
+            return 
         
         job_map = {
             (job_m[1], job_m[2], str(job_m[3])): job_m[0]
@@ -207,15 +220,18 @@ def manage_operation(job_data):
 
         conn.commit()
         logging.info("manage_operation completed successfully")
-        return True
+        return "True"
 
     except Exception as e:
+        
+        logging.exception(f"manage_operation failed with error: {e}")
         try:
             conn.rollback()
-        except Exception:
-            pass # Ignore rollback errors if connection is closed
-        logging.exception(f"manage_operation failed: {e}")
-        return False
+        except Exception as rollback_err:
+            logging.error(f"Failed to rollback after error: {rollback_err}")
+        
+        return e
+        
 
     finally:
         if cur:

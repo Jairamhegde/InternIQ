@@ -1,5 +1,17 @@
 import re
 import logging
+logging.basicConfig(
+    level=logging.INFO,
+    format=(
+        "%(asctime)s | %(levelname)s | "
+        "%(filename)s:%(lineno)d | "
+        "%(funcName)s() | %(message)s"
+    ),
+    handlers=[
+        logging.FileHandler("logfile.log"),
+        logging.StreamHandler()
+    ]
+)
 from dbconnection.dbconnect import connect_database
 
 def convertSalary(s: str):
@@ -96,7 +108,10 @@ def loadData():
 
         # Fetch jobs scraped today
         cur.execute("SELECT id, title, salary, location, company, scrape_time, posted_date,job_link FROM job_data WHERE scrape_time::date = CURRENT_DATE;")
+
+        
         rows = cur.fetchall()
+        logging.info(f"Loaded rawdata for transformation...{len(rows)}rows.")
 
         job_dict = {}
         for row in rows:
@@ -136,6 +151,8 @@ def loadData():
                 job_dict[job_id]["skills"].append(" ".join(skill_name.lower().strip().split()))
 
         job_data = list(job_dict.values())
+        logging.info(f"Returned...{len(job_data)}rows for insertion.")
+
 
         cur.close()
         conn.close()

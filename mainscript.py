@@ -55,9 +55,11 @@ def internshala(url_list):
                 logging.exception(f"Failed scraping page {page} of {url}:{e}")
     logging.info(f"Started inserting into into clean data")
     # Transform all raw data once scraping is complete
-    
-    data = loadData()
-    manage_operation(data)
+    try:
+        data = loadData()
+        manage_operation(data)
+    except Exception as e:
+        logging.exception("Failed to insert into clean data.")
 
     logging.info("Processed data inserted into clean_data schema (PostgreSQL)")
 

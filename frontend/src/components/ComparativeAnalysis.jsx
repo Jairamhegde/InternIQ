@@ -289,7 +289,6 @@ function Compare_line_chart({ selectedJobs }) {
         return <div className="linechart-status-container empty">No data available for the selected roles</div>;
     }
 
-    // Modern vibrant color palette
     const colours = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899', '#06b6d4'];
 
     const allFields = Object.keys(data[0])
@@ -305,24 +304,24 @@ function Compare_line_chart({ selectedJobs }) {
             >
                 <CartesianGrid vertical={false} stroke="#f1f5f9" strokeDasharray="4 4" />
 
-                <XAxis 
-                    dataKey='month' 
-                    axisLine={false} 
-                    tickLine={false} 
+                <XAxis
+                    dataKey='month'
+                    axisLine={false}
+                    tickLine={false}
                     tick={{ fill: '#64748b', fontSize: 13, fontWeight: 500 }}
                     dy={15}
                 />
-                
-                <YAxis 
+
+                <YAxis
                     axisLine={false}
                     tickLine={false}
                     tick={{ fill: '#64748b', fontSize: 13, fontWeight: 500 }}
                     dx={-10}
-                    tickFormatter={(value) => `${value >= 1000 ? (value/1000).toFixed(1) + 'k' : value}`}
+                    tickFormatter={(value) => `${value >= 1000 ? (value / 1000).toFixed(1) + 'k' : value}`}
                 />
-                
-                <Tooltip 
-                    contentStyle={{ 
+
+                <Tooltip
+                    contentStyle={{
                         backgroundColor: 'rgba(255, 255, 255, 0.95)',
                         borderRadius: '12px',
                         border: '1px solid #e2e8f0',
@@ -332,9 +331,9 @@ function Compare_line_chart({ selectedJobs }) {
                     }}
                     cursor={{ stroke: '#cbd5e1', strokeWidth: 1, strokeDasharray: '3 3' }}
                 />
-                
-                <Legend 
-                    verticalAlign='top' 
+
+                <Legend
+                    verticalAlign='top'
                     height={40}
                     iconType="circle"
                     wrapperStyle={{ paddingBottom: '20px', fontWeight: 600, color: '#334155' }}

@@ -1,5 +1,6 @@
+from sqlalchemy import Integer
 from datetime import datetime
-from typing import List, Dict, Any
+from typing import List, Dict, Any , Optional
 from pydantic import BaseModel, Field
 
 # -------------BASE MODELS------------------------
@@ -29,6 +30,7 @@ class JobpostingModel(BaseModel):
 class TopCompanyModel(BaseModel):
     year: int
     field: str
+    month: Optional[int] = None
 
 class LinechartData(BaseModel):
     selected_jobs:List[str]

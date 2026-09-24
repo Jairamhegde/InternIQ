@@ -1,3 +1,4 @@
+from fastapi import Request
 import logging
 import os
 import json
@@ -16,16 +17,16 @@ from docx import Document
 
 from queries.analysis import (
     job_postings, topSkills, topLocations, current_year_postings, toproles,
-    common_skills, get_percentage_ofskills, find_reuiqred_skills, find_freq_skills
-    ,top_hiring_company
+    top_hiring_company
 )
 from queries.recent_market_trends import (
-    Top_role, top_skill, total_opportunities, average_salary, 
+    Top_role, top_skill, total_opportunities, average_salary,
     recenttopLocations, previous_total_opportunities, recent_job_postings, get_last_sync_time
-   
 )
-
-from queries.comparative_analysis import compare_role_trend
+from queries.comparative_analysis import (
+    compare_role_trend, common_skills, get_percentage_ofskills
+)
+from queries.skill_gap import find_reuiqred_skills, find_freq_skills
 
 from backend.models import (
     OverviewInsightsModel, RolesPostingsModel, CommonSkillModal, 
@@ -68,7 +69,7 @@ def last_sync():
 @app.post('/api/top-companies')
 def get_top_companies(request:TopCompanyModel):
     actual_field = None if request.field.lower() == 'all' else request.field
-    top_companies = top_hiring_company(request.year, actual_field)
+    top_companies = top_hiring_company(request.year, actual_field,request.month)
     return top_companies.to_dict(orient='records')
 
 
@@ -92,16 +93,31 @@ async def get_job_posting_insights(request: OverviewInsightsModel):
 @app.get('/api/job-tiles')
 def get_data_for_jobtile(field: str = 'all'):
     actual_field = None if field.lower() == 'all' else field
-    skill = topSkills(actual_field).iloc[0]['name']
-    location = topLocations(actual_field).iloc[0]['location']
-    toprole = toproles(actual_field).iloc[0]['role']
-    year_posting = int(current_year_postings(datetime.now().year, actual_field))
+
+    skills_df = topSkills(field=actual_field)
+    skill = skills_df.iloc[0]['name'] if not skills_df.empty else "N/A"
+    topSkillCount = int(skills_df.iloc[0]['demand']) if not skills_df.empty else 0
+
+    loc_df = topLocations(field=actual_field)
+    location = loc_df.iloc[0]['location'] if not loc_df.empty else "N/A"
+    topLocCount = int(loc_df.iloc[0]['count']) if not loc_df.empty else 0
+    
+    roles_df = toproles(field=actual_field)
+    toprole = roles_df.iloc[0]['role'] if not roles_df.empty else "N/A"
+    toproleCount = int(roles_df.iloc[0]['volume']) if not roles_df.empty else 0
+    
+    year_posting = int(current_year_postings(datetime.now().year, field=actual_field))
     
     return {
         "skill": skill,
+        "skillCount":topSkillCount,
+
         "location": location,
+        "locationCount":topLocCount,
         "year_posting": f"{year_posting:,}",
-        "role": toprole
+        "role": toprole,
+        "roleCount":toproleCount
+
     }
 
 
@@ -111,7 +127,7 @@ def get_data_for_jobtile(field: str = 'all'):
 @app.get('/api/top-role-table')
 def get_top_roles(field: str = 'all'):
     actual_field = None if field.lower() == 'all' else field
-    data = toproles(actual_field)
+    data = toproles(field=actual_field)
     return data.to_dict(orient='records')
 
 

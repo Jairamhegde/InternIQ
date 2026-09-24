@@ -51,16 +51,15 @@ function Key_insights({ selectedYear, data, selectedField }) {
                 <>
 
                     <div className="insights-header">
-                        <span className="insights-icon">
-                            <img src={growthIcon} alt="insights" width="20" height="20" />
-                        </span>
-                        <h3>Key Insights</h3>
+
+                        <h3>Top Hiring Companies</h3>
                     </div>
 
-                    {/* Divider */}
+                    {/*
+                  
                     <div className="divider"></div>
 
-                    {/* Insight 1 */}
+                    
                     <div className="insight">
                         <h4>{keydata.brief || ""}</h4>
                     </div>
@@ -68,9 +67,10 @@ function Key_insights({ selectedYear, data, selectedField }) {
                         <p>{keydata.detail || ""}</p>
 
                     </div>
+                    */}
 
                     <div className="company-card">
-                        <h3 className="top-companies-title">Top hiring companies</h3>
+                        {/* <h3 className="top-companies-title">Top hiring companies</h3> */}
                         <div className="top-companies-list">
                             {companyData?.map((key, index) => (
                                 <div key={index} className="top-company-container">

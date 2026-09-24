@@ -1,8 +1,8 @@
 import pytest
-from queries.analysis import (topLocations, topSkills, roles,
-                              noOfopportunities, commonSkills,
-                              TopSkillsOfRole, jobCount, roles_trends,
-                              OPPORTUNITIES, uniqueSkillCount)
+from queries.analysis import (topLocations, topSkills, toproles, roles_trends)
+from queries.future_use import (roles, noOfopportunities, commonSkills,
+                                TopSkillsOfRole, jobCount, OPPORTUNITIES, uniqueSkillCount)
+
 import numpy as np
 import pandas as pd
 from extract.extractor import dateFromtext 

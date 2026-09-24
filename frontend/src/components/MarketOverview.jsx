@@ -25,34 +25,38 @@ function MarketOverview({ data, setData, selectedField, setField }) {
 
     const stats = [
         {
-            label: "TOTAL POSTINGS",
+            label: "OPPORTUNITIES TRACKED",
             value: data.year_posting || "...",
+            cnt: "Postings",
         },
         {
-            label: "TRENDING TECHSTACK",
+            label: "TOP ROLE",
+            value: data.role || "...",
+            cnt: data.roleCount !== undefined ? `${data.roleCount} jobs` : "...",
+        },
+        {
+            label: "MOST DEMANDED SKILL",
             value: data.skill || "...",
+            cnt: data.skillCount !== undefined ? `${data.skillCount} mentions` : "...",
         },
         {
             label: "TOP LOCATION",
             value: data.location || "...",
-        },
-        {
-            label: "DEMANDING ROLE",
-            value: data.role || "..."
+            cnt: data.locationCount !== undefined ? `${data.locationCount} jobs` : "...",
         }
     ];
 
     return (
         <div className="market-overview">
 
-            <div className="market-overview-text">
+            {/* <div className="market-overview-text">
                 <h1 className="market-title">Internship Job Market Overview</h1>
                 <p className="market-description">
                     An analytical overview of the current hiring landscape,
                     tracking key volume indicators and compensation trends
                     across major domains.
                 </p>
-            </div>
+            </div> */}
 
             <div className="overview-cards">
                 {stats.map((stat, index) => (
@@ -63,7 +67,16 @@ function MarketOverview({ data, setData, selectedField, setField }) {
                     >
                         <span className="stat-label">{stat.label}</span>
                         <div className="stat-value-row">
-                            <h3 className="stat-value">{isFetching ? "..." : stat.value}</h3>
+                            {isFetching ? <h4 className="stat-value">...</h4> :
+                                <div className='tile-details'>
+                                    <h4 className='stat-value' title={typeof stat.value === 'string' ? stat.value : ''}>
+                                        {stat.value}
+                                    </h4>
+                                    <h5 className='stat-val'>
+                                        <span className="stat-arrow"></span> {stat.cnt}
+                                    </h5>
+                                </div>
+                            }
                         </div>
                     </div>
                 ))}
@@ -99,12 +112,12 @@ function SelectBox({ selectedField, setField }) {
     };
 
     return (
-        <div className="select-box-container">
+        <div className="market-select-inner">
             {isLoading ? (<Loader />) : (
                 <>
-                    <h3>
+                    <h4>
                         Select Field
-                    </h3>
+                    </h4>
                     <Select
                         options={myOptions}
                         value={selectedField}

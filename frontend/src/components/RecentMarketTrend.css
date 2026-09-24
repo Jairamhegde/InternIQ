@@ -43,6 +43,8 @@
     border: 1px solid #e2e8f0;
     border-radius: 12px;
     padding: 20px 24px;
+    position: relative;
+    min-width: 0;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.03);
     transition: all 0.25s ease;
 }
@@ -51,6 +53,25 @@
     transform: translateY(-3px);
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
     border-color: #cbd5e1;
+
+}
+
+.stat-card[data-tooltip]:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: -34px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #ffffff;
+    color: #000000;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 12px 18px;
+    border-radius: 6px;
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 100;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .stat-label {
@@ -65,17 +86,25 @@
 
 .stat-value-row {
     display: flex;
+    flex-direction: row;
     align-items: center;
+    min-width: 0;
     gap: 12px;
 }
 
 .stat-value {
     margin: 0;
-    font-size: 26px;
+    font-size: 20px;
     font-weight: 800;
     color: #0f172a;
     letter-spacing: -0.02em;
     text-transform: capitalize;
+    width: auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+    max-width: 100%;
+    white-space: nowrap;
 }
 
 .stat-change {
@@ -110,4 +139,4 @@
 .loc-posting-chart {
     display: flex;
     gap: 20px;
-}
+}

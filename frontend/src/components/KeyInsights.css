@@ -20,6 +20,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  margin-bottom: 20px;
 }
 
 .insights-icon {
@@ -29,7 +30,7 @@
 
 .insights-header h3 {
   margin: 0;
-  font-size: 17px;
+  font-size: 18px;
   font-weight: 700;
   color: #0f172a;
   letter-spacing: -0.01em;
@@ -136,7 +137,7 @@
 }
 
 .top-companies-list {
-  max-height: 155px;
+  max-height: 350px;
   /* Fits exactly 3 cards and hints at more */
   overflow-y: auto;
   padding-right: 6px;

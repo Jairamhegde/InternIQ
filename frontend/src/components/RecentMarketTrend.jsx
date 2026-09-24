@@ -8,11 +8,6 @@ import { useQuery } from '@tanstack/react-query';
 import BuildingSvg from '../assets/building.svg'
 import BriefCase from '../assets/briefcase.svg'
 
-
-
-
-
-
 import {
     BarChart,
     Bar,
@@ -76,7 +71,7 @@ function RecentMarketTrend() {
                     <div className="rmt-body">
                         <div className="overview-cards">
                             {data.map((stat, index) => (
-                                <div className="stat-card" key={index}>
+                                <div className="stat-card" key={index} data-tooltip={stat.value}>
                                     <span className="stat-label">{startCase(stat.label)}</span>
                                     <div className="stat-value-row" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                                         <h3 className="stat-value">{stat.value}</h3>

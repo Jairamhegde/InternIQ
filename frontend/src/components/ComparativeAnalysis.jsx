@@ -200,8 +200,6 @@ function ComaparitiveCharts({ selectedJobs }) {
 
                         </BarChart>
                     </ResponsiveContainer>
-
-                    <ComparativeAnalysisInsights title="Insights" data={compInsights?.role_insights} />
                 </div>
                 <div className='Radar-chart'>
                     <div className='comp-header'>
@@ -231,28 +229,29 @@ function ComaparitiveCharts({ selectedJobs }) {
                             }
                         </RadarChart>
                     </ResponsiveContainer>
-                    <ComparativeAnalysisInsights title="Insights" data={compInsights?.skill_insights} />
-
                 </div>
             </div>
             <div className='line-chart-div'>
                 <Compare_line_chart selectedJobs={selectedJobs} />
             </div>
 
-            <ComparativeAnalysisInsights title="Key takeaway" data={compInsights?.takeaway} />
+            <ComparativeAnalysisInsights title="Key takeaway" data={compInsights?.takeaway} error={compInsights?.error} />
 
         </div>
     );
 }
 
-function ComparativeAnalysisInsights({ title, data }) {
+function ComparativeAnalysisInsights({ title, data, error }) {
+    const unavailable = error || (!data && data !== 0);
     return (
         <div className='comp-insights-card'>
             <h3>{title}</h3>
             {data ? (
                 <p>{data}</p>
             ) : (
-                <p>...</p>
+                <p style={{ color: '#94a3b8', fontStyle: 'italic', fontSize: '14px' }}>
+                    {unavailable ? 'Insights currently not available.' : '...'}
+                </p>
             )}
         </div>
     );

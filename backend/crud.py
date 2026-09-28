@@ -74,7 +74,10 @@ async def ask_ai(field1: str, field2: str, type: str = 'overview'):
             prompt  = prompt1
 
         model = genai.GenerativeModel('gemini-flash-lite-latest')
-        model_response = await model.generate_content_async(prompt)
+        model_response = await model.generate_content_async(
+            prompt,
+            request_options={"timeout": 60},
+        )
         raw = model_response.text.strip()
 
         if not raw:
@@ -90,7 +93,10 @@ async def ask_ai(field1: str, field2: str, type: str = 'overview'):
         clean_response = json.loads(raw)
         return clean_response
     except Exception as e:
-        return []
+        error_msg = str(e)
+        if "429" in error_msg or "quota" in error_msg.lower():
+            return {"error": "API quota exceeded. Insights unavailable temporarily."}
+        return {"error": f"AI service error: {error_msg[:100]}"}
 
 
 def extract_pdf(file):

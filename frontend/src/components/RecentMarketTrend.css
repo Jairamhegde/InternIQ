@@ -140,3 +140,27 @@
     display: flex;
     gap: 20px;
 }
+
+.top-roles-card .table-responsive {
+    max-height: 520px;
+    overflow-y: auto;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.top-roles-card .table-responsive::-webkit-scrollbar {
+    width: 4px;
+}
+
+.top-roles-card .table-responsive::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.top-roles-card .table-responsive::-webkit-scrollbar-thumb {
+    background: transparent;
+    border-radius: 4px;
+}
+
+.top-roles-card .table-responsive:hover::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.15);
+}

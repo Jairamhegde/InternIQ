@@ -52,7 +52,7 @@ function RecentMarketTrend() {
         },
         {
             label: "TOP ROLE AVG STIPEND",
-            value: statsdata?.average_sal ? `₹${Number(statsdata.average_sal).toLocaleString("en-IN")}` : "Loading..."
+            value: isLoading ? "Loading..." : (statsdata?.average_sal ? `₹${Number(statsdata.average_sal).toLocaleString("en-IN")}` : "N/A")
         },
         {
             label: "TOP LOCATION",

@@ -45,16 +45,17 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:5173",
+        "http://localhost:5174",
         "http://localhost:3000",
         "https://intern-iq-five.vercel.app"
     ],  
+    allow_origin_regex=r"^https?://(localhost|127\.0\.0\.1)(:\d+)?$",
     allow_credentials=True,
     allow_methods=["*"],  
     allow_headers=["*"],  
-   
 )
 
-genai.configure(api_key=os.getenv("GEMINI_API"))
+genai.configure(api_key=os.getenv("GEMINI_API"), transport="rest")
 
 # _________________________ API ENDPOINTS ______________________
 

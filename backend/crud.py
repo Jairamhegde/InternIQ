@@ -17,7 +17,6 @@ async def get_ai_response(field1,field2,type):
     data = await ask_ai(field1_str, field2_str, type)
     return data
 
-
 @alru_cache(maxsize = 100)
 async def ask_ai(field1: str, field2: str, type: str = 'overview'):
     

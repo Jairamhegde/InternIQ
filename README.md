@@ -46,6 +46,12 @@ Students and job seekers often can't see the internship market clearly. InternIQ
 - **Resume skill-gap analyzer:** Upload a PDF or DOCX and choose a target field. Missing skills are ranked by market demand and split into *essential* and *nice to have*.
 - **Recent market trends:** A rolling 10-day view built on `job_snapshot`, kept separate from all-time analytics.
 
+### Role Classifier Benchmark & Performance
+
+The hybrid role classifier combines keyword rule-matching with TF-IDF cosine similarity against reference embeddings across seven technical fields. Evaluated on a validation set of 100 randomly sampled postings, the model achieves **96.00% overall accuracy**:
+
+![Role Classifier Evaluation Report](screenshot/classifier_evaluation.png)
+
 ---
 
 ## Tech Stack
@@ -223,7 +229,11 @@ VITE_API_URL=http://localhost:8000
 | `scrape.yml` | Daily cron | Runs tests first; runs the live scraper only if they pass |
 
 ```bash
+# Run pytest test suite
 python -m pytest testing/
+
+# Run classifier evaluation and accuracy report
+python -m testing.test_classifier_extractor
 ```
 
 ---

@@ -15,11 +15,8 @@ def test_extract_pdf():
     pdf_path = os.path.join(os.path.dirname(__file__), "test_resume.pdf")
     with open(pdf_path, "rb") as f:
         text = extract_pdf(f)
-    
     assert "Python" in text
     assert "Django" in text
-
-
 
 
 if __name__ == '__main__':

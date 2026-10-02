@@ -36,6 +36,7 @@ Thumbs.db
 
 # Generated Data
 *.csv
+!testing/test.csv
 *.zip
 *.json
 !package.json

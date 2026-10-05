@@ -1,0 +1,103 @@
+/* Recent Market Trends page */
+
+.trend-stat-grid {
+    grid-template-columns: repeat(5, 1fr);
+}
+
+.trend-stat-grid .stat-tile-value {
+    font-size: 18px;
+}
+
+/* Legend under the location pie chart */
+.location-legend {
+    margin: 12px 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.location-legend li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--grid);
+    font-size: 13px;
+}
+
+.location-legend li:last-child {
+    border-bottom: 0;
+}
+
+.location-name {
+    flex: 1;
+}
+
+.location-value {
+    font-weight: 500;
+}
+
+.location-share {
+    width: 40px;
+    text-align: right;
+    color: var(--text-3);
+}
+
+/* Recent postings table */
+.table-search {
+    width: 240px;
+    height: 34px;
+    padding: 0 10px;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-sm);
+    outline: 0;
+}
+
+.table-search:focus {
+    border-color: var(--accent);
+}
+
+/* The posting list can be long, so it scrolls inside the card with a sticky header. */
+.postings-scroll {
+    max-height: 480px;
+    overflow-y: auto;
+}
+
+.postings-scroll th {
+    position: sticky;
+    top: 0;
+}
+
+.posted-date {
+    white-space: nowrap;
+    color: var(--text-3);
+}
+
+.posting-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--accent);
+    font-weight: 500;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.posting-link:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 1100px) {
+    .trend-stat-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 760px) {
+    .trend-stat-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .table-search {
+        width: 100%;
+    }
+}

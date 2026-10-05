@@ -1,0 +1,75 @@
+/* Compare Roles page */
+
+.compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.picker-count {
+    font-size: 13px;
+    color: var(--text-3);
+}
+
+.compare-empty {
+    padding: 48px;
+    text-align: center;
+    color: var(--text-3);
+    border: 1px dashed var(--border-strong);
+    border-radius: var(--radius);
+}
+
+.legend-text {
+    color: var(--text-2);
+}
+
+.takeaway-text {
+    color: var(--text-2);
+    line-height: 1.65;
+}
+
+/* react-select restyled to match the rest of the dashboard */
+.role-select__control {
+    min-height: 40px;
+    border-color: var(--border-strong) !important;
+    border-radius: var(--radius-sm) !important;
+    box-shadow: none !important;
+}
+
+.role-select__control--is-focused {
+    border-color: var(--accent) !important;
+}
+
+.role-select__multi-value {
+    background: var(--accent-soft) !important;
+    border-radius: 4px !important;
+}
+
+.role-select__multi-value__label {
+    color: var(--accent) !important;
+    font-size: 13px !important;
+}
+
+.role-select__multi-value__remove:hover {
+    background: var(--bad-soft) !important;
+    color: var(--bad) !important;
+}
+
+.role-select__option--is-focused {
+    background: var(--hover) !important;
+}
+
+.role-select__option--is-selected {
+    background: var(--accent-soft) !important;
+    color: var(--accent) !important;
+}
+
+.role-select__placeholder {
+    color: var(--text-3) !important;
+}
+
+@media (max-width: 1100px) {
+    .compare-grid {
+        grid-template-columns: 1fr;
+    }
+}

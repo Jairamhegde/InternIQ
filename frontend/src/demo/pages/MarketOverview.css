@@ -1,0 +1,79 @@
+/* Market Overview page */
+
+/* Year switch above the postings chart */
+.year-buttons {
+    display: inline-flex;
+    gap: 2px;
+    padding: 2px;
+    background: var(--hover);
+    border-radius: var(--radius-sm);
+}
+
+.year-buttons button {
+    padding: 4px 12px;
+    border: 0;
+    border-radius: 4px;
+    background: none;
+    color: var(--text-2);
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.year-buttons button.is-active {
+    background: var(--surface);
+    color: var(--text);
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.08);
+}
+
+/* Top hiring companies list */
+.company-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.company-list li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--grid);
+}
+
+.company-list li:last-child {
+    border-bottom: 0;
+}
+
+.company-initial {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 30px;
+    height: 30px;
+    border-radius: 6px;
+    background: var(--hover);
+    color: var(--text-2);
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.company-name {
+    flex: 1;
+    min-width: 0;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.company-count {
+    flex-shrink: 0;
+    font-size: 13px;
+    color: var(--text-2);
+}
+
+/* Rank number in the top roles table */
+.rank-cell {
+    width: 40px;
+    color: var(--text-3);
+}

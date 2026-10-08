@@ -366,10 +366,7 @@ def skillgap_analyzer(field: str = Form(...), resume: UploadFile = File(...)):
     
     average_score = sum(df_fre[j] for j in missing) / len(missing) if missing else 0
 
-    '''
-    create dict which holds missing skills along with frequency, with label as 'e' (essential)
-    or 'r' required. if freq > avg -> label as 'e'. else 'r'
-    '''
+    # Label each missing skill 'e' (essential) if its frequency is above average, else 'r' (required).
     missing_with_freq = [{"skill": s, "freq": df_fre[s], "priority": "e" if df_fre[s] >= average_score else "r"} for s in missing]
     matched_with_freq = [{"skill": s, "freq": df_fre[s]} for s in matched]
 
@@ -385,12 +382,7 @@ def skillgap_analyzer(field: str = Form(...), resume: UploadFile = File(...)):
 # _________________________ Ask AI Endpoint ________________________
 
 def fill_missing_dashboard_data():
-    """
-    app.state.dashboard_data only fills up as the dashboard pages call the API.
-    If someone opens Ask AI first, load the default view of every page
-    (all fields, current year, top 3 roles) so the AI has data to use.
-    Each endpoint saves its own result into app.state.dashboard_data.
-    """
+    """Loads each page's default data when Ask AI is opened before the dashboard pages."""
     dashboard_data = app.state.dashboard_data
     current_year = datetime.now().year
 

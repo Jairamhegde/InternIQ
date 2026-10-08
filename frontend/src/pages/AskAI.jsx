@@ -4,14 +4,7 @@ import { Icon } from '../components.jsx';
 import { postJson } from '../helpers.js';
 import './AskAI.css';
 
-// Questions are sent to the backend endpoint /api/chatwith_ai, which answers
-// them with Gemini using the dashboard data stored on the server.
-//
-// Caching: every answer is loaded with useQuery, using the question as the query key.
-// React Query keeps each answer in its cache, so asking the same question again
-// shows the saved answer straight away instead of calling the AI again.
-// The cache lives in the QueryClient (main.jsx), so it is kept even when the
-// user switches to another page and comes back.
+// Sends questions to /api/chatwith_ai and caches each answer by question, so repeats are instant.
 
 const SUGGESTED_QUESTIONS = [
     'Which role has the most postings?',
@@ -20,8 +13,7 @@ const SUGGESTED_QUESTIONS = [
     'How many jobs were posted in the last 10 days?',
 ];
 
-// Turns a question into a cache key, so small differences do not matter.
-// "Which skill is most in demand?" and "which skill is most in demand" give the same key.
+// Normalises a question into a cache key, ignoring case and punctuation differences.
 function makeCacheKey(question) {
     let key = question.trim().toLowerCase();
 
@@ -36,8 +28,7 @@ function makeCacheKey(question) {
     return key;
 }
 
-// Sends one question to the backend and returns the answer text.
-// Errors are thrown, so React Query does not store them as answers.
+// Sends one question to the backend and returns the answer; errors are thrown so they are not cached.
 async function fetchAnswer(question) {
     const result = await postJson('/api/chatwith_ai', { question: question });
 

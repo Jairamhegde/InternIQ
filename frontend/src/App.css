@@ -1,5 +1,4 @@
-/* Base styles for the dashboard: colours, layout shell, sidebar and shared pieces.
-   Page-specific styles live next to each page in pages/. */
+/* Base styles for the dashboard: colours, layout, sidebar and shared pieces. */
 
 :root {
     --bg: #f6f6f4;

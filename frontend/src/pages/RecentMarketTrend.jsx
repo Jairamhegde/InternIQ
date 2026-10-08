@@ -32,8 +32,7 @@ function RecentMarketTrend() {
     );
 }
 
-// ---------- Stat tiles: /api/recent-market-trend ----------
-// role, skill and toplocation arrive as [name, count] pairs.
+// ---------- Stat tiles: /api/recent-market-trend (role, skill and location arrive as [name, count]) ----------
 
 function TrendTiles({ trend }) {
     const [roleName, roleCount] = trend.role;

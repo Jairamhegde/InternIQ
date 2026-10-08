@@ -1,5 +1,4 @@
-// Small building blocks used by more than one page.
-// Their styles live in App.css.
+// Small building blocks shared by every page; styles live in App.css.
 import { formatNumber } from './helpers.js';
 
 const ICON_PATHS = {

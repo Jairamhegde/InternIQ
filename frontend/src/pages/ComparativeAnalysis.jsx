@@ -73,8 +73,7 @@ function ComparativeAnalysis() {
     );
 }
 
-// Gives each role a colour that stays the same while the role stays selected,
-// so removing one role does not repaint the others.
+// Keeps each selected role's colour stable when other roles are added or removed.
 function assignColors(oldColors, roles) {
     const newColors = {};
     const usedColors = [];
@@ -235,8 +234,7 @@ function SkillsRadar({ query, selectedRoles, roleColors }) {
     );
 }
 
-// The API returns every skill (often 50 or more), which is unreadable on a radar.
-// Keep the skills with the highest combined share across the selected roles.
+// Keeps only the skills with the highest combined share, so the radar stays readable.
 function pickTopSkills(skillRows, selectedRoles) {
     const rowsWithTotal = skillRows.map((row) => {
         let total = 0;
@@ -306,8 +304,7 @@ function legendText(value) {
     return <span className="legend-text">{value}</span>;
 }
 
-// ---------- Average salary: /api/get-role-posting ----------
-// Uses the same response as the postings chart, which includes average_salary for each role.
+// ---------- Average salary: /api/get-role-posting (same response as the postings chart) ----------
 
 function SalaryChart({ query }) {
     let body;

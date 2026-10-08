@@ -5,6 +5,7 @@ from psycopg2.extras import execute_values
 
 
 def insertRawData(job_data):
+    
     engine = connect_database(search_path="raw_data")
 
     # Extract the raw psycopg2 connection from the SQLAlchemy engine
@@ -21,6 +22,13 @@ def insertRawData(job_data):
             if job.get('tech_stack') and job.get('company') and job.get('job_title')
         ]
 
+        # Drop repeats of the same job within this batch; ON CONFLICT DO UPDATE cannot touch one row twice
+        unique_jobs = {}
+        for job in valid_jobs:
+            key = (job['job_title'], job['location'], job['company'], job['posted_date'])
+            unique_jobs[key] = job
+        valid_jobs = list(unique_jobs.values())
+
         job_data_tuple = [
             (
                 job['job_title'],
@@ -36,13 +44,15 @@ def insertRawData(job_data):
         ]
 
         if not job_data_tuple:
-            return
+            return 
 
-        # Insert Jobs — allow duplicates, return ids in insertion order
+        # Insert new jobs, tag already-seen jobs with this run_id; one id is returned per row, in order
         query1 = '''
             INSERT INTO job_data
             (title, salary, location, scrape_time, posted_date, company, job_link, run_id)
             VALUES %s
+            ON CONFLICT (title, location, company, posted_date)
+            DO UPDATE SET run_id = EXCLUDED.run_id
             RETURNING id
             ;
         '''
@@ -108,6 +118,7 @@ def insertRawData(job_data):
             execute_values(cur, snapshot_query, snapshot_tuples)
 
         conn.commit()
+        return True
 
     except Exception as e:
         conn.rollback()

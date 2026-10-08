@@ -361,41 +361,6 @@ def get_job_skills(job_title):
     newset = [normalize_title(row[0]) for row in rows]
     return newset
 
-def score_job_field(title,skills):
-    title = normalize_title(title)
-    backend_score = 0
-    frontend_score = 0
-    fullstack_score = 0
-    aiml_score = 0
-
-    if title in BACKEND_JOB_TITLES:
-        backend_score += 10
-    if title in FRONTEND_JOB_TITLES:
-        frontend_score += 10
-    if title in FULL_STACK_JOB_TITLES:
-        fullstack_score += 10
-    if title in AI_ML_JOB_TITLES:
-        aiml_score += 10
-    
-    for skill in skills:
-        if skill in BACKEND_KEYWORDS:
-            backend_score += 1
-        if skill in FRONTEND_KEYWORDS:
-            frontend_score += 1
-        if skill in AI_ML_KEYWORDS:
-            aiml_score += 1
-        if skill in FULLSTACK_KEYWORDS:
-            fullstack_score += 1
-    print(f"fullstack : {fullstack_score}\nbackend : {backend_score}\n Frontend : {frontend_score}\n aiml : {aiml_score}")
-    
-    if fullstack_score >= backend_score and fullstack_score >= frontend_score and fullstack_score >= aiml_score:
-        return f"Fullstack{fullstack_score}"
-    elif backend_score >= fullstack_score and backend_score >= frontend_score and backend_score >= aiml_score:
-        return f"backend{backend_score}"
-    elif frontend_score >= fullstack_score and frontend_score >= backend_score and frontend_score >= aiml_score:
-        return f"Frontend{frontend_score}"
-    else:
-        return f"aiml{aiml_score}"
 
 dictionaries = {
     "frontend": """
@@ -510,7 +475,7 @@ dictionaries = {
 
                 Common technologies include Python, R, SQL, Excel, Power BI, Tableau, Pandas, NumPy,
                 SciPy, Matplotlib, Seaborn, Plotly, Jupyter Notebook, scikit-learn, linear and logistic
-                regression, decision trees, random forests, XGBoost, A/B testing frameworks, and
+                regression, decision trees, random forests, XGBoost, A/B testing frameworks, and 
                 statistical inference methods such as hypothesis testing and confidence intervals.
                 """,
 
@@ -556,6 +521,14 @@ dictionaries = {
                 Redshift, BigQuery, Databricks, AWS EMR, Azure Data Factory, GCP Dataflow, and data
                 warehousing and distributed systems design.
                 """,
+            "devops": """
+                A DevOps Engineer builds and maintains CI/CD pipelines, automates deployments,
+                manages cloud infrastructure and containers, and monitors system reliability.
+                Common titles include DevOps Engineer, Site Reliability Engineer, Cloud Engineer,
+                Platform Engineer, and Infrastructure Engineer.
+                Common technologies include Docker, Kubernetes, Jenkins, GitHub Actions, Terraform,
+                Ansible, AWS, Azure, GCP, Linux, Bash, Prometheus, Grafana, and CI/CD.
+                """
 }
 
 corpus = list(dictionaries.values())

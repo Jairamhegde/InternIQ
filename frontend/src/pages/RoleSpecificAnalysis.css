@@ -1,0 +1,14 @@
+/* Role Analysis page */
+
+/* Two stat tiles side by side; the shared .stat-grid is built for four. */
+.role-stat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+@media (max-width: 760px) {
+    .role-stat-grid {
+        grid-template-columns: 1fr;
+    }
+}

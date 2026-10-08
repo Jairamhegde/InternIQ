@@ -101,15 +101,28 @@ def currencymap(number, currencyType):
 
 def loadData():
     job_data = []
+    conn = None
+    cur = None
     try:
         engine = connect_database(search_path="raw_data")
         conn = engine.raw_connection()
         cur = conn.cursor()
 
-        # Fetch jobs scraped today
-        cur.execute("SELECT id, title, salary, location, company, scrape_time, posted_date,job_link FROM job_data WHERE scrape_time::date = CURRENT_DATE;")
+        # Latest run
+        cur.execute("SELECT MAX(run_id) FROM job_data;")
+        run_id = cur.fetchone()[0]
+        if run_id is None:
+            return job_data
 
-        
+        # Fetch jobs from the latest run
+        cur.execute(
+            """
+            SELECT id, title, salary, location, company, scrape_time, posted_date, job_link
+            FROM job_data
+            WHERE run_id = %s;
+            """,
+            (run_id,),
+        )
         rows = cur.fetchall()
         logging.info(f"Loaded rawdata for transformation...{len(rows)}rows.")
 
@@ -118,12 +131,12 @@ def loadData():
             job_id = row[0] if row[0] else None
             if not job_id:
                 continue
-                
+
             job_name  = " ".join(row[1].strip().split()).lower() if row[1] else None
             sal       = convertSalary(row[2]) if row[2] else (0, 0)
             location  = " ".join(row[3].strip().split()).lower() if row[3] else None
             company   = " ".join(row[4].strip().split()).lower() if row[4] else None
-            
+
             job_dict[job_id] = {
                 "job_title":    job_name,
                 "min_salary":   sal[0] if sal[0] > 0 else None,
@@ -133,31 +146,33 @@ def loadData():
                 "posted_date":  row[6] if row[6] else None,
                 "company":      company,
                 "skills":       [],
-                "job_link" :   row[7] if  row[7] else None
+                "job_link":     row[7] if row[7] else None
             }
 
-        # Fetch skills for jobs scraped today
-        cur.execute('''
+        # Fetch skills for jobs in the same run
+        cur.execute(
+            """
             SELECT js.job_id, s.name
             FROM job_skills js
             JOIN skills s ON js.skill_id = s.skill_id
             JOIN job_data jd ON js.job_id = jd.id
-            WHERE jd.scrape_time::date = CURRENT_DATE;
-        ''')
-        skill_rows = cur.fetchall()
-
-        for job_id, skill_name in skill_rows:
+            WHERE jd.run_id = %s;
+            """,
+            (run_id,),
+        )
+        for job_id, skill_name in cur.fetchall():
             if job_id in job_dict and skill_name:
                 job_dict[job_id]["skills"].append(" ".join(skill_name.lower().strip().split()))
 
         job_data = list(job_dict.values())
         logging.info(f"Returned...{len(job_data)}rows for insertion.")
-
-
-        cur.close()
-        conn.close()
         return job_data
 
     except Exception as e:
         logging.exception(f"loadData failed: {e}")
         return job_data
+    finally:
+        if cur:
+            cur.close()
+        if conn:
+            conn.close()

@@ -1,7 +1,7 @@
 import pytest
-from queries.analysis import (topLocations, topSkills, toproles, roles_trends)
+from queries.analysis import (topLocations, topSkills, toproles)
 from queries.future_use import (roles, noOfopportunities, commonSkills,
-                                TopSkillsOfRole, jobCount, OPPORTUNITIES, uniqueSkillCount)
+                                TopSkillsOfRole, jobCount, OPPORTUNITIES, uniqueSkillCount, roles_trends)
 
 import numpy as np
 import pandas as pd

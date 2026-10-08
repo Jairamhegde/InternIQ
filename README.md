@@ -1,421 +1,211 @@
 # InternIQ
 
-InternIQ is a job-market analytics platform that turns internship listings into structured market intelligence.
+**An end-to-end data engineering platform that turns raw internship postings into market intelligence.**
 
-It automatically collects internship postings from Internshala, extracts and normalizes job data, classifies postings into technical domains, stores the processed data in PostgreSQL, and exposes analytics through a FastAPI backend and React dashboard.
+InternIQ scrapes internship listings from Internshala every day, cleans and normalizes them in a PostgreSQL warehouse, classifies each posting by technical role, and serves the results through a FastAPI backend to an interactive React dashboard, including AI-generated insights and a resume skill-gap analyzer.
 
-It also provides:
-- market and role analysis
-- skill and location analysis
-- salary normalization
-- comparative role analysis
-- recent 10-day market trends
-- AI-generated market summaries
-- resume skill-gap analysis
+---
 
-## What It Helps With
+## Live Demo
 
-InternIQ is built for students and job seekers who want a data-driven view of the internship market instead of relying on isolated job listings.
+| Component | Link |
+|-----------|------|
+| Dashboard (Vercel) | [interniq.vercel.app](https://intern-iq-five.vercel.app/) |
+| API (Render) | [interniq-api.onrender.com](https://interniq-api.onrender.com) |
+| API Health Check | [`/api/health`](https://interniq-api.onrender.com/api/health) |
 
-The platform answers questions such as:
-- Which roles are appearing most frequently?
-- Which skills are most commonly requested?
-- Which locations have the highest posting volume?
-- How does demand compare across selected roles?
-- What skills are missing from a resume for a selected field?
+> **Note:** The API runs on Render's free tier and spins down when idle. Open the [health check](https://interniq-api.onrender.com/api/health) first and wait a few seconds for the service to wake up, then open the dashboard. Otherwise the first data request may time out.
 
-## How It Is Built
+---
 
-InternIQ is organized as a scheduled data pipeline and an application-serving layer.
+## What It Solves
 
-1. **Collect** — GitHub Actions runs the scraper on a schedule. Requests and BeautifulSoup collect listings from selected Internshala job categories.
-2. **Extract** — The scraper parses job title, company, salary, location, skills, posted date, hiring status, and source link. When a listing does not expose skill tags, the description is tokenized into unigrams and bigrams and matched against the project's skill dictionary.
-3. **Stage** — Scraped records and skill relationships are inserted into the `raw_data` PostgreSQL schema.
-4. **Transform** — Raw records are normalized. Salary strings are parsed into minimum/maximum values, supported currencies are converted to INR, and monthly compensation is annualized.
-5. **Classify** — Each posting is assigned a primary technical domain using a hybrid approach: title/keyword scoring plus TF-IDF and cosine similarity against curated domain descriptions. The selected domain and similarity score are stored with the job.
-6. **Load** — Processed records, skills, locations, relationships, and scrape observations are written to the `clean_data` schema.
-7. **Serve** — FastAPI exposes REST endpoints for market analytics, comparative analysis, recent trends, AI insights, and resume analysis.
-8. **Present** — React consumes the API and renders the dashboard.
-9. **Enrich** — Gemini generates concise natural-language summaries from calculated analytics. Responses are generated asynchronously and cached with an LRU cache.
+Students and job seekers often can't see the internship market clearly. InternIQ answers four questions using real posting data:
+
+1. Which technical roles are in highest demand right now?
+2. Which skills does each role require, and how do roles compare?
+3. What are the real salary ranges once currencies and pay periods are normalized?
+4. Given a target role, which skills on my resume are missing?
+
+## How It Works
+
+1. **Extract:** A GitHub Actions cron job scrapes five job categories across paginated Internshala listings. When a posting has no skill tags, an n-gram tokenizer and skill matcher recover skills from the description.
+2. **Load (raw):** Scraped postings are batch-inserted into a `raw_data` staging schema.
+3. **Transform:** Salary strings are parsed, converted to INR, and annualized. Dates are parsed and duplicates removed.
+4. **Classify:** A hybrid classifier assigns each posting a primary role and a confidence score.
+5. **Load (clean):** Results are upserted into the `clean_data` analytics schema, with a daily `job_snapshot` for trend analysis.
+6. **Serve:** FastAPI exposes analytics, AI insights and resume analysis to the React dashboard.
+
+## Key Features
+
+- **Automated daily pipeline:** The scheduled workflow runs the test suite first and executes the live scrape only if the tests pass.
+- **Hybrid role classifier:** Postings are scored against keyword dictionaries for Backend, Frontend, Full-Stack and AI/ML. Ambiguous titles fall back to TF-IDF cosine similarity against reference role descriptions across seven fields, including Data Science, Mobile and Big Data.
+- **Salary and currency standardizer:** Detects INR, USD, EUR and AED, converts to INR at fixed rates, annualizes monthly pay and stores `salary_min` / `salary_max`.
+- **AI-generated insights:** Gemini turns query results (top roles, skill frequency, monthly trends) into short executive summaries. Calls are async and LRU-cached.
+- **Comparative role analysis:** Compare 2–3 roles on posting volume and skill overlap with a radar chart, powered by a single parameterized SQL query.
+- **Resume skill-gap analyzer:** Upload a PDF or DOCX and choose a target field. Missing skills are ranked by market demand and split into *essential* and *nice to have*.
+- **Recent market trends:** A rolling 10-day view built on `job_snapshot`, kept separate from all-time analytics.
+
+### Role Classifier Benchmark & Performance
+
+The hybrid role classifier combines keyword rule-matching with TF-IDF cosine similarity against reference embeddings across seven technical fields. Evaluated on a validation set of 100 randomly sampled postings, the model achieves **96.00% overall accuracy**:
+
+![Role Classifier Evaluation Report](screenshot/classifier_evaluation.png)
+
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|-------|------------|
+| Scraping | Requests, BeautifulSoup4 |
+| Classification | Keyword rules, scikit-learn TF-IDF, cosine similarity |
+| Database | PostgreSQL (Aiven), SQLAlchemy, psycopg2 |
+| Backend | FastAPI, Uvicorn, Pydantic |
+| AI | Google Gemini (`gemini-flash-lite-latest`), `async_lru` |
+| Resume parsing | PyMuPDF (PDF), python-docx (DOCX) |
+| Frontend | React 19, Vite, TanStack Query, Recharts, react-select |
+| CI/CD | GitHub Actions (tests on every push/PR, scheduled scrape) |
+| Hosting | Vercel (frontend), Render (backend), Aiven (database) |
+
+---
 
 ## Architecture
 
 ```mermaid
 flowchart LR
-    A[Internshala] --> B[Scraper]
-    B --> C[raw_data\nPostgreSQL]
-    C --> D[Transform]
-    D --> E[Hybrid Classification\nRules + TF-IDF + Cosine Similarity]
-    E --> F[clean_data\nPostgreSQL]
-
-    F --> G[FastAPI]
-    G --> H[React Dashboard]
-
-    F --> I[Analytics Queries]
-    I --> J[Gemini]
-    J --> G
-
-    K[Resume PDF / DOCX] --> L[Text Extraction]
-    L --> M[Skill Matching]
-    F --> M
-    M --> G
-
-    N[GitHub Actions] --> B
-    N --> O[Automated Tests]
+    CRON["GitHub Actions<br/>daily cron"] -.-> SCRAPER
+    SRC["Internshala"] --> SCRAPER["Scraper &<br/>Skill Extractor"]
+    SCRAPER --> RAW[("raw_data<br/>(staging)")]
+    RAW --> ETL["Transform &<br/>Classify"]
+    ETL --> CLEAN[("clean_data<br/>(analytics)")]
+    CLEAN --> API["FastAPI<br/>(Render)"]
+    API <--> AI["Gemini API"]
+    API --> UI["React Dashboard<br/>(Vercel)"]
 ```
 
-### Deployment
+**Design decisions**
 
-```text
-                    REST / JSON
-React — Vercel  ----------------->  FastAPI — Render
-                                      |
-                                      v
-                                PostgreSQL — Aiven
+- **Two schemas (`raw_data` → `clean_data`):** Scraped HTML is messy. A staging schema means a bad scrape or a failed transform never corrupts the tables the dashboard reads.
+- **`job_snapshot` table:** Stores one row per (job, scrape-date), so a job re-scraped on several days is not double-counted. "Postings this week" becomes a simple count query.
+- **Three separately deployed services:** The scraper runs on a schedule, the API is always on, and the frontend is static. A slow scrape never affects dashboard response times.
 
-GitHub Actions
-      |
-      +---- scheduled scraper ----> PostgreSQL
-      |
-      +---- test workflow --------> pytest
-```
-
-## Live Demo
-
-**Dashboard:** https://intern-iq-five.vercel.app/
-
-**API health check:** https://interniq-api-5tmj.onrender.com/api/health
-
-The deployed backend uses Render's free tier and may take longer to respond after inactivity while the service starts.
-
-## Tech Stack
-
-| Layer | Technologies |
-|---|---|
-| Data collection | Python, Requests, BeautifulSoup4 |
-| Data processing | Pandas, NumPy |
-| NLP / classification | scikit-learn TF-IDF, cosine similarity, keyword matching |
-| Backend | FastAPI, Uvicorn, Pydantic |
-| Database | PostgreSQL, SQLAlchemy, psycopg2 |
-| AI insights | Google Gemini, async_lru |
-| Resume parsing | PyMuPDF, python-docx |
-| Frontend | React, Vite, TanStack Query, Recharts, react-select |
-| Testing / CI | pytest, GitHub Actions |
-| Deployment | Vercel, Render, Aiven |
-
-## Core Features
-
-### Market Overview
-
-The dashboard provides:
-- total posting volume
-- top roles
-- most demanded skills
-- top hiring companies
-- top locations
-- salary information
-- monthly posting trends
-
-Where supported, the API accepts year, month, and technical-field filters.
-
-### Hybrid Domain Classification
-
-InternIQ classifies job postings into technical domains using two complementary stages.
-
-**Rule-based scoring**
-- curated job-title dictionaries
-- domain-specific skill keywords
-- stronger weighting for direct title matches
-
-**TF-IDF similarity**
-- creates TF-IDF vectors for curated domain descriptions
-- vectorizes the incoming job title, description, and skills
-- computes cosine similarity against each reference domain
-- selects the highest-scoring domain
-
-The resulting domain and similarity score are stored in `primary_field` and `field_confidence`.
-
-### Comparative Analysis
-
-Users can select job roles and compare:
-- posting volume
-- posting trends
-- overlapping skills
-- skill frequency percentages
-- generated comparison insights
-
-### Recent Market Trends
-
-The dashboard includes a rolling 10-day view with:
-- total opportunities
-- most demanded skill
-- most demanded role
-- average salary for the top role
-- top locations
-- recent job postings
-
-The API also compares the current 10-day window with the preceding 10-day window to calculate the change in total opportunities.
-
-### Resume Skill-Gap Analysis
-
-Users can select a target field and upload a PDF or DOCX resume.
-
-InternIQ:
-1. extracts text from the document
-2. retrieves frequently requested skills for the selected field
-3. checks which skills are present in the resume
-4. separates matched and missing skills
-5. prioritizes missing skills using observed market frequency
-
-## Data Pipeline
-
-```text
-Internshala
-    |
-    v
-Scrape
-    |
-    v
-raw_data
-    |
-    v
-Transform & Normalize
-    |
-    +---- salary normalization
-    +---- date normalization
-    +---- text normalization
-    |
-    v
-Hybrid Classification
-    |
-    +---- title / keyword scoring
-    +---- TF-IDF + cosine similarity
-    |
-    v
-clean_data
-    |
-    v
-Analytics / FastAPI
-    |
-    v
-React Dashboard
-```
-
-The separation between `raw_data` and `clean_data` keeps scraped records separate from analytics-ready records.
+---
 
 ## Database Schema
 
-InternIQ uses two PostgreSQL schemas in the same Aiven database.
+Two isolated schemas in a single Aiven-managed PostgreSQL instance.
 
-### raw_data
+**`raw_data` (staging)**
 
-```text
-raw_data
-├── job_data
-├── skills
-└── job_skills
-```
+| Table | Purpose |
+|-------|---------|
+| `job_data` | Raw scraped postings: text fields, unparsed salary strings, timestamps |
+| `skills`, `job_skills` | Staging skill tags and their many-to-many mapping to postings |
 
-- **`job_data`** — raw scraped job information such as title, salary text, company, location, dates, and source link.
-- **`skills`** — unique skill names extracted from postings.
-- **`job_skills`** — many-to-many relationship between jobs and skills.
+**`clean_data` (analytics)**
 
-### clean_data
+| Table | Purpose |
+|-------|---------|
+| `job_data` | Normalized titles and locations, parsed dates, `salary_min` / `salary_max`, `primary_field`, `field_confidence` |
+| `skills`, `job_skills` | Normalized skill names and the clean join table |
+| `job_snapshot` | One row per (job, scrape-date); basis for all time-series and recent-trend queries |
 
-```text
-clean_data
-├── job_data
-├── skills
-├── job_skills
-├── locations
-├── job_location
-└── job_snapshot
-```
-
-- **`job_data`** — normalized job information, salary range, primary domain, similarity score, and source link.
-- **`skills`** — normalized skill names.
-- **`job_skills`** — job-to-skill relationships.
-- **`locations`** — normalized locations.
-- **`job_location`** — job-to-location relationships for postings that can contain multiple locations.
-- **`job_snapshot`** — records when a job was observed by the scraper and supports trend analysis.
-
-### Relationships
-
-```text
-job_data 1 ────< job_skills >──── 1 skills
-
-job_data 1 ────< job_location >─── 1 locations
-
-job_data 1 ────< job_snapshot
-```
+---
 
 ## API Design
 
-The FastAPI service keeps request validation, analytical queries, and supporting logic separated into focused modules.
+Built with FastAPI and Pydantic models for request and response validation.
 
-### Health & Sync
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/health` | GET | Health check |
+| `/api/last-sync` | GET | Timestamp of the most recent successful scrape |
+| `/api/job-tiles` | GET | Top skill, location, role and posting count for the overview cards |
+| `/api/top-role-table` | GET | Ranked table of roles by demand |
+| `/api/job-postings` | POST | Posting volume by year and field |
+| `/api/job-posting-card-insights` | POST | AI-generated overview insight for the current filter |
+| `/api/get-role-posting` | POST | Posting counts for a selected set of roles |
+| `/api/common-skill` | POST | Skill-overlap matrix for a set of roles |
+| `/api/get-comparative-insights` | POST | AI-generated comparative insight across selected roles |
+| `/api/recent-market-trend` | GET | Rolling 10-day summary (top role, skill, location, opportunity delta) |
+| `/api/job-posting-list` | GET | Recent individual postings |
+| `/api/get-top-locations` | GET | Top hiring locations in the recent window |
+| `/api/analyze-gap` | POST | Resume upload (PDF/DOCX) returns matched vs. missing skills for a target field |
 
-| Method | Endpoint | Purpose |
-|---|---|---|
-| GET | `/api/health` | API health check |
-| GET | `/api/last-sync` | Most recent scrape time |
-
-### Market Overview
-
-| Method | Endpoint | Purpose |
-|---|---|---|
-| GET | `/api/job-tiles` | Overview metrics for role, skill, location, and yearly postings |
-| GET | `/api/top-role-table` | Top roles by posting volume |
-| POST | `/api/job-postings` | Posting volume by year and field |
-| POST | `/api/top-companies` | Top hiring companies with optional filters |
-| POST | `/api/job-posting-card-insights` | AI-generated overview insight |
-
-### Comparative Analysis
-
-| Method | Endpoint | Purpose |
-|---|---|---|
-| POST | `/api/get-role-posting` | Posting counts for selected roles |
-| POST | `/api/get-linechart-data` | Posting trends for selected roles |
-| POST | `/api/common-skill` | Skill overlap and percentage distribution |
-| POST | `/api/get-comparative-insights` | AI-generated role comparison |
-
-### Recent Market
-
-| Method | Endpoint | Purpose |
-|---|---|---|
-| GET | `/api/recent-market-trend` | Recent 10-day market summary |
-| GET | `/api/job-posting-list` | Recent individual postings |
-| GET | `/api/get-top-locations` | Recent top locations |
-
-### Resume Analysis
-
-| Method | Endpoint | Purpose |
-|---|---|---|
-| POST | `/api/analyze-gap` | Resume upload and skill-gap analysis |
+---
 
 ## React Dashboard
 
-The React frontend is organized around four primary views.
+| View | What it shows |
+|------|---------------|
+| **Market Overview** | Summary tiles (top skill, location, role, total postings), role demand ranking, posting volume by year and field, AI-generated insight |
+| **Recent Trends** | Rolling 10-day view of top role, skill, location and opportunity change, plus recent postings |
+| **Comparative Analysis** | Select 2–3 roles to compare posting volume and skill overlap (radar chart), with an AI-generated comparison |
+| **Skill Gap Analyzer** | Upload a resume, pick a target field, and see matched skills and missing skills ranked by demand |
 
-### Market Overview
+Data fetching and caching use TanStack Query; charts use Recharts.
 
-Displays market KPIs, posting trends, top roles, skills, companies, locations, and salary-related information.
-
-### Comparative Analysis
-
-Lets users select roles and compare posting volume, trends, and shared skills.
-
-### Recent Market Trend
-
-Provides the latest 10-day view with demand metrics, locations, recent postings, and salary information.
-
-### Skill Gap Analysis
-
-Lets users upload a resume and returns:
-- match score
-- matched skills
-- missing skills
-- higher-priority missing skills
-- lower-priority missing skills
-
-TanStack Query handles API data fetching and caching on the frontend, while Recharts renders the dashboard visualizations.
-
-## CI/CD
-
-InternIQ uses GitHub Actions for automated testing and scheduled data collection.
-
-### Continuous testing
-
-Triggered on pushes and pull requests to `main`:
-
-```text
-Checkout
-   ↓
-Python setup
-   ↓
-Install dependencies
-   ↓
-pytest
-```
-
-### Scheduled scraper
-
-Runs on a daily schedule and can also be triggered manually:
-
-```text
-Checkout
-   ↓
-Python setup
-   ↓
-Install dependencies
-   ↓
-Run pipeline tests
-   ↓
-Run mainscript.py
-   ↓
-Scrape → Stage → Transform → Classify → Load
-```
-
-Database credentials are supplied through GitHub Actions secrets.
+---
 
 ## Project Structure
 
-```text
-InternIQ/
-├── extract/                  # scraping and field extraction
-├── transform/                # normalization and salary processing
-├── keyword_match/            # skill matching and domain classification
-├── insertRawData/             # raw PostgreSQL ingestion
-├── insertCleanData/           # clean PostgreSQL loading
-├── dbconnection/              # PostgreSQL connection and engine management
-├── queries/                   # analytics and reporting queries
-├── backend/                   # FastAPI, AI insights, resume parsing
-├── frontend/                  # React + Vite dashboard
-├── testing/                   # pytest tests
-├── .github/workflows/         # CI and scheduled scraper
-└── mainscript.py              # pipeline entry point
+```
+extract/            fetcher.py, extractor.py: scraping and parsing
+transform/          transformData.py: salary and currency normalization
+keyword_match/      dev_trend.py (TF-IDF classifier), text_tockenization.py
+insertRawData/      insertRawData.py: staging layer writes
+insertCleanData/    insertCleanData.py: clean_data upserts
+dbconnection/       dbconnect.py: pooled SQLAlchemy engines per schema
+queries/            analysis.py, recent_market_trends.py: read layer
+backend/            FastAPI app: main.py, crud.py (AI + resume parsing), models.py
+frontend/           React + Vite dashboard (src/components/)
+testing/            pytest suite
+.github/workflows/  tests.yml (CI), scrape.yml (scheduled pipeline)
+mainscript.py       Pipeline entrypoint: scrape → stage → transform → load
 ```
 
-## Local Development
+---
 
-### Backend and data pipeline
+## Local Setup
+
+**1. Clone**
 
 ```bash
 git clone https://github.com/Jairamhegde/InternIQ.git
 cd InternIQ
-
-python -m venv venv
-source venv/bin/activate
-# Windows: venv\\Scripts\\activate
-
-pip install -r requirements.txt
 ```
 
-Create a `.env` file:
+**2. Configure environment**
+
+Create a `.env` file in the project root:
 
 ```env
-DB_HOST=your-aiven-host
-DB_PORT=your-port
-DB_NAME=your-database
-DB_USER=your-user
-DB_PASSWORD=your-password
+DB_HOST=your-aiven-postgres-host
+DB_PORT=your-aiven-postgres-port
+DB_NAME=your-database-name
+DB_USER=your-database-user
+DB_PASSWORD=your-database-password
 SSLMODE=require
 GEMINI_API=your-gemini-api-key
 ```
 
-Run the data pipeline:
+**3. Install dependencies and run the pipeline**
 
 ```bash
+python -m venv venv
+source venv/bin/activate        # Windows: venv\Scripts\activate
+pip install -r requirements.txt
 python mainscript.py
 ```
 
-Run the API:
+**4. Start the API**
 
 ```bash
 uvicorn backend.main:app --reload
 ```
 
-### Frontend
+**5. Start the dashboard**
 
 ```bash
 cd frontend
@@ -423,25 +213,44 @@ npm install
 npm run dev
 ```
 
-To point the frontend at a local backend:
+By default the frontend calls the deployed Render API. To use your local backend, create `frontend/.env`:
 
 ```env
 VITE_API_URL=http://localhost:8000
 ```
 
-## Testing
+---
 
-Run the test suite with:
+## Testing & CI
+
+| Workflow | Trigger | Behavior |
+|----------|---------|----------|
+| `tests.yml` | Every push and PR to `main` | Runs the full pytest suite |
+| `scrape.yml` | Daily cron | Runs tests first; runs the live scraper only if they pass |
 
 ```bash
+# Run pytest test suite
 python -m pytest testing/
+
+# Run classifier evaluation and accuracy report
+python -m testing.test_classifier_extractor
 ```
 
-The repository contains tests covering extraction/classification behavior, database loading, backend helper functions, and recent-market functionality.
+---
 
-## Limitations
+## Known Limitations
 
-- Salary conversion uses fixed exchange rates rather than a live FX service.
-- The scraper depends on Internshala's current HTML structure.
-- The deployed backend runs on Render's free tier and may cold-start after inactivity.
-- CI uses the configured PostgreSQL environment rather than a fully isolated test database.
+- Currency conversion uses fixed exchange rates rather than a live FX API. This suits INR-dominant Internshala data but would drift on international listings.
+- Scraper selectors depend on Internshala's current HTML, so a site redesign would require updating `extract/extractor.py`.
+- Render's free tier cold-starts after inactivity. A paid tier or a keep-alive ping would remove this.
+- CI runs against a live Aiven database rather than an isolated test database.
+
+---
+
+## License
+
+Distributed under the MIT License. See `LICENSE` for details.
+
+## Author
+
+**Jairam Hegde**: [GitHub](https://github.com/Jairamhegde)

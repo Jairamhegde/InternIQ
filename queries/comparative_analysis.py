@@ -147,6 +147,34 @@ def get_percentage_ofskills(job_roles) -> pd.DataFrame:
 
     return df
 
+# -------------------- Average Salary By Role --------------------
+
+def average_salary_by_role(job_roles) -> pd.DataFrame:
+    '''
+    returns the average salary of each selected role, taking the midpoint
+    of salary_min and salary_max for every posting.
+    postings without a salary are skipped by AVG.
+    '''
+    n = len(job_roles)
+    if n < 1:
+        return pd.DataFrame()
+
+    conn = connect_database('clean_data')
+
+    parameter = ", ".join(["%s"] * n)
+    query = f'''
+    SELECT title AS job_role,
+           ROUND(AVG((salary_min + salary_max) / 2.0)) AS average_salary
+    FROM clean_data.job_data
+    WHERE title IN ({parameter})
+    GROUP BY title
+    ORDER BY average_salary DESC NULLS LAST;
+    '''
+
+    df = pd.read_sql_query(query, conn, params=(*job_roles,))
+    return df
+
+
 if __name__ == "__main__":
         print(compare_role_trend("data engineer","data scientist"))
 

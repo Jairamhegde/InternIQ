@@ -120,14 +120,13 @@ def recenttopLocations(field: str | None = None):
 
 
 def recent_job_postings():
-    """Fetches the 10 most recent job postings from the last 10 days."""
+    """Fetches job postings from today and yesterday."""
     conn = connect_database('clean_data')
     query = '''
     SELECT title, company, job_link, posted_date
     FROM job_data
-    WHERE posted_date::date >= CURRENT_DATE - INTERVAL '10 days'
-    ORDER BY posted_date DESC
-    LIMIT 10;
+    WHERE posted_date::date >= CURRENT_DATE - INTERVAL '10 day'
+    ORDER BY posted_date DESC;
     '''
     df = pd.read_sql_query(query, conn)
     return df

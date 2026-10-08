@@ -47,7 +47,7 @@ function MarketOverview() {
             </div>
 
             <div className="grid-two">
-                <TopRolesTable field={field} />
+                <TopSkillsTable field={field} />
                 <TopRolesChart field={field} />
             </div>
         </>
@@ -202,18 +202,13 @@ function TopCompanies({ field, year }) {
     );
 }
 
-// ---------- Top roles table and chart: /api/top-role-table ----------
-// Both use the same query key, so the data is fetched once and shared.
+// ---------- Top skills table: /api/top-skills ----------
 
-function useTopRoles(field) {
-    return useQuery({
-        queryKey: ['topRoles', field],
-        queryFn: () => getJson(`/api/top-role-table?field=${field}`),
+function TopSkillsTable({ field }) {
+    const { data, isLoading, isError } = useQuery({
+        queryKey: ['topSkills', field],
+        queryFn: () => getJson(`/api/top-skills?field=${field}`),
     });
-}
-
-function TopRolesTable({ field }) {
-    const { data, isLoading, isError } = useTopRoles(field);
 
     let body;
     if (isLoading) {
@@ -227,16 +222,16 @@ function TopRolesTable({ field }) {
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Role</th>
-                            <th className="cell-number">Postings</th>
+                            <th>Skill</th>
+                            <th className="cell-number">Mentions</th>
                         </tr>
                     </thead>
                     <tbody>
                         {data.map((row, index) => (
-                            <tr key={row.role}>
+                            <tr key={row.name}>
                                 <td className="rank-cell">{index + 1}</td>
-                                <td className="cell-strong">{toTitle(row.role)}</td>
-                                <td className="cell-number">{formatNumber(row.volume)}</td>
+                                <td className="cell-strong">{toTitle(row.name)}</td>
+                                <td className="cell-number">{formatNumber(row.demand)}</td>
                             </tr>
                         ))}
                     </tbody>
@@ -246,14 +241,19 @@ function TopRolesTable({ field }) {
     }
 
     return (
-        <Card title="Top in-demand roles" subtitle="Ranked by number of postings">
+        <Card title="Top in-demand skills" subtitle="Top 5 skills by number of postings">
             {body}
         </Card>
     );
 }
 
+// ---------- Top roles chart: /api/top-role-table ----------
+
 function TopRolesChart({ field }) {
-    const { data, isLoading, isError } = useTopRoles(field);
+    const { data, isLoading, isError } = useQuery({
+        queryKey: ['topRoles', field, 5],
+        queryFn: () => getJson(`/api/top-role-table?field=${field}&limit=5`),
+    });
 
     let body;
     if (isLoading) {
@@ -288,7 +288,7 @@ function TopRolesChart({ field }) {
     }
 
     return (
-        <Card title="Top roles" subtitle="Postings by role">
+        <Card title="Top roles" subtitle="Top 5 roles by number of postings">
             {body}
         </Card>
     );

@@ -7,12 +7,15 @@ import {
     XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
 } from 'recharts';
 import { Card, PageHeader, Loader, ErrorMessage, EmptyMessage, ChartTooltip } from '../components.jsx';
-import { getJson, postJson, toTitle, shortMonth, CHART_COLORS, AXIS_STYLE, GRID_COLOR } from '../helpers.js';
+import { getJson, postJson, toTitle, shortMonth, formatRupee, CHART_COLORS, AXIS_STYLE, GRID_COLOR } from '../helpers.js';
 import './ComparativeAnalysis.css';
 
 const MIN_ROLES = 2;
 const MAX_ROLES = 3;
 const RADAR_SKILL_LIMIT = 10;
+
+// One colour for every salary bar, so this chart does not look like the postings chart.
+const SALARY_BAR_COLOR = '#5a9a78';
 
 function ComparativeAnalysis() {
     const [selectedRoles, setSelectedRoles] = useState(null);
@@ -63,7 +66,7 @@ function ComparativeAnalysis() {
         <>
             <PageHeader
                 title="Compare Roles"
-                description="Compare two or three roles on postings, skills and monthly trend."
+                description="Compare two or three roles on postings, skills, monthly trend and salary."
             />
             {body}
         </>
@@ -142,6 +145,7 @@ function ComparisonCharts({ selectedRoles, roleColors }) {
                 <SkillsRadar query={skillsQuery} selectedRoles={selectedRoles} roleColors={roleColors} />
             </div>
             <MonthlyTrendChart selectedRoles={selectedRoles} roleColors={roleColors} />
+            <SalaryChart query={postingsQuery} />
             <KeyTakeaway postings={postingsQuery.data} skills={skillsQuery.data} />
         </>
     );
@@ -300,6 +304,55 @@ function MonthlyTrendChart({ selectedRoles, roleColors }) {
 // Legend text stays grey; the coloured dot next to it shows which line is which.
 function legendText(value) {
     return <span className="legend-text">{value}</span>;
+}
+
+// ---------- Average salary: /api/get-role-posting ----------
+// Uses the same response as the postings chart, which includes average_salary for each role.
+
+function SalaryChart({ query }) {
+    let body;
+    if (query.isLoading) {
+        body = <Loader />;
+    } else if (query.isError) {
+        body = <ErrorMessage />;
+    } else {
+        // Roles without any salary data come back with average_salary set to null.
+        const rolesWithSalary = [];
+        for (const row of query.data) {
+            if (row.average_salary !== null) {
+                rolesWithSalary.push(row);
+            }
+        }
+
+        if (rolesWithSalary.length === 0) {
+            body = <EmptyMessage text="No salary data for the selected roles." />;
+        } else {
+            body = (
+                <ResponsiveContainer width="100%" height={300}>
+                    <BarChart data={rolesWithSalary} margin={{ top: 20, right: 8, left: 8, bottom: 0 }} barCategoryGap="30%">
+                        <CartesianGrid vertical={false} stroke={GRID_COLOR} />
+                        <XAxis dataKey="role" tickFormatter={toTitle} interval={0} {...AXIS_STYLE} dy={8} />
+                        <YAxis tickFormatter={formatRupee} {...AXIS_STYLE} width={80} />
+                        <Tooltip content={<ChartTooltip labelFormatter={toTitle} />} cursor={{ fill: '#f3f3f0' }} />
+                        <Bar
+                            dataKey="average_salary"
+                            name="Average salary (₹)"
+                            fill={SALARY_BAR_COLOR}
+                            radius={[4, 4, 0, 0]}
+                            maxBarSize={56}
+                            label={{ position: 'top', fill: '#57564f', fontSize: 12, formatter: formatRupee }}
+                        />
+                    </BarChart>
+                </ResponsiveContainer>
+            );
+        }
+    }
+
+    return (
+        <Card title="Average salary" subtitle="Average of the salary range across postings for each role">
+            {body}
+        </Card>
+    );
 }
 
 // ---------- AI takeaway: /api/get-comparative-insights ----------

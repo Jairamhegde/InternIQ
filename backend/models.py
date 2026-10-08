@@ -35,3 +35,6 @@ class TopCompanyModel(BaseModel):
 class LinechartData(BaseModel):
     selected_jobs:List[str]
 
+class ChatModel(BaseModel):
+    question: str
+

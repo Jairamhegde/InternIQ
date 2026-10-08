@@ -1,10 +1,11 @@
 // Small building blocks used by more than one page.
-// Their styles live in DemoApp.css.
+// Their styles live in App.css.
 import { formatNumber } from './helpers.js';
 
 const ICON_PATHS = {
     overview: 'M3 13h8V3H3v10Zm0 8h8v-6H3v6Zm10 0h8V11h-8v10Zm0-18v6h8V3h-8Z',
     compare: 'M4 20V10m6 10V4m6 16v-7m4 7H2',
+    role: 'M4 8h16v11a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V8Zm5 0V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3m-11 5h16',
     trend: 'M3 17l6-6 4 4 8-8m0 0h-6m6 0v6',
     gap: 'M9 12l2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z',
     ai: 'M12 3v2m0 14v2M5 12H3m18 0h-2M7 7 5.6 5.6m12.8 12.8L17 17M7 17l-1.4 1.4M18.4 5.6 17 7M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z',

@@ -1,7 +1,6 @@
-// Small helpers shared by every page of the demo dashboard.
-import { API_URL } from '../config.js';
+// Small helpers shared by every page of the dashboard.
+import { API_URL } from './config.js';
 
-// ---------- API calls ----------
 
 export async function getJson(path) {
     const response = await fetch(`${API_URL}${path}`);
@@ -25,9 +24,7 @@ export async function postJson(path, body) {
 
 // ---------- Text and number formatting ----------
 
-// The API returns text in mixed case, such as "data engineer" or "ai SPECIALIST".
-// This makes every word start with a capital letter: "Data Engineer".
-// Short codes in brackets stay upper case, so "(ai)" becomes "(AI)".
+//normalize the titles
 export function toTitle(text) {
     if (text === null || text === undefined) {
         return '';

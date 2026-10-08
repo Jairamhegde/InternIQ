@@ -1,4 +1,5 @@
 from sys import maxsize
+import asyncio
 import json
 from datetime import datetime
 import re
@@ -8,14 +9,92 @@ from docx import Document
 from async_lru import alru_cache
 
 
+# ------------- ASK AI SETTINGS ------------------------
+
+CHAT_MODEL = "gemini-3.5-flash-lite"
+
+CHAT_PROMPT = """
+    # Persona
+    You are InternIQ's market assistant. You help students and job seekers understand
+    the internship and entry-level job market in India.
+
+    # Your data
+    At the end of these instructions you are given one JSON object with the data
+    shown on the InternIQ dashboard:
+    - "pipeline": when the job data was last scraped.
+    - "market_overview": yearly totals, top roles, most demanded skill, top location,
+      monthly job postings and top hiring companies.
+    - "comparative_analysis": total postings, skill share (percentage of postings that
+      mention each skill) and monthly postings for the roles a user compared.
+    - "recent_market_trends": totals, top role, top skill, top locations, average stipend
+      and individual job postings from the last 10 days.
+    Inside each section, the keys such as "field=all" or "year=2026, field=backend"
+    describe which filter the numbers belong to.
+
+    # How to answer
+    - Answer ONLY from the dashboard data. Never invent numbers, companies, roles or trends.
+    - If the data does not contain the answer, say so plainly and mention what you
+      can answer instead (roles, skills, locations, companies, postings, stipends).
+    - Quote exact numbers from the data and say which period they cover
+      (this year, a given month, or the last 10 days).
+    - A negative percent change is a decrease and a positive one is an increase;
+      always say which it is (for example "down 68.8%").
+    - The data stores every name in lowercase. In your answer, always start each word of
+      a skill, role, company or location name with a capital letter, for example
+      write "Python", "Data Engineer", "Tata Consultancy Services" and "Work From Home",
+      never "python" or "data engineer". Keep short codes in capitals, such as "AI" and "SQL".
+    - Keep answers short: 2 to 4 sentences, or a short list when comparing items.
+    - Reply in plain text. Do not use markdown, tables or emojis.
+"""
+
+
 # ------------- HELPER FUNCTIONS ------------------------
 async def get_ai_response(field1,field2,type):
+    # Ask AI questions: field1 is the user's question, field2 is the dashboard data.
+    # They skip the lru_cache below so a failed answer is never cached and repeated.
+    if type == 'chat':
+        data = await answer_chat_question(field1, field2)
+        return data
+
     # Convert inputs to strings to make them hashable for the lru_cache
     field1_str = json.dumps(field1, default=str) if not isinstance(field1, str) else field1
     field2_str = json.dumps(field2, default=str) if not isinstance(field2, str) else field2
-    
+
     data = await ask_ai(field1_str, field2_str, type)
     return data
+
+
+async def answer_chat_question(question, dashboard_data):
+    """
+    Answers a user's question from the dashboard data.
+    The data is added to the system instruction, so Gemini reads it as fixed
+    background knowledge and the user's question is sent as the message.
+    """
+    data_json = json.dumps(dashboard_data, default=str)
+    system_instruction = f"""
+        {CHAT_PROMPT}
+
+        # Dashboard data
+        {data_json}
+    """
+
+    try:
+        model = genai.GenerativeModel(CHAT_MODEL, system_instruction=system_instruction)
+
+        # generate_content_async does not work with transport="rest" (set in main.py),
+        # so call the normal version in a background thread instead.
+        model_response = await asyncio.to_thread(
+            model.generate_content,
+            question,
+            request_options={"timeout": 60},
+        )
+        return {"answer": model_response.text.strip()}
+
+    except Exception as e:
+        error_msg = str(e)
+        if "429" in error_msg or "quota" in error_msg.lower():
+            return {"error": "API quota exceeded. Ask AI is unavailable temporarily."}
+        return {"error": f"AI service error: {error_msg[:100]}"}
 
 @alru_cache(maxsize = 100)
 async def ask_ai(field1: str, field2: str, type: str = 'overview'):

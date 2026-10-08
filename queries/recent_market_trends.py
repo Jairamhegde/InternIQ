@@ -125,7 +125,7 @@ def recent_job_postings():
     query = '''
     SELECT title, company, job_link, posted_date
     FROM job_data
-    WHERE posted_date::date >= CURRENT_DATE - INTERVAL '1 day'
+    WHERE posted_date::date >= CURRENT_DATE - INTERVAL '10 day'
     ORDER BY posted_date DESC;
     '''
     df = pd.read_sql_query(query, conn)

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { Card, PageHeader, Icon, ErrorMessage } from '../components.jsx';
 import { toTitle } from '../helpers.js';
-import { API_URL } from '../../config.js';
+import { API_URL } from '../config.js';
 import './SkillGapAnalysis.css';
 
 const TARGET_FIELDS = [

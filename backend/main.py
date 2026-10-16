@@ -39,9 +39,10 @@ from backend.crud import (
     extract_docx, analyze_gap,get_ai_response
 )
 
-
 load_dotenv()
 app = FastAPI()
+
+
 
 app.add_middleware(
     CORSMiddleware,

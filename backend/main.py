@@ -13,6 +13,8 @@ from backend.routes import (
 load_dotenv()
 app = FastAPI()
 
+
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[

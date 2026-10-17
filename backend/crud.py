@@ -148,7 +148,7 @@ async def ask_ai(field1: str, field2: str, type: str = 'overview'):
         prompt = ""
         if type == "overview":
             prompt = prompt2
-        elif type == "comparision":
+        elif type == "comparison":
             prompt  = prompt1
 
         model = genai.GenerativeModel('gemini-flash-lite-latest')

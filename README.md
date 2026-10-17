@@ -4,6 +4,17 @@
 
 InternIQ scrapes internship listings from Internshala every day, cleans and normalizes them in a PostgreSQL warehouse, classifies each posting by technical role, and serves the results through a FastAPI backend to an interactive React dashboard, including AI-generated insights and a resume skill-gap analyzer.
 
+<table>
+  <tr>
+    <td width="50%"><img src="screenshot/RecentTrends.png" alt="Recent Market Trends page: 10-day summary tiles, postings by role and top locations"></td>
+    <td width="50%"><img src="screenshot/Compare.png" alt="Compare Roles page: postings comparison and skills radar chart for two roles"></td>
+  </tr>
+  <tr>
+    <td align="center"><b>Recent Market Trends:</b> the last 10 days of postings by role, skill and location</td>
+    <td align="center"><b>Compare Roles:</b> posting volume and skill overlap for 2–3 roles</td>
+  </tr>
+</table>
+
 ---
 
 ## Live Demo
@@ -44,7 +55,7 @@ Students and job seekers often can't see the internship market clearly. InternIQ
 - **AI-generated insights:** Gemini turns query results (top roles, skill frequency, monthly trends) into short executive summaries. Calls are async and LRU-cached.
 - **Comparative role analysis:** Compare 2–3 roles on posting volume and skill overlap with a radar chart, powered by a single parameterized SQL query.
 - **Resume skill-gap analyzer:** Upload a PDF or DOCX and choose a target field. Missing skills are ranked by market demand and split into *essential* and *nice to have*.
-- **Recent market trends:** A rolling 10-day view built on `job_snapshot`, kept separate from all-time analytics.
+- **Recent market trends:** A rolling 10-day view, kept separate from all-time analytics.
 
 ### Role Classifier Benchmark & Performance
 
@@ -65,6 +76,7 @@ The hybrid role classifier combines keyword rule-matching with TF-IDF cosine sim
 | AI | Google Gemini (`gemini-flash-lite-latest`), `async_lru` |
 | Resume parsing | PyMuPDF (PDF), python-docx (DOCX) |
 | Frontend | React 19, Vite, TanStack Query, Recharts, react-select |
+| Observability | OpenTelemetry (auto-instrumentation), Grafana Cloud |
 | CI/CD | GitHub Actions (tests on every push/PR, scheduled scrape) |
 | Hosting | Vercel (frontend), Render (backend), Aiven (database) |
 
@@ -87,8 +99,24 @@ flowchart LR
 **Design decisions**
 
 - **Two schemas (`raw_data` → `clean_data`):** Scraped HTML is messy. A staging schema means a bad scrape or a failed transform never corrupts the tables the dashboard reads.
-- **`job_snapshot` table:** Stores one row per (job, scrape-date), so a job re-scraped on several days is not double-counted. "Postings this week" becomes a simple count query.
+- **`job_snapshot` table:** Stores one row per (job, scrape-date), so a job re-scraped on several days is not double-counted. "Postings this week" becomes a simple count query. The pipeline already fills this table, but the dashboard queries don't use it yet; trend queries will move to it in a later version.
 - **Three separately deployed services:** The scraper runs on a schedule, the API is always on, and the frontend is static. A slow scrape never affects dashboard response times.
+
+---
+
+## Observability
+
+The API is instrumented with OpenTelemetry and sends traces and metrics to Grafana Cloud. No monitoring code lives in the app: `opentelemetry-instrument` wraps FastAPI, SQLAlchemy and the outgoing HTTP calls to Gemini at startup.
+
+![Grafana service overview for the InternIQ API](screenshot/grafana.png)
+
+The service overview tracks three things for every endpoint:
+
+- **Latency (p50/p95/p99):** how long requests take, so slow endpoints stand out.
+- **Error ratio:** the share of requests that fail.
+- **Request rate:** how much traffic the API is handling.
+
+Each request also has a trace that splits its time into database queries, Gemini calls and Python processing. Measuring per-query timings showed that the API (Render, US East) and the database (Aiven, Bangalore) were on different continents, adding a long network round trip to every query. Moving the API to Singapore cut p95 latency of `/api/last-sync` from about 5.1 s to about 2.4 s.
 
 ---
 
@@ -109,7 +137,7 @@ Two isolated schemas in a single Aiven-managed PostgreSQL instance.
 |-------|---------|
 | `job_data` | Normalized titles and locations, parsed dates, `salary_min` / `salary_max`, `primary_field`, `field_confidence` |
 | `skills`, `job_skills` | Normalized skill names and the clean join table |
-| `job_snapshot` | One row per (job, scrape-date); basis for all time-series and recent-trend queries |
+| `job_snapshot` | One row per (job, scrape-date). Filled daily by the pipeline; not yet used by the dashboard, planned as the basis for time-series and trend queries |
 
 ---
 
@@ -235,6 +263,14 @@ python -m pytest testing/
 # Run classifier evaluation and accuracy report
 python -m testing.test_classifier_extractor
 ```
+
+---
+
+## Roadmap
+
+- **More job sources:** scrape platforms beyond Internshala, such as LinkedIn, and merge duplicate postings across sources.
+- **Use `job_snapshot` for trends:** move the time-series and recent-trend queries onto the daily snapshot table.
+- **Redis caching:** cache API responses, keyed by the latest sync date so a new scrape automatically uses fresh data.
 
 ---
 

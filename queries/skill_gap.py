@@ -4,7 +4,7 @@ from dbconnection.dbconnect import connect_database
 
 # -------------------- Skill Gap Analyzer Queries --------------------
 
-def find_reuiqred_skills(field):
+def find_required_skills(field):
     '''
     using common skills which is mentioned across the different roles of the same field
     this will help to get only the common , rather than extracting all of the skills from

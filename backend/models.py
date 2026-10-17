@@ -16,7 +16,7 @@ class OverviewInsightsModel(Basemodel):
 class RolesPostingsModel(Basemodel):
     roles: List[str]
 
-class CommonSkillModal(Basemodel):
+class CommonSkillModel(Basemodel):
     roles: List[str]
 
 class ComparativeInsightsModel(Basemodel):

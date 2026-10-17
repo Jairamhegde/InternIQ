@@ -71,3 +71,8 @@ project_details.md
 secrets.toml
 export_data.py
 trash
+
+# Embedding classifier (experimental, kept local; pipeline uses TF-IDF)
+keyword_match/embedding_classifier.py
+keyword_match/models/
+testing/test_embedding_classifier.py

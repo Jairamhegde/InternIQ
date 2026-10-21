@@ -6,7 +6,7 @@ from datetime import datetime
 
 # -------------------- Market Overview Queries --------------------
 
-def topSkills(year: int | None = None, field: str | None = None, month: int | None = None) -> pd.DataFrame:
+def top_skills(year: int | None = None, field: str | None = None, month: int | None = None) -> pd.DataFrame:
     conn = connect_database("clean_data")
     query = '''
     SELECT s.name, count(*) as demand
@@ -44,7 +44,7 @@ def topSkills(year: int | None = None, field: str | None = None, month: int | No
     return df
 
 
-def toproles(year: int | None = None, field: str | None = None, month: int | None = None) -> pd.DataFrame:
+def top_roles(year: int | None = None, field: str | None = None, month: int | None = None) -> pd.DataFrame:
     conn = connect_database("clean_data")
     query = '''
     select title as role, count(*) as volume
@@ -80,7 +80,7 @@ def toproles(year: int | None = None, field: str | None = None, month: int | Non
     return df
 
 
-def topLocations(year: int | None = None, field: str | None = None, month: int | None = None) -> pd.DataFrame:
+def top_locations(year: int | None = None, field: str | None = None, month: int | None = None) -> pd.DataFrame:
     conn = connect_database("clean_data")
     query = '''
     SELECT l.loc as location, count(l.loc) as count
@@ -192,4 +192,4 @@ def top_hiring_company(year: int = datetime.now().year, field: str = None, month
 
 
 if __name__ == '__main__':
-    print(toproles(2026, None,7))
+    print(top_roles(2026, None,7))

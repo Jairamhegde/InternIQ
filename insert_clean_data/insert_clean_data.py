@@ -1,9 +1,7 @@
 import logging
-import psycopg2
 from datetime import datetime
 from psycopg2.extras import execute_values
 from dbconnection.dbconnect import connect_database
-from psycopg2.extras import execute_values
 from keyword_match.dev_trend import similarity_check
 logging.basicConfig(
     level=logging.INFO,
@@ -67,9 +65,9 @@ def manage_operation(job_data):
             VALUES %s
             ON CONFLICT(title,company, posted_date) DO NOTHING;
         '''
-        values = execute_values(cur, query1, job_data_tuple)
+        execute_values(cur, query1, job_data_tuple)
         
-        #Getting job id's and other details by creating a vetual table using VALUES and joining it.
+        #Getting job id's and other details by creating a virtual table using VALUES and joining it.
         query2 = '''
             SELECT j.job_id, j.title, j.company, j.posted_date
             FROM job_data j

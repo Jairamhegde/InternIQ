@@ -1,4 +1,3 @@
-from sqlalchemy import column
 import pandas as pd
 from dbconnection.dbconnect import connect_database
 
@@ -53,7 +52,7 @@ def common_skills(job_roles) -> pd.DataFrame:
 
 # -------------------- Skill Overlap Percentage --------------------
 
-def get_percentage_ofskills(job_roles) -> pd.DataFrame:
+def get_skill_percentages(job_roles) -> pd.DataFrame:
     '''
     at first we select common skills which is overlapping in selected roles
     then we take role count of each of the role.

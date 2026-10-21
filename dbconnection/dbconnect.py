@@ -20,7 +20,6 @@ def _build_url(user, password, host, port, database, sslmode):
 _engines = {}
 
 def connect_database(search_path="clean_data"):
-    global _engines
     if os.environ.get("DB_HOST"):
         if search_path not in _engines:
             try:

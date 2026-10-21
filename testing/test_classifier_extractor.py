@@ -1,6 +1,6 @@
 import pandas as pd
 import pytest
-from keyword_match.field_trend import similarity_check
+from keyword_match.dev_trend import similarity_check
 from dbconnection.dbconnect import connect_database
 
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix

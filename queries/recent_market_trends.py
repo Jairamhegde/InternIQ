@@ -2,7 +2,7 @@ import pandas as pd
 from dbconnection.dbconnect import connect_database
 
 
-def Top_role():
+def top_role():
     """Fetches the top 5 most demanded roles in the last 10 days."""
     conn = connect_database("clean_data")
     query = '''
@@ -92,7 +92,7 @@ def average_salary(role: str):
     return df
 
 
-def recenttopLocations(field: str | None = None):
+def recent_top_locations(field: str | None = None):
     """Fetches the top 10 locations with the most job postings in the last 10 days."""
     conn = connect_database("clean_data")
     

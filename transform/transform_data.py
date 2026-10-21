@@ -14,7 +14,7 @@ logging.basicConfig(
 )
 from dbconnection.dbconnect import connect_database
 
-def convertSalary(s: str):
+def convert_salary(s: str):
     if s.lower() == "Competitive salary":
         return None,None
     if not s:
@@ -23,9 +23,9 @@ def convertSalary(s: str):
     s = s.replace(",", "")
     currency = detect_currency(s)
     detect = per_month_detector(s)
-    minSal, maxSal = stripedSal(s)
-    minSal = currencymap(minSal, currency)
-    maxSal = currencymap(maxSal, currency)
+    minSal, maxSal = strip_salary(s)
+    minSal = convert_to_inr(minSal, currency)
+    maxSal = convert_to_inr(maxSal, currency)
     if detect:
         minSal *= 12
         maxSal *= 12
@@ -37,7 +37,7 @@ def per_month_detector(s:str):
         return True
     return False
 
-def stripedSal(s: str):
+def strip_salary(s: str):
     
     f = detect_currency(s)
     if f == "0":
@@ -86,7 +86,7 @@ def detect_currency(s):
     return "unknown"
 
 
-def currencymap(number, currencyType):
+def convert_to_inr(number, currencyType):
     d = {
         
         "inr": 1,
@@ -99,7 +99,7 @@ def currencymap(number, currencyType):
     return number * d[currencyType]
 
 
-def loadData():
+def load_data():
     job_data = []
     conn = None
     cur = None
@@ -133,7 +133,7 @@ def loadData():
                 continue
 
             job_name  = " ".join(row[1].strip().split()).lower() if row[1] else None
-            sal       = convertSalary(row[2]) if row[2] else (0, 0)
+            sal       = convert_salary(row[2]) if row[2] else (0, 0)
             location  = " ".join(row[3].strip().split()).lower() if row[3] else None
             company   = " ".join(row[4].strip().split()).lower() if row[4] else None
 
@@ -169,7 +169,7 @@ def loadData():
         return job_data
 
     except Exception as e:
-        logging.exception(f"loadData failed: {e}")
+        logging.exception(f"load_data failed: {e}")
         return job_data
     finally:
         if cur:

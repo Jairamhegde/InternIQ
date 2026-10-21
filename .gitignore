@@ -76,6 +76,3 @@ trash
 keyword_match/embedding_classifier.py
 keyword_match/models/
 testing/test_embedding_classifier.py
-
-# Interview prep (local only)
-interview_prep/

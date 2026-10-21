@@ -26,7 +26,7 @@ def roles() -> pd.DataFrame:
 
 # -------------------- Opportunity Counts --------------------
 
-def noOfopportunities(field: str | None = None, month: int | None = None):
+def number_of_opportunities(field: str | None = None, month: int | None = None):
     conn = connect_database()
     query = '''
     SELECT count(*) as opportunities
@@ -44,7 +44,7 @@ def noOfopportunities(field: str | None = None, month: int | None = None):
     return df['opportunities'][0]
 
 
-def OPPORTUNITIES():
+def opportunities_last_10_days():
     """Total opportunities posted in the last 10 days."""
     conn = connect_database("clean_data")
     query = '''
@@ -59,7 +59,7 @@ def OPPORTUNITIES():
 
 # -------------------- Role-Specific Analysis --------------------
 
-def TopSkillsOfRole(role) -> pd.DataFrame:
+def top_skills_of_role(role) -> pd.DataFrame:
     conn = connect_database("clean_data")
     query = '''
     SELECT s.name, count(*) as demand
@@ -76,7 +76,7 @@ def TopSkillsOfRole(role) -> pd.DataFrame:
     return df
 
 
-def jobCount(job) -> pd.DataFrame:
+def job_count(job) -> pd.DataFrame:
     conn = connect_database("clean_data")
     query = '''
     SELECT count(*) as no_of_jobs
@@ -90,7 +90,7 @@ def jobCount(job) -> pd.DataFrame:
 
 # -------------------- Skill Counts per Role --------------------
 
-def uniqueSkills(role) -> pd.DataFrame:
+def unique_skills(role) -> pd.DataFrame:
     """Count of distinct skills for a given job_id."""
     conn = connect_database("clean_data")
     query = '''
@@ -105,7 +105,7 @@ def uniqueSkills(role) -> pd.DataFrame:
     return df
 
 
-def uniqueSkillCount(role) -> pd.DataFrame:
+def unique_skill_count(role) -> pd.DataFrame:
     """Top 8 skills with their frequency for a given job title."""
     conn = connect_database("clean_data")
     query = '''
@@ -125,7 +125,7 @@ def uniqueSkillCount(role) -> pd.DataFrame:
 
 # -------------------- Misc --------------------
 
-def commonSkills() -> pd.DataFrame:
+def common_skills_of_roles() -> pd.DataFrame:
     """Skills shared across the top 2 job roles by occurrence."""
     conn = connect_database("clean_data")
     query = '''
@@ -198,7 +198,7 @@ def roles_trends(year: int | None = None, field: str | None = None, month: int |
         SELECT
             TO_CHAR(jsn.scraped_date, 'YYYY-MM-DD') AS month,
             s.name,
-            count(*) AS jobCount,
+            count(*) AS job_count,
             RANK() OVER (
                 PARTITION BY TO_CHAR(jsn.scraped_date, 'YYYY-MM-DD')
                 ORDER BY count(*) DESC

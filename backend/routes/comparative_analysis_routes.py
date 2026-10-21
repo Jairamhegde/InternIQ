@@ -1,8 +1,8 @@
 from fastapi import APIRouter
 
-from queries.analysis import toproles
+from queries.analysis import top_roles
 from queries.comparative_analysis import (
-    compare_role_trend, get_percentage_ofskills, average_salary_by_role
+    compare_role_trend, get_skill_percentages, average_salary_by_role
 )
 from backend.models import (
     RolesPostingsModel, CommonSkillModel, ComparativeInsightsModel, LinechartData
@@ -16,7 +16,7 @@ router = APIRouter(tags=["comparative_analysis"])
 @router.post('/get-role-posting')
 def get_role_postings(request: RolesPostingsModel):
     role_list = [role.lower() for role in request.roles]
-    data = toproles()
+    data = top_roles()
     filtered_data = data[data['role'].str.lower().isin(role_list)]
 
     # Add each role's average salary; roles with no salary data get None.
@@ -37,7 +37,7 @@ def get_role_postings(request: RolesPostingsModel):
 
 @router.post('/common-skill')
 def get_common_skill(request: CommonSkillModel):
-    df = get_percentage_ofskills(request.roles)
+    df = get_skill_percentages(request.roles)
     pivot_df = df.pivot(index='skill', columns='title', values='percentage').reset_index().fillna(0)
     result = pivot_df.to_dict(orient='records')
 
@@ -55,7 +55,7 @@ async def get_comparative_insights(request: ComparativeInsightsModel):
 
 
 @router.post('/get-linechart-data')
-def get_linechart_data(request: LinechartData):
+def get_line_chart_data(request: LinechartData):
     if not request.selected_jobs:
         return []
 

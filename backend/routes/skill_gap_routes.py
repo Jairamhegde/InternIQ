@@ -7,7 +7,7 @@ router = APIRouter(tags=["skill_gap"])
 
 
 @router.post("/analyze-gap")
-def skillgap_analyzer(field: str = Form(...), resume: UploadFile = File(...)):
+def skill_gap_analyzer(field: str = Form(...), resume: UploadFile = File(...)):
     file_byte = resume.file
 
     if resume.filename.lower().endswith(".pdf"):

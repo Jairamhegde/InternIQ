@@ -3,7 +3,7 @@ from datetime import datetime
 from fastapi import APIRouter
 
 from queries.analysis import (
-    job_postings, topSkills, topLocations, current_year_postings, toproles,
+    job_postings, top_skills, top_locations, current_year_postings, top_roles,
     top_hiring_company
 )
 from backend.models import OverviewInsightsModel, JobpostingModel, TopCompanyModel
@@ -45,18 +45,18 @@ async def get_job_posting_insights(request: OverviewInsightsModel):
 
 
 @router.get('/job-tiles')
-def get_data_for_jobtile(field: str = 'all'):
+def get_job_tiles(field: str = 'all'):
     actual_field = None if field.lower() == 'all' else field
 
-    skills_df = topSkills(field=actual_field)
+    skills_df = top_skills(field=actual_field)
     skill = skills_df.iloc[0]['name'] if not skills_df.empty else "N/A"
     top_skill_count = int(skills_df.iloc[0]['demand']) if not skills_df.empty else 0
 
-    loc_df = topLocations(field=actual_field)
+    loc_df = top_locations(field=actual_field)
     location = loc_df.iloc[0]['location'] if not loc_df.empty else "N/A"
     top_loc_count = int(loc_df.iloc[0]['count']) if not loc_df.empty else 0
 
-    roles_df = toproles(field=actual_field)
+    roles_df = top_roles(field=actual_field)
     top_role = roles_df.iloc[0]['role'] if not roles_df.empty else "N/A"
     top_role_count = int(roles_df.iloc[0]['volume']) if not roles_df.empty else 0
 
@@ -81,7 +81,7 @@ def get_data_for_jobtile(field: str = 'all'):
 @router.get('/top-role-table')
 def get_top_roles(field: str = 'all', limit: int | None = None):
     actual_field = None if field.lower() == 'all' else field
-    data = toproles(field=actual_field)
+    data = top_roles(field=actual_field)
     if limit:
         data = data.head(limit)
     result = data.to_dict(orient='records')
@@ -94,7 +94,7 @@ def get_top_roles(field: str = 'all', limit: int | None = None):
 @router.get('/top-skills')
 def get_top_skills(field: str = 'all', limit: int = 5):
     actual_field = None if field.lower() == 'all' else field
-    data = topSkills(field=actual_field).head(limit)
+    data = top_skills(field=actual_field).head(limit)
     result = data.to_dict(orient='records')
 
     save_dashboard_data("market_overview", "top_skills", f"field={field}", result)

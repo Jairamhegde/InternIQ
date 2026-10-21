@@ -1,13 +1,12 @@
 from datetime import datetime, timedelta
 import logging
 import re
-import pandas as pd
-from keyword_match.text_tockenization import (generate_unigrams,
+from keyword_match.text_tokenization import (generate_unigrams,
                                               generate_bigrams,
                                               get_matching_skills)
 
 
-def dateFromtext(i):
+def date_from_text(i):
     i = i.lower()
 
     if i in {"few hours ago","just now","today"}:
@@ -67,7 +66,7 @@ SALARY_PATTERN = re.compile(
     r"|unpaid|not disclosed|performance based",
     re.IGNORECASE,
 )
-def extract_sal(job_card):
+def extract_salary(job_card):
     money_icon = job_card.find('i', class_=re.compile(r"money", re.IGNORECASE))
     if money_icon:
         container = money_icon.find_parent(class_=re.compile(r"row-1-item"))
@@ -142,13 +141,13 @@ def scrape_data(soup):
                 status_tag = job.find('div', class_="actively-hiring-badge")
                 status = status_tag.text if status_tag else None
 
-                sal = extract_sal(job)
+                sal = extract_salary(job)
 
                 techstack = skills
 
                 location = find_location(job)
 
-                jobPostedDate = dateFromtext(posted_time.lower()) if posted_time else None
+                jobPostedDate = date_from_text(posted_time.lower()) if posted_time else None
 
                 scrape_time = datetime.now().strftime("%Y-%m-%d")
                 

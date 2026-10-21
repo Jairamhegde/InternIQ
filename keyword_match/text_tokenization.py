@@ -13,7 +13,6 @@ def generate_bigrams(tokens):
         bigrams.add(tokens[i] + " " + tokens[i + 1])
     return bigrams
 
-
 def get_matching_skills(ar):
     skill = set()
     for i in ar:
@@ -25,11 +24,10 @@ def get_matching_skills(ar):
 
     return list(skill)
 
-
 # unigrams = generate_unigrams(text)
 # bigrams = generate_bigrams(unigrams)
 # ngrams = set(unigrams) | bigrams
 # 
-# print(matchining)
+# print(matching)
 
 

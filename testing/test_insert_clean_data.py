@@ -1,10 +1,10 @@
 
 import pytest
-from insertCleanData.insertCleanData import manage_operation
+from insert_clean_data.insert_clean_data import manage_operation
 from dbconnection.dbconnect import connect_database
 
 
-def test_insertCleanData():
+def test_insert_clean_data():
     data = [{
         "job_title": "Backend Developer Intern",
         "location": "Bengaluru",

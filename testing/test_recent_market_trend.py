@@ -1,9 +1,9 @@
 import pytest
-from queries.recent_market_trends import (Top_role,top_skill,total_opportunities)
+from queries.recent_market_trends import (top_role,top_skill,total_opportunities)
 import pandas as pd
 
 def test_top_roles():
-    df = Top_role()
+    df = top_role()
     assert isinstance(df,pd.DataFrame)
     assert "title" in df.columns
     assert "job_count" in df.columns

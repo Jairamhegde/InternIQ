@@ -22,10 +22,10 @@ InternIQ scrapes internship listings from Internshala every day, cleans and norm
 | Component | Link |
 |-----------|------|
 | Dashboard (Vercel) | [interniq.vercel.app](https://intern-iq-five.vercel.app/) |
-| API (Render) | [interniq-api.onrender.com](https://interniq-api.onrender.com) |
-| API Health Check | [`/api/health`](https://interniq-api.onrender.com/api/health) |
+| API (Render) | [interniq-t9hh.onrender.com](https://interniq-t9hh.onrender.com) |
+| API Health Check | [`/api/health`](https://interniq-t9hh.onrender.com/api/health) |
 
-> **Note:** The API runs on Render's free tier and spins down when idle. Open the [health check](https://interniq-api.onrender.com/api/health) first and wait a few seconds for the service to wake up, then open the dashboard. Otherwise the first data request may time out.
+> **Note:** The API runs on Render's free tier and spins down when idle. Open the [health check](https://interniq-t9hh.onrender.com/api/health) first and wait a few seconds for the service to wake up, then open the dashboard. Otherwise the first data request may time out.
 
 ---
 
@@ -180,10 +180,10 @@ Data fetching and caching use TanStack Query; charts use Recharts.
 
 ```
 extract/            fetcher.py, extractor.py: scraping and parsing
-transform/          transformData.py: salary and currency normalization
-keyword_match/      dev_trend.py (TF-IDF classifier), text_tockenization.py
-insertRawData/      insertRawData.py: staging layer writes
-insertCleanData/    insertCleanData.py: clean_data upserts
+transform/          transform_data.py: salary and currency normalization
+keyword_match/      dev_trend.py (TF-IDF classifier), text_tokenization.py
+insert_raw_data/    insert_raw_data.py: staging layer writes
+insert_clean_data/  insert_clean_data.py: clean_data upserts
 dbconnection/       dbconnect.py: pooled SQLAlchemy engines per schema
 queries/            analysis.py, recent_market_trends.py: read layer
 backend/            FastAPI app: main.py, crud.py (AI + resume parsing), models.py

@@ -1,16 +1,16 @@
 import pytest
-from queries.analysis import (topLocations, topSkills, toproles)
-from queries.future_use import (roles, noOfopportunities, commonSkills,
-                                TopSkillsOfRole, jobCount, OPPORTUNITIES, uniqueSkillCount, roles_trends)
+from queries.analysis import (top_locations, top_skills, top_roles)
+from queries.future_use import (roles, number_of_opportunities, common_skills_of_roles,
+                                top_skills_of_role, job_count, opportunities_last_10_days, unique_skill_count, roles_trends)
 
 import numpy as np
 import pandas as pd
-from extract.extractor import dateFromtext 
+from extract.extractor import date_from_text 
 from datetime import datetime
-from transform.transformData import convertSalary,stripedSal,detect_currency,currencymap
+from transform.transform_data import convert_salary,strip_salary,detect_currency,convert_to_inr
 
 def test_top_skills():
-    df = topSkills()
+    df = top_skills()
     assert isinstance(df, pd.DataFrame)
     assert not df.empty
     assert "name" in df.columns
@@ -18,7 +18,7 @@ def test_top_skills():
 
 
 def test_top_locations():
-    df = topLocations()
+    df = top_locations()
     assert isinstance(df, pd.DataFrame)
     assert not df.empty
     assert "location" in df.columns
@@ -33,28 +33,28 @@ def test_top_roles():
     assert "demand" in df.columns
 
 
-def test_noof_opportunities():
-    count = noOfopportunities()
+def test_number_of_opportunities():
+    count = number_of_opportunities()
     assert isinstance(count, np.int64)
 
 
 def test_common_skills():
-    df = commonSkills()
+    df = common_skills_of_roles()
     assert isinstance(df, pd.DataFrame)
     assert "skill" in df.columns
     assert "role_count" in df.columns
     assert "total_occurrences" in df.columns
 
 
-def test_topSkill_roles():
-    df = TopSkillsOfRole(roles()['title'][0])   
+def test_top_skill_roles():
+    df = top_skills_of_role(roles()['title'][0])   
     assert isinstance(df, pd.DataFrame)
     assert not df.empty
     assert "demand" in df.columns
 
 
-def test_jobCount():
-    df = jobCount(roles()['title'][0])          
+def test_job_count():
+    df = job_count(roles()['title'][0])          
     assert isinstance(df, pd.DataFrame)
     assert not df.empty
     assert "no_of_jobs" in df.columns
@@ -66,17 +66,17 @@ def test_role_trends():
     assert not df.empty
     assert "month" in df.columns
     assert "name" in df.columns
-    assert "jobcount" in df.columns
+    assert "job_count" in df.columns
     assert "rank" in df.columns
 
 
 def test_opportunities_10days():
-    count = OPPORTUNITIES()
+    count = opportunities_last_10_days()
     assert isinstance(count, np.int64)
 
 
 def test_unique_skill_count():
-    df = uniqueSkillCount(roles()['title'][0])  
+    df = unique_skill_count(roles()['title'][0])  
     assert "skill" in df.columns
     assert "count" in df.columns
 
@@ -84,15 +84,15 @@ def test_unique_skill_count():
 
 #________________________________________________________________
 
-def test_DateFromText():
-    assert dateFromtext('today') == datetime.now().strftime("%Y-%m-%d")
-    assert dateFromtext('few hours ago') == datetime.now().strftime("%Y-%m-%d")
+def test_date_from_text():
+    assert date_from_text('today') == datetime.now().strftime("%Y-%m-%d")
+    assert date_from_text('few hours ago') == datetime.now().strftime("%Y-%m-%d")
 
-def test_convertSalary():
-    assert convertSalary('₹ 2,00,000 - 3,00,000') == (200000, 300000)
-    assert convertSalary('₹ 25,000 - 35,000 /month') == (300000, 420000)
-    assert convertSalary("Unpaid") == (0,0)
-    assert convertSalary("Competative Salary") == (0,0)
+def test_convert_salary():
+    assert convert_salary('₹ 2,00,000 - 3,00,000') == (200000, 300000)
+    assert convert_salary('₹ 25,000 - 35,000 /month') == (300000, 420000)
+    assert convert_salary("Unpaid") == (0,0)
+    assert convert_salary("Competitive Salary") == (0,0)
 
 
 if __name__ == "__main__":

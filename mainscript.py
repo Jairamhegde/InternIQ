@@ -1,11 +1,10 @@
 import logging
-import psycopg2
 from extract.fetcher import get_soup
 from extract.extractor import scrape_data
 
-from insertRawData.insertRawData import insertRawData
-from insertCleanData.insertCleanData import manage_operation
-from transform.transformData import loadData
+from insert_raw_data.insert_raw_data import insert_raw_data
+from insert_clean_data.insert_clean_data import manage_operation
+from transform.transform_data import load_data
 
 
 logging.basicConfig(
@@ -26,7 +25,12 @@ page_url = [
     "https://internshala.com/jobs/backend-development-jobs/",
     "https://internshala.com/fresher-jobs/front-end-development-jobs/",
     "https://internshala.com/jobs/mobile-app-development-jobs/",
-    "https://internshala.com/jobs/big-data-jobs/"
+    "https://internshala.com/jobs/big-data-jobs/",
+    "https://internshala.com/jobs/ai-agent-development-jobs/",
+    "https://internshala.com/jobs/angular-js-development-jobs/",
+    "https://internshala.com/jobs/artificial-intelligence-ai-jobs/",
+    "https://internshala.com/jobs/cloud-computing-jobs/",
+    "https://internshala.com/jobs/engineering-jobs/"
 ]
 
 
@@ -47,16 +51,15 @@ def internshala(url_list):
 
                 logging.info(f"Scraped {len(raw_data)} jobs from {link}")
 
-                insertRawData(raw_data)
+                insert_raw_data(raw_data)
 
                 logging.info(f"Inserted {len(raw_data)} jobs into raw_data schema (PostgreSQL)")
 
             except Exception as e:
                 logging.exception(f"Failed scraping page {page} of {url}:{e}")
-    logging.info(f"Started inserting into into clean data")
-    # Transform all raw data once scraping is complete
+    logging.info("Started inserting into clean data")
     try:
-        data = loadData()
+        data = load_data()
         manage_operation(data)
     except Exception as e:
         logging.exception("Failed to insert into clean data.")

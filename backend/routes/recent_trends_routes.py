@@ -4,8 +4,8 @@ import pandas as pd
 from fastapi import APIRouter
 
 from queries.recent_market_trends import (
-    top_role, top_skill, total_opportunities, average_salary,
-    recent_top_locations, previous_total_opportunities, recent_job_postings
+    Top_role, top_skill, total_opportunities, average_salary,
+    recenttopLocations, previous_total_opportunities, recent_job_postings
 )
 from backend.dashboard_state import save_dashboard_data
 
@@ -14,18 +14,18 @@ router = APIRouter(tags=["recent_trends"])
 
 @router.get("/recent-market-trend")
 def get_recent_trends():
-    df_top_role = top_role()
+    df_top_role = Top_role()
     df_top_skill = top_skill()
     df_opportunities = total_opportunities()
-    df_top_location = recent_top_locations()
+    df_top_location = recenttopLocations()
     pre_total_opp = previous_total_opportunities()
 
-    top_role_name = df_top_role.iloc[0]["title"] if not df_top_role.empty else None
+    top_role = df_top_role.iloc[0]["title"] if not df_top_role.empty else None
     top_role_count = int(df_top_role.iloc[0]["job_count"]) if not df_top_role.empty else 0
 
     avg_sal = None
-    if top_role_name:
-        df_avg_sal = average_salary(top_role_name)
+    if top_role:
+        df_avg_sal = average_salary(top_role)
         if not df_avg_sal.empty and pd.notnull(df_avg_sal.iloc[0]['average']):
             avg_sal = float(df_avg_sal.iloc[0]['average'])
 
@@ -47,7 +47,7 @@ def get_recent_trends():
         increment = 100.0 if total_opportunity > 0 else 0.0
 
     result = {
-        "role": [top_role_name, top_role_count],
+        "role": [top_role, top_role_count],
         "skill": [top_skill_name, top_skill_count],
         "postings": total_opportunity,
         "increment": increment,
@@ -60,7 +60,7 @@ def get_recent_trends():
     summary_for_ai = {
         "total_postings_last_10_days": total_opportunity,
         "percent_change_vs_previous_10_days": increment,
-        "top_role": {"role": top_role_name, "postings": top_role_count},
+        "top_role": {"role": top_role, "postings": top_role_count},
         "top_skill": {"skill": top_skill_name, "mentions": top_skill_count},
         "top_location": {"location": top_location, "postings": top_location_count},
         "average_stipend_of_top_role": avg_sal,
@@ -84,7 +84,7 @@ def job_posting_list():
 
 @router.get("/get-top-locations")
 def get_top_locations():
-    location = recent_top_locations()
+    location = recenttopLocations()
     top_4 = location.iloc[:4][:]
 
     top_4 = top_4.rename(columns={"location": "name", "count": "value"})

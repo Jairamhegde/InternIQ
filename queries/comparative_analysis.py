@@ -17,11 +17,11 @@ def compare_role_trend(*roles):
     df = pd.read_sql_query(query, db, params=(*roles,))
 
     if not df.empty:
-        df = (df.pivot_table(index=['month_no','month'], columns='title', values='postings', fill_value=0)
+        df = (df.pivot_table(index=['month_no', 'month'], columns='title', values='postings', fill_value=0)
               .reset_index())
 
-        df.drop(columns=['month_no'],inplace=True)
-        
+        df.drop(columns=['month_no'], inplace=True)
+
     return df
 
 
@@ -148,6 +148,7 @@ def get_skill_percentages(job_roles) -> pd.DataFrame:
 
 # -------------------- Average Salary By Role --------------------
 
+
 def average_salary_by_role(job_roles) -> pd.DataFrame:
     '''
     returns the average salary of each selected role, taking the midpoint
@@ -175,5 +176,4 @@ def average_salary_by_role(job_roles) -> pd.DataFrame:
 
 
 if __name__ == "__main__":
-        print(compare_role_trend("data engineer","data scientist"))
-
+    print(compare_role_trend("data engineer", "data scientist"))

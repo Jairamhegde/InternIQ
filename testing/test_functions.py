@@ -5,9 +5,10 @@ from queries.future_use import (roles, number_of_opportunities, common_skills_of
 
 import numpy as np
 import pandas as pd
-from extract.extractor import date_from_text 
+from extract.extractor import date_from_text
 from datetime import datetime
-from transform.transform_data import convert_salary,strip_salary,detect_currency,convert_to_inr
+from transform.transform_data import convert_salary, strip_salary, detect_currency, convert_to_inr
+
 
 def test_top_skills():
     df = top_skills()
@@ -29,7 +30,7 @@ def test_top_roles():
     df = roles()
     assert isinstance(df, pd.DataFrame)
     assert not df.empty
-    assert "title" in df.columns     
+    assert "title" in df.columns
     assert "demand" in df.columns
 
 
@@ -47,14 +48,14 @@ def test_common_skills():
 
 
 def test_top_skill_roles():
-    df = top_skills_of_role(roles()['title'][0])   
+    df = top_skills_of_role(roles()['title'][0])
     assert isinstance(df, pd.DataFrame)
     assert not df.empty
     assert "demand" in df.columns
 
 
 def test_job_count():
-    df = job_count(roles()['title'][0])          
+    df = job_count(roles()['title'][0])
     assert isinstance(df, pd.DataFrame)
     assert not df.empty
     assert "no_of_jobs" in df.columns
@@ -76,26 +77,18 @@ def test_opportunities_10days():
 
 
 def test_unique_skill_count():
-    df = unique_skill_count(roles()['title'][0])  
+    df = unique_skill_count(roles()['title'][0])
     assert "skill" in df.columns
     assert "count" in df.columns
 
-
-
-#________________________________________________________________
 
 def test_date_from_text():
     assert date_from_text('today') == datetime.now().strftime("%Y-%m-%d")
     assert date_from_text('few hours ago') == datetime.now().strftime("%Y-%m-%d")
 
+
 def test_convert_salary():
     assert convert_salary('₹ 2,00,000 - 3,00,000') == (200000, 300000)
     assert convert_salary('₹ 25,000 - 35,000 /month') == (300000, 420000)
-    assert convert_salary("Unpaid") == (0,0)
-    assert convert_salary("Competitive Salary") == (0,0)
-
-
-if __name__ == "__main__":
-    pass
-
-    
+    assert convert_salary("Unpaid") == (0, 0)
+    assert convert_salary("Competitive Salary") == (0, 0)

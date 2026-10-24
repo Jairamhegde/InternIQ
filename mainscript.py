@@ -1,5 +1,5 @@
 import logging
-from extract.fetcher import get_soup
+from extract.fetcher import get_soup, fetch_api_jobs
 from extract.extractor import scrape_data
 
 from insert_raw_data.insert_raw_data import insert_raw_data
@@ -35,14 +35,15 @@ page_url = [
 
 
 def internshala(url_list):
-    logging.info("Execution started...")
+    """Scrapes every Internshala category page and returns the jobs found."""
+    jobs = []
 
     for url in url_list:
         for page in range(1, 10):
 
             link = url if page == 1 else f"{url}page-{page}"
             try:
-                soup     = get_soup(link)
+                soup = get_soup(link)
                 raw_data = scrape_data(soup)
 
                 if not raw_data:
@@ -50,13 +51,33 @@ def internshala(url_list):
                     break
 
                 logging.info(f"Scraped {len(raw_data)} jobs from {link}")
-
-                insert_raw_data(raw_data)
-
-                logging.info(f"Inserted {len(raw_data)} jobs into raw_data schema (PostgreSQL)")
+                jobs.extend(raw_data)
 
             except Exception as e:
                 logging.exception(f"Failed scraping page {page} of {url}:{e}")
+
+    return jobs
+
+
+def run_pipeline():
+    logging.info("Execution started...")
+
+    jobs = internshala(page_url)
+
+    try:
+        api_jobs = fetch_api_jobs()
+        logging.info(f"Fetched {len(api_jobs)} tech jobs from Greenhouse and Ashby")
+        jobs.extend(api_jobs)
+    except Exception:
+        logging.exception("Failed to fetch jobs from Greenhouse and Ashby")
+
+    try:
+        insert_raw_data(jobs)
+        logging.info(f"Inserted {len(jobs)} jobs into raw_data schema (PostgreSQL)")
+    except Exception:
+        logging.exception("Failed to insert into raw data.")
+        return
+
     logging.info("Started inserting into clean data")
     try:
         data = load_data()
@@ -68,4 +89,4 @@ def internshala(url_list):
 
 
 if __name__ == '__main__':
-    internshala(url_list=page_url)
+    run_pipeline()

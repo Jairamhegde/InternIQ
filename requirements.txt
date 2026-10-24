@@ -2,8 +2,10 @@ pandas
 numpy
 beautifulsoup4
 requests
+httpx
 psycopg2-binary
 sqlalchemy
+alembic
 google-generativeai
 fastapi
 uvicorn

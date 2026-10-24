@@ -2,17 +2,17 @@ from datetime import datetime, timedelta
 import logging
 import re
 from keyword_match.text_tokenization import (generate_unigrams,
-                                              generate_bigrams,
-                                              get_matching_skills)
+                                             generate_bigrams,
+                                             get_matching_skills)
 
 
 def date_from_text(i):
     i = i.lower()
 
-    if i in {"few hours ago","just now","today"}:
+    if i in {"few hours ago", "just now", "today"}:
         return datetime.now().strftime("%Y-%m-%d")
-    
-    match = re.search(r'(\d+)\s+(hour|hours|day|days|week|weeks|month|months)\s+ago',i)
+
+    match = re.search(r'(\d+)\s+(hour|hours|day|days|week|weeks|month|months)\s+ago', i)
     if not match:
         return None
 
@@ -30,16 +30,17 @@ def date_from_text(i):
     if measure == "week" or measure == "weeks":
         date = (datetime.now() - timedelta(weeks=value)).strftime("%Y-%m-%d")
         return date
-        
+
     if measure == "month" or measure == "months":
-        date = (datetime.now() - timedelta(days=value*30)).strftime("%Y-%m-%d")
+        date = (datetime.now() - timedelta(days=value * 30)).strftime("%Y-%m-%d")
         return date
 
     return None
 
 
- 
 LOCATION_HINTS = re.compile(r"work from home|work from office|hybrid", re.IGNORECASE)
+
+
 def find_location(job_card):
     map_icon = job_card.find('i', class_=re.compile(r"map-pin", re.IGNORECASE))
     if map_icon:
@@ -48,24 +49,27 @@ def find_location(job_card):
             text = container.get_text(" ", strip=True)
             if text:
                 return text
- 
+
     loc_tag = job_card.find('p', class_=re.compile(r"\blocations\b", re.IGNORECASE))
     if loc_tag and loc_tag.get_text(strip=True):
         return loc_tag.get_text(strip=True)
- 
+
     loc_tag = job_card.find(class_=re.compile(r"location", re.IGNORECASE))
     if loc_tag and loc_tag.get_text(strip=True):
         return loc_tag.get_text(strip=True)
- 
+
     text = job_card.get_text(" ", strip=True)
     match = LOCATION_HINTS.search(text)
     return match.group(0).strip() if match else None
+
 
 SALARY_PATTERN = re.compile(
     r"(₹|rs\.?|inr)\s?[\d,]+(\s?-\s?[\d,]+)?\s?(/month|/week|lpa|per month)?"
     r"|unpaid|not disclosed|performance based",
     re.IGNORECASE,
 )
+
+
 def extract_salary(job_card):
     money_icon = job_card.find('i', class_=re.compile(r"money", re.IGNORECASE))
     if money_icon:
@@ -74,11 +78,11 @@ def extract_salary(job_card):
             sal_tag = container.find('span', class_=re.compile(r"^desktop$", re.IGNORECASE))
             if sal_tag and sal_tag.get_text(strip=True):
                 return sal_tag.get_text(strip=True)
- 
+
     sal_tag = job_card.find(class_=re.compile(r"stipend|salary", re.IGNORECASE))
     if sal_tag and sal_tag.get_text(strip=True):
         return sal_tag.get_text(strip=True)
- 
+
     text = job_card.get_text(" ", strip=True)
     match = SALARY_PATTERN.search(text)
     return match.group(0).strip() if match else None
@@ -102,7 +106,7 @@ def scrape_data(soup):
 
                 skills_tag = job.find_all("div", class_="job_skill")
                 if skills_tag:
-                    skills = [skill.get_text(strip = True)  for skill in skills_tag]
+                    skills = [skill.get_text(strip=True) for skill in skills_tag]
                 else:
                     job_description = job.find("div", class_="text")
 
@@ -122,8 +126,7 @@ def scrape_data(soup):
 
                     else:
                         skills = None
-                
-    
+
                 job_tag = job.find('a', id='job_title')
                 jobb = job_tag.text if job_tag else None
 
@@ -150,19 +153,20 @@ def scrape_data(soup):
                 jobPostedDate = date_from_text(posted_time.lower()) if posted_time else None
 
                 scrape_time = datetime.now().strftime("%Y-%m-%d")
-                
+
                 jd = {
-                        "job_title": jobb,
-                        "company": comp,
-                        "status": status,
-                        "salary": sal,
-                        "tech_stack": techstack,
-                        "location": location,
-                        "scrape_time": scrape_time,
-                        "posted_date": jobPostedDate,
-                        "job_link":job_link
-                    }
-                if not jd['job_title'] and  jd['company'] and jd['salary']:
+                    "job_title": jobb,
+                    "company": comp,
+                    "status": status,
+                    "salary": sal,
+                    "tech_stack": techstack,
+                    "location": location,
+                    "scrape_time": scrape_time,
+                    "posted_date": jobPostedDate,
+                    "job_link": job_link,
+                    "source": "internshala"
+                }
+                if not jd['job_title'] and jd['company'] and jd['salary']:
                     continue
                 else:
                     job_data.append(jd)
@@ -171,11 +175,3 @@ def scrape_data(soup):
     except Exception as e:
         logging.exception(f"Failed to extract data :{e}")
         return job_data
-
-
-'''
-1.select_one : is a css selector
-2.we have to use np.nan instead of None if we want to actually insert null into the csv
-3.(skills) : it is not a tuple, (skills,) : tuple with 1 element
-4.cur.lastrowid : the id of the last row which it has inserted
-'''

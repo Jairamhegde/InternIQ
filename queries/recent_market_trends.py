@@ -95,7 +95,7 @@ def average_salary(role: str):
 def recent_top_locations(field: str | None = None):
     """Fetches the top 10 locations with the most job postings in the last 10 days."""
     conn = connect_database("clean_data")
-    
+
     query = '''
     SELECT l.loc as location, COUNT(l.loc) as count
     FROM job_data j
@@ -103,18 +103,18 @@ def recent_top_locations(field: str | None = None):
     JOIN locations l ON jl.loc_id = l.id
     WHERE j.posted_date::date >= CURRENT_DATE - INTERVAL '10 days'
     '''
-    
+
     params = []
     if field:
         query += " AND j.primary_field = %s"
         params.append(field)
-        
+
     query += '''
     GROUP BY l.loc
     ORDER BY count DESC
     LIMIT 10;
     '''
-    
+
     df = pd.read_sql_query(query, conn, params=(tuple(params) if params else None))
     return df
 
@@ -140,6 +140,7 @@ def get_last_sync_time() -> str:
     if not df.empty and pd.notnull(df.iloc[0]['last_sync']):
         return str(df.iloc[0]['last_sync'])
     return "Never"
+
 
 if __name__ == '__main__':
     print(average_salary("python development"))

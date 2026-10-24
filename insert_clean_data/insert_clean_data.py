@@ -96,7 +96,7 @@ def manage_operation(job_data):
         for m in job_data:
             loc_str = m.get("location")
             if loc_str:
-                # Strip spaces so ' NY' and 'NY' are not stored twice
+               
                 loc_set.update([loc.strip() for loc in get_loc_list(loc_str) if loc.strip()])
 
         loc_tuple = [(loc,) for loc in loc_set]

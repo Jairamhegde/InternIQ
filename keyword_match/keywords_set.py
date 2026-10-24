@@ -1,4 +1,4 @@
-#________________Used in job description scraping_________________________________________
+# Skills matched in job descriptions
 PROGRAMMING_LANGUAGES = {
     "python",
     "java",
@@ -208,5 +208,4 @@ ALL_SKILLS = (
     | ARCHITECTURE
 )
 
-#_____________________________________For deve_field match___________________________________
-
+# Keywords used to match a job to its field

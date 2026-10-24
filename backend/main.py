@@ -14,7 +14,6 @@ load_dotenv()
 app = FastAPI()
 
 
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
@@ -31,7 +30,7 @@ app.add_middleware(
 
 genai.configure(api_key=os.getenv("GEMINI_API"), transport="rest")
 
-# _________________________ API ROUTERS ______________________
+# API routers
 
 app.include_router(health_routes.router, prefix="/api")
 app.include_router(market_overview_routes.router, prefix="/api")

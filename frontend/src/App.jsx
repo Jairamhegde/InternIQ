@@ -1,134 +1,127 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { Icon } from './components.jsx';
-import { getJson } from './helpers.js';
+import { getJson, formatDay } from './helpers.js';
 import './App.css';
 import MarketOverview from './pages/MarketOverview.jsx';
-import ComparativeAnalysis from './pages/ComparativeAnalysis.jsx';
-import RecentMarketTrend from './pages/RecentMarketTrend.jsx';
-import SkillGapAnalysis from './pages/SkillGapAnalysis.jsx';
-import RoleSpecificAnalysis from './pages/RoleSpecificAnalysis.jsx';
+import CompareRoles from './pages/CompareRoles.jsx';
+import RoleDetails from './pages/RoleDetails.jsx';
+import RecentTrends from './pages/RecentTrends.jsx';
+import SkillGap from './pages/SkillGap.jsx';
 import AskAI from './pages/AskAI.jsx';
 
-const ANALYTICS_PAGES = [
-    { id: 'overview', label: 'Market Overview', icon: 'overview' },
-    { id: 'compare', label: 'Compare Roles', icon: 'compare' },
-    { id: 'role', label: 'Role Analysis', icon: 'role' },
-    { id: 'trends', label: 'Recent Trends', icon: 'trend' },
-    { id: 'skill-gap', label: 'Skill Gap', icon: 'gap' },
+const PAGES = [
+    { id: 'overview', label: 'Overview' },
+    { id: 'compare', label: 'Compare roles' },
+    { id: 'role', label: 'Role details' },
+    { id: 'trends', label: 'Last 10 days' },
+    { id: 'skill-gap', label: 'Skill gap' },
+    { id: 'ask-ai', label: 'Ask AI' },
 ];
 
-const ASSISTANT_PAGE = { id: 'ask-ai', label: 'Ask AI', icon: 'ai' };
-
-// Opening /#trends goes straight to that page.
+// page from the url
 function getPageFromUrl() {
     const hash = window.location.hash.replace('#', '');
-    if (hash === '') {
-        return 'overview';
+    for (const page of PAGES) {
+        if (page.id === hash) {
+            return hash;
+        }
     }
-    return hash;
+    return 'overview';
 }
 
 function App() {
     const [activePage, setActivePage] = useState(getPageFromUrl());
-    const [menuOpen, setMenuOpen] = useState(false);
+
+    // question sent from the overview ask box
+    const [questionFromOverview, setQuestionFromOverview] = useState(null);
 
     function openPage(pageId) {
         setActivePage(pageId);
-        setMenuOpen(false);
         window.location.hash = pageId;
         window.scrollTo({ top: 0 });
     }
 
+    function askFromOverview(question) {
+        setQuestionFromOverview({ text: question, id: Date.now() });
+        openPage('ask-ai');
+    }
+
     return (
-        <div className="shell">
-            <aside className={menuOpen ? 'sidebar is-open' : 'sidebar'}>
-                <div className="brand">
-                    <span className="brand-mark">IQ</span>
-                    <span className="brand-name">InternIQ</span>
-                    <button className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle menu">
-                        <Icon name="menu" size={20} />
-                    </button>
-                </div>
-
-                <nav className="nav">
-                    <span className="nav-section">Analytics</span>
-                    {ANALYTICS_PAGES.map((page) => (
-                        <NavItem key={page.id} page={page} activePage={activePage} onOpen={openPage} />
-                    ))}
-
-                    <span className="nav-section">Assistant</span>
-                    <NavItem page={ASSISTANT_PAGE} activePage={activePage} onOpen={openPage} />
-                </nav>
-
-                <PipelineStatus />
-            </aside>
-
-            <main className="main">
-                <div className="content">
-                    <PageContent pageId={activePage} />
-                </div>
+        <div className="app">
+            <TopBar activePage={activePage} onOpen={openPage} />
+            <main className="page">
+                <PageContent pageId={activePage} onOpen={openPage} onAsk={askFromOverview} question={questionFromOverview} />
             </main>
         </div>
     );
 }
 
-function PageContent({ pageId }) {
+function PageContent({ pageId, onOpen, onAsk, question }) {
     if (pageId === 'compare') {
-        return <ComparativeAnalysis />;
+        return <CompareRoles />;
     }
     if (pageId === 'role') {
-        return <RoleSpecificAnalysis />;
+        return <RoleDetails />;
     }
     if (pageId === 'trends') {
-        return <RecentMarketTrend />;
+        return <RecentTrends />;
     }
     if (pageId === 'skill-gap') {
-        return <SkillGapAnalysis />;
+        return <SkillGap />;
     }
     if (pageId === 'ask-ai') {
-        return <AskAI />;
+        return <AskAI questionFromOverview={question} />;
     }
-    return <MarketOverview />;
+    return <MarketOverview onOpen={onOpen} onAsk={onAsk} />;
 }
 
-function NavItem({ page, activePage, onOpen }) {
-    const isActive = page.id === activePage;
-
+function TopBar({ activePage, onOpen }) {
     return (
-        <button
-            className={isActive ? 'nav-item is-active' : 'nav-item'}
-            onClick={() => onOpen(page.id)}
-            aria-current={isActive ? 'page' : undefined}
-        >
-            <Icon name={page.icon} size={18} />
-            {page.label}
-        </button>
+        <header className="topbar">
+            <div className="topbar-inner">
+                <button className="brand" onClick={() => onOpen('overview')}>
+                    InternIQ
+                </button>
+
+                <nav className="topnav" aria-label="Pages">
+                    {PAGES.map((page) => (
+                        <button
+                            key={page.id}
+                            className="topnav-link"
+                            aria-current={page.id === activePage ? 'page' : undefined}
+                            onClick={() => onOpen(page.id)}
+                        >
+                            {page.label}
+                        </button>
+                    ))}
+                </nav>
+
+                <LastSync />
+            </div>
+        </header>
     );
 }
 
-function PipelineStatus() {
+// last sync status
+function LastSync() {
     const { data, isError } = useQuery({
         queryKey: ['lastSync'],
         queryFn: () => getJson('/api/last-sync'),
     });
 
-    let syncText = 'Checking...';
+    let text = 'Checking';
     if (data) {
-        syncText = `Last sync ${data.last_sync}`;
+        text = `Updated ${formatDay(data.last_sync)}`;
     }
     if (isError) {
-        syncText = 'Sync status unavailable';
+        text = 'Update time unavailable';
     }
 
     return (
-        <div className="sync">
-            <span className={isError ? 'sync-dot is-offline' : 'sync-dot'} aria-hidden="true" />
-            <div>
-                <span className="sync-label">Pipeline status</span>
-                <span className="sync-time">{syncText}</span>
-            </div>
-        </div>
+        <span className="sync" title="Last time new postings were collected">
+            <span className="sync-dot" />
+            {text}
+        </span>
     );
 }
 

@@ -6,6 +6,7 @@ from sqlalchemy.engine import URL
 
 load_dotenv()
 
+
 def _build_url(user, password, host, port, database, sslmode):
     return URL.create(
         drivername="postgresql+psycopg2",
@@ -17,20 +18,30 @@ def _build_url(user, password, host, port, database, sslmode):
         query={"sslmode": sslmode},
     )
 
+
+def get_database_url():
+    """Database URL built from the DB_* environment variables (also used by Alembic)."""
+    if not os.environ.get("DB_HOST"):
+        raise ValueError("DB_HOST environment variable is missing. Please ensure your .env file is loaded.")
+
+    return _build_url(
+        user=os.environ["DB_USER"],
+        password=os.environ["DB_PASSWORD"],
+        host=os.environ["DB_HOST"],
+        port=os.environ["DB_PORT"],
+        database=os.environ["DB_NAME"],
+        sslmode=os.environ.get("SSLMODE", "require"),
+    )
+
+
 _engines = {}
+
 
 def connect_database(search_path="clean_data"):
     if os.environ.get("DB_HOST"):
         if search_path not in _engines:
             try:
-                url = _build_url(
-                    user=os.environ["DB_USER"],
-                    password=os.environ["DB_PASSWORD"],
-                    host=os.environ["DB_HOST"],
-                    port=os.environ["DB_PORT"],
-                    database=os.environ["DB_NAME"],
-                    sslmode=os.environ.get("SSLMODE", "require"),
-                )
+                url = get_database_url()
                 _engines[search_path] = create_engine(
                     url,
                     connect_args={"options": f"-c search_path={search_path}"},

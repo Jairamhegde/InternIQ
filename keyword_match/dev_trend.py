@@ -318,7 +318,7 @@ FULLSTACK_KEYWORDS = {
     "fullstack",
     "full",
     "stack",
-    
+
     # Popular stacks
     "mern",
     "mean",
@@ -342,9 +342,10 @@ FULLSTACK_KEYWORDS = {
 
 def normalize_title(title):
     title = title.lower()
-    title = re.sub(r"[^a-zA-Z0-9\s]"," ",title)
-    title = re.sub(r"\s+"," ",title)
+    title = re.sub(r"[^a-zA-Z0-9\s]", " ", title)
+    title = re.sub(r"\s+", " ", title)
     return title
+
 
 def get_job_skills(job_title):
     conn = connect_database("clean_data")
@@ -356,7 +357,7 @@ def get_job_skills(job_title):
         join skills s on js.skill_id = s.skill_id
         where j.title = %s
         '''
-    cur.execute(query,(job_title,))
+    cur.execute(query, (job_title,))
     rows = cur.fetchall()
     newset = [normalize_title(row[0]) for row in rows]
     return newset
@@ -521,7 +522,7 @@ dictionaries = {
                 Redshift, BigQuery, Databricks, AWS EMR, Azure Data Factory, GCP Dataflow, and data
                 warehousing and distributed systems design.
                 """,
-            "devops": """
+    "devops": """
                 A DevOps Engineer builds and maintains CI/CD pipelines, automates deployments,
                 manages cloud infrastructure and containers, and monitors system reliability.
                 Common titles include DevOps Engineer, Site Reliability Engineer, Cloud Engineer,
@@ -537,19 +538,11 @@ labels = list(dictionaries.keys())
 vectorizer = TfidfVectorizer(stop_words="english")
 embeded_word = vectorizer.fit_transform(corpus)
 
-def similarity_check(title,description,skills):
+
+def similarity_check(title, description, skills):
     text = f"{title} {description} {' '.join(skills)}"
     job_vector = vectorizer.transform([text])
-    similarity = cosine_similarity(job_vector,embeded_word)[0]
-    
+    similarity = cosine_similarity(job_vector, embeded_word)[0]
+
     best_idx = similarity.argmax()
-    return labels[best_idx] , round(similarity[best_idx],3)
-
-
-
-
-
-
-
-    
-
+    return labels[best_idx], round(similarity[best_idx], 3)

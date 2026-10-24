@@ -59,7 +59,7 @@ CHAT_PROMPT = """
 
 
 # ------------- HELPER FUNCTIONS ------------------------
-async def get_ai_response(field1,field2,type):
+async def get_ai_response(field1, field2, type):
     # Ask AI questions: field1 is the user's question, field2 is the dashboard data.
     # They skip the lru_cache below so a failed answer is never cached and repeated.
     if type == 'chat':
@@ -87,12 +87,8 @@ async def answer_chat_question(question, dashboard_data):
         # Dashboard data
         {data_json}
     """
-
     try:
         model = genai.GenerativeModel(CHAT_MODEL, system_instruction=system_instruction)
-
-        # generate_content_async does not work with transport="rest" (set in main.py),
-        # so call the normal version in a background thread instead.
         model_response = await asyncio.to_thread(
             model.generate_content,
             question,
@@ -106,9 +102,10 @@ async def answer_chat_question(question, dashboard_data):
             return {"error": "API quota exceeded. Ask AI is unavailable temporarily."}
         return {"error": f"AI service error: {error_msg[:100]}"}
 
-@alru_cache(maxsize = 100)
+
+@alru_cache(maxsize=100)
 async def ask_ai(field1: str, field2: str, type: str = 'overview'):
-    
+
     prompt1 = f"""
         # Persona
         You are an elite Labor Market Data Scientist and Career Intelligence Strategist. You specialize in analyzing job market trends, skills gaps, and hiring demands. Your insights are data-driven, actionable, and tailored to help tech professionals and executives make strategic career decisions.
@@ -159,7 +156,7 @@ async def ask_ai(field1: str, field2: str, type: str = 'overview'):
         if type == "overview":
             prompt = prompt2
         elif type == "comparison":
-            prompt  = prompt1
+            prompt = prompt1
 
         model = genai.GenerativeModel('gemini-flash-lite-latest')
         model_response = await model.generate_content_async(

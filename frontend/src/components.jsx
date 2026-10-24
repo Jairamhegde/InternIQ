@@ -1,120 +1,169 @@
-// Small building blocks shared by every page; styles live in App.css.
+// shared ui components
 import { formatNumber } from './helpers.js';
 
-const ICON_PATHS = {
-    overview: 'M3 13h8V3H3v10Zm0 8h8v-6H3v6Zm10 0h8V11h-8v10Zm0-18v6h8V3h-8Z',
-    compare: 'M4 20V10m6 10V4m6 16v-7m4 7H2',
-    role: 'M4 8h16v11a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V8Zm5 0V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3m-11 5h16',
-    trend: 'M3 17l6-6 4 4 8-8m0 0h-6m6 0v6',
-    gap: 'M9 12l2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z',
-    ai: 'M12 3v2m0 14v2M5 12H3m18 0h-2M7 7 5.6 5.6m12.8 12.8L17 17M7 17l-1.4 1.4M18.4 5.6 17 7M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z',
-    send: 'M5 12h14m-6-6 6 6-6 6',
-    upload: 'M12 16V4m0 0-4 4m4-4 4 4M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3',
-    file: 'M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8l-5-5Zm0 0v5h5',
-    external: 'M14 4h6v6m0-6L10 14M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5',
-    check: 'M5 12l5 5L20 7',
-    close: 'M6 6l12 12M18 6 6 18',
-    up: 'M12 19V5m0 0-6 6m6-6 6 6',
-    down: 'M12 5v14m0 0-6-6m6 6 6-6',
-    menu: 'M4 6h16M4 12h16M4 18h16',
-};
-
-export function Icon({ name, size = 18 }) {
-    return (
-        <svg
-            className="icon"
-            width={size}
-            height={size}
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.7"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden="true"
-        >
-            <path d={ICON_PATHS[name]} />
-        </svg>
-    );
-}
-
-export function PageHeader({ title, description, children }) {
-    return (
-        <div className="page-header">
-            <div>
-                <h1 className="page-title">{title}</h1>
-                <p className="page-description">{description}</p>
+// page layout with an optional sidebar
+export function PageLayout({ title, description, aside, sidebar, sidebarTitle, children }) {
+    let body;
+    if (sidebar) {
+        body = (
+            <div className="page-grid">
+                <aside className="filters" aria-label={sidebarTitle}>
+                    <h2 className="filters-title">{sidebarTitle}</h2>
+                    {sidebar}
+                </aside>
+                <div className="page-content">{children}</div>
             </div>
-            <div className="page-controls">{children}</div>
-        </div>
+        );
+    } else {
+        body = (
+            <div className="page-grid page-grid-full">
+                <div className="page-content">{children}</div>
+            </div>
+        );
+    }
+
+    return (
+        <>
+            <div className="page-head">
+                <div>
+                    <h1 className="page-title">{title}</h1>
+                    <p className="page-description">{description}</p>
+                </div>
+                {aside && <div className="page-aside">{aside}</div>}
+            </div>
+            {body}
+        </>
     );
 }
 
-export function Card({ title, subtitle, action, children, className = '' }) {
+export function Panel({ title, subtitle, action, className, children }) {
+    let panelClass = 'panel';
+    if (className) {
+        panelClass = `panel ${className}`;
+    }
+
     return (
-        <section className={`card ${className}`}>
-            <header className="card-header">
-                <div>
-                    <h3 className="card-title">{title}</h3>
-                    {subtitle && <p className="card-subtitle">{subtitle}</p>}
-                </div>
-                {action}
-            </header>
+        <section className={panelClass}>
+            {title && (
+                <header className="panel-head">
+                    <div>
+                        <h2 className="panel-title">{title}</h2>
+                        {subtitle && <p className="panel-sub">{subtitle}</p>}
+                    </div>
+                    {action}
+                </header>
+            )}
             {children}
         </section>
     );
 }
 
-export function StatTile({ label, value, meta, change, badge = false }) {
+// stat tile
+export function Stat({ label, value, meta, tone }) {
+    let metaClass = 'stat-meta';
+    if (tone) {
+        metaClass = `stat-meta tone-${tone}`;
+    }
+
     return (
-        <div className="stat-tile">
-            <span className="stat-tile-label">{label}</span>
-            <span className="stat-tile-value" title={value}>{value}</span>
-            <div className="stat-tile-meta">
-                {change !== undefined && <Change value={change} />}
-                {meta && <span className={badge ? 'stat-tile-badge' : undefined}>{meta}</span>}
-            </div>
+        <div className="stat">
+            <span className="stat-label">{label}</span>
+            <span className="stat-value" title={String(value)}>{value}</span>
+            {meta && <span className={metaClass}>{meta}</span>}
         </div>
     );
 }
 
-// Green badge for growth, red badge for decline.
-function Change({ value }) {
-    let direction = 'flat';
-    if (value > 0) {
-        direction = 'up';
-    }
-    if (value < 0) {
-        direction = 'down';
+// single choice chips
+export function ChipGroup({ label, options, value, onChange }) {
+    return (
+        <fieldset className="filter-group">
+            <legend className="filter-label">{label}</legend>
+            <div className="chips">
+                {options.map((option) => (
+                    <button
+                        key={option.value}
+                        type="button"
+                        className="chip"
+                        aria-pressed={option.value === value}
+                        onClick={() => onChange(option.value)}
+                    >
+                        {option.label}
+                    </button>
+                ))}
+            </div>
+        </fieldset>
+    );
+}
+
+// multiple choice chips
+export function MultiChipGroup({ label, hint, options, values, max, colors, onChange }) {
+    function toggle(value) {
+        const isSelected = values.includes(value);
+
+        if (isSelected) {
+            const remaining = values.filter((item) => item !== value);
+            onChange(remaining);
+            return;
+        }
+
+        if (values.length < max) {
+            onChange([...values, value]);
+        }
     }
 
     return (
-        <span className={`change change-${direction}`}>
-            {direction !== 'flat' && <Icon name={direction} size={12} />}
-            {Math.abs(value)}%
-        </span>
+        <fieldset className="filter-group">
+            <legend className="filter-label">{label}</legend>
+            <p className="filter-hint">{hint}</p>
+            <div className="chips">
+                {options.map((option) => {
+                    const isSelected = values.includes(option.value);
+                    const isFull = values.length >= max;
+
+                    return (
+                        <button
+                            key={option.value}
+                            type="button"
+                            className="chip"
+                            aria-pressed={isSelected}
+                            disabled={!isSelected && isFull}
+                            onClick={() => toggle(option.value)}
+                        >
+                            {isSelected && <span className="chip-dot" style={{ background: colors[option.value] }} />}
+                            {option.label}
+                        </button>
+                    );
+                })}
+            </div>
+        </fieldset>
     );
 }
 
 export function Loader() {
     return (
-        <div className="status-box">
+        <div className="status">
             <span className="spinner" />
-            Loading...
+            Loading
         </div>
     );
 }
 
 export function ErrorMessage({ text = 'Could not load this data. Please try again later.' }) {
-    return <div className="status-box status-error">{text}</div>;
+    return <div className="status status-error">{text}</div>;
 }
 
-export function EmptyMessage({ text = 'No data available.' }) {
-    return <div className="status-box">{text}</div>;
+export function EmptyMessage({ title, text }) {
+    return (
+        <div className="status status-empty">
+            <strong>{title}</strong>
+            {text && <span>{text}</span>}
+        </div>
+    );
 }
 
-// Tooltip shared by all charts. labelFormatter turns raw API text into readable text.
-export function ChartTooltip({ active, payload, label, labelFormatter, valueSuffix = '' }) {
+// chart tooltip
+export function ChartTooltip({ active, payload, label, labelFormatter, valueFormatter }) {
     if (!active || !payload || payload.length === 0) {
         return null;
     }
@@ -124,20 +173,28 @@ export function ChartTooltip({ active, payload, label, labelFormatter, valueSuff
         title = labelFormatter(label);
     }
 
+    let formatValue = formatNumber;
+    if (valueFormatter) {
+        formatValue = valueFormatter;
+    }
+
     return (
-        <div className="chart-tooltip">
-            {title && <div className="chart-tooltip-label">{title}</div>}
+        <div className="tooltip">
+            {title && <div className="tooltip-title">{title}</div>}
             {payload.map((item) => (
-                <div className="chart-tooltip-row" key={item.dataKey}>
-                    <span className="chart-tooltip-name">
-                        <span className="swatch" style={{ background: item.color || item.payload.fill }} />
+                <div className="tooltip-row" key={item.dataKey}>
+                    <span className="tooltip-name">
+                        <span className="dot" style={{ background: item.color || item.payload.fill }} />
                         {item.name}
                     </span>
-                    <span className="chart-tooltip-value">
-                        {formatNumber(item.value)}{valueSuffix}
-                    </span>
+                    <span className="tooltip-value">{formatValue(item.value)}</span>
                 </div>
             ))}
         </div>
     );
+}
+
+// job source tag
+export function SourceTag() {
+    return <span className="tag">Internshala</span>;
 }

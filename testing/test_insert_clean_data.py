@@ -16,8 +16,8 @@ def test_insert_clean_data():
         "skills": ["Python", "SQL"],
         "job_link": "https://example.com/job-regression-1",
     },
-     {
-        "job_title": "  backend developer intern  ",   
+        {
+        "job_title": "  backend developer intern  ",
         "location": "bengaluru",
         "company": "  TestCorp Regression",
         "scraped_time": "2026-09-02",
@@ -26,16 +26,15 @@ def test_insert_clean_data():
         "max_salary": 20000,
         "skills": ["Django"],
         "job_link": "https://example.com/job-regression-1",
-    
+
     }]
-    
+
     db = connect_database('clean_data')
     conn = db.raw_connection()
-    cur  = conn.cursor()
+    cur = conn.cursor()
     try:
         res = manage_operation(data)
         assert res is True
-        
 
         query = '''
             SELECT job_id FROM job_data WHERE title = %s AND company = %s
@@ -68,12 +67,3 @@ def test_insert_clean_data():
         conn.commit()
         cur.close()
         conn.close()
-
-
-
-
-
-    
-
-
-

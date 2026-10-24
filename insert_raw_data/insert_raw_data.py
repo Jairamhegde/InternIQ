@@ -5,7 +5,7 @@ from psycopg2.extras import execute_values
 
 JOB_QUERY = '''
     INSERT INTO job_data
-    (title, salary, location, scrape_time, posted_date, company, job_link, run_id)
+    (title, salary, location, scrape_time, posted_date, company, job_link, run_id, source)
     VALUES %s
     ON CONFLICT (title, location, company, posted_date)
     DO UPDATE SET run_id = EXCLUDED.run_id
@@ -58,7 +58,8 @@ def insert_raw_data(job_data):
                 job['posted_date'],
                 job['company'],
                 job['job_link'],
-                run_id
+                run_id,
+                job.get('source', 'internshala')
             )
             for job in unique_jobs.values()
         ]

@@ -14,10 +14,10 @@ logging.basicConfig(
 )
 from dbconnection.dbconnect import connect_database
 
+
 def convert_salary(s: str):
-    if s.lower() == "Competitive salary":
-        return None,None
-    if not s:
+    # (0, 0) means "no usable salary"; the caller stores it as NULL.
+    if not s or "competitive" in s.lower():
         return 0, 0
     s = "".join(s.split()).lower()
     s = s.replace(",", "")
@@ -31,14 +31,16 @@ def convert_salary(s: str):
         maxSal *= 12
     return minSal, maxSal
 
-def per_month_detector(s:str):
+
+def per_month_detector(s: str):
     find_month = re.search(r'month', s)
     if find_month:
         return True
     return False
 
+
 def strip_salary(s: str):
-    
+
     f = detect_currency(s)
     if f == "0":
         return 0, 0
@@ -88,7 +90,7 @@ def detect_currency(s):
 
 def convert_to_inr(number, currencyType):
     d = {
-        
+
         "inr": 1,
         "usd": 90,
         "euro": 98,
@@ -117,7 +119,7 @@ def load_data():
         # Fetch jobs from the latest run
         cur.execute(
             """
-            SELECT id, title, salary, location, company, scrape_time, posted_date, job_link
+            SELECT id, title, salary, location, company, scrape_time, posted_date, job_link, source
             FROM job_data
             WHERE run_id = %s;
             """,
@@ -132,21 +134,22 @@ def load_data():
             if not job_id:
                 continue
 
-            job_name  = " ".join(row[1].strip().split()).lower() if row[1] else None
-            sal       = convert_salary(row[2]) if row[2] else (0, 0)
-            location  = " ".join(row[3].strip().split()).lower() if row[3] else None
-            company   = " ".join(row[4].strip().split()).lower() if row[4] else None
+            job_name = " ".join(row[1].strip().split()).lower() if row[1] else None
+            sal = convert_salary(row[2]) if row[2] else (0, 0)
+            location = " ".join(row[3].strip().split()).lower() if row[3] else None
+            company = " ".join(row[4].strip().split()).lower() if row[4] else None
 
             job_dict[job_id] = {
-                "job_title":    job_name,
-                "min_salary":   sal[0] if sal[0] > 0 else None,
-                "max_salary":   sal[1] if sal[1] > 0 else None,
-                "location":     location,
+                "job_title": job_name,
+                "min_salary": sal[0] if sal[0] > 0 else None,
+                "max_salary": sal[1] if sal[1] > 0 else None,
+                "location": location,
                 "scraped_time": row[5] if row[5] else None,
-                "posted_date":  row[6] if row[6] else None,
-                "company":      company,
-                "skills":       [],
-                "job_link":     row[7] if row[7] else None
+                "posted_date": row[6] if row[6] else None,
+                "company": company,
+                "skills": [],
+                "job_link": row[7] if row[7] else None,
+                "source": row[8]
             }
 
         # Fetch skills for jobs in the same run

@@ -79,3 +79,8 @@ testing/test_embedding_classifier.py
 
 # Interview prep (local only)
 interview_prep/
+
+
+# Claude Code and agent skill files
+.agents/
+.claude/

@@ -117,8 +117,6 @@ def top_locations(year: int | None = None, field: str | None = None, month: int 
     return df
 
 
-#
-
 # -------------------- Job Postings --------------------
 
 def job_postings(year, field: str | None = None) -> pd.DataFrame:
@@ -192,4 +190,4 @@ def top_hiring_company(year: int = datetime.now().year, field: str = None, month
 
 
 if __name__ == '__main__':
-    print(top_roles(2026, None,7))
+    print(top_roles(2026, None, 7))
